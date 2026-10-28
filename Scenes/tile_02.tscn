@@ -1,0 +1,400 @@
+[gd_scene load_steps=37 format=3 uid="uid://cpu1g8auqvx74"]
+
+[ext_resource type="Shader" uid="uid://m0mhk6kvavkj" path="res://Shaders/ground.gdshader" id="1_3ydap"]
+[ext_resource type="Texture2D" uid="uid://c6vyu1oottst0" path="res://Assets/Polygon-Mega Survival Forest/Textures/TerrainTextures/Stones_with_leafs.png" id="2_uuxnl"]
+[ext_resource type="Texture2D" uid="uid://cmuevcjrla8qn" path="res://Assets/Polygon-Mega Survival Forest/Textures/Textures/Dirt_Grass/Dirt_Grass_03_Albedo.png" id="3_uuxnl"]
+[ext_resource type="PackedScene" uid="uid://rrtfkax415do" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Grass_02.prefab.scn" id="4_aod2p"]
+[ext_resource type="Script" uid="uid://fcswi5sgg1l8" path="res://Script/ground.gd" id="4_uuxnl"]
+[ext_resource type="PackedScene" uid="uid://kghudq6nt608" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Agave.prefab.scn" id="5_2qqhr"]
+[ext_resource type="PackedScene" uid="uid://crdn7cj22q443" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Agaric.prefab.scn" id="6_hr1w2"]
+[ext_resource type="PackedScene" uid="uid://cne1f0q8dtguy" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Aloe.prefab.scn" id="7_tjrlj"]
+[ext_resource type="PackedScene" uid="uid://dkqrx6a2vqlkn" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Blackberry.prefab.scn" id="8_yspl4"]
+[ext_resource type="PackedScene" uid="uid://d1p0gqg5v81vc" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_01.prefab.scn" id="9_uktat"]
+[ext_resource type="PackedScene" uid="uid://bohp4bia0n2qr" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_02.prefab.scn" id="10_2u2op"]
+[ext_resource type="PackedScene" uid="uid://brq5k6flq7quh" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_03.prefab.scn" id="11_7e1rg"]
+[ext_resource type="PackedScene" uid="uid://nsvkl61itafh" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Currant.prefab.scn" id="12_khgus"]
+[ext_resource type="PackedScene" uid="uid://d1of121fbkx6r" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Fern_02.prefab.scn" id="13_fn2oq"]
+[ext_resource type="PackedScene" uid="uid://cqwfhtu27ayam" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Grass_With_Flowers.prefab.scn" id="14_l58ed"]
+[ext_resource type="PackedScene" uid="uid://bundd01jjpp2g" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Aspen_Green_Yellow.prefab.scn" id="15_3whc7"]
+[ext_resource type="PackedScene" uid="uid://ckggfoa5m7pfr" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Small_Tree_01_Red.prefab.scn" id="16_p0y3w"]
+[ext_resource type="PackedScene" uid="uid://1hb4pajyqy5h" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Branch_01.prefab.scn" id="17_aga4x"]
+[ext_resource type="PackedScene" uid="uid://3gvmd38bqord" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Log_02.prefab.scn" id="18_en0m4"]
+[ext_resource type="PackedScene" uid="uid://c5cykd4np3i6f" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Stump_Oak.prefab.scn" id="19_j2vck"]
+[ext_resource type="PackedScene" uid="uid://yog8bwxlykgg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_08.prefab.scn" id="20_r0u0q"]
+[ext_resource type="PackedScene" uid="uid://d2i1gcbhtgr56" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Sunflower.prefab.scn" id="21_em5k2"]
+[ext_resource type="PackedScene" uid="uid://8fsd83wxk0rg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Large_Rock_Layered_02.prefab.scn" id="22_pp26h"]
+[ext_resource type="PackedScene" uid="uid://dvbw73vsgew2k" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Medium_Rock_Square_09.prefab.scn" id="23_2qqhr"]
+[ext_resource type="PackedScene" uid="uid://cg6hfpbe45spl" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_05.prefab.scn" id="24_hr1w2"]
+[ext_resource type="PackedScene" uid="uid://bc0r3qrd15l07" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Medium_Rock_Square_01.prefab.scn" id="26_ci3jc"]
+[ext_resource type="PackedScene" uid="uid://bt58gm0q1iu" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_09.prefab.scn" id="27_ci3jc"]
+[ext_resource type="PackedScene" uid="uid://lad0wigjiyla" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Small_Tree_03_Green_Yellow.prefab.scn" id="29_qh3vj"]
+[ext_resource type="PackedScene" uid="uid://4up1jhh4x0wv" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Broken_Tree.prefab.scn" id="30_gjxi8"]
+[ext_resource type="PackedScene" uid="uid://cujxxita5uck" path="res://Assets/fence.fbx" id="30_qh3vj"]
+[ext_resource type="PackedScene" uid="uid://d1v6o343cockp" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Aspen_Green.prefab.scn" id="31_gjxi8"]
+[ext_resource type="PackedScene" uid="uid://q3wav0wrp0a1" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Aspen_Damaged_Green.prefab.scn" id="32_vrc7y"]
+[ext_resource type="PackedScene" uid="uid://h3ih3dedib01" path="res://Scenes/bonfire.tscn" id="33_g8e72"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_yspl4"]
+size = Vector2(2.03, 2.01)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uktat"]
+render_priority = 1
+shader = ExtResource("1_3ydap")
+shader_parameter/grass_texture = ExtResource("3_uuxnl")
+shader_parameter/dirt_texture = ExtResource("2_uuxnl")
+shader_parameter/path_width = 0.0
+shader_parameter/path_softness = 0.20800000988
+shader_parameter/pixel_size = 32.0000014725
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2u2op"]
+next_pass = SubResource("ShaderMaterial_uktat")
+uv1_scale = Vector3(7.905, 7.905, 7.905)
+uv1_offset = Vector3(0.595, 0, 0)
+
+[node name="Tile_02" type="Node3D"]
+
+[node name="Ground" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.013305664, 0.026733398, -0.068359375)
+mesh = SubResource("PlaneMesh_yspl4")
+surface_material_override/0 = SubResource("StandardMaterial3D_2u2op")
+script = ExtResource("4_uuxnl")
+
+[node name="SM_Grass_02" parent="Ground" instance=ExtResource("4_aod2p")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.3096259, 5.9604646e-09, 0.16645506)
+
+[node name="SM_Agave" parent="Ground" instance=ExtResource("5_2qqhr")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.41735166, 0, -0.67996114)
+
+[node name="SM_Agave3" parent="Ground" instance=ExtResource("5_2qqhr")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.44625098, 0, -0.6242314)
+
+[node name="SM_Agave2" parent="Ground" instance=ExtResource("5_2qqhr")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.43339324, 0, 0.27061778)
+
+[node name="SM_Agaric" parent="Ground" instance=ExtResource("6_hr1w2")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.2563679, 0, -0.3076866)
+
+[node name="SM_Aloe" parent="Ground" instance=ExtResource("7_tjrlj")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.80088055, -2.3841858e-08, -0.6894152)
+
+[node name="SM_Blackberry" parent="Ground" instance=ExtResource("8_yspl4")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.40822306, 0, -0.12997523)
+
+[node name="SM_Bushes_01" parent="Ground" instance=ExtResource("9_uktat")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.39156663, 0, 0.33720574)
+
+[node name="SM_Bushes_02" parent="Ground" instance=ExtResource("10_2u2op")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.40640256, 0, 0.7906073)
+
+[node name="SM_Bushes_03" parent="Ground" instance=ExtResource("11_7e1rg")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.3770998, 0, -0.7948848)
+
+[node name="SM_Currant" parent="Ground" instance=ExtResource("12_khgus")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.4108021, 0, -0.2764332)
+
+[node name="SM_Fern_02" parent="Ground" instance=ExtResource("13_fn2oq")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.6546632, 0, 0.2885835)
+
+[node name="SM_Grass_With_Flowers" parent="Ground" instance=ExtResource("14_l58ed")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.36125365, 0, 0.5856611)
+
+[node name="Aspen_Green_Yellow" parent="Ground" instance=ExtResource("15_3whc7")]
+transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, -0.34486845, 0, -0.1056911)
+visible = false
+
+[node name="SM_Small_Tree_01_Red" parent="Ground" instance=ExtResource("16_p0y3w")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.6855756, 0, 0.5194788)
+
+[node name="SM_Small_Tree_01_Red2" parent="Ground" instance=ExtResource("16_p0y3w")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.6361945, 0, -0.82505894)
+
+[node name="SM_Branch_01" parent="Ground" instance=ExtResource("17_aga4x")]
+transform = Transform3D(0.011731212, 0, -0.09930951, 0, 0.1, 0, 0.09930951, 0, 0.011731212, -0.38681427, 0, -0.083103895)
+
+[node name="SM_Log_02" parent="Ground" instance=ExtResource("18_en0m4")]
+transform = Transform3D(0.06443239, 0, -0.07647528, 0, 0.1, 0, 0.07647528, 0, 0.06443239, -0.5439667, 0, -0.5439054)
+
+[node name="SM_Stump_Oak" parent="Ground" instance=ExtResource("19_j2vck")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.7497737, 0, -0.4378356)
+
+[node name="SM_Sharp_Stone_08" parent="Ground" instance=ExtResource("20_r0u0q")]
+transform = Transform3D(-0.04769134, 0, 0.087895036, 0, 0.1, 0, -0.087895036, 0, -0.04769134, -0.70066625, 0, 0)
+
+[node name="SM_Sunflower" parent="Ground" instance=ExtResource("21_em5k2")]
+transform = Transform3D(-0.09844266, 0, 0.017579628, 0, 0.1, 0, -0.017579628, 0, -0.09844266, -0.5790126, 0, 0.24877326)
+
+[node name="SM_Large_Rock_Layered_02" parent="Ground" instance=ExtResource("22_pp26h")]
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -1.2335819, -0.0026733398, -0.3017212)
+
+[node name="SM_Large_Rock_Layered_03" parent="Ground" instance=ExtResource("22_pp26h")]
+transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09, -1.2298585, -0.0026733398, 0.6309876)
+
+[node name="SM_Medium_Rock_Square_09" parent="Ground" instance=ExtResource("23_2qqhr")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.59173584, -0.0026733398, -0.33919677)
+
+[node name="SM_Sharp_Stone_05" parent="Ground" instance=ExtResource("24_hr1w2")]
+transform = Transform3D(0.09402109, 0, 0.03405929, 0, 0.1, 0, -0.03405929, 0, 0.09402109, -0.60498047, -0.0026733398, 0.832959)
+
+[node name="SM_Medium_Rock_Square_01" parent="Ground" instance=ExtResource("26_ci3jc")]
+transform = Transform3D(0.09807138, 0, -0.01954498, 0, 0.1, 0, 0.01954498, 0, 0.09807138, 1.0065795, -0.0026733398, -0.0476349)
+
+[node name="SM_Sharp_Stone_09" parent="Ground" instance=ExtResource("27_ci3jc")]
+transform = Transform3D(0.042261824, -0.090630785, 0, 0.090630785, 0.042261824, 0, 0, 0, 0.1, -1.4825563, -0.0026733398, 0.013293457)
+
+[node name="SM_Sharp_Stone_10" parent="Ground" instance=ExtResource("27_ci3jc")]
+transform = Transform3D(0.042261824, -0.090630785, 0, 0.090630785, 0.042261824, 0, 0, 0, 0.1, -1.4431888, -0.0026733398, 1.0105714)
+
+[node name="fence" parent="Ground" instance=ExtResource("30_qh3vj")]
+transform = Transform3D(-0.09534594, 0, -0.030152157, 0, 0.09999999, 0, 0.030152157, 0, -0.09534594, 1.2046263, -0.0026733398, 0.50020754)
+
+[node name="Ground2" type="MeshInstance3D" parent="."]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 20, 0, 0)
+mesh = SubResource("PlaneMesh_yspl4")
+surface_material_override/0 = SubResource("StandardMaterial3D_2u2op")
+script = ExtResource("4_uuxnl")
+
+[node name="SM_Small_Tree_03_Green_Yellow" parent="." instance=ExtResource("29_qh3vj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.854187, 0, 0.19580078)
+
+[node name="SM_Broken_Tree" parent="." instance=ExtResource("30_gjxi8")]
+transform = Transform3D(-0.7914156, 0, 0.61127853, 0, 1, 0, -0.61127853, 0, -0.7914156, 10.0448, 0, -4.230835)
+
+[node name="SM_Aspen_Green" parent="." instance=ExtResource("31_gjxi8")]
+transform = Transform3D(0.91265595, 0, -0.40872872, 0, 1, 0, 0.40872872, 0, 0.91265595, 11.15802, 0, 8.247437)
+
+[node name="SM_Aspen_Damaged_Green" parent="." instance=ExtResource("32_vrc7y")]
+transform = Transform3D(-0.58983076, 0, -0.8075269, 0, 1, 0, 0.8075269, 0, -0.58983076, 7.970276, 0, 2.1328144)
+
+[node name="Fire" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 8.166504, -0.08538818, -5.2695923)
+
+[node name="MeshInstance3D" parent="Fire" index="0"]
+transform = Transform3D(0.478765, -3.1615638e-08, -0.36164075, 0, -0.6, 5.2453665e-08, -0.36164075, -4.185497e-08, -0.478765, 0, 0.14811313, 0)
+
+[node name="MeshInstance3D2" parent="Fire" index="1"]
+transform = Transform3D(0.4676863, -0.0025334004, -0.3758499, -0.092652105, -0.58224833, -0.111366436, -0.3642597, 0.14484644, -0.4542405, 0.04638672, 0.20023715, -0.08093262)
+
+[node name="MeshInstance3D3" parent="Fire" index="2"]
+transform = Transform3D(0.28380632, -0.08656114, -0.52149886, 0.10428219, -0.57110316, 0.15154642, -0.51824623, -0.16232146, -0.25509316, -0.110961914, 0.14811313, -0.10681152)
+
+[node name="SM_Log_02" parent="Fire" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire" index="9"]
+visible = false
+
+[node name="Fire2" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 7.765503, 0, 2.760437)
+
+[node name="MeshInstance3D" parent="Fire2" index="0"]
+transform = Transform3D(0.4798674, -3.148765e-08, -0.36017677, 0, -0.6, 5.2453665e-08, -0.36017677, -4.195134e-08, -0.4798674, 0, 0.14811313, 0)
+
+[node name="MeshInstance3D3" parent="Fire2" index="2"]
+transform = Transform3D(0.35620546, -0.062016867, -0.478823, 0.10428219, -0.57110316, 0.15154642, -0.47142637, -0.17319064, -0.32827136, -0.110961914, 0.14811313, -0.10681152)
+
+[node name="SM_Log_02" parent="Fire2" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire2" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire2" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire2" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire2" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire2" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire2" index="9"]
+visible = false
+
+[node name="Fire8" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, 7.765503, -0.22784424, 9.514587)
+
+[node name="SM_Log_02" parent="Fire8" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire8" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire8" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire8" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire8" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire8" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire8" index="9"]
+visible = false
+
+[node name="Fire3" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.807251, 0, 3.340332)
+
+[node name="SM_Log_02" parent="Fire3" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire3" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire3" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire3" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire3" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire3" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire3" index="9"]
+visible = false
+
+[node name="Fire4" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(2.5452538, 0, -1.5879812, 0, 3, 0, 1.5879812, 0, 2.5452538, -6.427368, -0.08538818, -6.753845)
+
+[node name="MeshInstance3D" parent="Fire4" index="0"]
+transform = Transform3D(0.21122181, 0.09661559, -0.29407173, 0.10351696, -0.37746578, -0.04104814, -0.30967635, -0.060278405, -0.21429968, 0.20147681, 0.094992206, 0.24925017)
+
+[node name="MeshInstance3D2" parent="Fire4" index="1"]
+transform = Transform3D(0.3521306, 0.14321724, -0.46421236, 0.08641523, -0.58265674, -0.11420861, -0.47805518, 0.00016886741, -0.3625788, 0.2617731, 0.1114107, -0.13109434)
+
+[node name="MeshInstance3D3" parent="Fire4" index="2"]
+transform = Transform3D(0.51036656, -0.29625434, -0.10843991, -0.23729412, -0.49639842, 0.23933236, -0.20788787, -0.16069189, -0.5394078, 0.05862522, 0.087464534, -0.09981513)
+
+[node name="SM_Log_02" parent="Fire4" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire4" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire4" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire4" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire4" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire4" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire4" index="9"]
+visible = false
+
+[node name="Fire5" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(3, 0, 0, 0, 3, 0, 0, 0, 3, -6.828369, -0.25653076, 4.508606)
+
+[node name="MeshInstance3D" parent="Fire5" index="0"]
+transform = Transform3D(0.4277057, -1.8409565e-08, -0.29277843, 0, -0.47524202, 5.7764304e-08, -0.21140389, -3.7245655e-08, -0.5923401, 0.6368815, 0.14811313, 0)
+
+[node name="SM_Log_02" parent="Fire5" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire5" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire5" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire5" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire5" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire5" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire5" index="9"]
+visible = false
+
+[node name="Fire7" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(2.0463014, 0, 2.1937754, 0, 3, 0, -2.1937754, 0, 2.0463014, 4.3310547, -0.25653076, -0.22796631)
+
+[node name="MeshInstance3D" parent="Fire7" index="0"]
+transform = Transform3D(0.4277057, -1.8409565e-08, -0.29277843, 0, -0.47524202, 5.7764304e-08, -0.21140389, -3.7245655e-08, -0.5923401, 0.6368815, 0.14811313, 0)
+
+[node name="MeshInstance3D3" parent="Fire7" index="2"]
+transform = Transform3D(0.19367304, 0.039738044, -0.12564752, 0.0347365, -0.31617126, 0.14693645, -0.03504838, -0.09377004, -0.5486835, -1.3429484, 0.14811313, 0.6403841)
+
+[node name="SM_Log_02" parent="Fire7" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire7" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire7" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire7" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire7" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire7" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire7" index="9"]
+visible = false
+
+[node name="Fire6" parent="." instance=ExtResource("33_g8e72")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.786621, 0, 3.340332)
+
+[node name="SM_Log_02" parent="Fire6" index="3"]
+visible = false
+
+[node name="SM_Log_03" parent="Fire6" index="4"]
+visible = false
+
+[node name="SM_Log_04" parent="Fire6" index="5"]
+visible = false
+
+[node name="SM_Small_Rock_Round_04" parent="Fire6" index="6"]
+visible = false
+
+[node name="SM_Small_Rock_Round_05" parent="Fire6" index="7"]
+visible = false
+
+[node name="SM_Log_05" parent="Fire6" index="8"]
+visible = false
+
+[node name="SM_Log_06" parent="Fire6" index="9"]
+visible = false
+
+[editable path="Fire"]
+[editable path="Fire2"]
+[editable path="Fire8"]
+[editable path="Fire3"]
+[editable path="Fire4"]
+[editable path="Fire5"]
+[editable path="Fire7"]
+[editable path="Fire6"]

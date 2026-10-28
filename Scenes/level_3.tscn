@@ -1,0 +1,2135 @@
+[gd_scene load_steps=112 format=3 uid="uid://soosefshdpkq"]
+
+[ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
+[ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_odnv0"]
+[ext_resource type="Script" uid="uid://je2wchg1jbf0" path="res://Script/pivot.gd" id="3_gtgtc"]
+[ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="4_i0vcm"]
+[ext_resource type="Script" uid="uid://oqcdm8pjfoih" path="res://Script/level_controller.gd" id="5_fk3tt"]
+[ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="6_wpmth"]
+[ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_e5i8k"]
+[ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_cvu23"]
+[ext_resource type="PackedScene" uid="uid://bo6p3qj6i6y23" path="res://Scenes/goblin_boss.tscn" id="11_gqssx"]
+[ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_f7ucr"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/player.tscn" id="13_xqvjd"]
+[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_rkt0a"]
+[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_phxl3"]
+[ext_resource type="Script" uid="uid://ccsoe75qt5qxb" path="res://Script/character_hud.gd" id="16_7a12t"]
+[ext_resource type="Texture2D" uid="uid://c003xulu5dvlb" path="res://icons/health_frame.png" id="17_wwj55"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_ecjq2"]
+[ext_resource type="Shader" uid="uid://yyxh6w7k8i2x" path="res://Shaders/health_orb.gdshader" id="19_au2vr"]
+[ext_resource type="Texture2D" uid="uid://cisktxovjy43o" path="res://Assets/Polygon-Mega Survival Forest/Textures/TerrainTextures/Sand.png" id="20_j1cj0"]
+[ext_resource type="Texture2D" uid="uid://bxubncoeh2cot" path="res://icons/mana-frame.png" id="21_7i7tp"]
+[ext_resource type="Texture2D" uid="uid://dkjgym4631m2a" path="res://icons/coins (3).png" id="22_1w35t"]
+[ext_resource type="Texture2D" uid="uid://2mqxcw8cptnr" path="res://UI/UISprites/elements/element_4.png" id="23_ns7hs"]
+[ext_resource type="Texture2D" uid="uid://djr54n7f4nryd" path="res://UI/UISprites/panel.png" id="24_n1w6x"]
+[ext_resource type="Script" uid="uid://dkls6mhvlbhll" path="res://Script/skill_hud_slot.gd" id="25_ur86p"]
+[ext_resource type="Texture2D" uid="uid://b5h7074odeald" path="res://UI/UISprites/configurations_icon_button.png" id="26_qdqqi"]
+[ext_resource type="Texture2D" uid="uid://di7j4kx1xv6ju" path="res://UI/UISprites/InventoryButton.png" id="27_15y6s"]
+[ext_resource type="Texture2D" uid="uid://cerk8axxjseyy" path="res://UI/UISprites/SkillsButton.png" id="28_ohy03"]
+[ext_resource type="Texture2D" uid="uid://dlimabx3shrb1" path="res://UI/UISprites/MapButton.png" id="29_em5xb"]
+[ext_resource type="Script" uid="uid://dxem2h5omvu7y" path="res://Script/skill_tree_ui.gd" id="30_cxn53"]
+[ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_ta7ij"]
+[ext_resource type="Texture2D" uid="uid://bp5nv4bv400y1" path="res://icons/disabled-fire-ray.png" id="32_rb17e"]
+[ext_resource type="Texture2D" uid="uid://bxste58hol0h6" path="res://icons/fire-ray.png" id="33_jun3v"]
+[ext_resource type="Texture2D" uid="uid://8roovoey6nle" path="res://UI/UISprites/Icon_button_plus_symbol.png" id="34_c3ksh"]
+[ext_resource type="Texture2D" uid="uid://gd8xpf27t8sj" path="res://UI/UISprites/Icon_button_minus_symbol.png" id="35_dhvd5"]
+[ext_resource type="Texture2D" uid="uid://cmo1gyfdyqkkv" path="res://icons/disabled-burning-passion.png" id="36_u6glm"]
+[ext_resource type="Texture2D" uid="uid://djx1qqwcbt54w" path="res://icons/burning-passion.png" id="37_okdfo"]
+[ext_resource type="Texture2D" uid="uid://bn5h4dh50snuf" path="res://icons/disabled-comet-spark.png" id="38_4y3t1"]
+[ext_resource type="Texture2D" uid="uid://ddjnlxqlqmdpn" path="res://icons/comet-spark.png" id="39_tr0iu"]
+[ext_resource type="Texture2D" uid="uid://bnvpdb5tjtofm" path="res://UI/Window_no_back_with_chains_lock.png" id="40_s64qq"]
+[ext_resource type="Texture2D" uid="uid://d0vymgdqe3r1g" path="res://icons/disabled-heart-plus.png" id="41_6bp1b"]
+[ext_resource type="Texture2D" uid="uid://vjn2j8ehvdhv" path="res://icons/heart-plus.png" id="42_qj2jk"]
+[ext_resource type="Texture2D" uid="uid://cf15xx8dbnah7" path="res://icons/disabled-thunderstorm.png" id="43_tesbl"]
+[ext_resource type="Texture2D" uid="uid://cqkpps3dhq627" path="res://icons/thuderstorm-icon.png" id="44_m6uek"]
+[ext_resource type="Texture2D" uid="uid://b4h5ca84m1px7" path="res://icons/plasma-bolt.png" id="45_wkbeh"]
+[ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_ttoim"]
+[ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_p12dn"]
+[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_0t7sr"]
+[ext_resource type="Texture2D" uid="uid://clid7j7s6arav" path="res://UI/UISprites/Tab-skill.png" id="48_6luls"]
+[ext_resource type="Script" uid="uid://cxp2tv7l0i81c" path="res://Script/status.gd" id="49_2d6x2"]
+[ext_resource type="Texture2D" uid="uid://ky7ellurff3k" path="res://icons/mage-bg.png" id="50_3sbua"]
+[ext_resource type="Texture2D" uid="uid://cosmu0j2l8ojb" path="res://icons/barbute (1).png" id="51_qad0a"]
+[ext_resource type="Texture2D" uid="uid://enm03es8ronf" path="res://icons/chest-armor.png" id="52_ujjeg"]
+[ext_resource type="Texture2D" uid="uid://bgqkahavllawl" path="res://icons/gladius.png" id="53_118yl"]
+[ext_resource type="Texture2D" uid="uid://ikdcrw8tdtkw" path="res://icons/gloves.png" id="54_wxqoa"]
+[ext_resource type="Texture2D" uid="uid://b4j4pexby1uv1" path="res://icons/armored-pants.png" id="55_mf0q4"]
+[ext_resource type="Texture2D" uid="uid://uc7tof6wpa0h" path="res://icons/leg-armor.png" id="56_7shlo"]
+[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_dw0r2"]
+[ext_resource type="Texture2D" uid="uid://cprnmkg6ju63b" path="res://UI/UISprites/Icon_button_Chest.png" id="58_n0sas"]
+[ext_resource type="Texture2D" uid="uid://nigh4conaguo" path="res://UI/UISprites/Icon_button_Sell_All_Itens.png" id="59_fvus2"]
+[ext_resource type="Script" uid="uid://75cb4rq3ixe1" path="res://Script/retry_panel.gd" id="60_55qhh"]
+[ext_resource type="Texture2D" uid="uid://bu4n212oc0cpd" path="res://UI/UISprites/Window.png" id="61_yhc8s"]
+[ext_resource type="Texture2D" uid="uid://e8etrxpp53ok" path="res://UI/UISprites/Retry.png" id="62_wjkui"]
+[ext_resource type="Texture2D" uid="uid://dveswenxmwfsw" path="res://UI/UISprites/Map.png" id="63_cd85w"]
+[ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="64_lnjto"]
+[ext_resource type="Texture2D" uid="uid://cka0x1itkiqh7" path="res://UI/UISprites/Icon_button_arrow_turning_on.png" id="65_kuiv3"]
+[ext_resource type="Texture2D" uid="uid://djslkugbuk3bw" path="res://UI/UISprites/Icon_button_arrow_turning_off.png" id="66_cq0q0"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_wbg8p"]
+ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
+
+[sub_resource type="Sky" id="Sky_yex7x"]
+sky_material = SubResource("PhysicalSkyMaterial_wbg8p")
+
+[sub_resource type="Environment" id="Environment_odnv0"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_yex7x")
+ssil_intensity = 4.0
+sdfgi_read_sky_light = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_6luls"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gtgtc"]
+render_priority = 0
+shader = ExtResource("4_i0vcm")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.1
+shader_parameter/lineShadow = 0.1
+
+[sub_resource type="Resource" id="Resource_wjjdy"]
+script = ExtResource("6_wpmth")
+enemy_scene = ExtResource("7_e5i8k")
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="Resource" id="Resource_7gblq"]
+script = ExtResource("6_wpmth")
+enemy_scene = ExtResource("7_e5i8k")
+amount = 2
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="Resource" id="Resource_bq53a"]
+script = ExtResource("6_wpmth")
+enemy_scene = ExtResource("7_e5i8k")
+amount = 2
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="LabelSettings" id="LabelSettings_i0vcm"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fk3tt"]
+shader = ExtResource("19_au2vr")
+shader_parameter/fill_amount = 0.47200002242
+shader_parameter/wave_speed = 5.0
+shader_parameter/wave_strength = 0.025
+shader_parameter/pixel_strength = 0.0
+shader_parameter/dark_color = Color(0.22, 0.005, 0.015, 1)
+shader_parameter/base_color = Color(0.8, 0.025, 0.045, 1)
+shader_parameter/bright_color = Color(1, 0.22, 0.12, 1)
+shader_parameter/highlight_color = Color(1, 0.45, 0.35, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wpmth"]
+shader = ExtResource("19_au2vr")
+shader_parameter/fill_amount = 1.0
+shader_parameter/wave_speed = 0.7
+shader_parameter/wave_strength = 0.025
+shader_parameter/pixel_strength = 0.18
+shader_parameter/dark_color = Color(0.2138449, 0.029568164, 0.41090488, 1)
+shader_parameter/base_color = Color(0.50980395, 0.16470589, 0.9098039, 1)
+shader_parameter/bright_color = Color(0.28312787, 0.050445408, 0.52966815, 1)
+shader_parameter/highlight_color = Color(0.8945878, 0.85853314, 0.99724156, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e5i8k"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_pfj7f"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tdmcb"]
+bg_color = Color(0.8156863, 0.5411765, 0, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cvu23"]
+bg_color = Color(0.7394663, 0.4176499, 0.22714403, 0.6509804)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gqssx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f7ucr"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xqvjd"]
+bg_color = Color(0.67058825, 0.49803922, 0.23921569, 0.8235294)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_rkt0a"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_phxl3"]
+bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7a12t"]
+texture = ExtResource("31_ta7ij")
+expand_margin_left = 75.0
+expand_margin_top = 70.0
+expand_margin_right = 75.0
+expand_margin_bottom = 70.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_wwj55"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_ecjq2"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_au2vr"]
+color = Color(0.47715485, 0.31638956, 0.13299686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j1cj0"]
+bg_color = Color(0, 0, 0, 0.24313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.96862745, 0.78039217, 0.4117647, 0.4117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7i7tp"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1w35t"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ns7hs"]
+bg_color = Color(0.36862746, 0.36862746, 0.36862746, 0.69803923)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n1w6x"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ur86p"]
+bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qdqqi"]
+bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_15y6s"]
+content_margin_left = 30.0
+content_margin_top = 25.0
+content_margin_right = 30.0
+content_margin_bottom = 25.0
+bg_color = Color(0, 0, 0, 0.015686275)
+border_color = Color(0, 0, 0, 0.74509805)
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ohy03"]
+bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_em5xb"]
+bg_color = Color(0.14117648, 0.14117648, 0.14117648, 0.70980394)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.9490196, 0.6392157, 0.41960785, 0.93333334)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_cxn53"]
+default_font = ExtResource("18_ecjq2")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ta7ij"]
+load_path = "res://.godot/imported/Window-slot.png-f0eb6b9bac7f4e956e2781cf01cec74b.ctex"
+
+[sub_resource type="LabelSettings" id="LabelSettings_rb17e"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jun3v"]
+bg_color = Color(0, 0, 0, 0.40784314)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.230315, 0.23031494, 0.23031479, 1)
+expand_margin_left = 15.0
+expand_margin_top = 15.0
+expand_margin_right = 15.0
+expand_margin_bottom = 15.0
+shadow_color = Color(0, 0, 0, 0.7058824)
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3ksh"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_dhvd5"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_u6glm"]
+texture = ExtResource("57_dw0r2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_okdfo"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_4y3t1"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tr0iu"]
+content_margin_left = 30.0
+content_margin_top = 25.0
+content_margin_right = 30.0
+content_margin_bottom = 25.0
+bg_color = Color(0, 0, 0, 0)
+border_color = Color(0, 0, 0, 0.74509805)
+border_blend = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_s64qq"]
+font = ExtResource("18_ecjq2")
+
+[sub_resource type="LabelSettings" id="LabelSettings_6bp1b"]
+font = ExtResource("18_ecjq2")
+
+[node name="Level_3" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+mouse_target = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(384, 216)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
+light_color = Color(5.0055983e-06, 0.6417036, 0.8064364, 1)
+light_energy = 0.8
+light_indirect_energy = 0.5
+light_bake_mode = 1
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+sky_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(-0.881476, 0.047373705, -0.4698463, -0.41536787, 0.39554948, 0.81915206, 0.2246537, 0.9172219, -0.32898995, -16.333925, 21.972055, -21.354462)
+light_color = Color(1.0529996, 0.998022, 0.46565846, 1)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
+environment = SubResource("Environment_odnv0")
+
+[node name="WorldScroller" type="Node3D" parent="SubViewportContainer/SubViewport/World" groups=["world_scroller"]]
+script = ExtResource("1_odnv0")
+speed = 4.0
+
+[node name="Tile_00" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_odnv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+
+[node name="Tile_01" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_odnv0")]
+
+[node name="Tile_02" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_odnv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="Tile_03" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_odnv0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-1.8270907, 0, 0.81347305, 0, 2, 0, -0.81347305, 0, -1.8270907, 0, 0, -24.79126)
+script = ExtResource("3_gtgtc")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
+transform = Transform3D(0.1545085, -0.2377641, 0.41181955, 0, 0.43301263, 0.25, -0.47552833, -0.077254236, 0.13380827, 5, 4, -0.5)
+projection = 1
+current = true
+size = 10.0
+far = 250.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_6luls")
+surface_material_override/0 = SubResource("ShaderMaterial_gtgtc")
+
+[node name="LevelController" type="Node3D" parent="SubViewportContainer/SubViewport" groups=["level_controller"]]
+script = ExtResource("5_fk3tt")
+wave_1_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_wjjdy")])
+wave_2_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_7gblq")])
+wave_3_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_bq53a")])
+
+[node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("10_cvu23")
+boss_scene = ExtResource("11_gqssx")
+x_spacing = 2.0
+spawn_radius = 2.5
+max_level_offset = 0
+
+[node name="Knight" parent="SubViewportContainer/SubViewport" instance=ExtResource("12_f7ucr")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.0817871, 0, -23.964172)
+visible = false
+animation_speed = 1.0
+
+[node name="Player" parent="SubViewportContainer/SubViewport" groups=["player"] instance=ExtResource("13_xqvjd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25)
+attack_range = 8.0
+attack_base_duration = 0.6
+damage_font_size = 90
+damage_height = 2.0
+damage_duration = 1.0
+damage_rise_speed = 3.0
+damage_color = Color(0.53871167, 0, 0.038604088, 1)
+
+[node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("14_rkt0a")
+
+[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
+script = ExtResource("15_phxl3")
+
+[node name="CharacterHUD" type="Control" parent="SubViewportContainer/UI"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("16_7a12t")
+
+[node name="HealthOrb" type="Control" parent="SubViewportContainer/UI/CharacterHUD"]
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -226.0
+offset_top = -108.0
+offset_right = -151.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/HealthOrb"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("17_wwj55")
+stretch_mode = 2
+
+[node name="HealthLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/HealthOrb/TextureRect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.37300003
+anchor_right = 0.37600002
+offset_left = -9.800003
+offset_top = 72.5
+offset_right = 20.744999
+offset_bottom = 89.5
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+label_settings = SubResource("LabelSettings_i0vcm")
+
+[node name="Liquid" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/HealthOrb"]
+z_index = -1
+material = SubResource("ShaderMaterial_fk3tt")
+custom_minimum_size = Vector2(75, 75)
+layout_mode = 1
+offset_right = 75.0
+offset_bottom = 75.0
+texture = ExtResource("20_j1cj0")
+expand_mode = 1
+
+[node name="ManaOrb" type="Control" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 154.0
+offset_top = -108.0
+offset_right = 229.0
+offset_bottom = -33.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/ManaOrb"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("21_7i7tp")
+stretch_mode = 2
+
+[node name="Liquid" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/ManaOrb"]
+z_index = -1
+material = SubResource("ShaderMaterial_wpmth")
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("20_j1cj0")
+expand_mode = 1
+
+[node name="ManaLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/ManaOrb"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.37300003
+anchor_right = 0.37600002
+offset_left = -9.974991
+offset_top = 47.999977
+offset_right = 20.57
+offset_bottom = 64.99998
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+label_settings = SubResource("LabelSettings_i0vcm")
+
+[node name="LevelLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 48.915
+offset_right = 103.0
+offset_bottom = 65.915
+label_settings = SubResource("LabelSettings_e5i8k")
+
+[node name="GoldIcon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 68.915
+offset_right = 43.0
+offset_bottom = 103.915
+texture = ExtResource("22_1w35t")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="GoldLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/GoldIcon"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.012
+anchor_top = 0.16700001
+anchor_right = 0.15300001
+anchor_bottom = 0.273
+offset_left = 39.58
+offset_top = 9.155
+offset_right = 80.478
+offset_bottom = 23.611
+label_settings = SubResource("LabelSettings_pfj7f")
+
+[node name="XpBarControl" type="Control" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -40.0
+offset_right = 20.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/XpBarControl"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 140.0
+offset_top = -161.20593
+offset_right = 270.20593
+offset_bottom = 44.794067
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+texture = ExtResource("23_ns7hs")
+stretch_mode = 5
+
+[node name="XPBar" type="ProgressBar" parent="SubViewportContainer/UI/CharacterHUD/XpBarControl"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -102.0
+offset_top = -124.0
+offset_right = 95.0
+offset_bottom = -107.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1, 0.8)
+theme_override_fonts/font = ExtResource("18_ecjq2")
+theme_override_styles/background = SubResource("StyleBoxFlat_tdmcb")
+theme_override_styles/fill = SubResource("StyleBoxFlat_cvu23")
+show_percentage = false
+
+[node name="SkillBar" type="HBoxContainer" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -111.0
+offset_top = -98.0
+offset_right = 109.0
+offset_bottom = -18.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="SkillContainer" type="Panel" parent="SubViewportContainer/UI/CharacterHUD/SkillBar"]
+custom_minimum_size = Vector2(210, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_gqssx")
+
+[node name="Background" type="Control" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -29.0
+offset_top = -11.0
+offset_right = 39.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("24_n1w6x")
+expand_mode = 1
+
+[node name="Skill1" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer"]
+custom_minimum_size = Vector2(45, 45)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072
+anchor_right = 0.363
+anchor_bottom = 1.0
+script = ExtResource("25_ur86p")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill1"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -15.0
+offset_right = 15.0
+offset_bottom = 30.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 6
+
+[node name="CooldownLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill1"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_f7ucr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill2" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer"]
+custom_minimum_size = Vector2(45, 80)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.363
+anchor_right = 0.64000005
+anchor_bottom = 1.0
+offset_right = -1.5258789e-05
+script = ExtResource("25_ur86p")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -15.0
+offset_right = 15.0
+offset_bottom = 30.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CooldownLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill2"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_f7ucr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Skill3" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer"]
+custom_minimum_size = Vector2(45, 80)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.637
+anchor_right = 0.942
+anchor_bottom = 1.0
+offset_left = -1.5258789e-05
+script = ExtResource("25_ur86p")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill3"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -15.0
+offset_right = 15.0
+offset_bottom = 30.0
+grow_horizontal = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CooldownLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/SkillContainer/Skill3"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -30.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 0
+label_settings = SubResource("LabelSettings_f7ucr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.737
+anchor_top = 0.915
+anchor_right = 1.0
+anchor_bottom = 0.97400004
+offset_left = -0.19604492
+offset_top = -0.1749878
+offset_bottom = -0.2300415
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/separation = 30
+
+[node name="RetryPanelButton" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer"]
+custom_minimum_size = Vector2(35, 0)
+layout_mode = 2
+texture_normal = ExtResource("26_qdqqi")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="StatusButton" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+texture_normal = ExtResource("27_15y6s")
+stretch_mode = 5
+
+[node name="SkillTreeButton" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+texture_normal = ExtResource("28_ohy03")
+stretch_mode = 5
+
+[node name="PointsLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer/SkillTreeButton"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.827
+anchor_top = -0.67700005
+anchor_right = 1.0370001
+anchor_bottom = 0.065000005
+offset_left = 0.013000488
+offset_top = -0.012998581
+offset_right = 0.002998352
+offset_bottom = -0.015000105
+theme_override_styles/normal = SubResource("StyleBoxFlat_xqvjd")
+text = "2"
+label_settings = SubResource("LabelSettings_rkt0a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MapButton" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+texture_normal = ExtResource("29_em5xb")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SkillTree" type="Panel" parent="SubViewportContainer/UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_phxl3")
+script = ExtResource("30_cxn53")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/SkillTree"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1.0
+offset_bottom = -2.0
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control"]
+custom_minimum_size = Vector2(465, 500)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -252.0
+offset_top = -283.0
+offset_right = 232.5
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7a12t")
+
+[node name="Points" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer"]
+layout_mode = 1
+offset_left = 135.0
+offset_top = 49.0
+offset_right = 398.0
+offset_bottom = 66.0
+text = "Points:"
+label_settings = SubResource("LabelSettings_wwj55")
+
+[node name="AvailablePoints" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/Points"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 194.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_ecjq2")
+
+[node name="AddSkilOnProgressBarButton" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer"]
+z_index = 1
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 70.0
+offset_top = 27.0
+offset_right = 120.0
+offset_bottom = 77.0
+disabled = true
+texture_normal = ExtResource("46_ttoim")
+texture_disabled = ExtResource("47_p12dn")
+ignore_texture_size = true
+stretch_mode = 3
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer"]
+layout_mode = 0
+offset_left = 130.0
+offset_top = 58.0
+offset_right = 415.0
+offset_bottom = 88.0
+theme_override_styles/separator = SubResource("StyleBoxLine_au2vr")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 74.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer"]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+
+[node name="ControlContainer" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control"]
+custom_minimum_size = Vector2(300, 700)
+anchors_preset = 0
+offset_left = 176.5
+offset_right = 476.5
+offset_bottom = 700.0
+size_flags_horizontal = 10
+size_flags_vertical = 3
+
+[node name="VBoxContainerSkillNv1Container" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -17.5
+offset_right = 245.5
+offset_bottom = 110.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="MarginContainerSkill1" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill1" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill1" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("32_rb17e")
+texture_disabled = ExtResource("33_jun3v")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("34_c3ksh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("35_dhvd5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MarginContainerSkill2" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill2" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Basic Attack"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill2" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "ENERGYBALL 
+DMG: 45 | COST: 35
+*Acerta todos os inimigos proximos
+"
+texture_normal = ExtResource("36_u6glm")
+texture_disabled = ExtResource("37_okdfo")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("34_c3ksh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("35_dhvd5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MarginContainerSkill3" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill3" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill3" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "AURA 
+DMG 1.5x | COST:50"
+texture_normal = ExtResource("38_4y3t1")
+texture_disabled = ExtResource("39_tr0iu")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("34_c3ksh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv1Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("35_dhvd5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -28.5
+offset_top = 35.0
+offset_right = 221.5
+offset_bottom = 115.0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -30.0
+offset_right = 16.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("40_s64qq")
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -47.5
+offset_top = 130.0
+offset_right = 235.5
+offset_bottom = 160.0
+theme_override_styles/separator = SubResource("StyleBoxLine_au2vr")
+
+[node name="VBoxContainerSkillNv2Container" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -17.5
+offset_top = 130.0
+offset_right = 245.5
+offset_bottom = 240.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container"]
+custom_minimum_size = Vector2(0, 110)
+layout_mode = 2
+
+[node name="MarginContainerSkill1" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill1" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill1" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("41_6bp1b")
+texture_disabled = ExtResource("42_qj2jk")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("34_c3ksh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill1/VBoxContainerSkill1/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("35_dhvd5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MarginContainerSkill2" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill2" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Basic Attack"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill2" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("43_tesbl")
+texture_disabled = ExtResource("44_m6uek")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("34_c3ksh")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill2/VBoxContainerSkill2/Panel"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("35_dhvd5")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MarginContainerSkill3" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_right = 35
+
+[node name="VBoxContainerSkill3" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill3"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxFlat_j1cj0")
+
+[node name="Skill3" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill3/VBoxContainerSkill3/Panel"]
+layout_mode = 0
+offset_right = 50.0
+offset_bottom = 50.0
+disabled = true
+texture_normal = ExtResource("37_okdfo")
+texture_disabled = ExtResource("36_u6glm")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="MarginContainerSkill4" type="MarginContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer"]
+visible = false
+layout_mode = 2
+
+[node name="VBoxContainerSkill4" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4"]
+layout_mode = 2
+
+[node name="RemoveSkillButton" type="Button" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4"]
+custom_minimum_size = Vector2(35, 45)
+layout_mode = 2
+theme_override_styles/disabled = SubResource("StyleBoxFlat_7i7tp")
+disabled = true
+
+[node name="Skill4" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4"]
+custom_minimum_size = Vector2(80, 90)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4/Skill4"]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4/Skill4/VBoxContainer"]
+custom_minimum_size = Vector2(30, 50)
+layout_mode = 2
+texture = ExtResource("45_wkbeh")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+flip_v = true
+
+[node name="Label" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4/Skill4/VBoxContainer"]
+layout_mode = 2
+text = "Basic Attack"
+label_settings = SubResource("LabelSettings_1w35t")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AddSkillButton" type="Button" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/VBoxContainerSkillNv2Container/HBoxContainer/MarginContainerSkill4/VBoxContainerSkill4"]
+custom_minimum_size = Vector2(35, 45)
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ns7hs")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_n1w6x")
+disabled = true
+
+[node name="Panel2" type="Panel" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -28.5
+offset_top = 165.0
+offset_right = 221.5
+offset_bottom = 245.0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer/Panel2"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -21.0
+offset_top = -31.0
+offset_right = 16.0
+offset_bottom = 29.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("40_s64qq")
+stretch_mode = 5
+
+[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlContainer"]
+layout_mode = 0
+offset_left = -47.5
+offset_top = 265.0
+offset_right = 235.5
+offset_bottom = 295.0
+theme_override_styles/separator = SubResource("StyleBoxLine_au2vr")
+
+[node name="ControlProgressBar" type="Control" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control"]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -15.0
+offset_right = 100.0
+offset_bottom = 685.0
+grow_vertical = 2
+size_flags_horizontal = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlProgressBar"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 15.0
+offset_right = 70.0
+offset_bottom = 811.0
+texture = ExtResource("48_6luls")
+stretch_mode = 5
+
+[node name="ProgressBar" type="ProgressBar" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlProgressBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.22000001
+anchor_right = 0.78000003
+anchor_bottom = 1.5230001
+offset_left = 49.0
+offset_top = 53.0
+offset_right = 672.63635
+offset_bottom = -2059.2002
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 1.5707964
+theme_override_styles/background = SubResource("StyleBoxFlat_ur86p")
+theme_override_styles/fill = SubResource("StyleBoxFlat_qdqqi")
+step = 3.0
+value = 36.0
+show_percentage = false
+
+[node name="5" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlProgressBar"]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 145.0
+offset_right = 54.0
+offset_bottom = 168.0
+text = "5 -"
+
+[node name="10" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlProgressBar"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 280.0
+offset_right = 47.0
+offset_bottom = 303.0
+text = "10 -"
+
+[node name="15" type="Label" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer/ScrollContainer/Control/ControlProgressBar"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 425.0
+offset_right = 47.0
+offset_bottom = 448.0
+text = "15 -"
+
+[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/SkillTree/CenterContainer/Control/PanelContainer"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -33.25
+offset_top = -15.0
+offset_right = 26.75
+offset_bottom = 45.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("48_0t7sr")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="SkillChangeDialog" type="ConfirmationDialog" parent="SubViewportContainer/UI/SkillTree"]
+dialog_text = "Essa alteração será aplicada na próxima rodada, quando o mapa for carregado novamente. Deseja continuar?"
+
+[node name="Status" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_phxl3")
+script = ExtResource("49_2d6x2")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/Status"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/Status/CenterContainer"]
+custom_minimum_size = Vector2(450, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_15y6s")
+
+[node name="Background" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -127.0
+offset_right = 123.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("31_ta7ij")
+stretch_mode = 5
+
+[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.0
+offset_top = 31.0
+offset_right = -8.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("48_0t7sr")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -258.0
+offset_top = -5.0
+offset_right = -58.0
+offset_bottom = 350.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ohy03")
+
+[node name="PlayerBackground" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -81.0
+offset_right = 156.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("50_3sbua")
+stretch_mode = 5
+
+[node name="Helmet" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 55.0
+offset_right = 120.0
+offset_bottom = 95.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("51_qad0a")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Chest" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 124.0
+offset_right = 120.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("52_ujjeg")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Weapon" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 85.0
+offset_right = 190.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("53_118yl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Gloves" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 180.0
+offset_right = 61.0
+offset_bottom = 220.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("54_wxqoa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Pants" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 230.0
+offset_right = 120.0
+offset_bottom = 270.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("55_mf0q4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Boots" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 300.0
+offset_right = 120.0
+offset_bottom = 340.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_em5xb")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_cxn53")
+texture = ExtResource("56_7shlo")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_cxn53")
+texture = SubResource("CompressedTexture2D_ta7ij")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Status"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="Level" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Level"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Exp"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="Gold" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Gold"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="Health" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Health"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="Mana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mana"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Damage:"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Atk Speed"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="MaxHealth" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Max Health"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Max Mana"
+label_settings = SubResource("LabelSettings_rb17e")
+
+[node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+layout_mode = 2
+
+[node name="InventoryPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -200.0
+offset_right = 480.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_jun3v")
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.043
+anchor_top = -0.030000001
+anchor_right = 1.051
+anchor_bottom = 1.0
+offset_left = -158.938
+offset_top = -65.229996
+offset_right = 155.06604
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("57_dw0r2")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+text = "Inventario"
+label_settings = SubResource("LabelSettings_c3ksh")
+
+[node name="ChestButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture_normal = ExtResource("58_n0sas")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+
+[node name="ChestCount" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.827
+anchor_top = -0.67700005
+anchor_right = 0.827
+anchor_bottom = -0.67700005
+offset_left = -17.0
+offset_top = 15.080004
+offset_right = 2.0
+offset_bottom = 37.08
+theme_override_styles/normal = SubResource("StyleBoxFlat_xqvjd")
+text = "2"
+label_settings = SubResource("LabelSettings_rkt0a")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SellAllButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("59_fvus2")
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_dhvd5")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemsGrid" type="GridContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5
+
+[node name="AttributesControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl"]
+custom_minimum_size = Vector2(150, 400)
+layout_mode = 0
+offset_left = -558.0
+offset_top = -243.0
+offset_right = -270.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_u6glm")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 245.0
+offset_bottom = 428.0
+theme_override_constants/separation = 20
+
+[node name="Points" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Points:"
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="AvailablePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Points"]
+layout_mode = 0
+offset_left = 157.0
+offset_right = 185.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="Strength" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Str:"
+label_settings = SubResource("LabelSettings_4y3t1")
+
+[node name="StrengthPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_ttoim")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Agility" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Agi:"
+label_settings = SubResource("LabelSettings_4y3t1")
+
+[node name="AgilityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_ttoim")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Intelligence" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Int:"
+label_settings = SubResource("LabelSettings_4y3t1")
+
+[node name="IntelligencePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_ttoim")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Vitality" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vit:"
+label_settings = SubResource("LabelSettings_4y3t1")
+
+[node name="VitalityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_okdfo")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_ttoim")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 249.0
+offset_right = 235.0
+offset_bottom = 253.0
+
+[node name="Control" type="LineEdit" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 259.0
+offset_right = 237.0
+offset_bottom = 349.0
+size_flags_vertical = 3
+
+[node name="RetryPanel" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_phxl3")
+script = ExtResource("60_55qhh")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/RetryPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.5258789e-05
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/RetryPanel/CenterContainer"]
+custom_minimum_size = Vector2(380, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tr0iu")
+
+[node name="Background" type="Control" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.333
+anchor_top = -0.49300003
+anchor_right = 1.292
+anchor_bottom = 1.4130001
+offset_left = 11.560013
+offset_top = 6.600006
+offset_right = -0.44000244
+offset_bottom = 4.6999817
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("61_yhc8s")
+stretch_mode = 6
+
+[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Background/TextureRect"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -79.30002
+offset_right = 40.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("48_0t7sr")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Defeated!!!"
+label_settings = SubResource("LabelSettings_s64qq")
+horizontal_alignment = 1
+
+[node name="Retry" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("62_wjkui")
+stretch_mode = 5
+
+[node name="Map" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("63_cd85w")
+stretch_mode = 5
+
+[node name="Next" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+texture_normal = ExtResource("64_lnjto")
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EnableAutoRetryButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.95300007
+anchor_top = -0.065000005
+anchor_right = 1.047
+anchor_bottom = 0.085
+offset_left = 1.039978
+offset_top = 191.0
+offset_right = 0.95999146
+offset_bottom = 191.0
+texture_normal = ExtResource("65_kuiv3")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="DisableAutoRetryButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.95300007
+anchor_top = -0.065000005
+anchor_right = 1.047
+anchor_bottom = 0.085
+offset_left = 1.039978
+offset_top = 191.0
+offset_right = 0.95999146
+offset_bottom = 191.0
+texture_normal = ExtResource("66_cq0q0")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
+layout_mode = 0
+offset_left = 224.0
+offset_top = 181.0
+offset_right = 307.0
+offset_bottom = 204.0
+text = "Auto Retry:"
+label_settings = SubResource("LabelSettings_6bp1b")

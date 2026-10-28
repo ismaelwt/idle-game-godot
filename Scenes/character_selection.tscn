@@ -1,0 +1,291 @@
+[gd_scene load_steps=22 format=3 uid="uid://dq8ikoedncwll"]
+
+[ext_resource type="Script" uid="uid://dnu24abo6csr7" path="res://Script/character_selection.gd" id="1_l3v1h"]
+[ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="2_i640r"]
+[ext_resource type="PackedScene" uid="uid://cxm1g2vbtpghc" path="res://Scenes/character_selection_tile.tscn" id="3_ve3h0"]
+[ext_resource type="Script" uid="uid://cif7ma31nrvyy" path="res://Script/character_selection_knight.gd" id="4_pwu4o"]
+[ext_resource type="PackedScene" uid="uid://bgrmjpsqwuc5t" path="res://Scenes/character_selection_knight.tscn" id="4_ve3h0"]
+[ext_resource type="PackedScene" uid="uid://bni7pph36bvhd" path="res://Scenes/character_selection_mage.tscn" id="5_pwu4o"]
+[ext_resource type="Script" uid="uid://c1ia1hug0lo5h" path="res://Script/character_selection_mage.gd" id="6_pwu4o"]
+[ext_resource type="PackedScene" uid="uid://h3ih3dedib01" path="res://Scenes/bonfire.tscn" id="7_yr170"]
+[ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="8_bqtcc"]
+[ext_resource type="AudioStream" uid="uid://c05ib3e1c0g7o" path="res://Sounds/CharacterSelection/character_selection.mp3" id="8_rr1ac"]
+[ext_resource type="Texture2D" uid="uid://72d0iowg4c6n" path="res://UI/CharacterSelectionUI/element_6.png" id="10_f561k"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="11_pslhg"]
+[ext_resource type="Texture2D" uid="uid://du7fanycp8jeg" path="res://UI/CharacterSelectionUI/Select_Hero.png" id="12_pslhg"]
+[ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="13_l3v1h"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_i640r"]
+ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
+
+[sub_resource type="Sky" id="Sky_ve3h0"]
+sky_material = SubResource("PhysicalSkyMaterial_i640r")
+
+[sub_resource type="Environment" id="Environment_pwu4o"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_ve3h0")
+ssil_intensity = 4.0
+sdfgi_read_sky_light = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_yr170"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rr1ac"]
+render_priority = 0
+shader = ExtResource("2_i640r")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.1
+shader_parameter/lineShadow = 0.1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rr1ac"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_l3v1h"]
+font = ExtResource("11_pslhg")
+
+[node name="CharacterSelection" type="Node3D"]
+script = ExtResource("1_l3v1h")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+mouse_target = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(384, 216)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(-0.9308327, 0.19616216, -0.30833596, -0.09842588, 0.6779774, 0.72846365, 0.35194165, 0.7084259, -0.611776, 24.874815, 21.797924, 14.17968)
+visible = false
+light_color = Color(2.6471912e-06, 0.3658029, 0.4653002, 1)
+light_energy = 0.8
+light_indirect_energy = 0.5
+light_bake_mode = 1
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+sky_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.8987847, 0.31724775, 0.3025557, -0.41536796, 0.39554957, 0.81915206, 0.14019844, -0.8619133, 0.48728848, 25.120546, 21.972055, 14.377682)
+light_color = Color(1.0262412, 1.053, 0.715397, 1)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
+environment = SubResource("Environment_pwu4o")
+
+[node name="SelectionSpotlight" type="SpotLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.18565811, -0.9796586, 0.07615854, -0.3010459, 0.017069492, 0.9534569, -0.9353622, -0.19994421, -0.2917531, -2.616, 3.76, 0.242)
+light_color = Color(6.545782e-06, 0.72693115, 0.9082833, 1)
+light_bake_mode = 0
+spot_range = 1.75
+spot_attenuation = -6.0
+spot_angle = 35.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.022704752, 0, -0.9997422, 0, 1, 0, 0.9997422, 0, 0.022704752, -0.484375, 3.0453491, 1.3052979)
+light_color = Color(0.627451, 0.23921569, 0.078431375, 1)
+light_energy = 4.0
+omni_range = 4.0
+omni_attenuation = 0.0
+
+[node name="SpotLightPosition1" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.616, 3.76, -0.242)
+
+[node name="SpotLightPosition2" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48306537, 3.76, -1.5572647)
+
+[node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1.5320886, 0, -1.2855752, 0, 2.0000002, 0, 1.2855749, 0, 1.5320889, -4, 1, 2)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
+transform = Transform3D(0.12940955, -0.24148144, 0.4182582, 0, 0.43301266, 0.25000003, -0.48296297, -0.06470476, 0.11207196, 5.965, 4.5, -0.31)
+projection = 1
+current = true
+size = 6.0
+far = 250.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_yr170")
+surface_material_override/0 = SubResource("ShaderMaterial_rr1ac")
+
+[node name="CharacterSelectionEnv" parent="SubViewportContainer/SubViewport" instance=ExtResource("3_ve3h0")]
+transform = Transform3D(0.69364077, 0, 0.7203211, 0, 1, 0, -0.7203211, 0, 0.69364077, 0.023498535, 0.017150879, -0.032836914)
+
+[node name="Knight" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_ve3h0")]
+transform = Transform3D(0.100403614, 0, 0.28269967, 0, 0.2999999, 0, -0.28269967, 0, 0.100403614, -2.7962825, 2.584383, 0.16120619)
+script = ExtResource("4_pwu4o")
+
+[node name="Mage" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_pwu4o")]
+transform = Transform3D(0.6297116, 0, 0.4934199, 0, 0.79999995, 0, -0.4934199, 0, 0.6297116, -0.6620915, 2.5809855, -1.2770509)
+script = ExtResource("6_pwu4o")
+
+[node name="Fire" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_yr170")]
+transform = Transform3D(1.6933157, 0, 1.0642753, 0, 2, 0, -1.0642753, 0, 1.6933157, -0.62442386, 2.5502522, 0.9891846)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
+
+[node name="Panel" type="Panel" parent="SubViewportContainer/CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_rr1ac")
+
+[node name="Control" type="Control" parent="SubViewportContainer/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -120.0
+offset_top = -141.0
+offset_right = 49.0
+offset_bottom = -101.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("12_pslhg")
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Knight" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2951389
+anchor_top = 0.29166666
+anchor_right = 0.4027778
+anchor_bottom = 0.34104937
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_f561k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SubViewportContainer/CanvasLayer/Panel/Control/Knight"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "KNIGHT Lv. 1"
+label_settings = SubResource("LabelSettings_l3v1h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Mage" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5434028
+anchor_top = 0.26674077
+anchor_right = 0.63943756
+anchor_bottom = 0.31635803
+offset_top = 0.15197754
+offset_right = 0.36791992
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_f561k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SubViewportContainer/CanvasLayer/Panel/Control/Mage"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "MAGE Lv. 1"
+label_settings = SubResource("LabelSettings_l3v1h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Next" type="TextureButton" parent="SubViewportContainer/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -67.0
+offset_right = 20.0
+offset_bottom = -27.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("8_bqtcc")
+
+[node name="Previous" type="TextureButton" parent="SubViewportContainer/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -68.0
+offset_right = -56.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("8_bqtcc")
+flip_h = true
+
+[node name="StartButton" type="TextureButton" parent="SubViewportContainer/CanvasLayer/Panel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88900006
+anchor_top = 0.90000004
+anchor_right = 0.96400005
+anchor_bottom = 0.961
+offset_left = -0.12805176
+offset_top = -0.2000122
+offset_right = -0.5280762
+offset_bottom = 0.27197266
+grow_horizontal = 0
+grow_vertical = 0
+texture_normal = ExtResource("13_l3v1h")
+stretch_mode = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_rr1ac")
+volume_db = -10.0
+autoplay = true
+parameters/looping = true

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://81no4qad8v7u"]
+
+[ext_resource type="Texture2D" uid="uid://crm0q8wl0lp0e" path="res://icons/fire-hood.png" id="1_s03ei"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_62yeh"]
+
+[resource]
+script = ExtResource("2_62yeh")
+item_id = &"fire_hood_01"
+item_name = "Capuz Flamejante"
+description = "Capuz com propriedades flamejantes"
+icon = ExtResource("1_s03ei")
+icon_slot_1 = ExtResource("1_s03ei")
+icon_slot_2 = ExtResource("1_s03ei")
+item_type = 1
+rarity = 1
+intelligence_min = 5
+intelligence_max = 9
+vitality_min = 2
+vitality_max = 4
+magic_damage_min = 5
+magic_damage_max = 12
+min_enchantment_slots = 1
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

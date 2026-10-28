@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=3 uid="uid://byww3q4pyeyky"]
+
+[ext_resource type="Shader" uid="uid://yyxh6w7k8i2x" path="res://Shaders/health_orb.gdshader" id="1_8d1tw"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_24v5a"]
+shader = ExtResource("1_8d1tw")
+shader_parameter/fill_amount = 0.6330000300675
+shader_parameter/wave_speed = 5.0
+shader_parameter/wave_strength = 0.03
+shader_parameter/pixel_strength = 1.0
+shader_parameter/dark_color = Color(0.22, 0.005, 0.015, 1)
+shader_parameter/base_color = Color(0.8, 0.025, 0.045, 1)
+shader_parameter/bright_color = Color(1, 0.22, 0.12, 1)
+shader_parameter/highlight_color = Color(1, 0.45, 0.35, 1)
+
+[node name="HealthOrb" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -992.0
+offset_bottom = -488.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Liquid" type="TextureRect" parent="."]
+material = SubResource("ShaderMaterial_24v5a")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1

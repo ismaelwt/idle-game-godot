@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx571pbar3xqh"]
+
+[ext_resource type="Texture2D" uid="uid://bqhsixock3yup" path="res://Mapa.jpg" id="1_2jh14"]
+[ext_resource type="Script" uid="uid://ctspehvus44rw" path="res://Script/load_fase.gd" id="2_70f7c"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_70f7c"]
+
+[node name="Mapa" type="Node3D"]
+script = ExtResource("2_70f7c")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(586, 381)
+texture = ExtResource("1_2jh14")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+script = ExtResource("2_70f7c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+position = Vector2(-140.86957, 258.88892)
+shape = SubResource("CircleShape2D_70f7c")

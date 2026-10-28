@@ -1,0 +1,102 @@
+[gd_scene load_steps=18 format=3 uid="uid://cqmhxfjwtbpig"]
+
+[ext_resource type="PackedScene" uid="uid://buq8hltnfkemk" path="res://Assets/WizardusMaximus.fbx" id="1_sweqy"]
+[ext_resource type="PackedScene" uid="uid://ce5pe0gykhmgo" path="res://Assets/CAJADO.fbx" id="2_2hs0m"]
+[ext_resource type="Script" uid="uid://d2ikxrkvhfcej" path="res://Script/player.gd" id="2_h4iuc"]
+[ext_resource type="Animation" uid="uid://cob5d4330yu7w" path="res://Anim/mage/running.res" id="3_1jxqw"]
+[ext_resource type="Animation" uid="uid://dw2thbf1kbvig" path="res://Anim/mage/attack.res" id="4_dw050"]
+[ext_resource type="Animation" uid="uid://7bg42ajtjpep" path="res://Anim/mage/idle.res" id="5_b26j0"]
+[ext_resource type="Animation" uid="uid://ccfwhov13mxfv" path="res://Anim/mage/idle2.res" id="6_2hs0m"]
+[ext_resource type="Animation" uid="uid://dyn31t2j2aef" path="res://Anim/mage/attack_2.res" id="7_1jxqw"]
+[ext_resource type="Animation" uid="uid://bbhnp0din2h37" path="res://Anim/mage/hit.res" id="8_b26j0"]
+[ext_resource type="Script" uid="uid://j0arlcl8j7oe" path="res://Script/character_stats.gd" id="8_dw050"]
+[ext_resource type="Animation" uid="uid://c5g235nm80ohw" path="res://Anim/mage/buff.res" id="9_n7ghd"]
+[ext_resource type="Animation" uid="uid://bblt45jqwsfs5" path="res://Anim/mage/die.res" id="10_ivps1"]
+[ext_resource type="PackedScene" uid="uid://b8fvofvx52gao" path="res://Scenes/level_up_effect.tscn" id="11_nvl01"]
+[ext_resource type="Animation" uid="uid://bevajslyina3x" path="res://Anim/mage/base_attack.res" id="11_ukyrk"]
+[ext_resource type="Animation" uid="uid://yfun7y35tclu" path="res://Anim/mage/heal.res" id="12_7dp3o"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n7ghd"]
+_data = {
+&"attack": ExtResource("4_dw050"),
+&"attack_2": ExtResource("7_1jxqw"),
+&"base_attack": ExtResource("11_ukyrk"),
+&"buff": ExtResource("9_n7ghd"),
+&"die": ExtResource("10_ivps1"),
+&"heal": ExtResource("12_7dp3o"),
+&"hit": ExtResource("8_b26j0"),
+&"idle": ExtResource("5_b26j0"),
+&"idle2": ExtResource("6_2hs0m"),
+&"running": ExtResource("3_1jxqw")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_dw050"]
+radius = 0.4111328
+
+[node name="WizardusMaximus" instance=ExtResource("1_sweqy")]
+script = ExtResource("2_h4iuc")
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(17.433716, 9.668723, -0.26008514, -0.19430429, 0.8860946, 19.916405, 9.670273, -17.41312, 0.86906475, 0.01588117, -0.02544777, -0.046411715)
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-0.27671167, -0.0025237575, 0.009763159, 0.96090007)
+bones/2/rotation = Quaternion(-0.16024546, -0.013830216, 0.01005784, 0.9869291)
+bones/3/rotation = Quaternion(0.4044314, 0.030507024, -0.013523768, 0.91395944)
+bones/4/rotation = Quaternion(-0.23849154, 0.027355943, -0.019110741, 0.9705711)
+bones/5/rotation = Quaternion(-0.26963353, 0.0331591, -0.0037469943, 0.96238476)
+bones/11/rotation = Quaternion(-0.103260875, 0.032355048, 0.008168298, 0.9940944)
+bones/12/rotation = Quaternion(-0.18984304, 0.106818214, 0.098788515, 0.9709739)
+bones/27/rotation = Quaternion(-0.41031143, -0.38050723, -0.5592695, 0.611618)
+bones/28/rotation = Quaternion(-0.37180796, -0.40848967, -0.25051314, 0.7950712)
+bones/29/rotation = Quaternion(0.018946894, 0.02013335, -0.5478584, 0.8361142)
+bones/30/rotation = Quaternion(-0.0074132113, -0.39488164, 0.1144618, 0.91154385)
+bones/31/rotation = Quaternion(-0.073331036, 0.75732535, -0.43705243, 0.47965208)
+bones/32/rotation = Quaternion(-0.25737336, -0.019683845, 0.030546334, 0.9656285)
+bones/34/rotation = Quaternion(-0.45770976, 0.10354777, 0.061707903, 0.8808927)
+bones/35/rotation = Quaternion(-0.54055876, -0.0026277937, 0.0055470266, 0.8412839)
+bones/40/rotation = Quaternion(-0.4094639, 0.31870934, 0.58972436, 0.618861)
+bones/41/rotation = Quaternion(-0.51700485, -0.029758902, 0.08032209, 0.8516858)
+bones/42/rotation = Quaternion(0.01149145, -0.08803581, 0.1676103, 0.98184747)
+bones/43/rotation = Quaternion(-0.05152596, -0.023711052, 0.05699081, 0.9967623)
+bones/44/rotation = Quaternion(-0.07355583, -0.018728597, -0.032765977, 0.9965768)
+bones/45/rotation = Quaternion(-0.16272119, 0.021833947, -0.016828258, 0.986287)
+bones/47/rotation = Quaternion(0.07140766, -0.8368695, 0.22049865, 0.49591422)
+bones/48/rotation = Quaternion(-0.20997791, 0.22514501, 0.03756626, 0.950688)
+bones/53/rotation = Quaternion(0.18769492, 0.5308643, 0.82551074, -0.0385459)
+bones/54/rotation = Quaternion(-0.3486386, -0.112710685, 0.0069971583, 0.93042916)
+bones/55/rotation = Quaternion(0.56838083, 0.013815345, -0.06512126, 0.82006806)
+bones/57/rotation = Quaternion(-0.037167937, 0.49136153, 0.86837244, 0.055782948)
+bones/58/rotation = Quaternion(-0.32274303, -0.08041138, 0.000983649, 0.94306415)
+bones/59/rotation = Quaternion(0.61072934, 0.024531672, 0.06345196, 0.7889119)
+bones/61/rotation = Quaternion(0.9006213, -2.842171e-14, 9.437641e-16, -0.43460476)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="1"]
+transform = Transform3D(0.09652418, 0.22898112, 0.9686333, 0.30608374, -0.9328478, 0.19002053, 0.947099, 0.2781409, -0.16012967, 0.019484427, -0.021306992, 0.07514895)
+bone_name = "DEF-HAND.L"
+bone_idx = 30
+
+[node name="CAJADO" parent="Armature/Skeleton/BoneAttachment3D" index="0" instance=ExtResource("2_2hs0m")]
+transform = Transform3D(0.0154588455, 0.0749429, -0.0151190385, -0.017435847, 0.018474432, 0.07374742, 0.074438006, -0.01123636, 0.020413918, -0.048087053, -0.0069481265, 0.005631063)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"player": SubResource("AnimationLibrary_n7ghd")
+}
+
+[node name="FireballSpawn" type="Marker3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9856715, 1.5276958)
+
+[node name="CharacterStats" type="Node" parent="." index="3"]
+script = ExtResource("8_dw050")
+magic_damage_per_int = 0.33
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="4"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.059556007, 0.96, 0.097455084)
+shape = SubResource("CapsuleShape3D_dw050")
+
+[node name="LevelUpEffect" parent="." index="5" instance=ExtResource("11_nvl01")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.14014149, 0, 0.09926659)
+visible = false

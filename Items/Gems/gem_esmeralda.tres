@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://l8qooaooylf5"]
+
+[ext_resource type="Texture2D" uid="uid://148r28mwhxr1" path="res://icons/gem-esmeralda.png" id="1_scnd5"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_l2sbh"]
+
+[resource]
+script = ExtResource("2_l2sbh")
+item_id = &"gem_esmeralda_01"
+item_name = "Esmeralda Do Saber"
+description = "Fragmento da pedra do saber"
+icon = ExtResource("1_scnd5")
+item_type = 7
+gem_effect = 3
+gem_effect_min = 1.0
+gem_effect_max = 8.0
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

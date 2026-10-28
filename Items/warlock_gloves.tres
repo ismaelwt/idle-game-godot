@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bt25r205e2me1"]
+
+[ext_resource type="Texture2D" uid="uid://dfrgo1fuhs4lx" path="res://icons/warlock-gloves.png" id="1_udu51"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_o7jxu"]
+
+[resource]
+script = ExtResource("2_o7jxu")
+item_id = &"warlock_gloves_01"
+item_name = "Luvas do Bruxo"
+description = "Luvas do Bruxo"
+icon = ExtResource("1_udu51")
+icon_slot_1 = ExtResource("1_udu51")
+icon_slot_2 = ExtResource("1_udu51")
+item_type = 3
+rarity = 2
+intelligence_min = 1
+intelligence_max = 5
+vitality_max = 3
+magic_damage_min = 3
+magic_damage_max = 8
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

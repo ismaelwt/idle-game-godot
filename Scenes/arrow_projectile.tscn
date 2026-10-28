@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cd4r7i0qc3ln4"]
+
+[ext_resource type="Script" uid="uid://18bwjh1flf1p" path="res://Script/arrow_projectile.gd" id="1_k1g7c"]
+[ext_resource type="PackedScene" uid="uid://bvhgnj0qu8ktb" path="res://Assets/BowModel/Arrow.fbx" id="1_l0jjt"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l0jjt"]
+radius = 0.21044922
+height = 3.0
+
+[node name="ArrowProjectile" type="Node3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+script = ExtResource("1_k1g7c")
+speed = 5.0
+max_lifetime = 15.0
+
+[node name="Arrow" parent="." instance=ExtResource("1_l0jjt")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="Arrow"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arrow/Area3D"]
+transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, -1, -4.371139e-08, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 0.5, -2.1855694e-08, -0.042964004)
+shape = SubResource("CapsuleShape3D_l0jjt")

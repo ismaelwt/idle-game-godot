@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://opylpjmir7as"]
+
+[ext_resource type="Texture2D" uid="uid://dj0tc6s5ggmn0" path="res://icons/terra-rob.png" id="1_dx5dw"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_vfqfh"]
+
+[resource]
+script = ExtResource("2_vfqfh")
+item_id = &"terra_robe_01"
+item_name = "Robe de Terra"
+description = "Robe de terra"
+icon = ExtResource("1_dx5dw")
+icon_slot_1 = ExtResource("1_dx5dw")
+icon_slot_2 = ExtResource("1_dx5dw")
+item_type = 2
+intelligence_max = 2
+magic_damage_max = 5
+max_enchantment_slots = 1
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

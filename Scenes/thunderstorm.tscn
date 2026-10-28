@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://brv5435knp4fm"]
+
+[ext_resource type="Script" uid="uid://cc2nnu53ntftm" path="res://Script/thunderstorm.gd" id="1_xakaa"]
+[ext_resource type="Shader" uid="uid://b4i3qi52vfqr0" path="res://Shaders/lightning_effect.gdshader" id="2_4csl2"]
+[ext_resource type="Texture2D" uid="uid://cqkpps3dhq627" path="res://icons/thuderstorm-icon.png" id="2_yn1k3"]
+[ext_resource type="Texture2D" uid="uid://cf15xx8dbnah7" path="res://icons/disabled-thunderstorm.png" id="3_4l5nr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qnx4n"]
+render_priority = 0
+shader = ExtResource("2_4csl2")
+shader_parameter/effect_color = Color(0.44345173, 0.30099568, 1, 1)
+shader_parameter/core_color = Color(0.7940864, 0.747894, 1, 1)
+shader_parameter/speed = 3.08100014308762
+shader_parameter/bolt_width = 0.05000000167648
+shader_parameter/glow = 6.000000285
+shader_parameter/opacity = 0.2830000134425
+shader_parameter/branch_strength = 0.4890000232275
+
+[sub_resource type="QuadMesh" id="QuadMesh_u1t85"]
+material = SubResource("ShaderMaterial_qnx4n")
+size = Vector2(2, 3)
+
+[node name="Thunderstorm" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
+script = ExtResource("1_xakaa")
+icon = ExtResource("2_yn1k3")
+disabled_icon = ExtResource("3_4l5nr")
+
+[node name="Cloud" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.919525, 0)
+
+[node name="Bolts" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 3, 0, 0, 0, 1, -0.017351866, 0, 0)
+
+[node name="Bolt1" type="MeshInstance3D" parent="Bolts" groups=["thunderstorm_bolts"]]
+transform = Transform3D(-1, 1.509958e-07, 0, -1.509958e-07, -1, 0, 0, 0, 1, 0, 1.3800653, 0)
+cast_shadow = 0
+gi_mode = 0
+mesh = SubResource("QuadMesh_u1t85")

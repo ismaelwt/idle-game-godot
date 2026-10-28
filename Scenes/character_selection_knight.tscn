@@ -1,0 +1,68 @@
+[gd_scene load_steps=8 format=3 uid="uid://bgrmjpsqwuc5t"]
+
+[ext_resource type="PackedScene" uid="uid://d3u8sshc6d0dj" path="res://Assets/Knight.fbx" id="1_onvos"]
+[ext_resource type="PackedScene" uid="uid://bs7nvjwpjniwc" path="res://Assets/Knight/Sword.fbx" id="2_htrgl"]
+[ext_resource type="PackedScene" uid="uid://eb3j47yp2ujb" path="res://Assets/Knight/Shield_Heater.fbx" id="3_12y01"]
+[ext_resource type="Animation" uid="uid://87mi3e25144b" path="res://Anim/knight/attack.res" id="4_o3pi8"]
+[ext_resource type="Animation" uid="uid://dt3gkx0ms5w5x" path="res://Anim/knight/idle.res" id="5_5fup3"]
+[ext_resource type="Animation" uid="uid://o4o1swjwps3j" path="res://Anim/knight/running.res" id="6_ik7vb"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_np0bx"]
+_data = {
+&"attack": ExtResource("4_o3pi8"),
+&"idle": ExtResource("5_5fup3"),
+&"running": ExtResource("6_ik7vb")
+}
+
+[node name="Knight" instance=ExtResource("1_onvos")]
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(63.769455, 75.95532, -12.815801, 4.2253947, 13.163299, 99.03975, 76.91296, -63.69862, 5.1847506, -0.043689325, 1.7526317, -0.025827609)
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(0.03165757, 0.045703925, -0.021846306, 0.99821424)
+bones/2/rotation = Quaternion(0.06311552, 0.09253475, -0.042380635, 0.9928029)
+bones/3/rotation = Quaternion(0.0066672103, 0.027245492, -0.00021930951, 0.9996065)
+bones/4/rotation = Quaternion(0.006667125, 0.027245475, -0.00021928932, 0.9996065)
+bones/6/rotation = Quaternion(0.09696281, -0.069407195, -0.83452636, 0.53790957)
+bones/7/rotation = Quaternion(0.059203193, -0.08290196, -0.20735452, 0.9729473)
+bones/8/rotation = Quaternion(0.24321747, -0.16147259, -0.088302314, 0.9523521)
+bones/9/rotation = Quaternion(0.023250258, 0.02021694, 0.059298947, 0.99776477)
+bones/10/rotation = Quaternion(0.050361853, -0.010660507, -0.0012072906, 0.99867344)
+bones/12/rotation = Quaternion(0.13930783, 0.13230897, 0.8144387, 0.54751927)
+bones/13/rotation = Quaternion(-0.24255511, 0.14173901, 0.2790535, 0.9182626)
+bones/14/rotation = Quaternion(0.3984371, 0.10148952, 0.08929241, 0.9071796)
+bones/15/rotation = Quaternion(0.30508402, -0.01904865, 0.062214665, 0.9501001)
+bones/16/rotation = Quaternion(0.04661286, -0.06772707, 0.31810966, 0.94448215)
+bones/18/rotation = Quaternion(0.36520803, 0.4522352, 0.7861795, -0.20982915)
+bones/19/rotation = Quaternion(-0.44003886, 0.1748029, -0.04793519, 0.8794954)
+bones/20/rotation = Quaternion(0.6920749, -0.0795736, -0.0696444, 0.71403784)
+bones/20/scale = Vector3(0.99999505, 0.9999555, 0.99999446)
+bones/21/rotation = Quaternion(0.0065580294, 0.013034161, -0.05286174, 0.99849534)
+bones/23/rotation = Quaternion(-0.048715495, 0.3296608, 0.9176178, 0.21662919)
+bones/24/rotation = Quaternion(-0.5034693, -0.042769313, -0.04490326, 0.86178493)
+bones/24/scale = Vector3(1.0000001, 1.0000256, 0.999979)
+bones/25/rotation = Quaternion(0.831148, 0.13562517, 0.1824552, 0.50745344)
+bones/26/rotation = Quaternion(-0.004940484, 0.012225263, 0.026214497, 0.9995695)
+bones/37/rotation = Quaternion(0, 1, 0, 0)
+
+[node name="SwordBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="1"]
+transform = Transform3D(-0.8799279, 0.042796433, 0.47317505, -0.17965096, -0.95196056, -0.24798283, 0.43983093, -0.3032134, 0.8453455, -0.010890992, -0.009088718, 0.004357089)
+bone_name = "Hand.R"
+bone_idx = 15
+
+[node name="Sword" parent="Armature/Skeleton/SwordBoneAttachment3D" index="0" instance=ExtResource("2_htrgl")]
+transform = Transform3D(0.00018162327, 0.0010324281, -0.011954133, -0.011819933, 0.0020710384, -7.105991e-07, 0.0020630527, 0.011774763, 0.0010482757, -0.0006130263, 0.0014079844, -0.0014068633)
+
+[node name="ShieldBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="2"]
+transform = Transform3D(-0.8417018, 0.5380178, 0.04554192, -0.35725328, -0.4916851, -0.79411256, -0.40485466, -0.68467635, 0.6060614, 0.015021915, -0.004406184, 0.0017852522)
+bone_name = "Hand.L"
+bone_idx = 9
+
+[node name="Shield_Heater" parent="Armature/Skeleton/ShieldBoneAttachment3D" index="0" instance=ExtResource("3_12y01")]
+transform = Transform3D(-0.0007060765, -0.00088173826, -0.004956339, -0.007962124, -0.00028786546, 0.00045888487, -0.00032557687, 0.008952079, -0.00047342054, -0.0016965028, -5.8975536e-05, -0.0023224354)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"knight": SubResource("AnimationLibrary_np0bx")
+}

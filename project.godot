@@ -11,15 +11,27 @@ config_version=5
 [application]
 
 config/name="3D Pixel Art - Tutorial"
-run/main_scene="res://demo.tscn"
-config/features=PackedStringArray("4.4", "Forward Plus")
+config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://Assets/icon.png"
+
+[autoload]
+
+SaveManager="*res://Script/save_manager.gd"
+SkillTree="*res://Script/skill_tree.gd"
+SceneLoader="*res://Script/scene_loader.gd"
+CharacterSelectionData="*res://Script/character_selection_data.gd"
+GameManager="*res://Script/game_manager.gd"
 
 [display]
 
 window/size/borderless=true
 window/stretch/scale_mode="integer"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/mixamo_animation_retargeter/plugin.cfg")
+
 [rendering]
 
+textures/canvas_textures/default_texture_filter=3
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0

@@ -1,0 +1,50 @@
+[gd_scene load_steps=5 format=3 uid="uid://hm85il1q6p2p"]
+
+[ext_resource type="Script" uid="uid://cc5xxvo1dwb2s" path="res://Script/loading.gd" id="1_fim2r"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="2_k66n3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k66n3"]
+bg_color = Color(0.2509804, 0.25490198, 0.36078432, 0.23921569)
+
+[sub_resource type="LabelSettings" id="LabelSettings_31xe0"]
+font = ExtResource("2_k66n3")
+
+[node name="Loading" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fim2r")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_k66n3")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Carregando..."
+label_settings = SubResource("LabelSettings_31xe0")
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_k66n3")

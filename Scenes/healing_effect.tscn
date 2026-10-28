@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://d3pqcjjjmio20"]
+
+[ext_resource type="Shader" uid="uid://d3xifxl7rkwxr" path="res://Shaders/healing_effect.gdshader" id="1_42wmo"]
+[ext_resource type="Script" uid="uid://darnrvrco2rou" path="res://Script/healing_effect.gd" id="1_pa31m"]
+[ext_resource type="Texture2D" uid="uid://b83ut5t64joak" path="res://icons/heart-plus-2.png" id="2_m6n4o"]
+[ext_resource type="Texture2D" uid="uid://bs4wqgijpqns6" path="res://icons/disabled-hearth-plus-2.png" id="3_qxj7q"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_42wmo"]
+top_radius = 0.15
+bottom_radius = 0.15
+height = 0.5
+radial_segments = 24
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pa31m"]
+render_priority = 0
+shader = ExtResource("1_42wmo")
+shader_parameter/speed = 1.48200006713512
+shader_parameter/symbol_count = 6.2090001999275
+shader_parameter/symbol_size = 0.15000000596046
+shader_parameter/horizontal_speed = 0.78000003705
+shader_parameter/horizontal_amount = 0.40800001938
+shader_parameter/wave_frequency = 0.62000002619012
+shader_parameter/healing_color_top = Color(0.4495536, 0.57535344, 5.7756904e-07, 1)
+shader_parameter/healing_color_bottom = Color(0.08536754, 0.2661262, 0.0007114447, 1)
+shader_parameter/glow = 3.710000176225
+shader_parameter/opacity = 0.8
+shader_parameter/pixel_scale = 100.0
+shader_parameter/dissolve_threshold = 0.0
+shader_parameter/bar_speed = 1.00000004424012
+shader_parameter/bar_size = 0.05000000074506
+shader_parameter/aura_color_top = Color(0.16544676, 0.4469322, 0, 1)
+shader_parameter/aura_color_bottom = Color(0.2147288, 0.55914205, 1.92523e-07, 1)
+shader_parameter/aura_glow = 0.0
+shader_parameter/aura_opacity = 0.35
+
+[node name="HealingEffect" type="Node3D"]
+physics_interpolation_mode = 2
+script = ExtResource("1_pa31m")
+icon = ExtResource("2_m6n4o")
+disabled_icon = ExtResource("3_qxj7q")
+cooldown = 30.0
+mana_cost = 25.0
+healing_amount = 65.0
+duration = 2.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.3406937, 0)
+cast_shadow = 0
+gi_mode = 0
+gi_lightmap_texel_scale = 0.01
+mesh = SubResource("CylinderMesh_42wmo")
+surface_material_override/0 = SubResource("ShaderMaterial_pa31m")

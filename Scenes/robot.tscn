@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://kfpt6c5opt60"]
+
+[ext_resource type="PackedScene" uid="uid://kg5eul06f5v2" path="res://Assets/Robot.fbx" id="1_3cn6f"]
+
+[node name="Robot" instance=ExtResource("1_3cn6f")]
+
+[node name="Robot 2" parent="." index="0"]
+transform = Transform3D(53.590923, 1.3125557e-14, 5.7373634e-22, 0, -2.3425337e-06, 53.590923, 1.3125557e-14, -53.590923, -2.3425337e-06, -0.0007776022, 1.7073833, -0.0023172349)

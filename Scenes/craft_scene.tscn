@@ -1,0 +1,295 @@
+[gd_scene load_steps=15 format=3 uid="uid://by3nbeel1wxk2"]
+
+[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="1_i3kok"]
+[ext_resource type="Texture2D" uid="uid://b13qg8ugmd3cw" path="res://UI/Forja.png" id="2_p1adl"]
+[ext_resource type="Texture2D" uid="uid://2bhe8mtr45vv" path="res://UI/UISprites/Window-slot.png" id="3_2v3r7"]
+[ext_resource type="Texture2D" uid="uid://bp5nv4bv400y1" path="res://icons/disabled-fire-ray.png" id="4_v6a18"]
+[ext_resource type="Texture2D" uid="uid://bxste58hol0h6" path="res://icons/fire-ray.png" id="5_dy2u7"]
+[ext_resource type="Texture2D" uid="uid://8roovoey6nle" path="res://UI/UISprites/Icon_button_plus_symbol.png" id="6_b2wr1"]
+[ext_resource type="Texture2D" uid="uid://gd8xpf27t8sj" path="res://UI/UISprites/Icon_button_minus_symbol.png" id="7_b0ox7"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="8_7di70"]
+[ext_resource type="Texture2D" uid="uid://c6tqob0u70oe5" path="res://UI/UISprites/Icon_button_Check.png" id="9_2v3r7"]
+[ext_resource type="Texture2D" uid="uid://gh1vol8sojgs" path="res://UI/UISprites/Icon_button__uncheck.png" id="10_v6a18"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_cgnwu"]
+texture = ExtResource("1_i3kok")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rmmbt"]
+texture = ExtResource("3_2v3r7")
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_fmkvs"]
+font = ExtResource("8_7di70")
+font_size = 24
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t7608"]
+texture = ExtResource("3_2v3r7")
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="Control"]
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_cgnwu")
+
+[node name="TextureRect" type="TextureRect" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_top = 7.0
+offset_right = 43.0
+offset_bottom = 47.0
+grow_horizontal = 2
+texture = ExtResource("2_p1adl")
+stretch_mode = 5
+
+[node name="Item" type="Panel" parent="Control/Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 92.0
+offset_top = 93.0
+offset_right = 142.0
+offset_bottom = 143.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_rmmbt")
+
+[node name="Skill1" type="TextureButton" parent="Control/Panel/Item"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_v6a18")
+texture_disabled = ExtResource("5_dy2u7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="Control/Panel/Item"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("6_b2wr1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="Control/Panel/Item"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("7_b0ox7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 108.0
+offset_right = 185.0
+offset_bottom = 132.0
+text = "+ "
+label_settings = SubResource("LabelSettings_fmkvs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Item2" type="Panel" parent="Control/Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 175.0
+offset_top = 93.0
+offset_right = 225.0
+offset_bottom = 143.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_t7608")
+
+[node name="Skill1" type="TextureButton" parent="Control/Panel/Item2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_v6a18")
+texture_disabled = ExtResource("5_dy2u7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="Control/Panel/Item2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("6_b2wr1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="Control/Panel/Item2"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("7_b0ox7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label2" type="Label" parent="Control/Panel"]
+layout_mode = 0
+offset_left = 225.0
+offset_top = 106.0
+offset_right = 265.0
+offset_bottom = 130.0
+text = "="
+label_settings = SubResource("LabelSettings_fmkvs")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Item3" type="Panel" parent="Control/Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 261.0
+offset_top = 93.0
+offset_right = 311.0
+offset_bottom = 143.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_t7608")
+
+[node name="Skill1" type="TextureButton" parent="Control/Panel/Item3"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_v6a18")
+texture_disabled = ExtResource("5_dy2u7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="AddSkill" type="TextureButton" parent="Control/Panel/Item3"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("6_b2wr1")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="RemoveSkill" type="TextureButton" parent="Control/Panel/Item3"]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.72
+anchor_top = 0.72
+anchor_right = 1.22
+anchor_bottom = 1.2
+offset_top = -1.0
+texture_normal = ExtResource("7_b0ox7")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="Control/Panel"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -33.0
+offset_right = 20.0
+offset_bottom = -29.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextEdit" type="TextEdit" parent="Control/Panel"]
+custom_minimum_size = Vector2(250, 100)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -125.0
+offset_top = -16.0
+offset_right = 125.0
+offset_bottom = 84.0
+grow_horizontal = 2
+grow_vertical = 2
+editable = false
+
+[node name="TextureButton" type="TextureButton" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -95.0
+offset_right = 20.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 0
+disabled = true
+texture_normal = ExtResource("9_2v3r7")
+texture_disabled = ExtResource("10_v6a18")

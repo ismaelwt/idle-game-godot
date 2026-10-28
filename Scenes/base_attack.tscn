@@ -1,0 +1,64 @@
+[gd_scene load_steps=12 format=3 uid="uid://by4rutnfpfppg"]
+
+[ext_resource type="ArrayMesh" uid="uid://bp0niqir1xie8" path="res://Assets/fireball_v2.obj" id="1_fmslx"]
+[ext_resource type="Script" uid="uid://dlrn5xt77mir4" path="res://Script/base_attack.gd" id="1_npkd5"]
+[ext_resource type="Shader" uid="uid://cdps0bavy68ul" path="res://Shaders/fireball.gdshader" id="2_u7tql"]
+
+[sub_resource type="Gradient" id="Gradient_imcpf"]
+offsets = PackedFloat32Array(0.26791278, 0.9096573)
+colors = PackedColorArray(0.30494824, 0.16210464, 0.6182817, 1, 1, 0.5529412, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_50u72"]
+gradient = SubResource("Gradient_imcpf")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3ifx4"]
+noise_type = 4
+seed = 555
+frequency = 0.0194
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qgf2b"]
+noise = SubResource("FastNoiseLite_3ifx4")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8t1cw"]
+render_priority = 0
+shader = ExtResource("2_u7tql")
+shader_parameter/noise_sampler = SubResource("NoiseTexture2D_qgf2b")
+shader_parameter/gradient_sampler = SubResource("GradientTexture1D_50u72")
+shader_parameter/emission_strength = 0.8
+shader_parameter/dither_scale = 2.0
+shader_parameter/dither_strength = 0.5
+
+[sub_resource type="SphereMesh" id="SphereMesh_kgrdx"]
+radius = 0.48
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w54qi"]
+albedo_color = Color(0.392254, 0.00012494743, 0.40147892, 1)
+emission_enabled = true
+emission = Color(0.5897973, 0.095482014, 0.69781655, 1)
+emission_energy_multiplier = 2.0
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_717ig"]
+height = 1.0371094
+
+[node name="BaseAttack" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0)
+script = ExtResource("1_npkd5")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.41727817, -1.8239808e-08)
+cast_shadow = 0
+mesh = ExtResource("1_fmslx")
+surface_material_override/0 = SubResource("ShaderMaterial_8t1cw")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49498641, 0)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_kgrdx")
+surface_material_override/0 = SubResource("StandardMaterial3D_w54qi")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.515625, 0)
+shape = SubResource("CapsuleShape3D_717ig")

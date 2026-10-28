@@ -1,0 +1,458 @@
+[gd_scene load_steps=26 format=3 uid="uid://b5ecf62cramfy"]
+
+[ext_resource type="Script" uid="uid://je2wchg1jbf0" path="res://pivot.gd" id="1_0b4ue"]
+[ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://world_scroller.gd" id="1_f2txt"]
+[ext_resource type="Script" uid="uid://oqcdm8pjfoih" path="res://Script/level_controller.gd" id="1_u52ul"]
+[ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="2_f2txt"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://player.tscn" id="2_oi3di"]
+[ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://tile_01.tscn" id="3_1ainy"]
+[ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://enemy_spawner.gd" id="6_km5ld"]
+[ext_resource type="PackedScene" uid="uid://bqb8cifrssvmg" path="res://minibot_1.tscn" id="7_h6smj"]
+[ext_resource type="Script" uid="uid://cs48asjf7mi7k" path="res://player.gd" id="7_n6hdu"]
+[ext_resource type="PackedScene" uid="uid://hvriilhfdthb" path="res://boss_v_1.tscn" id="8_8b0r0"]
+[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://ui.gd" id="10_2orkt"]
+[ext_resource type="Texture2D" uid="uid://bii55ubdn3k0y" path="res://Assets/Polygon-Mega Survival Forest/ForestTextures/Leaf_Textures/Aspen_Red_One.png" id="10_8cye3"]
+[ext_resource type="Texture2D" uid="uid://byanqc63gvuvq" path="res://Assets/Polygon-Mega Survival Forest/Particles/Textures/Firefliers.png" id="12_aicyk"]
+[ext_resource type="Script" uid="uid://ccsoe75qt5qxb" path="res://character_hud.gd" id="12_v5j5c"]
+[ext_resource type="Script" uid="uid://dxraoy7cvr56w" path="res://victory_panel.gd" id="14_h6smj"]
+[ext_resource type="Script" uid="uid://spo8yqsbq47d" path="res://atributtes.gd" id="16_5pxul"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_f2txt"]
+ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
+
+[sub_resource type="Sky" id="Sky_1ainy"]
+sky_material = SubResource("PhysicalSkyMaterial_f2txt")
+
+[sub_resource type="Environment" id="Environment_n6hdu"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_1ainy")
+ssil_intensity = 4.0
+sdfgi_read_sky_light = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_n6hdu"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_km5ld"]
+render_priority = 0
+shader = ExtResource("2_f2txt")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = false
+shader_parameter/lineHighlight = 0.2
+shader_parameter/lineShadow = 0.55
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5pxul"]
+bg_color = Color(0.99999994, 0.12676394, 0.06211166, 0.64705884)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fedht"]
+bg_color = Color(0.81113756, 0.53397125, 0.010535051, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h6smj"]
+bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5j5c"]
+content_margin_left = 30.0
+content_margin_top = 25.0
+content_margin_right = 30.0
+content_margin_bottom = 25.0
+bg_color = Color(0, 0, 0, 0.27450982)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0, 0, 0, 0.74509805)
+border_blend = true
+
+[node name="Level" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 2
+mouse_target = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(576, 324)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.7661271, 0.63829863, 0.074994534, -0.39497122, 0.37556267, 0.8384214, 0.50699824, -0.6719581, 0.5398382, 14.366446, 4.977335, 9.193878)
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_blur = 0.1
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
+environment = SubResource("Environment_n6hdu")
+
+[node name="WorldScroller" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
+script = ExtResource("1_f2txt")
+speed = 4.0
+
+[node name="Tile_01" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("3_1ainy")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -20)
+
+[node name="Tile_02" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("3_1ainy")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, -0.072143555)
+
+[node name="Tile_03" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("3_1ainy")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 20)
+
+[node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-1.8396429, 0, 0.78467405, 0, 2, 0, -0.78467405, 0, -1.8396429, 7.287, 2.637, 11.145)
+script = ExtResource("1_0b4ue")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
+transform = Transform3D(0.27192426, -0.20979598, 0.3633771, 0, 0.4330126, 0.25000012, -0.41959184, -0.13596216, 0.2354933, 15.54, 3, 16.473)
+projection = 1
+size = 8.0
+near = 0.5
+far = 250.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_n6hdu")
+surface_material_override/0 = SubResource("ShaderMaterial_km5ld")
+
+[node name="LevelController" type="Node3D" parent="SubViewportContainer/SubViewport" groups=["level_controller"]]
+script = ExtResource("1_u52ul")
+
+[node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("6_km5ld")
+enemy_scene = ExtResource("7_h6smj")
+boss_scene = ExtResource("8_8b0r0")
+x_spacing = 3.0
+
+[node name="Player" parent="SubViewportContainer/SubViewport" groups=["player"] instance=ExtResource("2_oi3di")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25.741577)
+script = ExtResource("7_n6hdu")
+attack_range = 8.0
+damage_font_size = 64
+damage_outline_size = 4
+damage_color = Color(1, 0.9883277, 0.9866993, 1)
+animation_blend = 0.15
+
+[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
+script = ExtResource("10_2orkt")
+
+[node name="CharacterHUD" type="Control" parent="SubViewportContainer/UI"]
+layout_mode = 3
+anchor_right = 1.0020001
+anchor_bottom = 0.99500006
+offset_right = -0.30407715
+offset_bottom = 0.2399292
+script = ExtResource("12_v5j5c")
+
+[node name="HealthBar" type="ProgressBar" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.071
+anchor_right = 0.19600001
+anchor_bottom = 0.113000005
+offset_left = 15.0
+offset_top = 250.205
+offset_right = 3.2079926
+offset_bottom = 250.11499
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_5pxul")
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/HealthBar"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.37300003
+anchor_right = 0.56
+anchor_bottom = 0.96300006
+offset_left = 0.03177643
+offset_top = 3.0
+offset_right = -0.059516907
+offset_bottom = -0.001001358
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+
+[node name="ManaBar" type="ProgressBar" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.010000001
+anchor_top = 0.128
+anchor_right = 0.17400001
+anchor_bottom = 0.149
+offset_left = 11.459999
+offset_top = 248.44
+offset_right = 12.531982
+offset_bottom = 261.895
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="XPBar" type="ProgressBar" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.026
+anchor_top = 0.19600001
+anchor_right = 0.172
+anchor_bottom = 0.238
+offset_left = -9.004
+offset_top = 458.58
+offset_right = -9.196014
+offset_bottom = 458.49
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_fedht")
+
+[node name="LevelLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 266.0
+offset_right = 119.0
+offset_bottom = 289.0
+
+[node name="SkillBar" type="HBoxContainer" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.39800003
+anchor_top = 0.84900004
+anchor_right = 0.63000005
+anchor_bottom = 0.97200006
+offset_left = -1.2920227
+offset_top = 2.3949585
+offset_right = -0.5560913
+offset_bottom = 3.0599365
+
+[node name="Skill1" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/SkillBar"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/Skill1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.05
+anchor_right = 0.68700004
+anchor_bottom = 0.55
+offset_left = 0.03999901
+offset_right = 0.0399971
+texture = ExtResource("10_8cye3")
+expand_mode = 1
+
+[node name="CooldownLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/Skill1"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.5
+anchor_right = 0.70000005
+anchor_bottom = 0.81200004
+offset_top = 2.0
+offset_bottom = 0.039993286
+horizontal_alignment = 1
+
+[node name="Skill2" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/SkillBar"]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/Skill2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.187
+anchor_top = 0.05
+anchor_right = 0.68700004
+anchor_bottom = 0.55
+offset_left = 0.03999901
+offset_right = 0.0399971
+texture = ExtResource("12_aicyk")
+expand_mode = 1
+
+[node name="CooldownLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD/SkillBar/Skill2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.52500004
+anchor_right = 0.70000005
+anchor_bottom = 0.81200004
+offset_bottom = 0.039993286
+horizontal_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="SubViewportContainer/UI/CharacterHUD"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.020000001
+anchor_top = 0.859
+anchor_right = 0.16000001
+anchor_bottom = 0.89500004
+offset_left = -0.08000183
+offset_top = -0.054992676
+offset_right = 0.35998535
+offset_bottom = -0.2750244
+
+[node name="VictoryPanel" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h6smj")
+script = ExtResource("14_h6smj")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/VictoryPanel"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -1.5258789e-05
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/VictoryPanel/CenterContainer"]
+custom_minimum_size = Vector2(400, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v5j5c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/VictoryPanel/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/VictoryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "VICTORY!!!!"
+horizontal_alignment = 1
+
+[node name="Retry" type="Button" parent="SubViewportContainer/UI/VictoryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Retry
+"
+
+[node name="Next" type="Button" parent="SubViewportContainer/UI/VictoryPanel/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Next"
+
+[node name="Atributtes" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_h6smj")
+script = ExtResource("16_5pxul")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/Atributtes"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 139.0
+offset_top = 3.0
+offset_right = -486.0
+
+[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/Atributtes/CenterContainer"]
+custom_minimum_size = Vector2(300, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_v5j5c")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Points" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Pontos disponíveis:"
+
+[node name="AvailablePoints" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Points"]
+layout_mode = 0
+offset_left = 157.0
+offset_right = 185.0
+offset_bottom = 23.0
+
+[node name="Strength" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Força"
+
+[node name="StrengthPoints" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 143.0
+offset_bottom = 23.0
+
+[node name="Add" type="Button" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = -3.5
+offset_right = 246.0
+offset_bottom = 28.5
+text = "+"
+
+[node name="Agility" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Agilidade"
+
+[node name="AgilityPoints" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 143.0
+offset_bottom = 23.0
+
+[node name="Add" type="Button" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = -3.5
+offset_right = 246.0
+offset_bottom = 28.5
+text = "+"
+
+[node name="Intelligence" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Inteligência"
+
+[node name="IntelligencePoints" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 143.0
+offset_bottom = 23.0
+
+[node name="Add" type="Button" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = -3.5
+offset_right = 246.0
+offset_bottom = 28.5
+text = "+"
+
+[node name="Vitality" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vitalidade"
+
+[node name="VitalityPoints" type="Label" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 100.0
+offset_right = 143.0
+offset_bottom = 23.0
+
+[node name="Add" type="Button" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = -3.5
+offset_right = 246.0
+offset_bottom = 28.5
+text = "+"
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CloseButton" type="Button" parent="SubViewportContainer/UI/Atributtes/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "FECHAR"

@@ -1,30 +1,19 @@
-[gd_scene load_steps=18 format=3 uid="uid://c3dywxs16624x"]
+[gd_scene load_steps=29 format=3 uid="uid://c3dywxs16624x"]
 
 [ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="1_m0rpm"]
 [ext_resource type="Texture2D" uid="uid://ci38v0jfp4220" path="res://Assets/checker.jpg" id="2_o52xj"]
 [ext_resource type="ArrayMesh" uid="uid://caofxnauygyql" path="res://Assets/icosphere_mesh.res" id="3_c6xj6"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_hp20k"]
-flip_faces = true
-size = Vector2(2, 2)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_odkjl"]
-render_priority = 0
-shader = ExtResource("1_m0rpm")
-shader_parameter/lightIntensity = 1.25
-shader_parameter/lineAlpha = 0.7
-shader_parameter/useLighting = false
-shader_parameter/lineHighlight = 0.2
-shader_parameter/lineShadow = 0.55
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_uqnki"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfxb1"]
-diffuse_mode = 3
-specular_mode = 2
-albedo_texture = ExtResource("2_o52xj")
-uv1_scale = Vector3(9, 9, 9)
-texture_filter = 0
+[ext_resource type="Script" uid="uid://b3nu6gb6ffvo3" path="res://Script/walk.gd" id="4_kem5a"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/player.tscn" id="5_kem5a"]
+[ext_resource type="Script" uid="uid://je2wchg1jbf0" path="res://Script/pivot.gd" id="6_gxmxl"]
+[ext_resource type="PackedScene" path="res://scenes/enemy.tscn" id="7_n4w22"]
+[ext_resource type="PackedScene" uid="uid://bundd01jjpp2g" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Aspen_Green_Yellow.prefab.scn" id="8_n4w22"]
+[ext_resource type="PackedScene" uid="uid://cvomfqf4bqemo" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Medium_Rock_Round_07.prefab.scn" id="8_tql22"]
+[ext_resource type="PackedScene" uid="uid://cfvxppgy2mxff" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Medium_Rock_Square_08.prefab.scn" id="9_jbdfk"]
+[ext_resource type="PackedScene" uid="uid://yog8bwxlykgg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_08.prefab.scn" id="10_4gl14"]
+[ext_resource type="PackedScene" uid="uid://rhcttlb4iu51" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Big_Spruce.prefab.scn" id="11_5g7v7"]
+[ext_resource type="PackedScene" uid="uid://56dlef3qy7oq" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Ones/SM_Grass_Shorts_001A_Yellow.prefab.scn" id="13_i1g04"]
+[ext_resource type="PackedScene" uid="uid://es1yhcmjmtus" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Ones/SM_Aloe_02.prefab.scn" id="14_y4qkf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m0rpm"]
 albedo_color = Color(1, 0.321569, 0.321569, 1)
@@ -222,6 +211,28 @@ _data = {
 &"moving_objects": SubResource("Animation_rjqes")
 }
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_uqnki"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tfxb1"]
+diffuse_mode = 3
+specular_mode = 2
+albedo_texture = ExtResource("2_o52xj")
+uv1_scale = Vector3(9, 9, 9)
+texture_filter = 0
+
+[sub_resource type="QuadMesh" id="QuadMesh_hp20k"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_odkjl"]
+render_priority = 0
+shader = ExtResource("1_m0rpm")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = false
+shader_parameter/lineHighlight = 0.2
+shader_parameter/lineShadow = 0.55
+
 [node name="World" type="Node3D"]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -232,32 +243,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 stretch = true
-stretch_shrink = 10
+stretch_shrink = 3
+mouse_target = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(115, 64)
+size = Vector2i(384, 216)
 render_target_update_mode = 4
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 6.03694, 7.50437)
-projection = 1
-size = 6.0
-far = 200.0
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Camera3D"]
-cast_shadow = 0
-extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_hp20k")
-surface_material_override/0 = SubResource("ShaderMaterial_odkjl")
-
 [node name="meshes" type="Node3D" parent="SubViewportContainer/SubViewport"]
-
-[node name="ground" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/meshes"]
-transform = Transform3D(11.6393, 0, 11.6393, 0, 16.4604, 0, -11.6393, 0, 11.6393, 0, 0, 0)
-mesh = SubResource("PlaneMesh_uqnki")
-skeleton = NodePath("../..")
-surface_material_override/0 = SubResource("StandardMaterial3D_tfxb1")
+visible = false
 
 [node name="icoshpere" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/meshes"]
 transform = Transform3D(60, 0, 0, 0, 59.9999, 0, 0, 0, 60, 0, 3.34115, 0)
@@ -319,8 +314,13 @@ mesh = SubResource("BoxMesh_dqaes")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_gi8eg")
 
+[node name="cube10" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/meshes"]
+transform = Transform3D(0, 0, 1.9933375, 0, 1.9933486, 0, -1.9933375, 0, 0, 0, 16.760412, 0)
+mesh = SubResource("BoxMesh_dqaes")
+surface_material_override/0 = SubResource("StandardMaterial3D_gi8eg")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-0.130521, 0.749389, 0.649138, -1.65989e-06, -0.654743, 0.755851, 0.991446, 0.0986538, 0.0854584, 0, 4.76559, 0)
+transform = Transform3D(0.5369981, 0.736144, 0.41197705, -0.6742299, 0.081020474, 0.73406386, 0.5069982, -0.671958, 0.5398382, 14.366446, 26.835062, 9.193878)
 shadow_enabled = true
 shadow_bias = 0.2
 shadow_blur = 0.1
@@ -334,3 +334,66 @@ libraries = {
 &"": SubResource("AnimationLibrary_xr1em")
 }
 autoplay = "moving_objects"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer/SubViewport"]
+
+[node name="Label" type="Label" parent="SubViewportContainer/SubViewport/CanvasLayer"]
+offset_left = 5.0
+offset_top = -4.0
+offset_right = 390.0
+offset_bottom = 113.0
+text = "Lv: 01 - mage"
+
+[node name="ground" type="MeshInstance3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(11.6393, 0, 11.6393, 0, 16.4604, 0, -11.6393, 0, 11.6393, -0.0059547424, 0.025586128, -0.02183628)
+mesh = SubResource("PlaneMesh_uqnki")
+surface_material_override/0 = SubResource("StandardMaterial3D_tfxb1")
+
+[node name="WizardusMaximus" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_kem5a")]
+script = ExtResource("4_kem5a")
+
+[node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport/WizardusMaximus"]
+transform = Transform3D(1.440836, 0, -1.3870806, 0, 2, 0, 1.3870806, 0, 1.440836, 0, 1.3767922, 0)
+script = ExtResource("6_gxmxl")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/WizardusMaximus/Pivot"]
+transform = Transform3D(0.27192417, -0.20979597, 0.36337706, 0, 0.43301266, 0.25000012, -0.41959172, -0.13596214, 0.23549323, 5.414119, 3.01847, 2.8321283)
+projection = 1
+size = 8.0
+far = 200.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/WizardusMaximus/Pivot/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_hp20k")
+surface_material_override/0 = SubResource("ShaderMaterial_odkjl")
+
+[node name="Enemy" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_n4w22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5149488, 0, 5.0054703)
+
+[node name="SM_Medium_Rock_Round_07" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_tql22")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.598164, 0, 6.9805446)
+
+[node name="SM_Medium_Rock_Square_08" parent="SubViewportContainer/SubViewport" instance=ExtResource("9_jbdfk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.380071, 0, 7.5613327)
+
+[node name="SM_Sharp_Stone_08" parent="SubViewportContainer/SubViewport" instance=ExtResource("10_4gl14")]
+transform = Transform3D(0.44690055, 0, 0.89458364, 0, 1, 0, -0.89458364, 0, 0.44690055, -12.052713, 0, 5.4646015)
+
+[node name="SM_Big_Spruce" parent="SubViewportContainer/SubViewport" instance=ExtResource("11_5g7v7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5345469, 0, 6.2460756)
+
+[node name="Aspen_Green_Yellow" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_n4w22")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -2.7944102, -9.536743e-07, 2.583928)
+
+[node name="SM_Grass_Shorts_001A_Yellow" parent="SubViewportContainer/SubViewport" instance=ExtResource("13_i1g04")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -2.9843078, 0, 5.207107)
+
+[node name="SM_Grass_Shorts_001A_Yellow2" parent="SubViewportContainer/SubViewport" instance=ExtResource("13_i1g04")]
+transform = Transform3D(1.0817722, 0, -4.8815746, 0, 5, 0, 4.8815746, 0, 1.0817722, -7.2518272, 0, 6.2233734)
+
+[node name="SM_Grass_Shorts_001A_Yellow3" parent="SubViewportContainer/SubViewport" instance=ExtResource("13_i1g04")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, -7.0262485, 0, 5.207107)
+
+[node name="SM_Aloe_02" parent="SubViewportContainer/SubViewport" instance=ExtResource("14_y4qkf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.004039, 0, 6.295269)

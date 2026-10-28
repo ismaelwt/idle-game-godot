@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://cmnplpkielycs"]
+
+[ext_resource type="Texture2D" uid="uid://da6ufxetvcurk" path="res://icons/frost-hood.png" id="1_4oegd"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="4_kn11v"]
+
+[resource]
+script = ExtResource("4_kn11v")
+item_id = &"frost_hood_01"
+item_name = "Capuz Gélido"
+description = "Capuz com propriedades congelantes	"
+icon = ExtResource("1_4oegd")
+icon_slot_1 = ExtResource("1_4oegd")
+icon_slot_2 = ExtResource("1_4oegd")
+item_type = 1
+rarity = 2
+intelligence_min = 1
+intelligence_max = 5
+vitality_max = 3
+magic_damage_min = 3
+magic_damage_max = 8
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

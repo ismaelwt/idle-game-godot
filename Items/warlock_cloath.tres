@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://7u3swy0ek7a3"]
+
+[ext_resource type="Texture2D" uid="uid://v1siandsue7k" path="res://icons/warlock-cloath.png" id="1_ftxql"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_juihf"]
+
+[resource]
+script = ExtResource("2_juihf")
+item_id = &"warlock_cloath_01"
+item_name = "Roupas do Bruxo"
+description = "Roupas do Bruxo"
+icon = ExtResource("1_ftxql")
+icon_slot_1 = ExtResource("1_ftxql")
+icon_slot_2 = ExtResource("1_ftxql")
+item_type = 2
+rarity = 2
+base_value = 8
+intelligence_min = 1
+intelligence_max = 3
+vitality_min = 1
+vitality_max = 2
+magic_damage_min = 2
+magic_damage_max = 5
+min_enchantment_slots = 1
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

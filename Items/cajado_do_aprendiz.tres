@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://c3in50jbqgr37"]
+
+[ext_resource type="Texture2D" uid="uid://bxhdp6oo0ffbi" path="res://icons/aprenttice-staff.png" id="1_3wg41"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="1_hyw7v"]
+
+[resource]
+script = ExtResource("1_hyw7v")
+item_id = &"staff_apprentice_01"
+item_name = "Cajado Do Aprendiz"
+description = "Um cajado de energia sombria."
+icon = ExtResource("1_3wg41")
+icon_slot_1 = ExtResource("1_3wg41")
+icon_slot_2 = ExtResource("1_3wg41")
+intelligence_min = 1
+intelligence_max = 2
+vitality_min = 1
+vitality_max = 2
+magic_damage_min = 1
+magic_damage_max = 2
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

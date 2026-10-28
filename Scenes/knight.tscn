@@ -1,0 +1,100 @@
+[gd_scene load_steps=15 format=3 uid="uid://btemg1q7fkpga"]
+
+[ext_resource type="PackedScene" uid="uid://d3u8sshc6d0dj" path="res://Assets/Knight.fbx" id="1_nsuie"]
+[ext_resource type="Script" uid="uid://6tvusba84vdv" path="res://Script/knight.gd" id="2_np0bx"]
+[ext_resource type="Animation" uid="uid://87mi3e25144b" path="res://Anim/knight/attack.res" id="3_5h62n"]
+[ext_resource type="PackedScene" uid="uid://bs7nvjwpjniwc" path="res://Assets/Knight/Sword.fbx" id="3_nf5tg"]
+[ext_resource type="PackedScene" uid="uid://eb3j47yp2ujb" path="res://Assets/Knight/Shield_Heater.fbx" id="4_3ejob"]
+[ext_resource type="Animation" uid="uid://dt3gkx0ms5w5x" path="res://Anim/knight/idle.res" id="4_nf5tg"]
+[ext_resource type="Animation" uid="uid://o4o1swjwps3j" path="res://Anim/knight/running.res" id="5_3ejob"]
+[ext_resource type="Script" uid="uid://j0arlcl8j7oe" path="res://Script/character_stats.gd" id="8_ogjxi"]
+[ext_resource type="Animation" uid="uid://c1xhro1lfq5jc" path="res://Anim/knight/die.res" id="8_ooq44"]
+[ext_resource type="PackedScene" uid="uid://b8fvofvx52gao" path="res://Scenes/level_up_effect.tscn" id="9_d3yjk"]
+[ext_resource type="Animation" uid="uid://d0qpkaxobmupx" path="res://Anim/knight/attack2.res" id="9_qfryc"]
+[ext_resource type="Animation" uid="uid://6xomm2bu76oc" path="res://Anim/knight/buff.res" id="10_mlj5a"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_np0bx"]
+_data = {
+&"attack": ExtResource("3_5h62n"),
+&"attack2": ExtResource("9_qfryc"),
+&"buff": ExtResource("10_mlj5a"),
+&"die": ExtResource("8_ooq44"),
+&"idle": ExtResource("4_nf5tg"),
+&"running": ExtResource("5_3ejob")
+}
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_d3yjk"]
+radius = 1.7929688
+height = 4.8725586
+
+[node name="Knight" instance=ExtResource("1_nsuie")]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+script = ExtResource("2_np0bx")
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(58.32639, 80.30048, -12.242021, -1.2095466, 15.928061, 98.71592, 81.21931, -57.42934, 10.26153, -0.02103813, 1.7471914, -0.0713983)
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(0.025987774, 0.017104719, 0.00093251106, 0.9995155)
+bones/2/rotation = Quaternion(0.051922034, 0.0359069, 0.0035186901, 0.9979993)
+bones/3/rotation = Quaternion(-0.0057636765, 0.028393717, -0.005015196, 0.9995676)
+bones/4/rotation = Quaternion(-0.0057637873, 0.028393738, -0.0050152447, 0.9995676)
+bones/6/rotation = Quaternion(0.049285382, -0.04311638, -0.84506804, 0.53063357)
+bones/7/rotation = Quaternion(0.15381543, 0.045097392, -0.20754938, 0.96500283)
+bones/8/rotation = Quaternion(0.6990975, -0.20439184, -0.18220091, 0.66052216)
+bones/9/rotation = Quaternion(0.003246063, 0.0001643286, -0.028466413, 0.99958944)
+bones/10/rotation = Quaternion(0.071242936, 0.020512773, -0.6478255, 0.7581727)
+bones/12/rotation = Quaternion(-0.18783942, -0.057054, 0.83306116, 0.51717544)
+bones/13/rotation = Quaternion(0.023249485, -0.039646737, 0.25746, 0.9651953)
+bones/14/rotation = Quaternion(0.6050138, 0.025184978, 0.031791314, 0.7951814)
+bones/15/rotation = Quaternion(0.23993185, 0.0011677049, 0.0836965, 0.9671744)
+bones/16/rotation = Quaternion(-0.023191493, 0.014056417, 0.5105265, 0.8594343)
+bones/18/rotation = Quaternion(0.34914112, 0.48947582, 0.76684165, -0.22465028)
+bones/19/rotation = Quaternion(-0.43804756, 0.13412842, -0.018405356, 0.8886987)
+bones/20/rotation = Quaternion(0.66962767, -0.08001375, -0.07765995, 0.73427904)
+bones/20/scale = Vector3(0.99999505, 0.9999555, 0.99999446)
+bones/21/rotation = Quaternion(0.023168312, 0.037337683, -0.030932829, 0.9985551)
+bones/23/rotation = Quaternion(-0.23007466, 0.25811154, 0.89822865, 0.27134773)
+bones/24/rotation = Quaternion(-0.40134543, -0.010689031, -0.045854915, 0.9147158)
+bones/24/scale = Vector3(1.0000001, 1.0000256, 0.999979)
+bones/25/rotation = Quaternion(0.7486488, 0.2054823, 0.20080437, 0.5974777)
+bones/26/rotation = Quaternion(0.011996263, -0.008821156, 0.005064586, 0.9998763)
+bones/37/rotation = Quaternion(0, 1, 0, 0)
+
+[node name="SwordBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="1"]
+transform = Transform3D(-0.8797276, 0.05982308, 0.47169924, -0.039880842, -0.99784076, 0.052172333, 0.4738017, 0.027085781, 0.88021433, -0.011743362, -0.004783989, 0.005984254)
+bone_name = "Hand.R"
+bone_idx = 15
+
+[node name="Sword" parent="Armature/Skeleton/SwordBoneAttachment3D" index="0" instance=ExtResource("3_nf5tg")]
+transform = Transform3D(0.00018162327, 0.0010324281, -0.011954133, -0.011819933, 0.0020710384, -7.105991e-07, 0.0020630527, 0.011774763, 0.0010482757, -0.0006130263, 0.0014079844, -0.0014068633)
+
+[node name="ShieldBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="2"]
+transform = Transform3D(-0.9269703, -0.3625634, -0.09629945, 0.3546346, -0.9306469, 0.09016263, -0.122310154, 0.049427174, 0.9912602, 0.009084079, -0.009480573, 0.008766335)
+bone_name = "Hand.L"
+bone_idx = 9
+
+[node name="Shield_Heater" parent="Armature/Skeleton/ShieldBoneAttachment3D" index="0" instance=ExtResource("4_3ejob")]
+transform = Transform3D(-0.0007060765, -0.00088173826, -0.004956339, -0.007962124, -0.00028786546, 0.00045888487, -0.00032557687, 0.008952079, -0.00047342054, -0.0016965028, -5.8975536e-05, -0.0023224354)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"knight": SubResource("AnimationLibrary_np0bx")
+}
+
+[node name="CharacterStats" type="Node" parent="." index="2"]
+script = ExtResource("8_ogjxi")
+hero_id = "knight"
+hero_class = "Knight"
+magic_damage_per_int = 0.33
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="3"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2017616, 2.3962793, 0.8769389)
+shape = SubResource("CapsuleShape3D_d3yjk")
+debug_color = Color(0, 0, 0, 1)
+
+[node name="LevelUpEffect" parent="." index="4" instance=ExtResource("9_d3yjk")]
+transform = Transform3D(2.5, 0, 0, 0, 2.5, 0, 0, 0, 2.5, -0.14014149, 0, 0.09926659)
+visible = false

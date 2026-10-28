@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://cm0xfg5x3n46j"]
+
+[ext_resource type="Script" uid="uid://cxsqdvn8c86mw" path="res://Script/damage_buff.gd" id="1_f48y6"]
+[ext_resource type="Texture2D" uid="uid://br7hw83ahom0h" path="res://icons/frenesi.png" id="2_u3j71"]
+[ext_resource type="Shader" uid="uid://c7o6qib3g2su5" path="res://Shaders/damage_buff.gdshader" id="2_yc2tf"]
+[ext_resource type="Texture2D" uid="uid://ba1ah4s0qop1h" path="res://icons/disabled-frenesi.png" id="3_4wfap"]
+[ext_resource type="Shader" uid="uid://boli51em5nhhu" path="res://Shaders/damage_buff_1.gdshader" id="3_tg5jc"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_2c7be"]
+top_radius = 1.0
+height = 0.001
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nu8mc"]
+render_priority = 0
+shader = ExtResource("2_yc2tf")
+shader_parameter/aura_color_top = Color(1, 0.50980395, 0, 1)
+shader_parameter/aura_color_bottom = Color(0.8288101, 2.7193873e-06, 5.7756904e-07, 0.3019608)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_nl7ve"]
+top_radius = 0.8
+height = 0.05
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bxjhn"]
+render_priority = 0
+shader = ExtResource("3_tg5jc")
+shader_parameter/aura_color_top = Color(0.9999899, 0.3922223, 0.37322757, 0.58431375)
+shader_parameter/aura_color_bottom = Color(0.94509804, 0.32156864, 0, 0.32156864)
+
+[node name="DamageBuff" type="Node3D"]
+script = ExtResource("1_f48y6")
+icon = ExtResource("2_u3j71")
+disabled_icon = ExtResource("3_4wfap")
+cooldown = 35.0
+duration = 15.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.14452428, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_2c7be")
+surface_material_override/0 = SubResource("ShaderMaterial_nu8mc")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25136483, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_nl7ve")
+surface_material_override/0 = SubResource("ShaderMaterial_bxjhn")

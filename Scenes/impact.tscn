@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdaufnhhid6ir"]
+
+[ext_resource type="Shader" uid="uid://boli51em5nhhu" path="res://Shaders/damage_buff_1.gdshader" id="1_pvcw0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_caylm"]
+render_priority = 0
+shader = ExtResource("1_pvcw0")
+shader_parameter/aura_color_top = Color(0.8181913, 0.41218606, 0.14283785, 1)
+shader_parameter/aura_color_bottom = Color(0.97146314, 0.5808789, 0.28265697, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6l1y3"]
+material = SubResource("ShaderMaterial_caylm")
+top_radius = 1.6
+bottom_radius = 1.0
+height = 0.005
+cap_top = false
+cap_bottom = false
+
+[node name="Impact" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.17330933, 0)
+mesh = SubResource("CylinderMesh_6l1y3")

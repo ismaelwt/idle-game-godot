@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://u68wch1rc2uv"]
+
+[ext_resource type="Texture2D" uid="uid://1teembbtqn2" path="res://icons/prismatic-legs.png" id="1_y00he"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_ktt3h"]
+
+[resource]
+script = ExtResource("2_ktt3h")
+item_id = &"prismatic_legs_01"
+item_name = "Calças Primaticas"
+description = "Calças primaticas dos sacerdotes da montanha"
+icon = ExtResource("1_y00he")
+icon_slot_1 = ExtResource("1_y00he")
+icon_slot_2 = ExtResource("1_y00he")
+item_type = 4
+rarity = 3
+base_value = 12
+intelligence_min = 3
+intelligence_max = 9
+vitality_min = 3
+vitality_max = 4
+magic_damage_min = 5
+magic_damage_max = 12
+min_enchantment_slots = 1
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

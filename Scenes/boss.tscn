@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://ckcn71rsntdxk"]
+
+[ext_resource type="PackedScene" uid="uid://bydmmlonrx2vj" path="res://Assets/ROBORIG.fbx" id="1_0bnu1"]
+[ext_resource type="Script" uid="uid://dr24psfp32skh" path="res://Script/boss.gd" id="2_wwfse"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_0bnu1"]
+radius = 0.3
+height = 1.0
+
+[node name="Boss" groups=["enemies"] instance=ExtResource("1_0bnu1")]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+script = ExtResource("2_wwfse")
+speed = 2.0
+max_health = 200.0
+damage_font_size = 128
+attack_range = 4.0
+
+[node name="Skeleton" parent="Armature" index="0"]
+bones/1/position = Vector3(1.2167271e-17, 0.010346206, -4.139758e-11)
+bones/1/rotation = Quaternion(0.004288136, 0.003917377, -0.6744705, 0.738279)
+bones/1/scale = Vector3(1, 1, 1)
+bones/2/position = Vector3(-2.2300597e-09, 0.0058322717, 4.6914184e-11)
+bones/2/rotation = Quaternion(1.6801765e-08, 2.1334653e-08, -0.045120277, 0.99898154)
+bones/2/scale = Vector3(1, 1, 1)
+bones/3/position = Vector3(1.10173225e-11, 0.0014787201, -4.768371e-11)
+bones/3/rotation = Quaternion(0.10786944, -0.107869186, -0.69883054, 0.69883066)
+bones/3/scale = Vector3(1, 1, 1.0000001)
+bones/5/position = Vector3(1.2167271e-17, 0.010346206, -4.139758e-11)
+bones/5/rotation = Quaternion(0.00035594963, 0.00035608155, 0.675787, 0.73709685)
+bones/5/scale = Vector3(0.9999998, 0.99999994, 0.99999976)
+bones/6/position = Vector3(4.9040155e-10, 0.005780184, 6.260188e-12)
+bones/6/rotation = Quaternion(-0.00050360477, -1.2502756e-08, 0.043352656, 0.99905974)
+bones/6/scale = Vector3(1.0000001, 1, 1.0000001)
+bones/7/position = Vector3(1.0266673e-11, 0.0015022056, 1.1860478e-13)
+bones/7/rotation = Quaternion(0.09967931, 0.10780409, 0.70004576, 0.6988407)
+bones/7/scale = Vector3(0.99999994, 1.0000001, 0.9999999)
+bones/10/position = Vector3(-1.0842022e-19, 0.0015773153, 0)
+bones/10/rotation = Quaternion(0, 0, 4.547474e-15, 1)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/position = Vector3(-1.0842022e-19, 0.001326948, 0)
+bones/11/rotation = Quaternion(-0.7028847, -0.07715724, -0.0771572, 0.70288455)
+bones/11/scale = Vector3(1.0000001, 1.0000001, 1.0000001)
+bones/12/position = Vector3(3.977398e-11, 0.0041548926, -1.4577e-11)
+bones/12/rotation = Quaternion(6.3998876e-08, -1.6205625e-08, 0.3135056, 0.9495864)
+bones/12/scale = Vector3(0.9999998, 0.9999999, 1)
+bones/13/position = Vector3(3.473729e-10, 0.00486049, -1.2880322e-16)
+bones/13/rotation = Quaternion(-2.677823e-07, -7.311002e-08, -0.7790818, 0.6269223)
+bones/13/scale = Vector3(1.0000001, 1.0000001, 1)
+bones/16/position = Vector3(0, 0.0016094027, 1.7347235e-18)
+bones/17/position = Vector3(0, 0.0014017376, 1.7347235e-18)
+bones/17/rotation = Quaternion(-0.70317185, 0.07449431, 0.07449427, 0.7031718)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/position = Vector3(9.21142e-12, 0.0041821687, 4.3368087e-19)
+bones/18/rotation = Quaternion(5.8571597e-08, 1.2377966e-07, -0.310113, 0.9506997)
+bones/19/position = Vector3(-1.5171331e-10, 0.0048660017, -6.591949e-17)
+bones/19/rotation = Quaternion(2.9901337e-08, -2.1810419e-07, 0.79148054, 0.6111944)
+bones/19/scale = Vector3(0.99999994, 0.99999994, 1)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256822, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.005714958, 1.4661609, 0.110354766)
+shape = SubResource("CapsuleShape3D_0bnu1")
+debug_color = Color(0.059259094, 0.5750445, 0.8187562, 0.41960785)
+
+[node name="MagicTarget" type="Marker3D" parent="." index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2497437e-09, 0.99059117, 0.048611403)

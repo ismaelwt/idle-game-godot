@@ -1,0 +1,73 @@
+[gd_scene load_steps=10 format=3 uid="uid://h3ih3dedib01"]
+
+[ext_resource type="Shader" uid="uid://m3b1vfjv6fsb" path="res://Shaders/fire.gdshader" id="1_wfoe5"]
+[ext_resource type="PackedScene" uid="uid://3gvmd38bqord" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Log_02.prefab.scn" id="2_b8r8p"]
+[ext_resource type="PackedScene" uid="uid://cde65oawmt8pd" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Small_Rock_Round_04.prefab.scn" id="3_8ileh"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_k8a0i"]
+size = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_v4da8"]
+offsets = PackedFloat32Array(0.23809524, 0.5897436, 0.96336997)
+colors = PackedColorArray(0.99607843, 0, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_50u72"]
+gradient = SubResource("Gradient_v4da8")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pay1w"]
+seed = 555
+frequency = 0.0067
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qgf2b"]
+noise = SubResource("FastNoiseLite_pay1w")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d1i4r"]
+render_priority = 0
+shader = ExtResource("1_wfoe5")
+shader_parameter/noise_sampler = SubResource("NoiseTexture2D_qgf2b")
+shader_parameter/gradient_sampler = SubResource("GradientTexture1D_50u72")
+shader_parameter/emission_strength = 0.9
+shader_parameter/dither_scale = 2.0
+shader_parameter/dither_strength = 0.0
+
+[node name="Fire" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, -0.6, 5.2453668e-08, 0, -5.2453668e-08, -0.6, 0, 0.14811313, -1.8239808e-08)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_k8a0i")
+surface_material_override/0 = SubResource("ShaderMaterial_d1i4r")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.46124485, -3.354725e-08, -0.3837359, -0.09265213, -0.5822483, -0.111366436, -0.3723826, 0.14486858, -0.4475984, 0.04638672, 0.20023715, -0.08093263)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_k8a0i")
+surface_material_override/0 = SubResource("ShaderMaterial_d1i4r")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.47976422, -0.007984612, -0.3602255, 0.10428217, -0.5711031, 0.1515464, -0.34489328, -0.18378608, -0.45527035, -0.110961914, 0.14811313, -0.10681154)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_k8a0i")
+surface_material_override/0 = SubResource("ShaderMaterial_d1i4r")
+
+[node name="SM_Log_02" parent="." instance=ExtResource("2_b8r8p")]
+transform = Transform3D(0.2870167, 0, 0.087300844, 0, 0.29999998, 0, -0.087300844, 0, 0.2870167, 0.15570068, 0, 0.015136719)
+
+[node name="SM_Log_03" parent="." instance=ExtResource("2_b8r8p")]
+transform = Transform3D(0.049773086, 9.358182e-10, 0.08673315, -0.016253661, 0.09822839, 0.009327401, -0.085196584, -0.018739834, 0.04889131, 0.2399292, 0.08766174, -0.12866211)
+
+[node name="SM_Log_04" parent="." instance=ExtResource("2_b8r8p")]
+transform = Transform3D(0.022106385, -0.014896491, 0.09638154, -0.03601984, 0.09059205, 0.022263309, -0.09063048, -0.039638095, 0.014660949, 0.24312589, 0.07600403, -0.24545175)
+
+[node name="SM_Small_Rock_Round_04" parent="." instance=ExtResource("3_8ileh")]
+transform = Transform3D(0.44721472, 0, 1.9493585, 0, 2, 0, -1.9493585, 0, 0.44721472, -0.32202148, 0.07043457, -0.07055664)
+
+[node name="SM_Small_Rock_Round_05" parent="." instance=ExtResource("3_8ileh")]
+transform = Transform3D(1.9404223, 0, 0.48452115, 0, 2, 0, -0.48452115, 0, 1.9404223, -0.099609375, 0.07043457, -0.3236084)
+
+[node name="SM_Log_05" parent="." instance=ExtResource("2_b8r8p")]
+transform = Transform3D(-0.02677245, -0.03511154, 0.089724116, -0.039848708, 0.088820875, 0.022867765, -0.087722965, -0.029631656, -0.037770987, 0.17488858, 0.09863281, -0.3094166)
+
+[node name="SM_Log_06" parent="." instance=ExtResource("2_b8r8p")]
+transform = Transform3D(-0.08748337, 0.015568412, -0.045872502, -0.011241118, 0.085585974, 0.050484437, 0.04712008, 0.04932207, -0.073123395, -0.1672745, 0.15655518, -0.27670175)

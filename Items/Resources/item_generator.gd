@@ -1,0 +1,203 @@
+
+extends RefCounted
+class_name ItemGenerator
+
+@export_category("Nível dos Itens")
+@export_range(0, 50, 1) var levels_below_player: int = 4
+@export_range(0, 50, 1) var levels_above_player: int = 4
+
+@export_category("Escalonamento")
+@export_range(0.0, 1.0, 0.01) var scaling_per_level: float = 0.05
+
+
+func generate_item(
+	base: ItemBase,
+	player_level: int = 1
+) -> ItemInstance:
+	if base == null:
+		push_error("ItemGenerator: ItemBase inválido.")
+		return null
+
+	var item := ItemInstance.new()
+
+	item.item_base = base
+	item.instance_id = str(ResourceUID.create_id())
+	item.generated_rarity = base.rarity
+	item.item_value = base.get_item_value()
+
+	# Sorteia o nível do item conforme o nível do jogador.
+	var character_level := maxi(1, player_level)
+	var min_level := maxi(1, character_level - levels_below_player)
+	var max_level := maxi(min_level, character_level + levels_above_player)
+
+	item.item_level = randi_range(min_level, max_level)
+
+	# Escalonamento linear: 5% por nível acima do nível 1.
+	var multiplier: float = 1.0 + (
+		float(item.item_level - 1) * scaling_per_level
+	)
+
+	# Gemas mantêm sua geração própria.
+	if base.item_type == ItemBase.ItemType.GEM:
+		item.gem_effect = base.gem_effect
+
+		if base.gem_effect != ItemBase.GemEffect.NONE:
+			item.gem_effect_value = randf_range(
+				base.gem_effect_min,
+				base.gem_effect_max
+			)
+
+		item.enchantment_slots = 0
+		item.installed_enchantments.clear()
+		return item
+
+	# Define quantos atributos o item poderá receber.
+	var attribute_count := get_attribute_count(item.generated_rarity)
+
+	# Monta a lista apenas com atributos configurados no ItemBase.
+	var available_attributes: Array[StringName] = []
+
+	if base.strength_min != 0 or base.strength_max != 0:
+		available_attributes.append(&"strength")
+
+	if base.agility_min != 0 or base.agility_max != 0:
+		available_attributes.append(&"agility")
+
+	if base.intelligence_min != 0 or base.intelligence_max != 0:
+		available_attributes.append(&"intelligence")
+
+	if base.vitality_min != 0 or base.vitality_max != 0:
+		available_attributes.append(&"vitality")
+
+	if base.max_mana_min != 0 or base.max_mana_max != 0:
+		available_attributes.append(&"max_mana")
+
+	if base.physical_damage_min != 0 or base.physical_damage_max != 0:
+		available_attributes.append(&"physical_damage")
+
+	if base.magic_damage_min != 0 or base.magic_damage_max != 0:
+		available_attributes.append(&"magic_damage")
+
+	var has_separate_defense := (
+		base.physical_defense_min != 0 or base.physical_defense_max != 0
+		or base.magic_defense_min != 0 or base.magic_defense_max != 0
+	)
+	if base.physical_defense_min != 0 or base.physical_defense_max != 0:
+		available_attributes.append(&"physical_defense")
+	if base.magic_defense_min != 0 or base.magic_defense_max != 0:
+		available_attributes.append(&"magic_defense")
+	if not has_separate_defense and (base.defense_min != 0 or base.defense_max != 0):
+		available_attributes.append(&"defense")
+
+	if base.magic_power_min != 0.0 or base.magic_power_max != 0.0:
+		available_attributes.append(&"magic_power")
+
+	# Começa com todos os bônus zerados.
+	item.strength_bonus = 0
+	item.agility_bonus = 0
+	item.intelligence_bonus = 0
+	item.vitality_bonus = 0
+	item.max_mana_bonus = 0
+	item.physical_damage_bonus = 0
+	item.magic_damage_bonus = 0
+	item.defense_bonus = 0
+	item.physical_defense_bonus = 0
+	item.magic_defense_bonus = 0
+	item.magic_power_bonus = 0.0
+
+	# Sorteia os atributos sem repetir nenhum.
+	var count := mini(attribute_count, available_attributes.size())
+
+	for i in range(count):
+		var index := randi_range(0, available_attributes.size() - 1)
+		var attribute: StringName = available_attributes[index]
+		available_attributes.remove_at(index)
+
+		match attribute:
+			&"strength":
+				item.strength_bonus = roundi(
+					randi_range(base.strength_min, base.strength_max) * multiplier
+				)
+			&"agility":
+				item.agility_bonus = roundi(
+					randi_range(base.agility_min, base.agility_max) * multiplier
+				)
+			&"intelligence":
+				item.intelligence_bonus = roundi(
+					randi_range(base.intelligence_min, base.intelligence_max) * multiplier
+				)
+			&"vitality":
+				item.vitality_bonus = roundi(
+					randi_range(base.vitality_min, base.vitality_max) * multiplier
+				)
+			&"max_mana":
+				item.max_mana_bonus = roundi(
+					randi_range(base.max_mana_min, base.max_mana_max) * multiplier
+				)
+			&"physical_damage":
+				item.physical_damage_bonus = roundi(
+					randi_range(base.physical_damage_min, base.physical_damage_max) * multiplier
+				)
+			&"magic_damage":
+				item.magic_damage_bonus = roundi(
+					randi_range(base.magic_damage_min, base.magic_damage_max) * multiplier
+				)
+			&"defense":
+				item.defense_bonus = roundi(
+					randi_range(base.defense_min, base.defense_max) * multiplier
+				)
+			&"physical_defense":
+				item.physical_defense_bonus = roundi(
+					randi_range(base.physical_defense_min, base.physical_defense_max) * multiplier
+				)
+			&"magic_defense":
+				item.magic_defense_bonus = roundi(
+					randi_range(base.magic_defense_min, base.magic_defense_max) * multiplier
+				)
+			&"magic_power":
+				item.magic_power_bonus = randf_range(
+					base.magic_power_min,
+					base.magic_power_max
+				) * multiplier
+
+	# Sorteia os slots de encantamento.
+	var min_slots := clampi(base.min_enchantment_slots, 0, 2)
+	var max_slots := clampi(base.max_enchantment_slots, min_slots, 2)
+
+	item.enchantment_slots = randi_range(min_slots, max_slots)
+	item.installed_enchantments.clear()
+
+	return item
+
+
+func get_attribute_count(rarity: ItemBase.Rarity) -> int:
+	match rarity:
+		ItemBase.Rarity.COMMON:
+			return 1
+		ItemBase.Rarity.UNCOMMON:
+			return 2
+		ItemBase.Rarity.RARE:
+			return 3
+		ItemBase.Rarity.EPIC:
+			return 4
+		ItemBase.Rarity.LEGENDARY:
+			return 5
+
+	return 1
+
+
+func generate_chest_item(
+	player_level: int = 1
+) -> ItemInstance:
+	var database := ItemDatabase.new()
+
+	var rarity := database.roll_rarity()
+	var base := database.get_random_item_by_rarity(rarity)
+
+	if base == null:
+		push_error(
+			"ItemGenerator: não existe item cadastrado para a raridade sorteada."
+		)
+		return null
+
+	return generate_item(base, player_level)

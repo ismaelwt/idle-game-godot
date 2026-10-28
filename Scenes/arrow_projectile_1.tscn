@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://deio2xpb8r2bd"]
+
+[ext_resource type="PackedScene" uid="uid://bvhgnj0qu8ktb" path="res://Assets/BowModel/Arrow.fbx" id="1_rqeld"]
+[ext_resource type="Script" uid="uid://18bwjh1flf1p" path="res://Script/arrow_projectile.gd" id="2_0v8vi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rqeld"]
+size = Vector3(0.65756226, 0.107910156, 0.0040283203)
+
+[node name="Arrow" instance=ExtResource("1_rqeld")]
+script = ExtResource("2_0v8vi")
+speed = 5.0
+max_lifetime = 15.0
+
+[node name="Arrow" parent="." index="0"]
+transform = Transform3D(-8.742278e-08, 0, -43.48, 0, 2, 0, 2, 0, -1.9005712e-06, 0, 0, 0)
+cast_shadow = 0
+
+[node name="Area3D" type="Area3D" parent="Arrow" index="0"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arrow/Area3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08921767, -0.0038706064, -0.00024156619)
+shape = SubResource("BoxShape3D_rqeld")

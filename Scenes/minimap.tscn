@@ -1,0 +1,320 @@
+[gd_scene load_steps=24 format=3 uid="uid://ck404wnc73o01"]
+
+[ext_resource type="Script" uid="uid://ctspehvus44rw" path="res://Script/map.gd" id="1_5oyd3"]
+[ext_resource type="Script" uid="uid://c0wuw1ewwj7ab" path="res://Script/map_window.gd" id="1_e3yhi"]
+[ext_resource type="Texture2D" uid="uid://c0dcrk1s834i4" path="res://UI/CharacterSelectionUI/element_4.png" id="2_e3yhi"]
+[ext_resource type="Texture2D" uid="uid://cjv8beeu4tyxf" path="res://UI/UISprites/map-512x512-pixel.png" id="3_0epa8"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="3_5oyd3"]
+[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="5_0epa8"]
+[ext_resource type="Texture2D" uid="uid://b7jbi157ph2qx" path="res://UI/UISprites/Pointer/pointer-frames_0001.png" id="7_e1urc"]
+[ext_resource type="Texture2D" uid="uid://c6ahqw72uqyhm" path="res://UI/UISprites/map-fram-256.png" id="8_0epa8"]
+[ext_resource type="Texture2D" uid="uid://bamsex7fa75j8" path="res://UI/UISprites/markers.png" id="8_3w2xr"]
+[ext_resource type="Texture2D" uid="uid://b5vgmt5ye5i0l" path="res://UI/UISprites/Pointer/pointer-frames_0002.png" id="8_bwhsp"]
+[ext_resource type="Texture2D" uid="uid://cdyo4slvfvid3" path="res://UI/UISprites/Pointer/pointer-frames_0003.png" id="9_013qf"]
+[ext_resource type="Texture2D" uid="uid://ck6k116ltrnhr" path="res://UI/UISprites/Pointer/pointer-frames_0004.png" id="10_cihie"]
+[ext_resource type="Texture2D" uid="uid://bjduxgaysve4y" path="res://UI/UISprites/Pointer/pointer-frames_0005.png" id="11_rvfde"]
+[ext_resource type="Texture2D" uid="uid://dhpd2hrdfl3ch" path="res://UI/UISprites/Pointer/pointer-frames_0007.png" id="13_j5eh0"]
+[ext_resource type="Texture2D" uid="uid://jqns4gs7vqke" path="res://UI/UISprites/Pointer/pointer-frames_0008.png" id="14_x77dq"]
+[ext_resource type="Texture2D" uid="uid://dw6nhw46t20ek" path="res://UI/UISprites/Pointer/pointer-frames_0009.png" id="15_jpgju"]
+[ext_resource type="Texture2D" uid="uid://4lwp1f6lgp0h" path="res://UI/UISprites/Pointer/pointer-frames_0010.png" id="16_67s6j"]
+[ext_resource type="Texture2D" uid="uid://b55gu6mjv2n68" path="res://UI/UISprites/disabled-markers.png" id="17_e1urc"]
+[ext_resource type="Texture2D" uid="uid://bssgc6lrkvpk4" path="res://UI/UISprites/Pointer/pointer-frames_0011.png" id="17_ym8im"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ef0ql"]
+load_path = "res://.godot/imported/pointer-frames_0006.png-c894caffa741bc13aab958dcfac0a80a.ctex"
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_k1o0g"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_e1urc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_bwhsp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_013qf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_cihie")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_rvfde")
+}, {
+"duration": 1.0,
+"texture": SubResource("CompressedTexture2D_ef0ql")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_j5eh0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_x77dq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_jpgju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_67s6j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_ym8im")
+}],
+"loop": true,
+"name": &"rotate",
+"speed": 11.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_3w2xr"]
+font = ExtResource("3_5oyd3")
+font_size = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_vegb6"]
+font = ExtResource("3_5oyd3")
+font_size = 12
+
+[node name="Map" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_5oyd3")
+
+[node name="MapWindow" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -452.0
+offset_top = -234.0
+offset_right = -196.0
+offset_bottom = 76.0
+grow_horizontal = 0
+grow_vertical = 2
+script = ExtResource("1_e3yhi")
+
+[node name="Content" type="Control" parent="MapWindow"]
+anchors_preset = 0
+offset_right = 256.0
+offset_bottom = 310.0
+
+[node name="Map" type="TextureRect" parent="MapWindow/Content"]
+texture_filter = 3
+layout_mode = 1
+offset_left = 3.5
+offset_right = 515.5
+offset_bottom = 512.0
+texture = ExtResource("3_0epa8")
+
+[node name="Markers" type="Control" parent="MapWindow/Content"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Pointer" type="Control" parent="MapWindow/Content/Markers"]
+texture_filter = 2
+anchors_preset = 0
+offset_left = 54.0
+offset_top = 425.0
+offset_right = 54.0
+offset_bottom = 425.0
+scale = Vector2(0.8, 0.8)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MapWindow/Content/Markers/Pointer"]
+z_index = 3
+scale = Vector2(1.2, 1.2)
+sprite_frames = SubResource("SpriteFrames_k1o0g")
+animation = &"rotate"
+frame_progress = 0.831832
+speed_scale = 0.8
+
+[node name="Fase1" type="TextureButton" parent="MapWindow/Content/Markers"]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 419.0
+offset_right = 104.0
+offset_bottom = 475.0
+tooltip_text = "level 1"
+texture_normal = ExtResource("8_3w2xr")
+texture_disabled = ExtResource("17_e1urc")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="MapWindow/Content/Markers/Fase1"]
+layout_mode = 0
+offset_left = 43.0
+offset_right = 82.0
+offset_bottom = 23.0
+texture = ExtResource("2_e3yhi")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MapWindow/Content/Markers/Fase1/TextureRect"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 40.0
+offset_bottom = 21.0
+text = "1 - 5"
+label_settings = SubResource("LabelSettings_3w2xr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PhasePointerPosition" type="Control" parent="MapWindow/Content/Markers/Fase1"]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = 24.0
+
+[node name="Fase2" type="TextureButton" parent="MapWindow/Content/Markers"]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 410.0
+offset_right = 201.0
+offset_bottom = 466.0
+tooltip_text = "level 1"
+disabled = true
+texture_normal = ExtResource("8_3w2xr")
+texture_disabled = ExtResource("17_e1urc")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="MapWindow/Content/Markers/Fase2"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = -1.0
+offset_right = 82.0
+offset_bottom = 23.0
+texture = ExtResource("2_e3yhi")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MapWindow/Content/Markers/Fase2/TextureRect"]
+layout_mode = 0
+offset_top = -1.0
+offset_right = 41.0
+offset_bottom = 23.0
+text = "5 - 10"
+label_settings = SubResource("LabelSettings_3w2xr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PhasePointerPosition" type="Control" parent="MapWindow/Content/Markers/Fase2"]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = 24.0
+
+[node name="Fase3" type="TextureButton" parent="MapWindow/Content/Markers"]
+layout_mode = 0
+offset_left = 238.0
+offset_top = 400.0
+offset_right = 316.0
+offset_bottom = 456.0
+tooltip_text = "level 1"
+disabled = true
+texture_normal = ExtResource("8_3w2xr")
+texture_disabled = ExtResource("17_e1urc")
+ignore_texture_size = true
+stretch_mode = 4
+
+[node name="TextureRect" type="TextureRect" parent="MapWindow/Content/Markers/Fase3"]
+layout_mode = 0
+offset_left = 43.0
+offset_top = -1.0
+offset_right = 90.0
+offset_bottom = 23.0
+texture = ExtResource("2_e3yhi")
+expand_mode = 1
+
+[node name="Label" type="Label" parent="MapWindow/Content/Markers/Fase3/TextureRect"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 3.0
+offset_right = 42.0
+offset_bottom = 20.0
+text = "10 - 15"
+label_settings = SubResource("LabelSettings_3w2xr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PhasePointerPosition" type="Control" parent="MapWindow/Content/Markers/Fase3"]
+anchors_preset = 0
+offset_left = 8.0
+offset_top = -16.0
+offset_right = 48.0
+offset_bottom = 24.0
+
+[node name="Frame" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -481.0
+offset_top = -267.0
+offset_right = -320.0
+offset_bottom = -74.5
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(2, 2)
+mouse_filter = 2
+texture = ExtResource("8_0epa8")
+expand_mode = 1
+
+[node name="CloseButton" type="TextureButton" parent="Frame"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -12.5
+offset_top = -25.5
+offset_right = 11.0
+offset_bottom = -5.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("5_0epa8")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect2" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -303.0
+offset_top = 16.0
+offset_right = -203.0
+offset_bottom = 58.0
+grow_horizontal = 0
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_e3yhi")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="TextureRect2"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.0
+offset_top = -34.0
+offset_right = 53.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Bal'trael Forest"
+label_settings = SubResource("LabelSettings_vegb6")
+horizontal_alignment = 1
+vertical_alignment = 1

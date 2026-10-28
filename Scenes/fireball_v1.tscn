@@ -1,0 +1,67 @@
+[gd_scene load_steps=14 format=3 uid="uid://b8gwhc4tcx6nb"]
+
+[ext_resource type="Script" uid="uid://dmwtrsk3dooip" path="res://Script/fireball.gd" id="1_24qo1"]
+[ext_resource type="Texture2D" uid="uid://dxumxyrr2dxuu" path="res://icons/disabled-fire-ray-2.png" id="2_nnmsm"]
+[ext_resource type="ArrayMesh" uid="uid://bp0niqir1xie8" path="res://Assets/fireball_v2.obj" id="2_po4an"]
+[ext_resource type="Texture2D" uid="uid://bvx6q7m3qfpqe" path="res://icons/fire-ray-2.png" id="3_i312e"]
+[ext_resource type="Shader" uid="uid://cdps0bavy68ul" path="res://Shaders/fireball.gdshader" id="3_nnmsm"]
+
+[sub_resource type="Gradient" id="Gradient_ikn8r"]
+offsets = PackedFloat32Array(0.26791278, 0.9096573)
+colors = PackedColorArray(0.99607843, 0, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_50u72"]
+gradient = SubResource("Gradient_ikn8r")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rjgdo"]
+noise_type = 4
+seed = 555
+frequency = 0.0194
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qgf2b"]
+noise = SubResource("FastNoiseLite_rjgdo")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_78aro"]
+render_priority = 0
+shader = ExtResource("3_nnmsm")
+shader_parameter/noise_sampler = SubResource("NoiseTexture2D_qgf2b")
+shader_parameter/gradient_sampler = SubResource("GradientTexture1D_50u72")
+shader_parameter/emission_strength = 0.9
+shader_parameter/dither_scale = 4.0
+shader_parameter/dither_strength = 0.3
+
+[sub_resource type="SphereMesh" id="SphereMesh_ln6qn"]
+radius = 0.48
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2i5o"]
+albedo_color = Color(1, 0.28235295, 0.1254902, 1)
+emission_enabled = true
+emission = Color(0.66660184, 0.1357041, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ikn8r"]
+height = 1.0371094
+
+[node name="Fireball" type="Node3D"]
+transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0)
+script = ExtResource("1_24qo1")
+icon = ExtResource("3_i312e")
+disabled_icon = ExtResource("2_nnmsm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.41727817, -1.8239808e-08)
+cast_shadow = 0
+mesh = ExtResource("2_po4an")
+surface_material_override/0 = SubResource("ShaderMaterial_78aro")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.49498641, 0)
+cast_shadow = 0
+mesh = SubResource("SphereMesh_ln6qn")
+surface_material_override/0 = SubResource("StandardMaterial3D_m2i5o")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.515625, 0)
+shape = SubResource("CapsuleShape3D_ikn8r")

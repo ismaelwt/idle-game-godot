@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8fvofvx52gao"]
+
+[ext_resource type="Shader" uid="uid://bjeq3s01xtvjc" path="res://Shaders/LevelUpEffect.gdshader" id="1_27bio"]
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_27bio"]
+top_radius = 0.6
+bottom_radius = 0.6
+height = 1.8
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_agqfs"]
+render_priority = 0
+shader = ExtResource("1_27bio")
+shader_parameter/speed = 1.00000004424012
+shader_parameter/bar_size = 0.05000000074506
+shader_parameter/aura_color_top = Color(1, 0.019607844, 0, 1)
+shader_parameter/aura_color_bottom = Color(0.74509805, 0.6862745, 0, 0.6392157)
+shader_parameter/spiral_count = 3.000000095
+shader_parameter/trail_thickness = 0.05600000196148
+shader_parameter/glow = 8.2170003903075
+
+[node name="LevelUpEffect" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.92025065, 0)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_27bio")
+surface_material_override/0 = SubResource("ShaderMaterial_agqfs")
