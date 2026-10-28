@@ -5,8 +5,6 @@ signal party_changed(heroes: Array[Node3D])
 
 @export_range(1, 3, 1) var max_party_size: int = 3
 
-const KNIGHT_COMPANION_ID: String = "knight"
-
 var heroes: Array[Node3D] = []
 var main_hero: Node3D = null
 var companion_hero: Node3D = null
@@ -31,80 +29,110 @@ func _ready() -> void:
 
 func _initialize_party() -> void:
 	var selected_id := "mage"
-
 	if is_instance_valid(CharacterSelectionData):
-		selected_id = str(
-			CharacterSelectionData.selected_character
-		).to_lower()
+		selected_id = CharacterSelectionData.get_selected_character_id()
 
-	var selected_node_name := (
-		"Knight" if selected_id == "knight" else "Player"
-	)
-
-	var other_node_name := (
-		"Player" if selected_node_name == "Knight" else "Knight"
-	)
-
-	var all_party_heroes := get_tree().get_nodes_in_group(
-		"party_heroes"
-	)
-
-	# Localiza os dois personagens mesmo que não estejam no grupo.
-	var parent_node := get_parent()
-
-	for hero_name in ["Player", "Knight"]:
-		var candidate := parent_node.get_node_or_null(hero_name)
-
-		if candidate is Node3D and not all_party_heroes.has(candidate):
-			all_party_heroes.append(candidate)
-
+	var candidates := _discover_heroes()
 	main_hero = null
 	companion_hero = null
 	heroes.clear()
 
-	for candidate in all_party_heroes:
-		if not candidate is Node3D:
-			continue
-
-		if candidate.name == selected_node_name:
+	for candidate in candidates:
+		if _get_hero_id(candidate) == selected_id:
 			main_hero = candidate
-
-	# O outro personagem só será companheiro se for o Knight comprado
-	# e equipado, e o personagem principal for o Mage.
-	var other_hero: Node3D = null
-
-	for candidate in all_party_heroes:
-		if candidate is Node3D and candidate.name == other_node_name:
-			other_hero = candidate
 			break
 
-	if is_instance_valid(main_hero):
-		_set_hero_active(main_hero, true)
-		register_hero(main_hero)
-	else:
+	if not is_instance_valid(main_hero):
 		push_error(
-			"PartyManager: personagem principal '%s' não encontrado."
-			% selected_node_name
+			"PartyManager: nenhum herói registrado corresponde ao ID principal '%s'."
+			% selected_id
 		)
+		return
 
-	# Primeiro oculta o personagem não selecionado.
-	if is_instance_valid(other_hero):
-		_set_hero_active(other_hero, false)
+	for candidate in candidates:
+		_set_hero_active(candidate, candidate == main_hero)
 
-	# Depois verifica se o Knight deve aparecer como companheiro.
+	register_hero(main_hero)
 	_refresh_companion()
 
 	print("=== EQUIPE ATUAL ===")
-	print("Personagem selecionado: ", selected_id)
-	print(
-		"Principal: ",
-		main_hero.name if is_instance_valid(main_hero) else "nenhum"
-	)
+	print("ID principal: ", selected_id)
+	print("Principal: ", main_hero.name)
 	print(
 		"Companheiro: ",
 		companion_hero.name if is_instance_valid(companion_hero) else "nenhum"
 	)
 	print("Total de heróis: ", get_heroes().size())
+
+
+func _discover_heroes() -> Array[Node3D]:
+	var discovered: Array[Node3D] = []
+	var candidates: Array[Node] = []
+
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if candidate is Node3D and not candidates.has(candidate):
+			candidates.append(candidate)
+
+	# Compatibilidade com cenas atuais: heróis podem ainda não estar no grupo.
+	# A descoberta é por CharacterStats/ID, nunca pelo nome do nó.
+	var parent_node := get_parent()
+	if is_instance_valid(parent_node):
+		for candidate in parent_node.get_children():
+			if not candidate is Node3D:
+				continue
+			if not _has_hero_identity(candidate):
+				continue
+			if not candidates.has(candidate):
+				candidates.append(candidate)
+
+	for candidate in candidates:
+		if candidate is Node3D and _has_hero_identity(candidate):
+			discovered.append(candidate)
+
+	return discovered
+
+
+func _has_hero_identity(hero: Node3D) -> bool:
+	if not is_instance_valid(hero):
+		return false
+
+	if hero.has_meta("hero_id"):
+		return not str(hero.get_meta("hero_id")).strip_edges().is_empty()
+
+	var stats := hero.get_node_or_null("CharacterStats")
+	if not is_instance_valid(stats):
+		stats = hero.find_child("CharacterStats", true, false)
+
+	if not is_instance_valid(stats):
+		return false
+
+	var hero_id := str(stats.get("hero_id")).strip_edges()
+	var hero_class := str(stats.get("hero_class")).strip_edges()
+	return not hero_id.is_empty() or not hero_class.is_empty()
+
+
+func _get_hero_id(hero: Node3D) -> String:
+	if not is_instance_valid(hero):
+		return ""
+
+	var raw_id := ""
+	if hero.has_meta("hero_id"):
+		raw_id = str(hero.get_meta("hero_id"))
+	else:
+		var stats := hero.get_node_or_null("CharacterStats")
+		if not is_instance_valid(stats):
+			stats = hero.find_child("CharacterStats", true, false)
+
+		if is_instance_valid(stats):
+			raw_id = str(stats.get("hero_id"))
+
+	if raw_id.strip_edges().is_empty():
+		return ""
+
+	if is_instance_valid(CharacterSelectionData):
+		return CharacterSelectionData.normalize_hero_id(raw_id)
+
+	return raw_id.strip_edges().to_lower()
 
 
 func _on_companion_state_changed() -> void:
@@ -115,60 +143,38 @@ func _refresh_companion() -> void:
 	if not is_instance_valid(main_hero):
 		return
 
-	# O Knight não pode ser companheiro de si próprio.
-	if main_hero.name == "Knight":
-		_remove_companion()
-		return
-
-	var knight := get_parent().get_node_or_null("Knight") as Node3D
-
-	if not is_instance_valid(knight):
-		push_warning("PartyManager: nó Knight não encontrado na cena.")
-		_remove_companion()
-		return
-
 	var active_id := ""
-
 	if is_instance_valid(_game_manager):
-		active_id = str(
-			_game_manager.get("active_companion_id")
-		).to_lower()
+		active_id = str(_game_manager.get("active_companion_id")).strip_edges().to_lower()
 
-	var is_equipped: bool = (
-		active_id == KNIGHT_COMPANION_ID
+	var desired_companion: Node3D = null
+	if (
+		not active_id.is_empty()
 		and is_instance_valid(_game_manager)
 		and _game_manager.has_method("owns_companion")
-		and bool(_game_manager.owns_companion(KNIGHT_COMPANION_ID))
-	)
+		and bool(_game_manager.owns_companion(active_id))
+	):
+		for candidate in _discover_heroes():
+			if candidate == main_hero:
+				continue
+			if _get_hero_id(candidate) == active_id:
+				desired_companion = candidate
+				break
 
-	if is_equipped:
-		companion_hero = knight
+	# Remove um companheiro anterior se ele foi desequipado/trocado.
+	if is_instance_valid(companion_hero) and companion_hero != desired_companion:
+		var previous_companion := companion_hero
+		companion_hero = null
+		_set_hero_active(previous_companion, false)
+		unregister_hero(previous_companion)
 
-		# Torna o Knight visível e permite que seu script processe.
-		_set_hero_active(companion_hero, true)
-
-		if not heroes.has(companion_hero):
-			register_hero(companion_hero)
-
-		print("Companheiro Knight ativado e visível.")
-	else:
-		_remove_companion()
-
-
-func _remove_companion() -> void:
-	if not is_instance_valid(companion_hero):
+	if not is_instance_valid(desired_companion):
 		companion_hero = null
 		return
 
-	var old_companion := companion_hero
-
-	if old_companion != main_hero:
-		_set_hero_active(old_companion, false)
-		unregister_hero(old_companion)
-
-	companion_hero = null
-
-	print("Nenhum companheiro equipado.")
+	companion_hero = desired_companion
+	_set_hero_active(companion_hero, true)
+	register_hero(companion_hero)
 
 
 func get_main_hero() -> Node3D:
@@ -189,18 +195,6 @@ func _set_hero_active(hero: Node3D, active: bool) -> void:
 	hero.set_physics_process(active)
 
 
-func _set_collision_state_recursive(node: Node, active: bool) -> void:
-	if node is CollisionObject3D and not active:
-		node.set("collision_layer", 0)
-		node.set("collision_mask", 0)
-
-	if node is CollisionShape3D or node is CollisionPolygon3D:
-		node.set("disabled", not active)
-
-	for child in node.get_children():
-		_set_collision_state_recursive(child, active)
-
-
 func register_hero(hero: Node3D) -> bool:
 	if not is_instance_valid(hero):
 		return false
@@ -214,9 +208,7 @@ func register_hero(hero: Node3D) -> bool:
 
 	heroes.append(hero)
 	party_changed.emit(get_heroes())
-
 	print("PartyManager: herói registrado: ", hero.name)
-
 	return true
 
 
@@ -228,21 +220,18 @@ func unregister_hero(hero: Node3D) -> void:
 
 func get_heroes() -> Array[Node3D]:
 	var valid_heroes: Array[Node3D] = []
-
 	for hero in heroes:
 		if is_instance_valid(hero):
 			valid_heroes.append(hero)
-
 	return valid_heroes
 
 
 func get_alive_heroes() -> Array[Node3D]:
 	var alive_heroes: Array[Node3D] = []
-
 	for hero in get_heroes():
-		if hero.get("dead") == null or not bool(hero.get("dead")):
+		var dead_value = hero.get("dead")
+		if dead_value == null or not bool(dead_value):
 			alive_heroes.append(hero)
-
 	return alive_heroes
 
 
@@ -254,92 +243,58 @@ func set_hero_target(hero: Node3D, target: Node3D) -> bool:
 		hero.set_meta("combat_target", target)
 	else:
 		hero.remove_meta("combat_target")
-
 	return true
 
 
 func get_hero_target(hero: Node3D) -> Node3D:
 	if not is_instance_valid(hero):
 		return null
-
 	if not hero.has_meta("combat_target"):
 		return null
 
 	var target = hero.get_meta("combat_target")
-
 	if not is_instance_valid(target):
 		hero.remove_meta("combat_target")
 		return null
-
 	return target as Node3D
 
 
 func grant_enemy_rewards(xp_reward: int, gold_reward: int) -> void:
-	# Ouro compartilhado.
+	# Ouro continua compartilhado entre todos os heróis.
 	if gold_reward > 0:
 		var game_manager := get_node_or_null("/root/GameManager")
-
-		if (
-			is_instance_valid(game_manager)
-			and game_manager.has_method("add_gold")
-		):
+		if is_instance_valid(game_manager) and game_manager.has_method("add_gold"):
 			game_manager.add_gold(gold_reward)
 			print("Ouro recebido: ", gold_reward)
 		else:
-			push_warning(
-				"PartyManager: GameManager não encontrado ou sem add_gold()."
-			)
+			push_warning("PartyManager: GameManager não encontrado ou sem add_gold().")
 
-	# Somente os heróis vivos e registrados recebem XP.
 	var alive_heroes := get_alive_heroes()
-
 	if alive_heroes.is_empty():
 		print("PartyManager: nenhum herói vivo para receber XP.")
 		return
 
 	var save_manager := get_node_or_null("/root/SaveManager")
-	var player := get_tree().get_first_node_in_group("player")
-
 	for hero in alive_heroes:
 		if not is_instance_valid(hero):
 			continue
 
-		var stats = hero.get("character_stats")
+		var stats := hero.get_node_or_null("CharacterStats")
+		if not is_instance_valid(stats):
+			stats = hero.find_child("CharacterStats", true, false)
 
-		if stats == null or not is_instance_valid(stats):
-			push_warning(
-				"PartyManager: CharacterStats não encontrado em %s."
-				% hero.name
-			)
+		if not is_instance_valid(stats):
+			push_warning("PartyManager: CharacterStats não encontrado em %s." % hero.name)
 			continue
 
 		if stats.has_method("add_xp"):
 			stats.add_xp(xp_reward)
+			print("XP recebido | Herói: ", hero.name, " | XP: ", xp_reward)
 
-			print(
-				"XP recebido | Herói: ",
-				hero.name,
-				" | XP: ",
-				xp_reward
-			)
-
-		if (
-			is_instance_valid(save_manager)
-			and save_manager.has_method("save_character")
-		):
-			var hero_id := ""
-
-			if hero == player:
-				hero_id = "player"
-			elif hero.has_meta("hero_id"):
-				hero_id = str(hero.get_meta("hero_id"))
-			elif stats.get("hero_id") != null:
-				hero_id = str(stats.get("hero_id"))
-			else:
-				hero_id = str(hero.name)
-
+		if is_instance_valid(save_manager) and save_manager.has_method("save_character"):
+			var hero_id := str(stats.get("hero_id"))
+			if hero_id.is_empty():
+				hero_id = _get_hero_id(hero)
 			save_manager.save_character(stats, null, hero_id)
 		else:
-			push_warning(
-				"PartyManager: SaveManager não encontrado ou sem save_character()."
-			)
+			push_warning("PartyManager: SaveManager não encontrado ou sem save_character().")
