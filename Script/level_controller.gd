@@ -382,7 +382,13 @@ func start_combat(enemy: Node3D):
 			combat_controller.start_combat()
 
 		# Inicializa/alimenta o alvo de cada herói registrado, sem classe fixa.
-		for hero in party_manager.get_alive_heroes() if is_instance_valid(party_manager) else [player]:
+		var active_heroes: Array[Node3D] = []
+		if is_instance_valid(party_manager):
+			active_heroes = party_manager.get_alive_heroes()
+		elif is_instance_valid(player):
+			active_heroes.append(player)
+
+		for hero in active_heroes:
 			if not is_instance_valid(hero):
 				continue
 			var hero_target: Node3D = combat_controller.find_target_for_hero(hero)
