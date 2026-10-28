@@ -20,7 +20,7 @@ var combat_enemies: Array[Node3D] = []
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 
-var wave_start_knight_position: Vector3 = Vector3.ZERO
+var wave_start_positions: Dictionary = {}
 var wave_start_position_recorded: bool = false
 
 # A onda atual e sua configuração agora pertencem ao EnemySpawner.
@@ -37,18 +37,39 @@ var automatic_retry: bool = false
 
 @onready var combat_controller = get_parent().get_node_or_null("CombatController")
 @onready var party_manager = get_parent().get_node_or_null("PartyManager") as PartyManager
-# "player" é o combatente ativo: Mage ("Player") ou Knight, conforme a seleção.
+# Referência de compatibilidade para o herói principal; a equipe é descoberta por ID.
 @onready var player: Node3D = _get_selected_hero()
-@onready var knight: Node3D = get_parent().get_node_or_null("Knight")
 
 
 func _get_selected_hero() -> Node3D:
 	var selected_id := "mage"
 	if is_instance_valid(CharacterSelectionData):
-		selected_id = str(CharacterSelectionData.selected_character).to_lower()
+		selected_id = CharacterSelectionData.get_selected_character_id()
 
-	var node_name := "Knight" if selected_id == "knight" else "Player"
-	return get_parent().get_node_or_null(node_name) as Node3D
+	var parent_node := get_parent()
+	if not is_instance_valid(parent_node):
+		return null
+
+	for candidate in parent_node.get_children():
+		if not candidate is Node3D:
+			continue
+
+		var stats := candidate.get_node_or_null("CharacterStats")
+		if not is_instance_valid(stats):
+			stats = candidate.find_child("CharacterStats", true, false)
+		if not is_instance_valid(stats):
+			continue
+
+		var candidate_id := str(stats.get("hero_id"))
+		if is_instance_valid(CharacterSelectionData):
+			candidate_id = CharacterSelectionData.normalize_hero_id(candidate_id)
+		else:
+			candidate_id = candidate_id.to_lower()
+
+		if candidate_id == selected_id:
+			return candidate
+
+	return null
 @onready var world_scroller = get_parent().get_node("World/WorldScroller")
 @onready var enemy_spawner = get_parent().get_node("EnemySpawner")
 @onready var inventory = get_parent().get_node("Inventory")
@@ -310,6 +331,11 @@ func start_running():
 	if is_party_defeated():
 		return
 
+	if is_instance_valid(party_manager):
+		var selected_main := party_manager.get_main_hero()
+		if is_instance_valid(selected_main):
+			player = selected_main
+
 	state = State.RUNNING
 
 	print("### RUN LIBERADO PELA FUNÇÃO start_running() ###")
@@ -355,17 +381,14 @@ func start_combat(enemy: Node3D):
 		if not combat_controller.combat_active:
 			combat_controller.start_combat()
 
-		if (
-			is_instance_valid(knight)
-			and is_instance_valid(party_manager)
-			and party_manager.get_heroes().has(knight)
-		):
-			var knight_target: Node3D = combat_controller.find_target_for_hero(knight)
-
-			if is_instance_valid(knight_target):
-				combat_controller.set_target(knight, knight_target)
-			else:
-				combat_controller.set_target(knight, enemy)
+		# Inicializa/alimenta o alvo de cada herói registrado, sem classe fixa.
+		for hero in party_manager.get_alive_heroes() if is_instance_valid(party_manager) else [player]:
+			if not is_instance_valid(hero):
+				continue
+			var hero_target: Node3D = combat_controller.find_target_for_hero(hero)
+			if not is_instance_valid(hero_target):
+				hero_target = enemy
+			combat_controller.set_target(hero, hero_target)
 
 	print("=== COMBAT ===")
 
@@ -526,13 +549,16 @@ func enemy_died(dead_enemy: Node3D):
 	# Procura o próximo alvo sem iniciar o retorno à posição inicial.
 	select_next_enemy()
 
-	# Atualiza o alvo individual do Knight.
-	if is_instance_valid(combat_controller) and is_instance_valid(knight):
-		if is_instance_valid(current_enemy):
-			combat_controller.set_target(knight, current_enemy)
-			print("=== KNIGHT: NOVO ALVO === ", current_enemy.name)
-		else:
-			combat_controller.set_target(knight, null)
+	# Atualiza os alvos de todos os heróis ativos.
+	if is_instance_valid(combat_controller) and is_instance_valid(party_manager):
+		for hero in party_manager.get_alive_heroes():
+			if not is_instance_valid(hero):
+				continue
+			if is_instance_valid(current_enemy):
+				combat_controller.set_target(hero, current_enemy)
+				print("=== NOVO ALVO | ", hero.name, ": ", current_enemy.name, " ===")
+			else:
+				combat_controller.set_target(hero, null)
 
 	# Encontrou um próximo alvo: continua o combate.
 	if is_instance_valid(current_enemy):
@@ -673,21 +699,19 @@ func get_current_level_number() -> int:
 
 
 func mark_wave_start_positions() -> void:
-	if (
-		not is_instance_valid(knight)
-		or not is_instance_valid(party_manager)
-		or not party_manager.get_heroes().has(knight)
-	):
-		wave_start_position_recorded = false
+	wave_start_positions.clear()
+	wave_start_position_recorded = false
+
+	if not is_instance_valid(party_manager):
 		return
 
-	wave_start_knight_position = knight.global_position
-	wave_start_position_recorded = true
+	for hero in party_manager.get_alive_heroes():
+		if is_instance_valid(hero):
+			wave_start_positions[hero.get_instance_id()] = hero.global_position
 
-	print(
-		"=== POSIÇÃO INICIAL DA ONDA REGISTRADA === | ",
-		wave_start_knight_position
-	)
+	wave_start_position_recorded = not wave_start_positions.is_empty()
+	if wave_start_position_recorded:
+		print("=== POSIÇÕES INICIAIS DA EQUIPE REGISTRADAS ===")
 
 
 func prepare_next_wave_transition() -> void:
@@ -695,25 +719,35 @@ func prepare_next_wave_transition() -> void:
 	world_scroller.running = false
 	state = State.REWARD
 
-	# A sincronização de formação só faz sentido quando dois heróis estão ativos.
-	if is_instance_valid(party_manager) and party_manager.get_heroes().size() < 2:
+	if not is_instance_valid(party_manager) or not wave_start_position_recorded:
 		return
 
-	if not is_instance_valid(knight) or not wave_start_position_recorded:
+	var active_heroes := party_manager.get_alive_heroes()
+	if active_heroes.size() < 2:
 		return
 
-	# Calcula quanto o Knight avançou durante a onda.
-	var displacement: Vector3 = (
-		knight.global_position - wave_start_knight_position
-	)
-	displacement.y = 0.0
+	# O companheiro é a referência de deslocamento quando existe;
+	# sem companheiro, usa o primeiro herói ativo.
+	var anchor: Node3D = party_manager.get_companion_hero()
+	if not is_instance_valid(anchor) or not active_heroes.has(anchor):
+		anchor = active_heroes[0]
+
+	var anchor_id := anchor.get_instance_id()
+	if not wave_start_positions.has(anchor_id):
+		return
+
+	var displacement: Vector3 = anchor.global_position - wave_start_positions[anchor_id]
 	displacement.x = 0.0
+	displacement.y = 0.0
 
-	# O Knight fica onde terminou.
-	# O Mage avança o mesmo deslocamento.
-	if is_instance_valid(player) and not bool(player.get("dead")) and not bool(knight.get("dead")):
-		var target_z: float = player.global_position.z + displacement.z
-		await move_mage_to_z(target_z)
+	# Mantém a lógica anterior: a referência fica onde terminou e os
+	# outros heróis avançam a mesma distância no eixo Z.
+	for hero in active_heroes:
+		if hero == anchor or not is_instance_valid(hero) or bool(hero.get("dead")):
+			continue
+
+		var target_z: float = hero.global_position.z + displacement.z
+		await move_hero_to_z(hero, target_z)
 
 	print("=== FORMAÇÃO SINCRONIZADA ===")
 	print("Deslocamento da formação: ", displacement)
@@ -723,62 +757,44 @@ func resume_after_wave_transition() -> void:
 	if is_party_defeated():
 		return
 
-	# Libera as animações dos heróis vivos.
 	if is_instance_valid(party_manager):
 		for hero in party_manager.get_alive_heroes():
 			if hero.has_method("start_running"):
 				hero.call("start_running")
-	else:
-		if is_instance_valid(player) and player.has_method("start_running"):
-			player.start_running()
+	elif is_instance_valid(player) and player.has_method("start_running"):
+		player.start_running()
 
-		if (
-			is_instance_valid(knight)
-			and not bool(knight.get("dead"))
-			and knight.has_method("start_running")
-		):
-			knight.start_running()
-
-	# O cenário só volta a correr após a sincronização.
 	world_scroller.running = true
 	state = State.RUNNING
-
 	print("=== RUNNING | FORMAÇÃO SINCRONIZADA ===")
 
 
-func move_mage_to_z(target_z: float, speed: float = 3.5) -> void:
-	if not is_instance_valid(player) or bool(player.get("dead")):
+func move_hero_to_z(hero: Node3D, target_z: float, speed: float = 3.5) -> void:
+	if not is_instance_valid(hero) or bool(hero.get("dead")):
 		return
 
-	var target_position: Vector3 = player.global_position
-	target_position.z = target_z
+	if hero.has_method("start_running"):
+		hero.call("start_running")
 
-	if player.has_method("start_running"):
-		player.start_running()
-
-	while is_instance_valid(player):
-		if bool(player.get("dead")):
+	while is_instance_valid(hero):
+		if bool(hero.get("dead")):
 			return
 
-		var current_position: Vector3 = player.global_position
-		var remaining_z: float = target_position.z - current_position.z
-
+		var current_position: Vector3 = hero.global_position
+		var remaining_z: float = target_z - current_position.z
 		if absf(remaining_z) <= 0.02:
 			break
 
 		var delta: float = get_process_delta_time()
 		current_position.z = move_toward(
 			current_position.z,
-			target_position.z,
+			target_z,
 			speed * delta
 		)
-
-		player.global_position = current_position
+		hero.global_position = current_position
 		await get_tree().process_frame
 
-	# Garante que o Mage termine exatamente no destino.
-	if is_instance_valid(player):
-		player.global_position.z = target_position.z
-
-		if player.has_method("play_animation"):
-			player.play_animation("idle")
+	if is_instance_valid(hero):
+		hero.global_position.z = target_z
+		if hero.has_method("play_animation"):
+			hero.call("play_animation", "idle")
