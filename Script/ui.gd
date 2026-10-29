@@ -113,9 +113,9 @@ func _refresh_heroes() -> void:
 		if stats == null:
 			continue
 
-		var hero_id := str(stats.get("hero_id")).to_lower()
+		var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
 
-		if hero_id == "mage" or hero_id == "player":
+		if hero_id == "mage":
 			new_mage = hero
 		elif hero_id == "knight":
 			new_knight = hero
