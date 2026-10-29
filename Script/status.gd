@@ -19,6 +19,8 @@ var item_tooltip: ItemTooltip
 
 @onready var gold_label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control/GoldLabel
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
+@onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
+@onready var mage_change_button: TextureButton = $CenterContainer/PanelContainer/Background/MageAvatar
 @onready var inventory_panel = $CenterContainer/InventoryControl/InventoryPanel
 @onready var items_grid: GridContainer = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer/ItemsGrid
 @onready var chest_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/ChestButton
@@ -121,6 +123,8 @@ func _ready() -> void:
 	vitality_button.pressed.connect(_on_vitality_pressed)
 
 	close_button.pressed.connect(_on_close_pressed)
+	knight_change_button.pressed.connect(_on_knight_change_pressed)
+	mage_change_button.pressed.connect(_on_mage_change_pressed)
 	chest_button.pressed.connect(_on_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
@@ -156,6 +160,7 @@ func _ready() -> void:
 	boots_icon.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	refresh_equipment_slots()
+	_refresh_hero_switch_buttons()
 
 
 func configurar_fonte_tooltips() -> void:
@@ -826,6 +831,77 @@ func _on_vitality_pressed():
 	update_status()
 
 
+# Troca apenas o herói exibido na janela Status; não altera o herói principal
+# da equipe nem a seleção usada pelo combate.
+func _on_knight_change_pressed() -> void:
+	_select_hero_by_id("knight")
+
+
+func _on_mage_change_pressed() -> void:
+	_select_hero_by_id("mage")
+
+
+func _select_hero_by_id(hero_id: String) -> void:
+	var hero := _find_hero_by_id(hero_id)
+	if not is_instance_valid(hero):
+		push_warning("Status: o herói '%s' não está disponível na equipe." % hero_id)
+		_refresh_hero_switch_buttons()
+		return
+
+	set_selected_hero(hero)
+
+
+func _find_hero_by_id(hero_id: String) -> Node:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return null
+
+	# Preferir os heróis registrados no PartyManager, pois isso também
+	# respeita a disponibilidade real do companheiro.
+	var manager := scene.find_child("PartyManager", true, false) as PartyManager
+	if is_instance_valid(manager):
+		for hero in manager.get_heroes():
+			if not is_instance_valid(hero):
+				continue
+			var stats := _get_hero_stats(hero)
+			if is_instance_valid(stats):
+				var current_id := str(stats.get("hero_id")).strip_edges().to_lower()
+				if current_id == hero_id:
+					return hero
+
+	# Fallback para heróis registrados no grupo comum.
+	for hero in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(hero):
+			continue
+		var stats := _get_hero_stats(hero)
+		if is_instance_valid(stats):
+			var current_id := str(stats.get("hero_id")).strip_edges().to_lower()
+			if current_id == hero_id:
+				return hero
+
+	return null
+
+
+func _get_hero_stats(hero: Node) -> Node:
+	if not is_instance_valid(hero):
+		return null
+	var stats = hero.get("character_stats")
+	if is_instance_valid(stats):
+		return stats
+	stats = hero.get_node_or_null("CharacterStats")
+	if not is_instance_valid(stats):
+		stats = hero.find_child("CharacterStats", true, false)
+	return stats
+
+
+func _refresh_hero_switch_buttons() -> void:
+	if not is_instance_valid(knight_change_button) or not is_instance_valid(mage_change_button):
+		return
+
+	knight_change_button.disabled = not is_instance_valid(_find_hero_by_id("knight"))
+	mage_change_button.disabled = not is_instance_valid(_find_hero_by_id("mage"))
+
+
 # Localiza o nó correspondente à seleção atual, sem depender do grupo "player".
 func _find_selected_hero() -> Node:
 	var scene := get_tree().current_scene
@@ -875,6 +951,9 @@ func set_selected_hero(hero: Node) -> void:
 	active_hero = hero
 	character_stats = new_stats
 
+	var hero_id := str(character_stats.get("hero_id")).strip_edges().to_lower()
+	_set_label_text(title_label, "STATUS: ( " + hero_id.to_upper() + " )")
+
 	if is_instance_valid(inventory):
 		inventory.active_hero_id = str(character_stats.hero_id)
 
@@ -890,3 +969,4 @@ func set_selected_hero(hero: Node) -> void:
 	update_attributes()
 	refresh_equipment_slots()
 	refresh_inventory()
+	_refresh_hero_switch_buttons()
