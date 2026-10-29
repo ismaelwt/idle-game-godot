@@ -125,7 +125,8 @@ func save_character(character_stats, inventory = null, hero_id: String = "") -> 
 	if hero_id.is_empty():
 		hero_id = str(character_stats.get("hero_id"))
 	if hero_id.is_empty() or hero_id == "<null>":
-		hero_id = "player"
+		hero_id = "mage"
+	hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
 
 	var data := _read_save_data()
 	var heroes: Dictionary = data.get("heroes", {})
@@ -182,7 +183,8 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 	if hero_id.is_empty():
 		hero_id = str(character_stats.get("hero_id"))
 	if hero_id.is_empty() or hero_id == "<null>":
-		hero_id = "player"
+		hero_id = "mage"
+	hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
 
 	if not FileAccess.file_exists(SAVE_PATH):
 		print("Nenhum save encontrado.")
@@ -203,11 +205,13 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 
 	if heroes.has(hero_id) and heroes[hero_id] is Dictionary:
 		hero_data = heroes[hero_id]
-	elif hero_id == "player":
-		# Compatibilidade com o save antigo, que guardava os atributos na raiz.
+	elif hero_id == "mage" and heroes.has("player") and heroes["player"] is Dictionary:
+		# Migra o progresso do ID antigo "player" para o Mage.
+		hero_data = heroes["player"]
+	elif hero_id == "mage" and data.has("level"):
+		# Compatibilidade com saves antigos que guardavam atributos na raiz.
 		hero_data = data
 	else:
-		# Não copia o progresso do Player para outro herói.
 		print("SaveManager: nenhum save individual para o herói: ", hero_id)
 		return
 
@@ -218,7 +222,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 			deserialize_inventory(inventory, inventory_data)
 		# Dados individuais do herói têm precedência; migra o equipamento legado do Player.
 		var saved_hero_equipment: Dictionary = hero_data.get("equipment", {})
-		if saved_hero_equipment.is_empty() and hero_id == "player":
+		if saved_hero_equipment.is_empty() and hero_id == "mage":
 			saved_hero_equipment = data.get("inventory", {}).get("equipped_items", {})
 		deserialize_hero_equipment(inventory, hero_id, saved_hero_equipment)
 
