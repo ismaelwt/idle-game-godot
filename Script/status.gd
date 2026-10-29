@@ -485,7 +485,7 @@ func _on_inventory_slot_gui_input(event: InputEvent, index: int) -> void:
 
 	if event is InputEventMouseMotion:
 		if item_tooltip != null and item != null:
-			item_tooltip.show_item(item)
+			item_tooltip.show_item(item, int(character_stats.level))
 
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
