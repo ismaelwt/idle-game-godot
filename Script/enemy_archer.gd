@@ -62,7 +62,7 @@ var base_xp_reward: int
 var base_gold_reward: int
 
 var level_label: Label3D
-var player: Node3D
+var fallback_hero_target: Node3D
 var combat_target: Node3D = null
 
 var health: float
@@ -197,7 +197,7 @@ func get_nearest_hero() -> Node3D:
 	var party_manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
 
 	if not is_instance_valid(party_manager):
-		return player if is_valid_combat_target(player) else null
+		return fallback_hero_target if is_valid_combat_target(fallback_hero_target) else null
 
 	var nearest_hero: Node3D = null
 	var nearest_distance: float = INF
@@ -214,7 +214,7 @@ func get_nearest_hero() -> Node3D:
 	if is_instance_valid(nearest_hero):
 		return nearest_hero
 
-	return player if is_valid_combat_target(player) else null
+	return fallback_hero_target if is_valid_combat_target(fallback_hero_target) else null
 
 func take_damage(damage: float, is_critical: bool = false) -> void:
 	if dying:
