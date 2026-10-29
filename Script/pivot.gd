@@ -17,10 +17,7 @@ extends Node3D
 @export var pixel_snap_enabled: bool = true
 
 
-@onready var mage: Node3D = (
-	get_parent()
-	.get_node_or_null("Player")
-)
+var followed_hero: Node3D = null
 
 
 
@@ -33,6 +30,7 @@ var snapped_world_position: Vector3
 func _ready():
 
 	process_priority = 100
+	followed_hero = _find_selected_hero()
 
 	if not is_instance_valid(camera):
 
@@ -165,4 +163,23 @@ func _process(_delta):
 		snapped_world_position
 	)
 	
-	camera.global_position.z = mage.global_position.z - 2
+	camera.global_position.z = followed_hero.global_position.z - 2
+
+
+func _find_selected_hero() -> Node3D:
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	var parent_node := get_parent()
+	if is_instance_valid(parent_node):
+		for candidate in parent_node.get_children():
+			if not candidate is Node3D:
+				continue
+			var stats = candidate.get("character_stats")
+			if not is_instance_valid(stats):
+				stats = candidate.get_node_or_null("CharacterStats")
+			if is_instance_valid(stats):
+				if CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
+					return candidate
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		return manager.get_main_hero()
+	return null
