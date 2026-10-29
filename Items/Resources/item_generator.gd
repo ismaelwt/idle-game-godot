@@ -187,12 +187,20 @@ func get_attribute_count(rarity: ItemBase.Rarity) -> int:
 
 
 func generate_chest_item(
-	player_level: int = 1
+	player_level: int = 1,
+	item_class: ItemBase.ItemClass = ItemBase.ItemClass.MAGE
 ) -> ItemInstance:
 	var database := ItemDatabase.new()
 
 	var rarity := database.roll_rarity()
-	var base := database.get_random_item_by_rarity(rarity)
+	var base := database.get_random_item_by_rarity(rarity, item_class)
+
+	# Se a classe ainda não possui item daquela raridade, tenta qualquer
+	# item cadastrado para a mesma classe para evitar um baú vazio.
+	if base == null:
+		var class_items := database.get_items_by_class(item_class)
+		if not class_items.is_empty():
+			base = class_items[randi_range(0, class_items.size() - 1)]
 
 	if base == null:
 		push_error(
