@@ -151,7 +151,14 @@ func open_chest() -> ItemInstance:
 		var stats = selected_hero.get("character_stats")
 		if is_instance_valid(stats):
 			hero_level = maxi(1, int(stats.get("level")))
-	var item := item_generator.generate_chest_item(hero_level)
+	var item_class: ItemBase.ItemClass = ItemBase.ItemClass.MAGE
+	match CharacterSelectionData.normalize_hero_id(active_hero_id):
+		"knight":
+			item_class = ItemBase.ItemClass.KNIGHT
+		"archer":
+			item_class = ItemBase.ItemClass.ARCHER
+
+	var item := item_generator.generate_chest_item(hero_level, item_class)
 
 	if item == null:
 		push_error("Inventory: falha ao gerar equipamento. O baú não foi consumido.")
