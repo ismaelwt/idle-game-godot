@@ -83,7 +83,7 @@ const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 )
 
 
-var player: Node3D
+var fallback_hero_target: Node3D
 
 var health: float
 var center_position: Vector3
@@ -478,7 +478,7 @@ func get_nearest_alive_hero() -> Node3D:
 		heroes = party_manager.get_alive_heroes()
 	else:
 		var fallback_player: Node3D = (
-			get_tree().get_first_node_in_group("player") as Node3D
+			get_tree().get_first_node_in_group("party_heroes") as Node3D
 		)
 
 		if (
@@ -639,3 +639,19 @@ func create_level_label() -> void:
 		level_label_height,
 		0.0
 	)
+
+
+
+func _get_selected_hero_fallback() -> Node3D:
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate) or not candidate is Node3D:
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats):
+			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			if hero_id == selected_id:
+				return candidate
+	return null
