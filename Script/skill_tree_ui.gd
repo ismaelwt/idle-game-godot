@@ -194,41 +194,43 @@ func _refresh_selected_hero() -> void:
 
 
 func _find_selected_hero() -> Node:
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+
 	var scene := get_tree().current_scene
-	if scene == null:
-		return null
+	if scene != null:
+		var manager := scene.find_child("PartyManager", true, false) as PartyManager
+		if is_instance_valid(manager):
+			for hero in manager.get_heroes():
+				if not is_instance_valid(hero):
+					continue
+				var stats := _get_hero_stats(hero)
+				if is_instance_valid(stats):
+					var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+					if hero_id == selected_id:
+						return hero
 
-	var selected := "mage"
-	if is_instance_valid(CharacterSelectionData):
-		selected = str(CharacterSelectionData.selected_character).to_lower()
-
-	var candidate_names: Array[String] = []
-	if selected == "knight":
-		candidate_names = ["Knight", "knight"]
-	else:
-		candidate_names = ["Player", "Mage", "player", "mage"]
-
-	for candidate_name in candidate_names:
-		var candidate := scene.find_child(candidate_name, true, false)
-		if candidate != null and candidate.get("character_stats") != null:
-			return candidate
-
-	# Fallback para projetos que registram os heróis no grupo comum.
 	for candidate in get_tree().get_nodes_in_group("party_heroes"):
 		if not is_instance_valid(candidate):
 			continue
-		var stats = candidate.get("character_stats")
-		if stats != null and str(stats.get("hero_id")).to_lower() == selected:
-			return candidate
-
-	# Último fallback: mantém compatibilidade com a configuração antiga do Mage.
-	if selected != "knight":
-		var player := get_tree().get_first_node_in_group("player")
-		if is_instance_valid(player) and player.get("character_stats") != null:
-			return player
+		var stats := _get_hero_stats(candidate)
+		if is_instance_valid(stats):
+			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			if hero_id == selected_id:
+				return candidate
 
 	return null
 
+
+func _get_hero_stats(hero: Node) -> Node:
+	if not is_instance_valid(hero):
+		return null
+	var stats = hero.get("character_stats")
+	if is_instance_valid(stats):
+		return stats
+	stats = hero.get_node_or_null("CharacterStats")
+	if not is_instance_valid(stats):
+		stats = hero.find_child("CharacterStats", true, false)
+	return stats
 
 func _process(_delta: float) -> void:
 
