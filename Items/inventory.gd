@@ -10,7 +10,7 @@ var equipment: Array[ItemInstance] = []
 
 # Identificador do herói que as chamadas antigas (sem hero_id) devem usar.
 # A interface de status atualiza este valor ao selecionar um personagem.
-var active_hero_id: String = "player"
+var active_hero_id: String = "mage"
 
 # Equipamentos separados por herói: equipped_by_hero[hero_id][item_type] = ItemInstance.
 var equipped_by_hero: Dictionary = {}
@@ -140,18 +140,18 @@ func open_chest() -> ItemInstance:
 		push_warning("Inventory: cena atual não encontrada.")
 		return null
 
-	var player = current_scene.find_child("Player", true, false)
-	var player_level: int = 1
-	if player != null and player.character_stats != null:
-		player_level = player.character_stats.level
-	else:
-		# Sem Player principal, usa o nível de um herói da party se disponível.
+	var selected_hero := _find_hero_by_id(active_hero_id)
+	if not is_instance_valid(selected_hero):
 		var party_manager = get_tree().get_first_node_in_group("party_manager")
-		if is_instance_valid(party_manager) and party_manager.has_method("get_alive_heroes"):
-			var heroes = party_manager.get_alive_heroes()
-			if not heroes.is_empty() and is_instance_valid(heroes[0].character_stats):
-				player_level = heroes[0].character_stats.level
-	var item := item_generator.generate_chest_item(player_level)
+		if is_instance_valid(party_manager):
+			selected_hero = party_manager.get_main_hero()
+
+	var hero_level: int = 1
+	if is_instance_valid(selected_hero):
+		var stats = selected_hero.get("character_stats")
+		if is_instance_valid(stats):
+			hero_level = maxi(1, int(stats.get("level")))
+	var item := item_generator.generate_chest_item(hero_level)
 
 	if item == null:
 		push_error("Inventory: falha ao gerar equipamento. O baú não foi consumido.")
@@ -186,7 +186,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 		print("Esse item não está na mochila.")
 		return false
 
-	var player_level: int = 1
+	var hero_level: int = 1
 	var current_scene := get_tree().current_scene
 	if current_scene != null:
 		var party_manager = get_tree().get_first_node_in_group("party_manager")
@@ -198,14 +198,14 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 						hero = candidate
 						break
 		if hero == null:
-			hero = current_scene.find_child("Player", true, false)
+			hero = _find_hero_by_id(resolved_id)
 		if is_instance_valid(hero) and is_instance_valid(hero.get("character_stats")):
-			player_level = int(hero.character_stats.level)
+			hero_level = int(hero.character_stats.level)
 
-	if item.item_level > player_level:
+	if item.item_level > hero_level:
 		print(
 			"Não foi possível equipar %s. Nível do item: %d | Nível do herói: %d"
-			% [item.item_base.item_name, item.item_level, player_level]
+			% [item.item_base.item_name, item.item_level, hero_level]
 		)
 		return false
 
@@ -270,6 +270,14 @@ func _find_hero_by_id(hero_id: String) -> Node:
 			var stats = hero.get("character_stats")
 			if is_instance_valid(stats) and str(stats.get("hero_id")) == hero_id:
 				return hero
-	if hero_id == "player":
-		return current_scene.find_child("Player", true, false)
+	var normalized_id := CharacterSelectionData.normalize_hero_id(hero_id)
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate):
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats):
+			if CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == normalized_id:
+				return candidate
 	return null
