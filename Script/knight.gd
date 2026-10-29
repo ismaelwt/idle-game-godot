@@ -466,7 +466,7 @@ func take_damage(damage: float, damage_type: String = "physical") -> void:
 	flash_hit()
 
 	print(
-		"Player recebeu ",
+		"Knight recebeu ",
 		damage,
 		" de dano. Vida: ",
 		health,
