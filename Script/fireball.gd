@@ -24,6 +24,7 @@ func get_description() -> String:
 
 var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
+var critical_damage_multiplier: float = 1.5
 
 var target: Node3D
 var resolved := false
@@ -74,11 +75,12 @@ func _on_body_entered(body):
 			return
 
 		var raw_damage: float = (damage + magic_bonus) * damage_multiplier
-		if randf() * 100.0 < critical_chance:
-			raw_damage *= 1.5
+		var is_critical: bool = randf() * 100.0 < critical_chance
+		if is_critical:
+			raw_damage *= critical_damage_multiplier
 		var final_damage := int(round(raw_damage))
 
-		enemy.take_damage(final_damage)
+		enemy.take_damage(final_damage, is_critical)
 		finish()
 
 
