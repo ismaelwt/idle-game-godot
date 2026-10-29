@@ -345,7 +345,7 @@ func _add_class_requirement(item: ItemInstance, hero_id: String) -> void:
 	if item.item_base.item_type == ItemBase.ItemType.GEM:
 		return
 
-	var class_names: Array[String] = ["Mage", "Knight", "Archer"]
+	var class_names: Array[String] = ["Mage", "Knight", "Archer", "Todos"]
 	var required_index: int = int(item.item_base.item_class)
 	var required_name: String = class_names[clampi(required_index, 0, class_names.size() - 1)]
 	var label := Label.new()
@@ -364,7 +364,7 @@ func _add_class_requirement(item: ItemInstance, hero_id: String) -> void:
 				hero_class = ItemBase.ItemClass.KNIGHT
 			"archer":
 				hero_class = ItemBase.ItemClass.ARCHER
-		if hero_class >= 0 and hero_class != required_index:
+		if required_index != ItemBase.ItemClass.ALL and hero_class >= 0 and hero_class != required_index:
 			label.add_theme_color_override("font_color", Color("#ff4040"))
 		else:
 			label.add_theme_color_override("font_color", Color("#b8b8b8"))
