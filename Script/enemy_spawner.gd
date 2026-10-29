@@ -105,8 +105,8 @@ func spawn_enemies() -> void:
 				push_warning("Uma cena configurada não possui raiz Node3D.")
 				continue
 
-			if _has_property(enemy, "player"):
-				enemy.set("player", selected_hero)
+			if _has_property(enemy, "fallback_hero_target"):
+				enemy.set("fallback_hero_target", selected_hero)
 
 			var player_level: int = 1
 			if is_instance_valid(selected_hero.get("character_stats")):
@@ -229,8 +229,8 @@ func spawn_boss() -> void:
 		push_error("EnemySpawner: a cena do Boss precisa ter uma raiz Node3D.")
 		return
 
-	if _has_property(boss, "player"):
-		boss.set("player", selected_hero)
+	if _has_property(boss, "fallback_hero_target"):
+		boss.set("fallback_hero_target", selected_hero)
 
 	var player_level: int = 1
 	if is_instance_valid(selected_hero) and is_instance_valid(selected_hero.get("character_stats")):
