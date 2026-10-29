@@ -218,13 +218,41 @@ func advance_wave() -> void:
 
 	wave_transition_in_progress = false
 
-
 func spawn_boss() -> void:
 	if boss_scene == null:
 		push_error("EnemySpawner: nenhuma cena de Boss foi definida no Inspector.")
 		return
 
+	if not is_instance_valid(world_scroller):
+		push_error("EnemySpawner: WorldScroller não está disponível.")
+		return
+
+	# Atualiza a referência caso o herói anterior tenha sido liberado.
+	if not is_instance_valid(selected_hero):
+		selected_hero = _get_selected_hero()
+
+	if not is_instance_valid(selected_hero):
+		push_error("EnemySpawner: não foi possível encontrar um herói válido para spawnar o Boss.")
+		return
+
+	# Guarda a posição antes de instanciar o Boss.
+	var hero_spawn_position: Vector3 = selected_hero.global_position
+	var hero_level: int = 1
+
+	var stats = selected_hero.get("character_stats")
+	if not is_instance_valid(stats):
+		stats = selected_hero.get_node_or_null("CharacterStats")
+
+	if is_instance_valid(stats):
+		hero_level = maxi(1, int(stats.get("level")))
+
+	var selected_level: int = mini(
+		hero_level,
+		max_enemy_level_limit
+	)
+
 	var boss := boss_scene.instantiate() as Node3D
+
 	if boss == null:
 		push_error("EnemySpawner: a cena do Boss precisa ter uma raiz Node3D.")
 		return
@@ -232,30 +260,31 @@ func spawn_boss() -> void:
 	if _has_property(boss, "fallback_hero_target"):
 		boss.set("fallback_hero_target", selected_hero)
 
-	var hero_level: int = 1
-	if is_instance_valid(selected_hero) and is_instance_valid(selected_hero.get("character_stats")):
-		hero_level = maxi(1, int(selected_hero.character_stats.level))
-
-	var selected_level: int = mini(hero_level, max_enemy_level_limit)
 	if boss.has_method("setup_level"):
 		boss.setup_level(selected_level)
 
 	world_scroller.add_child(boss)
-	boss.global_position = selected_hero.global_position
+
+	boss.global_position = hero_spawn_position
 	boss.global_position.z += spawn_distance
 
 	if not enemies.has(boss):
 		enemies.append(boss)
 
 	print(
-		"=== BOSS SPAWNADO === | Nível do jogador: ", hero_level,
-		" | Nível do boss: ", selected_level,
-		" | Posição: ", boss.global_position
+		"=== BOSS SPAWNADO === | Nível do jogador: ",
+		hero_level,
+		" | Nível do boss: ",
+		selected_level,
+		" | Posição: ",
+		boss.global_position
 	)
 
-	if is_instance_valid(level_controller) and level_controller.has_method("mark_wave_start_positions"):
+	if (
+		is_instance_valid(level_controller)
+		and level_controller.has_method("mark_wave_start_positions")
+	):
 		level_controller.mark_wave_start_positions()
-
 
 func get_valid_spawn_position(spawn_center: Vector3) -> Vector3:
 	for _attempt in range(max_spawn_attempts):

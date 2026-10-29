@@ -2,6 +2,8 @@ extends Node3D
 
 @onready var camera: Camera3D = $Camera3D
 
+@export var hero_z_offset: float = -6.0
+
 @onready var sub_viewport: SubViewport = (
 	get_parent()
 	.get_parent()
@@ -167,7 +169,7 @@ func _process(_delta):
 		snapped_world_position
 	)
 	
-	camera.global_position.z = followed_hero.global_position.z - 2
+	camera.global_position.z = followed_hero.global_position.z + hero_z_offset
 
 
 func _find_selected_hero() -> Node3D:

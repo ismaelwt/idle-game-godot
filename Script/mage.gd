@@ -383,7 +383,7 @@ func start_running():
 	)
 
 func play_animation(_name):
-	animation_player.play("mage/" + str(_name))
+	animation_player.play("player/" + str(_name))
 
 func start_combat():
 
@@ -395,7 +395,7 @@ func start_combat():
 	animation_player.speed_scale = 1.0
 
 	animation_player.play(
-		"mage/idle2",
+		"player/idle2",
 		animation_blend
 	)
 

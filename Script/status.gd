@@ -23,6 +23,9 @@ var item_tooltip: ItemTooltip
 @onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
 @onready var mage_change_button: TextureButton = $CenterContainer/PanelContainer/Background/MageAvatar
 
+@onready var knight_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/KnightAvatar/SelectedPlayer
+@onready var mage_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/MageAvatar/SelectedPlayer
+
 @onready var inventory_panel = $CenterContainer/InventoryControl/InventoryPanel
 @onready var items_grid: GridContainer = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer/ItemsGrid
 @onready var chest_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/ChestButton
@@ -605,18 +608,29 @@ func get_equipment_icon(
 # ==========================================
 # TOOLTIP PERSONALIZADO DOS EQUIPAMENTOS
 # ==========================================
-
-
-func _handle_equipment_tooltip(event: InputEvent, item_type: int) -> void:
+func _handle_equipment_tooltip(
+	event: InputEvent,
+	item_type: int
+) -> void:
 	if not event is InputEventMouseMotion:
 		return
 
-	if inventory == null or item_tooltip == null:
+	if not is_instance_valid(inventory):
 		return
 
-	var item: ItemInstance = inventory.get_equipped_items(str(character_stats.hero_id)).get(item_type)
+	if not is_instance_valid(item_tooltip):
+		return
 
-	if item != null and item.item_base != null:
+	var hero_id := _get_valid_active_hero_id()
+
+	if hero_id.is_empty():
+		item_tooltip.hide_tooltip()
+		return
+
+	var equipped_items: Dictionary = inventory.get_equipped_items(hero_id)
+	var item: ItemInstance = equipped_items.get(item_type)
+
+	if item != null and is_instance_valid(item) and item.item_base != null:
 		item_tooltip.show_item(item)
 	else:
 		var slot_name := ""
@@ -636,7 +650,6 @@ func _handle_equipment_tooltip(event: InputEvent, item_type: int) -> void:
 				slot_name = "Botas"
 
 		item_tooltip.show_empty_equipment_slot(slot_name)
-
 
 
 func _on_equipment_icon_mouse_exited() -> void:
@@ -680,7 +693,12 @@ func _on_helmet_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.HELMET, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.HELMET, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -693,7 +711,12 @@ func _on_chest_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.CHEST, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.CHEST, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -706,7 +729,12 @@ func _on_weapon_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.WEAPON, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.WEAPON, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -719,7 +747,12 @@ func _on_gloves_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.GLOVES, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.GLOVES, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -732,7 +765,12 @@ func _on_pants_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.PANTS, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.PANTS, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -745,7 +783,12 @@ func _on_boots_icon_gui_input(event: InputEvent) -> void:
 
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			inventory.unequip_item(ItemBase.ItemType.BOOTS, str(character_stats.hero_id))
+			var hero_id := _get_valid_active_hero_id()
+
+			if hero_id.is_empty() or not is_instance_valid(inventory):
+				return
+
+			inventory.unequip_item(ItemBase.ItemType.BOOTS, hero_id)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
@@ -897,12 +940,40 @@ func _get_hero_stats(hero: Node) -> Node:
 
 
 func _refresh_hero_switch_buttons() -> void:
-	if not is_instance_valid(knight_change_button) or not is_instance_valid(mage_change_button):
+	if not is_instance_valid(knight_change_button):
 		return
 
-	knight_change_button.disabled = not is_instance_valid(_find_hero_by_id("knight"))
-	mage_change_button.disabled = not is_instance_valid(_find_hero_by_id("mage"))
+	if not is_instance_valid(mage_change_button):
+		return
 
+	# Mantém os botões habilitados apenas para heróis disponíveis.
+	knight_change_button.disabled = not is_instance_valid(
+		_find_hero_by_id("knight")
+	)
+
+	mage_change_button.disabled = not is_instance_valid(
+		_find_hero_by_id("mage")
+	)
+
+	# Identifica o herói atualmente exibido no Status.
+	var current_hero_id := ""
+
+	if is_instance_valid(character_stats):
+		current_hero_id = str(
+			character_stats.get("hero_id")
+		).strip_edges().to_lower()
+
+	# Mostra o indicador somente ao lado do herói ativo no Status.
+	if is_instance_valid(knight_selected_icon):
+		knight_selected_icon.visible = (
+			current_hero_id == "knight"
+		)
+
+	if is_instance_valid(mage_selected_icon):
+		mage_selected_icon.visible = (
+			current_hero_id == "mage"
+		)
+	
 
 # Localiza heróis pela identidade do CharacterStats, sem depender do nome do nó.
 func _find_selected_hero() -> Node:
@@ -946,3 +1017,18 @@ func set_selected_hero(hero: Node) -> void:
 	refresh_equipment_slots()
 	refresh_inventory()
 	_refresh_hero_switch_buttons()
+
+func _get_valid_active_hero_id() -> String:
+	if not is_instance_valid(active_hero):
+		return ""
+
+	var stats = active_hero.get("character_stats")
+
+	if not is_instance_valid(stats):
+		stats = active_hero.get_node_or_null("CharacterStats")
+
+	if not is_instance_valid(stats):
+		return ""
+
+	character_stats = stats
+	return str(stats.get("hero_id"))
