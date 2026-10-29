@@ -262,22 +262,44 @@ func _find_hero_by_id(hero_id: String) -> Node:
 	var current_scene := get_tree().current_scene
 	if current_scene == null:
 		return null
-	var party_manager = get_tree().get_first_node_in_group("party_manager")
-	if is_instance_valid(party_manager) and party_manager.has_method("get_alive_heroes"):
-		for hero in party_manager.get_alive_heroes():
+
+	var normalized_id := CharacterSelectionData.normalize_hero_id(hero_id)
+
+	# O gerenciamento de inventário deve encontrar o herói mesmo morto.
+	# Não usar get_alive_heroes() para localizar dono de equipamento.
+	var party_manager := current_scene.find_child("PartyManager", true, false)
+	if is_instance_valid(party_manager) and party_manager.has_method("get_heroes"):
+		for hero in party_manager.get_heroes():
 			if not is_instance_valid(hero):
 				continue
+
 			var stats = hero.get("character_stats")
-			if is_instance_valid(stats) and str(stats.get("hero_id")) == hero_id:
+			if not is_instance_valid(stats):
+				stats = hero.get_node_or_null("CharacterStats")
+			if not is_instance_valid(stats):
+				continue
+
+			var candidate_id := CharacterSelectionData.normalize_hero_id(
+				str(stats.get("hero_id"))
+			)
+			if candidate_id == normalized_id:
 				return hero
-	var normalized_id := CharacterSelectionData.normalize_hero_id(hero_id)
+
+	# Compatibilidade com heróis que ainda estejam registrados apenas no grupo.
 	for candidate in get_tree().get_nodes_in_group("party_heroes"):
 		if not is_instance_valid(candidate):
 			continue
+
 		var stats = candidate.get("character_stats")
 		if not is_instance_valid(stats):
 			stats = candidate.get_node_or_null("CharacterStats")
-		if is_instance_valid(stats):
-			if CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == normalized_id:
-				return candidate
+		if not is_instance_valid(stats):
+			continue
+
+		var candidate_id := CharacterSelectionData.normalize_hero_id(
+			str(stats.get("hero_id"))
+		)
+		if candidate_id == normalized_id:
+			return candidate
+
 	return null
