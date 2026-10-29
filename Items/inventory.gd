@@ -200,7 +200,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 			push_warning("Inventory: classe desconhecida para o herói '%s'." % resolved_id)
 			return false
 
-	if required_class != hero_class:
+	if required_class != ItemBase.ItemClass.ALL and required_class != hero_class:
 		print(
 			"Não foi possível equipar %s. Classe exigida: %s | Classe do herói: %s"
 			% [
