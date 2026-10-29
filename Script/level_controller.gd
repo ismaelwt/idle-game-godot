@@ -244,7 +244,9 @@ func process_skills() -> void:
 		if is_instance_valid(combat_controller):
 			combat_controller.set_target(hero, target)
 
-		var range_value = hero.get("attack_range")
+		# Para heróis corpo a corpo, a parada do mundo deve respeitar
+		# o alcance real de ataque, não apenas o alcance de detecção.
+		var range_value = _get_hero_engagement_range(hero)
 
 		if range_value == null:
 			all_heroes_in_attack_range = false
@@ -296,7 +298,7 @@ func process_skills() -> void:
 		if target.dying or target.health <= 0:
 			continue
 
-		var range_value = hero.get("attack_range")
+		var range_value = _get_hero_engagement_range(hero)
 
 		if range_value == null:
 			continue
@@ -318,6 +320,18 @@ func process_skills() -> void:
 
 		if is_instance_valid(combat_controller):
 			combat_controller.process_skill_rotation(hero, target)
+
+func _get_hero_engagement_range(hero: Node) -> Variant:
+	if not is_instance_valid(hero):
+		return null
+
+	# Knight tem attack_range para detecção, mas melee_range para realmente atacar.
+	var melee_range = hero.get("melee_range")
+	if melee_range != null:
+		return float(melee_range)
+
+	return hero.get("attack_range")
+
 
 func has_combat_enemies() -> bool:
 	for enemy in combat_enemies:
