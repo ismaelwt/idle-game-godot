@@ -103,22 +103,24 @@ shader_parameter/lineShadow = 0.1
 [sub_resource type="Resource" id="Resource_4qhvg"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
-amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_tohvi"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("10_t405x")
+amount = 0
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_t405x"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
+amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_rby12"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("10_t405x")
+amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_lue1o"]
@@ -380,7 +382,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
 
 [node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(-1.8270907, 0, 0.81347305, 0, 2, 0, -0.81347305, 0, -1.8270907, 0, 0, -24.79126)
+transform = Transform3D(-1.7320505, 0, 1, 0, 2, 0, -1, 0, -1.7320505, 0, 0, -24.79126)
 script = ExtResource("3_ghgdn")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
@@ -423,7 +425,7 @@ damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 
 [node name="Player" parent="SubViewportContainer/SubViewport" groups=["party_heroes", "player"] instance=ExtResource("13_r5dji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
-attack_range = 10.0
+attack_range = 7.0
 attack_base_duration = 0.6
 damage_font_size = 90
 damage_height = 2.0

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://celjcdxc6pbya"]
+[gd_scene load_steps=13 format=3 uid="uid://celjcdxc6pbya"]
 
 [ext_resource type="Script" uid="uid://ceh52kk748qh" path="res://Script/companion_shop.gd" id="1_dgo3d"]
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="2_f2w83"]
-[ext_resource type="Texture2D" uid="uid://dyqpovl1t4jyp" path="res://UI/UISprites/characterUI/Knight.png" id="3_2yyh0"]
+[ext_resource type="Texture2D" uid="uid://dl4tfr2vvainy" path="res://UI/UISprites/Mage_Avatar.png" id="3_1awpb"]
+[ext_resource type="Texture2D" uid="uid://ctef08pvcnevn" path="res://UI/UISprites/Knight_Avatar.png" id="4_jkhgm"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="4_oogli"]
 [ext_resource type="Texture2D" uid="uid://ddc2f1vwcbvff" path="res://UI/UISprites/Icon_button_Buy.png" id="5_dxfu2"]
 [ext_resource type="Texture2D" uid="uid://f0kjosgcdrlw" path="res://UI/UISprites/Icon_button_Equip_buyed_item.png" id="6_dxfu2"]
@@ -81,10 +82,16 @@ grow_vertical = 2
 theme_override_constants/separation = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="Avatar" type="TextureRect" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="AvatarMage" type="TextureRect" parent="PanelContainer/Control/Control/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
-texture = ExtResource("3_2yyh0")
+texture = ExtResource("3_1awpb")
+stretch_mode = 3
+
+[node name="AvatarKnight" type="TextureRect" parent="PanelContainer/Control/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("4_jkhgm")
 stretch_mode = 3
 
 [node name="TitleLabel" type="Label" parent="PanelContainer/Control/Control/VBoxContainer"]

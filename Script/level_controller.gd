@@ -245,7 +245,7 @@ func process_skills() -> void:
 
 		var distance := hero_position.distance_to(target_position)
 
-		if distance > float(range_value):
+		if distance > float(range_value) + 0.01:
 			all_heroes_in_attack_range = false
 
 	# Mantém o cenário avançando até todos os heróis vivos
@@ -295,7 +295,7 @@ func process_skills() -> void:
 
 		var distance := hero_position.distance_to(target_position)
 
-		if distance > float(range_value):
+		if distance > float(range_value) + 0.01:
 			continue
 
 		if is_instance_valid(combat_controller):
@@ -452,7 +452,7 @@ func select_next_enemy():
 		if hero_range == null:
 			hero_range = 0.0
 
-		if distance > float(hero_range):
+		if distance > float(hero_range) + 0.01:
 			continue
 
 		if distance < nearest_distance:

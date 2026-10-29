@@ -6,6 +6,9 @@ var companion_id: String = ""
 var companion_name: String = ""
 @export var companion_price: int = 500
 
+@onready var knight_avatar: TextureRect = $PanelContainer/Control/Control/VBoxContainer/AvatarKnight
+@onready var mage_avatar: TextureRect = $PanelContainer/Control/Control/VBoxContainer/AvatarMage
+
 @onready var title_label: Label = $PanelContainer/Control/Control/VBoxContainer/TitleLabel
 @onready var gold_label: Label = $PanelContainer/Control/Control/VBoxContainer/GoldLabel
 @onready var description_label: Label = $PanelContainer/Control/Control/VBoxContainer/DescriptionLabel
@@ -45,10 +48,14 @@ func _configure_companion_offer() -> void:
 		"mage":
 			companion_id = "knight"
 			companion_name = "Cavaleiro Companheiro"
+			knight_avatar.visible = true;
+			mage_avatar.visible = false;
 			return
 		"knight":
 			companion_id = "mage"
 			companion_name = "Mago Companheiro"
+			knight_avatar.visible = false;
+			mage_avatar.visible = true;
 			return
 		_:
 			# Fallback para saves/seleções desconhecidas: oferece o Cavaleiro.

@@ -74,49 +74,77 @@ func _process(_delta: float) -> void:
 # =========================================================
 
 func _refresh_heroes() -> void:
-	var selected_character := CharacterSelectionData.selected_character.to_lower()
+	var active_party_manager := party_manager
 
-	# Exibe somente o HUD do personagem escolhido.
-	mage_ui.visible = selected_character == "mage"
-	knight_ui.visible = selected_character == "knight"
+	if not is_instance_valid(active_party_manager):
+		var scene := get_tree().current_scene
+		if scene == null:
+			return
 
-	# Localiza o herói correspondente à escolha.
-	var scene := get_tree().current_scene
-	if scene == null:
-		return
+		active_party_manager = scene.find_child(
+			"PartyManager", true, false
+		) as PartyManager
 
-	var selected_hero: Node3D = null
+		if not is_instance_valid(active_party_manager):
+			return
 
-	if selected_character == "knight":
-		var node := scene.find_child("Knight", true, false)
-		if node is Node3D and _has_valid_stats(node):
-			selected_hero = node
+		party_manager = active_party_manager
 
-	elif selected_character == "mage":
-		var node := scene.find_child("Player", true, false)
-		if node is Node3D and _has_valid_stats(node):
-			selected_hero = node
+	var active_heroes: Array[Node3D] = (
+		active_party_manager.get_heroes()
+	)
 
-	# Mantém as referências independentes dos dois heróis.
-	mage_hero = null
-	knight_hero = null
+	var new_mage: Node3D = null
+	var new_knight: Node3D = null
 
-	if is_instance_valid(selected_hero):
-		if selected_character == "knight":
-			knight_hero = selected_hero
-			_update_skill_icons(knight_hero, knight_skill_icons)
-		elif selected_character == "mage":
-			mage_hero = selected_hero
-			_update_skill_icons(mage_hero, mage_skill_icons)
+	for hero in active_heroes:
+		if not is_instance_valid(hero):
+			continue
+
+		if not _has_valid_stats(hero):
+			continue
+
+		var stats: Node = hero.get_node_or_null("CharacterStats")
+		if stats == null:
+			stats = hero.find_child(
+				"CharacterStats", true, false
+			)
+
+		if stats == null:
+			continue
+
+		var hero_id := str(stats.get("hero_id")).to_lower()
+
+		if hero_id == "mage" or hero_id == "player":
+			new_mage = hero
+		elif hero_id == "knight":
+			new_knight = hero
+
+	mage_hero = new_mage
+	knight_hero = new_knight
+
+	mage_ui.visible = is_instance_valid(mage_hero)
+	knight_ui.visible = is_instance_valid(knight_hero)
+
+	if is_instance_valid(mage_hero):
+		_update_skill_icons(mage_hero, mage_skill_icons)
+
+	if is_instance_valid(knight_hero):
+		_update_skill_icons(knight_hero, knight_skill_icons)
 
 
 func _has_valid_stats(hero: Node) -> bool:
 	if not is_instance_valid(hero):
 		return false
 
-	var stats = hero.get("character_stats")
-	return is_instance_valid(stats)
+	var stats: Node = hero.get_node_or_null("CharacterStats")
 
+	if stats == null:
+		stats = hero.find_child(
+			"CharacterStats", true, false
+		)
+
+	return is_instance_valid(stats)
 
 func _is_hero_alive(hero: Node3D) -> bool:
 	if not is_instance_valid(hero):
