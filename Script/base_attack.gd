@@ -9,6 +9,7 @@ signal finished
 
 var magic_bonus: int = 0
 var critical_chance: float = 1.0
+var critical_damage_multiplier: float = 1.5
 var basic_attack_level: int = 0
 
 var target: Node3D
@@ -88,11 +89,12 @@ func _on_body_entered(body):
 		return
 
 	var raw_damage: float = (damage + basic_attack_level + magic_bonus) * damage_multiplier
-	if randf() * 100.0 < critical_chance:
-		raw_damage *= 1.5
+	var is_critical: bool = randf() * 100.0 < critical_chance
+	if is_critical:
+		raw_damage *= critical_damage_multiplier
 	var final_damage := int(round(raw_damage))
 
-	target.take_damage(final_damage)
+	target.take_damage(final_damage, is_critical)
 
 	finish()
 
