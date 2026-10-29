@@ -24,7 +24,8 @@ enum Rarity {
 enum ItemClass {
 	MAGE,
 	KNIGHT,
-	ARCHER
+	ARCHER,
+	ALL
 }
 
 enum GemEffect {
