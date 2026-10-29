@@ -21,6 +21,12 @@ enum Rarity {
 	LEGENDARY
 }
 
+enum ItemClass {
+	MAGE,
+	KNIGHT,
+	ARCHER
+}
+
 enum GemEffect {
 	NONE,
 	STRENGTH,
@@ -47,6 +53,7 @@ enum GemEffect {
 
 @export_category("Classificação")
 @export var item_type: ItemType = ItemType.WEAPON
+@export var item_class: ItemClass = ItemClass.MAGE
 @export var rarity: Rarity = Rarity.COMMON
 
 @export_category("Nível do Item")
