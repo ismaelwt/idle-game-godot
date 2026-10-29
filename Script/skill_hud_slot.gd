@@ -49,16 +49,16 @@ func _ready():
 
 func _get_drag_data(_at_position):
 
-	var player = get_tree().get_first_node_in_group("player")
+	var hero = _get_main_hero()
 
 	if not is_instance_valid(player):
 
-		print("DRAG ERRO: Player não encontrado.")
+		print("DRAG ERRO: herói principal não encontrado.")
 
 		return null
 
 
-	var character_stats = player.character_stats
+	var character_stats = hero.character_stats
 
 
 	if slot_index >= character_stats.skill_order.size():
@@ -134,13 +134,13 @@ func _can_drop_data(_at_position, data):
 		return false
 
 
-	var player = get_tree().get_first_node_in_group("player")
+	var hero = _get_main_hero()
 
 	if not is_instance_valid(player):
 		return false
 
 
-	var character_stats = player.character_stats
+	var character_stats = hero.character_stats
 
 	var from_index = int(
 		data["from_index"]
@@ -178,18 +178,18 @@ func _drop_data(_at_position, data):
 		return
 
 
-	var player = get_tree().get_first_node_in_group("player")
+	var hero = _get_main_hero()
 
 	if not is_instance_valid(player):
 
 		print(
-			"DROP ERRO: Player não encontrado."
+			"DROP ERRO: herói principal não encontrado."
 		)
 
 		return
 
 
-	var character_stats = player.character_stats
+	var character_stats = hero.character_stats
 
 	var from_index = int(
 		data["from_index"]
@@ -277,3 +277,24 @@ func _drop_data(_at_position, data):
 	)
 
 	print("====================================")
+
+
+func _get_main_hero() -> Node:
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		var main_hero := manager.get_main_hero()
+		if is_instance_valid(main_hero):
+			return main_hero
+
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate):
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats):
+			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			if hero_id == selected_id:
+				return candidate
+	return null
