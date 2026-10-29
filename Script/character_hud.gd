@@ -8,8 +8,11 @@ var font = preload("res://Fonts/Pix32.ttf")
 var map_panel: Control
 var shop_panel: Control
 
-# HERÓI SELECIONADO
+# HERÓIS DA EQUIPE
 var player: Node3D = null
+var mage_hero: Node3D = null
+var knight_hero: Node3D = null
+var party_manager: PartyManager = null
 
 # VIDA E MANA
 @onready var mage_health_bar: ProgressBar = $VBoxContainer/MageUI/HealthFrame/HealthProgressBar
@@ -46,86 +49,158 @@ func _ready() -> void:
 	status_button.pressed.connect(_on_status_button_pressed)
 	retry_panel_button.pressed.connect(_on_retry_panel_button_pressed)
 
-	_update_selected_hero()
+	var scene := get_tree().current_scene
+	if scene != null:
+		party_manager = scene.find_child(
+			"PartyManager", true, false
+		) as PartyManager
+
+	if not is_instance_valid(party_manager):
+		party_manager = get_node_or_null("/root/PartyManager") as PartyManager
+
+	if is_instance_valid(party_manager):
+		if not party_manager.party_changed.is_connected(_on_party_changed):
+			party_manager.party_changed.connect(_on_party_changed)
+
+	_refresh_heroes()
+	call_deferred("_refresh_heroes")
 
 
 func _process(_delta: float) -> void:
-	# Detecta se o herói selecionado mudou.
+	_update_hero_ui(mage_hero, "mage")
+	_update_hero_ui(knight_hero, "knight")
+
+	# Os pontos de habilidade e o painel de status pertencem ao herói principal.
 	_update_selected_hero()
 
-	if not is_instance_valid(player):
+	if is_instance_valid(player):
+		var stats := _get_character_stats(player)
+		if is_instance_valid(stats):
+			skill_tree_button_points_label.text = str(stats.get("skill_points"))
+
+
+func _refresh_heroes() -> void:
+	var manager := party_manager
+
+	if not is_instance_valid(manager):
+		var scene := get_tree().current_scene
+		if scene == null:
+			return
+		manager = scene.find_child("PartyManager", true, false) as PartyManager
+		if not is_instance_valid(manager):
+			manager = get_node_or_null("/root/PartyManager") as PartyManager
+		if not is_instance_valid(manager):
+			return
+		party_manager = manager
+
+	var new_mage: Node3D = null
+	var new_knight: Node3D = null
+
+	for hero in manager.get_heroes():
+		if not is_instance_valid(hero):
+			continue
+
+		var stats := _get_character_stats(hero)
+		if not is_instance_valid(stats):
+			continue
+
+		var hero_id := str(stats.get("hero_id")).strip_edges().to_lower()
+		if hero_id == "player":
+			hero_id = "mage"
+
+		match hero_id:
+			"mage":
+				new_mage = hero
+			"knight":
+				new_knight = hero
+
+	mage_hero = new_mage
+	knight_hero = new_knight
+
+	$VBoxContainer/MageUI.visible = is_instance_valid(mage_hero)
+	$VBoxContainer/KnightUI.visible = is_instance_valid(knight_hero)
+
+	# Mantém player como referência ao herói principal para os botões existentes.
+	_update_selected_hero()
+
+
+func _get_character_stats(hero: Node) -> Node:
+	if not is_instance_valid(hero):
+		return null
+
+	# Compatibilidade com scripts que guardam CharacterStats em uma propriedade.
+	var stats: Node = hero.get("character_stats")
+	if is_instance_valid(stats):
+		return stats
+
+	stats = hero.get_node_or_null("CharacterStats")
+	if stats == null:
+		stats = hero.find_child("CharacterStats", true, false)
+
+	return stats
+
+
+func _update_hero_ui(hero: Node3D, hero_id: String) -> void:
+	if not is_instance_valid(hero):
 		return
 
-	var character_stats = player.get("character_stats")
-
-	if not is_instance_valid(character_stats):
+	var stats := _get_character_stats(hero)
+	if not is_instance_valid(stats):
 		return
 
-	# PONTOS DE HABILIDADE
-	skill_tree_button_points_label.text = str(character_stats.skill_points)
+	var health_bar: ProgressBar
+	var mana_bar: ProgressBar
+	var level_label: Label
+	var xp_bar: ProgressBar
 
-	# NÍVEL
-	mage_level_label.text = "Lv. " + str(character_stats.level)
-	knight_level_label.text = "Lv. " + str(character_stats.level)
+	match hero_id:
+		"mage":
+			health_bar = mage_health_bar
+			mana_bar = mage_mana_bar
+			level_label = mage_level_label
+			xp_bar = mage_xp_bar
+		"knight":
+			health_bar = knight_health_bar
+			mana_bar = knight_mana_bar
+			level_label = knight_level_label
+			xp_bar = knight_xp_bar
+		_:
+			return
 
-	# VIDA
-	mage_health_bar.max_value = maxf(float(player.max_health), 1.0)
-	mage_health_bar.value = clampf(
-		float(player.health),
-		0.0,
-		float(player.max_health)
-	)
-	
-	knight_health_bar.max_value = maxf(float(player.max_health), 1.0)
-	knight_health_bar.value = clampf(
-		float(player.health),
-		0.0,
-		float(player.max_health)
-	)
+	var max_health := maxf(float(hero.get("max_health")), 1.0)
+	var health := float(hero.get("health"))
+	health_bar.max_value = max_health
+	health_bar.value = clampf(health, 0.0, max_health)
 
-	# MANA
-	mage_mana_bar.max_value = maxf(float(character_stats.max_mana), 1.0)
-	mage_mana_bar.value = clampf(
-		float(character_stats.mana),
-		0.0,
-		float(character_stats.max_mana)
-	)
-	
-	knight_mana_bar.max_value = maxf(float(character_stats.max_mana), 1.0)
-	knight_mana_bar.value = clampf(
-		float(character_stats.mana),
-		0.0,
-		float(character_stats.max_mana)
-	)
+	var max_mana := maxf(float(stats.get("max_mana")), 1.0)
+	var mana := float(stats.get("mana"))
+	mana_bar.max_value = max_mana
+	mana_bar.value = clampf(mana, 0.0, max_mana)
 
-	# XP
-	mage_xp_bar.max_value = maxf(float(character_stats.xp_to_next_level), 1.0)
-	mage_xp_bar.value = clampf(
-		float(character_stats.xp),
-		0.0,
-		float(character_stats.xp_to_next_level)
-	)
-	
-	knight_xp_bar.max_value = maxf(float(character_stats.xp_to_next_level), 1.0)
-	knight_xp_bar.value = clampf(
-		float(character_stats.xp),
-		0.0,
-		float(character_stats.xp_to_next_level)
-	)
+	level_label.text = "Lv. " + str(stats.get("level"))
+
+	var xp_required := maxf(float(stats.get("xp_to_next_level")), 1.0)
+	var xp := float(stats.get("xp"))
+	xp_bar.max_value = xp_required
+	xp_bar.value = clampf(xp, 0.0, xp_required)
+
+
+func _on_party_changed(_heroes: Array[Node3D]) -> void:
+	_refresh_heroes()
 
 
 func _update_selected_hero() -> void:
-	var selected_id := str(CharacterSelectionData.selected_character).to_lower()
-	var hero_name := "Knight" if selected_id == "knight" else "Player"
+	if is_instance_valid(party_manager):
+		var main_hero := party_manager.get_main_hero()
+		if is_instance_valid(main_hero):
+			player = main_hero
+			return
 
-	var selected_hero := get_tree().current_scene.find_child(
-		hero_name,
-		true,
-		false
-	) as Node3D
-
-	if is_instance_valid(selected_hero):
-		player = selected_hero
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	if selected_id == "knight":
+		player = knight_hero
+	else:
+		player = mage_hero
 
 
 func _on_skill_tree_button_pressed() -> void:
