@@ -67,8 +67,29 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	_update_hero_ui(mage_hero, "mage")
-	_update_hero_ui(knight_hero, "knight")
+	# Um herói pode ter sido liberado ao morrer/removido da cena.
+	# Atualiza a equipe antes de passar referências antigas para funções tipadas.
+	var mage_was_assigned := mage_hero != null
+	var knight_was_assigned := knight_hero != null
+	var player_was_assigned := player != null
+
+	if (
+		(mage_was_assigned and not is_instance_valid(mage_hero))
+		or (knight_was_assigned and not is_instance_valid(knight_hero))
+		or (player_was_assigned and not is_instance_valid(player))
+	):
+		_refresh_heroes()
+
+	# Só chamar a função com referências ainda válidas.
+	if is_instance_valid(mage_hero):
+		_update_hero_ui(mage_hero, "mage")
+	else:
+		$VBoxContainer/MageUI.visible = false
+
+	if is_instance_valid(knight_hero):
+		_update_hero_ui(knight_hero, "knight")
+	else:
+		$VBoxContainer/KnightUI.visible = false
 
 	# Os pontos de habilidade e o painel de status pertencem ao herói principal.
 	_update_selected_hero()
