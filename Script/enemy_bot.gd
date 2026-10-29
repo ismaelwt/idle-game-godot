@@ -196,10 +196,10 @@ func die():
 
 	target_hero = _get_nearest_alive_hero()
 
-	if is_instance_valid(target_hero)
+	if is_instance_valid(target_hero):
 		target_hero.character_stats.add_xp(xp_reward)
-		player.character_stats.add_gold(gold_reward)
-		SaveManager.save_character(player.character_stats)
+		target_hero.character_stats.add_gold(gold_reward)
+		SaveManager.save_character(target_hero.character_stats)
 
 	# A animação de morte continua.
 	
