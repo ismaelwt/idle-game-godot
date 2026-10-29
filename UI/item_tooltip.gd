@@ -38,7 +38,7 @@ func _ready() -> void:
 	hide()
 
 
-func show_item(item: ItemInstance, hero_level: int = -1) -> void:
+func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -> void:
 	if item == null or item.item_base == null:
 		hide()
 		return
@@ -63,6 +63,7 @@ func show_item(item: ItemInstance, hero_level: int = -1) -> void:
 	rarity_label.text = ItemBase.Rarity.keys()[item.generated_rarity]
 	_clear_attributes()
 	_clear_enchantment_slots()
+	_add_class_requirement(item, hero_id)
 	rarity_label.add_theme_color_override(
 		"font_color",
 		_get_rarity_color(item.generated_rarity)
@@ -336,3 +337,38 @@ func _update_level_label_color(item: ItemInstance, hero_level: int = -1) -> void
 			"font_color",
 			Color("#b8b8b8")
 		)
+
+
+func _add_class_requirement(item: ItemInstance, hero_id: String) -> void:
+	if item == null or item.item_base == null:
+		return
+	if item.item_base.item_type == ItemBase.ItemType.GEM:
+		return
+
+	var class_names := ["Mage", "Knight", "Archer"]
+	var required_index := int(item.item_base.item_class)
+	var required_name := class_names[clampi(required_index, 0, class_names.size() - 1)]
+	var label := Label.new()
+	label.text = "Classe: %s" % required_name
+	label.add_theme_font_override("font", font)
+	label.add_theme_font_size_override("font_size", 14)
+	label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
+
+	var normalized_hero_id := CharacterSelectionData.normalize_hero_id(hero_id)
+	if not normalized_hero_id.is_empty():
+		var hero_class := -1
+		match normalized_hero_id:
+			"mage":
+				hero_class = ItemBase.ItemClass.MAGE
+			"knight":
+				hero_class = ItemBase.ItemClass.KNIGHT
+			"archer":
+				hero_class = ItemBase.ItemClass.ARCHER
+		if hero_class >= 0 and hero_class != required_index:
+			label.add_theme_color_override("font_color", Color("#ff4040"))
+		else:
+			label.add_theme_color_override("font_color", Color("#b8b8b8"))
+	else:
+		label.add_theme_color_override("font_color", Color("#b8b8b8"))
+
+	attributes_container.add_child(label)
