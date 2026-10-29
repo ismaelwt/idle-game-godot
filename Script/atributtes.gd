@@ -26,11 +26,13 @@ func _ready():
 
 	hide()
 
-	var player = get_tree().get_first_node_in_group("player")
+	var selected_hero = _find_selected_hero()
 
-	if player:
+	if is_instance_valid(selected_hero):
 
-		character_stats = player.get_node("CharacterStats")
+		character_stats = selected_hero.get_node_or_null("CharacterStats")
+		if not is_instance_valid(character_stats):
+			character_stats = selected_hero.find_child("CharacterStats", true, false)
 
 		character_stats.level_up_occurred.connect(_on_level_up)
 
@@ -103,3 +105,21 @@ func _on_vitality_pressed():
 	SaveManager.save_character(character_stats)
 
 	update_stats()
+
+
+func _find_selected_hero() -> Node:
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		var main_hero := manager.get_main_hero()
+		if is_instance_valid(main_hero):
+			return main_hero
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate):
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats) and CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
+			return candidate
+	return null
