@@ -25,6 +25,7 @@ func get_description() -> String:
 
 var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
+var critical_damage_multiplier: float = 1.5
 
 @export_category("Explosão")
 @export var explosion_radius: float = 3.0
@@ -122,8 +123,9 @@ func explode(explosion_position: Vector3) -> void:
 	var enemies := get_tree().get_nodes_in_group("enemies")
 
 	var raw_damage: float = (damage + magic_bonus) * damage_multiplier
-	if randf() * 100.0 < critical_chance:
-		raw_damage *= 1.5
+	var is_critical: bool = randf() * 100.0 < critical_chance
+	if is_critical:
+		raw_damage *= critical_damage_multiplier
 	var final_damage := int(round(raw_damage))
 
 	for node in enemies:
@@ -148,6 +150,6 @@ func explode(explosion_position: Vector3) -> void:
 		)
 
 		if distance <= explosion_radius:
-			node.take_damage(final_damage)
+			node.take_damage(final_damage, is_critical)
 
 	finish()
