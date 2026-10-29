@@ -9,7 +9,7 @@ var map_panel: Control
 var shop_panel: Control
 
 # HERÓIS DA EQUIPE
-var player: Node3D = null
+var selected_hero: Node3D = null
 var mage_hero: Node3D = null
 var knight_hero: Node3D = null
 var party_manager: PartyManager = null
@@ -71,12 +71,12 @@ func _process(_delta: float) -> void:
 	# Atualiza a equipe antes de passar referências antigas para funções tipadas.
 	var mage_was_assigned := mage_hero != null
 	var knight_was_assigned := knight_hero != null
-	var player_was_assigned := player != null
+	var player_was_assigned := selected_hero != null
 
 	if (
 		(mage_was_assigned and not is_instance_valid(mage_hero))
 		or (knight_was_assigned and not is_instance_valid(knight_hero))
-		or (player_was_assigned and not is_instance_valid(player))
+		or (player_was_assigned and not is_instance_valid(selected_hero))
 	):
 		_refresh_heroes()
 
@@ -94,8 +94,8 @@ func _process(_delta: float) -> void:
 	# Os pontos de habilidade e o painel de status pertencem ao herói principal.
 	_update_selected_hero()
 
-	if is_instance_valid(player):
-		var stats := _get_character_stats(player)
+	if is_instance_valid(selected_hero):
+		var stats := _get_character_stats(selected_hero)
 		if is_instance_valid(stats):
 			skill_tree_button_points_label.text = str(stats.get("skill_points"))
 
@@ -126,7 +126,9 @@ func _refresh_heroes() -> void:
 			continue
 
 		var hero_id := str(stats.get("hero_id")).strip_edges().to_lower()
-		if hero_id == "player":
+		if is_instance_valid(CharacterSelectionData):
+			hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
+		elif hero_id == "player":
 			hero_id = "mage"
 
 		match hero_id:
@@ -214,14 +216,14 @@ func _update_selected_hero() -> void:
 	if is_instance_valid(party_manager):
 		var main_hero := party_manager.get_main_hero()
 		if is_instance_valid(main_hero):
-			player = main_hero
+			selected_hero = main_hero
 			return
 
 	var selected_id := CharacterSelectionData.get_selected_character_id()
 	if selected_id == "knight":
-		player = knight_hero
+		selected_hero = knight_hero
 	else:
-		player = mage_hero
+		selected_hero = mage_hero
 
 
 func _on_skill_tree_button_pressed() -> void:
@@ -231,7 +233,7 @@ func _on_skill_tree_button_pressed() -> void:
 func _on_status_button_pressed() -> void:
 	_update_selected_hero()
 
-	if not is_instance_valid(player):
+	if not is_instance_valid(selected_hero):
 		push_warning("Não foi possível encontrar o herói selecionado.")
 		return
 
@@ -239,7 +241,7 @@ func _on_status_button_pressed() -> void:
 		push_warning("Painel de status não encontrado.")
 		return
 
-	status_player.set_selected_hero(player)
+	status_player.set_selected_hero(selected_hero)
 	status_player.visible = not status_player.visible
 
 
