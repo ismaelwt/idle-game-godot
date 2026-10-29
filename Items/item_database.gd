@@ -30,11 +30,28 @@ func get_all_items() -> Array[ItemBase]:
 	return ITEMS
 
 
-func get_items_by_rarity(rarity: ItemBase.Rarity) -> Array[ItemBase]:
+func get_items_by_rarity(
+	rarity: ItemBase.Rarity,
+	item_class: ItemBase.ItemClass = ItemBase.ItemClass.MAGE
+) -> Array[ItemBase]:
 	var result: Array[ItemBase] = []
 
 	for item in ITEMS:
-		if item != null and item.rarity == rarity:
+		if (
+			item != null
+			and item.rarity == rarity
+			and item.item_class == item_class
+		):
+			result.append(item)
+
+	return result
+
+
+func get_items_by_class(item_class: ItemBase.ItemClass) -> Array[ItemBase]:
+	var result: Array[ItemBase] = []
+
+	for item in ITEMS:
+		if item != null and item.item_class == item_class:
 			result.append(item)
 
 	return result
@@ -61,9 +78,10 @@ func roll_rarity() -> ItemBase.Rarity:
 
 
 func get_random_item_by_rarity(
-	rarity: ItemBase.Rarity
+	rarity: ItemBase.Rarity,
+	item_class: ItemBase.ItemClass = ItemBase.ItemClass.MAGE
 ) -> ItemBase:
-	var available_items := get_items_by_rarity(rarity)
+	var available_items := get_items_by_rarity(rarity, item_class)
 
 	if available_items.is_empty():
 		push_warning(
