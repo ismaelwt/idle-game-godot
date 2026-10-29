@@ -226,18 +226,50 @@ func _on_skill_tree_button_pressed() -> void:
 	skill_tree.visible = not skill_tree.visible
 
 
-func _on_status_button_pressed() -> void:
-	_update_selected_hero()
+func _get_status_hero() -> Node3D:
+	# O Status precisa de um herói válido para exibir os atributos.
+	# Se o principal morreu, usa o companheiro vivo sem alterar a identidade
+	# do herói principal registrada no PartyManager.
+	if is_instance_valid(party_manager):
+		var main := party_manager.get_main_hero()
+		if _is_hero_alive_for_status(main):
+			return main
 
-	if not is_instance_valid(selected_hero):
-		push_warning("Não foi possível encontrar o herói selecionado.")
+		var alive_hero := party_manager.get_alive_reference_hero()
+		if _is_hero_alive_for_status(alive_hero):
+			return alive_hero
+
+	# Fallback para cenas sem PartyManager ou antes da equipe ser registrada.
+	if _is_hero_alive_for_status(selected_hero):
+		return selected_hero
+	if _is_hero_alive_for_status(knight_hero):
+		return knight_hero
+	if _is_hero_alive_for_status(mage_hero):
+		return mage_hero
+
+	return null
+
+
+func _is_hero_alive_for_status(hero: Variant) -> bool:
+	if not is_instance_valid(hero) or not hero is Node3D:
+		return false
+
+	var dead_value = hero.get("dead")
+	return dead_value == null or not bool(dead_value)
+
+
+func _on_status_button_pressed() -> void:
+	var hero_for_status := _get_status_hero()
+
+	if not is_instance_valid(hero_for_status):
+		push_warning("Não há um herói vivo disponível para abrir o Status.")
 		return
 
 	if not is_instance_valid(status_player):
 		push_warning("Painel de status não encontrado.")
 		return
 
-	status_player.set_selected_hero(selected_hero)
+	status_player.set_selected_hero(hero_for_status)
 	status_player.visible = not status_player.visible
 
 
