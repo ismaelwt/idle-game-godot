@@ -2,8 +2,8 @@
 extends Control
 
 @export_category("Companion")
-@export var companion_id: String = "knight"
-@export var companion_name: String = "Um Guerreiro como Companheiro"
+var companion_id: String = ""
+var companion_name: String = ""
 @export var companion_price: int = 500
 
 @onready var title_label: Label = $PanelContainer/Control/Control/VBoxContainer/TitleLabel
@@ -18,6 +18,7 @@ extends Control
 
 
 func _ready() -> void:
+	_configure_companion_offer()
 	title_label.text = companion_name
 	description_label.text = (
 		"Um companheiro que poderá acompanhar seu herói."
@@ -34,6 +35,25 @@ func _ready() -> void:
 	GameManager.global_state_changed.connect(_refresh_ui)
 
 	_refresh_ui()
+
+
+func _configure_companion_offer() -> void:
+	# O companion disponível é sempre o outro herói, diferente do principal.
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+
+	match selected_id:
+		"mage":
+			companion_id = "knight"
+			companion_name = "Cavaleiro Companheiro"
+			return
+		"knight":
+			companion_id = "mage"
+			companion_name = "Mago Companheiro"
+			return
+		_:
+			# Fallback para saves/seleções desconhecidas: oferece o Cavaleiro.
+			companion_id = "knight"
+			companion_name = "Cavaleiro Companheiro"
 
 
 func _refresh_ui() -> void:
