@@ -71,11 +71,6 @@ func _refresh_ui() -> void:
 		or companion_price <= 0
 	)
 
-	if is_owned:
-		buy_button.disabled = true
-	else:
-		buy_button.disabled = false
-
 	equip_button.visible = is_owned
 	equip_button.disabled = is_equipped
 
