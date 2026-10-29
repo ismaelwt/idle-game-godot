@@ -12,8 +12,8 @@ extends Node3D
 @export var movement_speed: float = 3.0
 
 @export_category("Detecção e Ataque")
-@export var attack_range: float = 5.0 # Raio para detectar inimigos próximos
-@export var melee_range: float = 2.0 # Distância máxima para acertar o ataque
+@export var attack_range: float = 3.0 # Raio para detectar inimigos próximos
+@export var melee_range: float = 2.5 # Distância máxima para acertar o ataque
 @export var attack_damage: float = 10.0
 @export var attack_cooldown: float = 1.5
 @export var attack_hit_delay: float = 0.45

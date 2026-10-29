@@ -397,6 +397,7 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 	label.outline_modulate = damage_outline_color
 
 	if is_critical:
+		label.text = "-" + str(int(damage)) + " CRITICAL!!"
 		label.modulate = Color(1.0, 0.8, 0.0, 1.0) # Dourado
 	else:
 		label.modulate = damage_color

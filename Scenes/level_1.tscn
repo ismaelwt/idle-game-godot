@@ -416,8 +416,6 @@ min_enemy_spacing = 1.0
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
-attack_range = 4.0
-melee_range = 2.5
 damage_font_size = 350
 damage_height = 2.0
 damage_duration = 1.0
