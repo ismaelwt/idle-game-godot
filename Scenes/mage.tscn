@@ -81,7 +81,7 @@ transform = Transform3D(0.0154588455, 0.0749429, -0.0151190385, -0.017435847, 0.
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
-&"player": SubResource("AnimationLibrary_n7ghd")
+&"mage": SubResource("AnimationLibrary_n7ghd")
 }
 
 [node name="FireballSpawn" type="Marker3D" parent="." index="2"]
