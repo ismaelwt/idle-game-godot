@@ -477,15 +477,9 @@ func get_nearest_alive_hero() -> Node3D:
 	if is_instance_valid(party_manager):
 		heroes = party_manager.get_alive_heroes()
 	else:
-		var fallback_player: Node3D = (
-			get_tree().get_first_node_in_group("party_heroes") as Node3D
-		)
-
-		if (
-			is_instance_valid(fallback_player)
-			and not bool(fallback_player.get("dead"))
-		):
-			heroes.append(fallback_player)
+		var fallback_hero: Node3D = _get_selected_hero_fallback()
+		if is_instance_valid(fallback_hero) and not bool(fallback_hero.get("dead")):
+			heroes.append(fallback_hero)
 
 	var nearest_hero: Node3D = null
 	var nearest_distance: float = INF
