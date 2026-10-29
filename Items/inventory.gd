@@ -186,6 +186,31 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 		print("Esse item não está na mochila.")
 		return false
 
+	var normalized_hero_id := CharacterSelectionData.normalize_hero_id(resolved_id)
+	var required_class: ItemBase.ItemClass = item.item_base.item_class
+	var hero_class: ItemBase.ItemClass
+	match normalized_hero_id:
+		"mage":
+			hero_class = ItemBase.ItemClass.MAGE
+		"knight":
+			hero_class = ItemBase.ItemClass.KNIGHT
+		"archer":
+			hero_class = ItemBase.ItemClass.ARCHER
+		_:
+			push_warning("Inventory: classe desconhecida para o herói '%s'." % resolved_id)
+			return false
+
+	if required_class != hero_class:
+		print(
+			"Não foi possível equipar %s. Classe exigida: %s | Classe do herói: %s"
+			% [
+				item.item_base.item_name,
+				ItemBase.ItemClass.keys()[required_class],
+				ItemBase.ItemClass.keys()[hero_class]
+			]
+		)
+		return false
+
 	var hero_level: int = 1
 	var current_scene := get_tree().current_scene
 	if current_scene != null:
