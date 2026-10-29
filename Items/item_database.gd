@@ -50,7 +50,11 @@ func get_items_by_rarity(
 		if (
 			item != null
 			and item.rarity == rarity
-			and (item.item_class == item_class or item.item_class == ItemBase.ItemClass.ALL)
+			and (
+				item_class == ItemBase.ItemClass.ALL
+				or item.item_class == item_class
+				or item.item_class == ItemBase.ItemClass.ALL
+			)
 		):
 			result.append(item)
 
@@ -61,7 +65,14 @@ func get_items_by_class(item_class: ItemBase.ItemClass) -> Array[ItemBase]:
 	var result: Array[ItemBase] = []
 
 	for item in ITEMS:
-		if item != null and (item.item_class == item_class or item.item_class == ItemBase.ItemClass.ALL):
+		if (
+			item != null
+			and (
+				item_class == ItemBase.ItemClass.ALL
+				or item.item_class == item_class
+				or item.item_class == ItemBase.ItemClass.ALL
+			)
+		):
 			result.append(item)
 
 	return result
