@@ -11,7 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="9_ckvux"]
 [ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="10_k8xho"]
 [ext_resource type="Script" uid="uid://dkls6mhvlbhll" path="res://Script/skill_hud_slot.gd" id="10_yvrk7"]
-[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/player.tscn" id="11_bgibu"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="11_bgibu"]
 [ext_resource type="PackedScene" uid="uid://bo6p3qj6i6y23" path="res://Scenes/goblin_boss.tscn" id="11_ckvux"]
 [ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="13_45kkt"]
 [ext_resource type="Shader" uid="uid://yyxh6w7k8i2x" path="res://Shaders/health_orb.gdshader" id="13_w3147"]

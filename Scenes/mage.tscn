@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://buq8hltnfkemk" path="res://Assets/WizardusMaximus.fbx" id="1_sweqy"]
 [ext_resource type="PackedScene" uid="uid://ce5pe0gykhmgo" path="res://Assets/CAJADO.fbx" id="2_2hs0m"]
-[ext_resource type="Script" uid="uid://d2ikxrkvhfcej" path="res://Script/player.gd" id="2_h4iuc"]
+[ext_resource type="Script" uid="uid://d2ikxrkvhfcej" path="res://Script/mage.gd" id="2_h4iuc"]
 [ext_resource type="Animation" uid="uid://cob5d4330yu7w" path="res://Anim/mage/running.res" id="3_1jxqw"]
 [ext_resource type="Animation" uid="uid://dw2thbf1kbvig" path="res://Anim/mage/attack.res" id="4_dw050"]
 [ext_resource type="Animation" uid="uid://7bg42ajtjpep" path="res://Anim/mage/idle.res" id="5_b26j0"]

@@ -11,7 +11,7 @@
 [ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_rby12"]
 [ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="10_t405x"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
-[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/player.tscn" id="13_r5dji"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
 [ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_d8dne"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="14_yy84a"]
@@ -423,7 +423,7 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 
-[node name="Player" parent="SubViewportContainer/SubViewport" groups=["party_heroes", "player"] instance=ExtResource("13_r5dji")]
+[node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes", "player"] instance=ExtResource("13_r5dji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
 attack_range = 7.0
 attack_base_duration = 0.6
@@ -1746,6 +1746,7 @@ grow_vertical = 2
 [node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/Status/CenterContainer"]
 custom_minimum_size = Vector2(450, 250)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_hfp0m")
 
 [node name="Background" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
@@ -1869,18 +1870,20 @@ expand_mode = 1
 layout_mode = 2
 
 [node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
+visible = false
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -258.0
-offset_top = -5.0
+offset_top = 25.0
 offset_right = -58.0
-offset_bottom = 350.0
+offset_bottom = 380.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
 
 [node name="PlayerBackground" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

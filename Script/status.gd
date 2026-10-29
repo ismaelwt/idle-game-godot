@@ -19,8 +19,10 @@ var item_tooltip: ItemTooltip
 
 @onready var gold_label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control/GoldLabel
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
+
 @onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
 @onready var mage_change_button: TextureButton = $CenterContainer/PanelContainer/Background/MageAvatar
+
 @onready var inventory_panel = $CenterContainer/InventoryControl/InventoryPanel
 @onready var items_grid: GridContainer = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer/ItemsGrid
 @onready var chest_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/ChestButton
