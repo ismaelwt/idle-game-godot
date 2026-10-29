@@ -904,36 +904,10 @@ func _refresh_hero_switch_buttons() -> void:
 	mage_change_button.disabled = not is_instance_valid(_find_hero_by_id("mage"))
 
 
-# Localiza o nó correspondente à seleção atual, sem depender do grupo "player".
+# Localiza heróis pela identidade do CharacterStats, sem depender do nome do nó.
 func _find_selected_hero() -> Node:
-	var scene := get_tree().current_scene
-	if scene == null:
-		return null
-
-	var selected := str(CharacterSelectionData.selected_character).to_lower()
-	var candidate_names: Array[String] = []
-
-	if selected == "knight":
-		candidate_names = ["Knight", "knight"]
-	elif selected == "mage":
-		candidate_names = ["Player", "Mage", "player", "mage"]
-	else:
-		candidate_names = [str(CharacterSelectionData.selected_character)]
-
-	for candidate_name in candidate_names:
-		var candidate := scene.find_child(candidate_name, true, false)
-		if candidate != null and candidate.get("character_stats") != null:
-			return candidate
-
-	# Fallback para projetos que já registram os heróis em um grupo comum.
-	for candidate in get_tree().get_nodes_in_group("party_heroes"):
-		if not is_instance_valid(candidate):
-			continue
-		var stats = candidate.get("character_stats")
-		if is_instance_valid(stats) and str(stats.hero_id).to_lower() == selected:
-			return candidate
-
-	return null
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	return _find_hero_by_id(selected_id)
 
 
 # Permite que um seletor de party externo altere o herói exibido sem duplicar a UI.
