@@ -219,8 +219,8 @@ func _find_selected_hero() -> Node3D:
 	return null
 
 
-func _is_hero_alive(hero: Node3D) -> bool:
-	if not is_instance_valid(hero) or not _has_property(hero, "dead"):
+func _is_hero_alive(hero: Variant) -> bool:
+	if not is_instance_valid(hero) or not hero is Node3D or not _has_property(hero, "dead"):
 		return false
 
 	return not bool(hero.get("dead"))
