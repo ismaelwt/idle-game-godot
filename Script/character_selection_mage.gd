@@ -3,7 +3,7 @@ extends Node3D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	animation_player.play("player/idle2")
+	animation_player.play("mage/idle2")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
