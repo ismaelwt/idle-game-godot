@@ -51,7 +51,7 @@ func _get_drag_data(_at_position):
 
 	var hero = _get_main_hero()
 
-	if not is_instance_valid(player):
+	if not is_instance_valid(hero):
 
 		print("DRAG ERRO: herói principal não encontrado.")
 
@@ -136,7 +136,7 @@ func _can_drop_data(_at_position, data):
 
 	var hero = _get_main_hero()
 
-	if not is_instance_valid(player):
+	if not is_instance_valid(hero):
 		return false
 
 
@@ -180,7 +180,7 @@ func _drop_data(_at_position, data):
 
 	var hero = _get_main_hero()
 
-	if not is_instance_valid(player):
+	if not is_instance_valid(hero):
 
 		print(
 			"DROP ERRO: herói principal não encontrado."
