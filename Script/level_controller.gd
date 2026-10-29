@@ -38,7 +38,7 @@ var automatic_retry: bool = false
 @onready var combat_controller = get_parent().get_node_or_null("CombatController")
 @onready var party_manager = get_parent().get_node_or_null("PartyManager") as PartyManager
 # Referência de compatibilidade para o herói principal; a equipe é descoberta por ID.
-@onready var player: Node3D = _get_selected_hero()
+@onready var main_hero: Node3D = _get_selected_hero()
 
 
 func _get_selected_hero() -> Node3D:
@@ -136,7 +136,7 @@ func is_party_defeated() -> bool:
 		return party_manager.get_alive_heroes().is_empty()
 
 	# Compatibilidade com cenas antigas sem PartyManager.
-	return not is_instance_valid(player) or bool(player.get("dead"))
+	return not is_instance_valid(main_hero) or bool(main_hero.get("dead"))
 
 
 func get_nearest_alive_hero_to(target: Node3D) -> Node3D:
@@ -147,8 +147,8 @@ func get_nearest_alive_hero_to(target: Node3D) -> Node3D:
 
 	if is_instance_valid(party_manager):
 		heroes = party_manager.get_alive_heroes()
-	elif is_instance_valid(player) and not bool(player.get("dead")):
-		heroes.append(player)
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		heroes.append(main_hero)
 
 	var nearest_hero: Node3D = null
 	var nearest_distance: float = INF
@@ -179,8 +179,8 @@ func process_skills() -> void:
 
 	if is_instance_valid(party_manager):
 		heroes = party_manager.get_alive_heroes()
-	elif is_instance_valid(player) and not bool(player.get("dead")):
-		heroes.append(player)
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		heroes.append(main_hero)
 
 	if heroes.is_empty():
 		return
@@ -334,7 +334,7 @@ func start_running():
 	if is_instance_valid(party_manager):
 		var selected_main := party_manager.get_main_hero()
 		if is_instance_valid(selected_main):
-			player = selected_main
+			main_hero = selected_main
 
 	state = State.RUNNING
 
@@ -345,7 +345,7 @@ func start_running():
 			if hero.has_method("start_running"):
 				hero.call("start_running")
 	else:
-		player.start_running()
+		main_hero.start_running()
 
 	print("=== RUNNING | ONDA ", current_wave, " ===")
 
@@ -385,8 +385,8 @@ func start_combat(enemy: Node3D):
 		var active_heroes: Array[Node3D] = []
 		if is_instance_valid(party_manager):
 			active_heroes = party_manager.get_alive_heroes()
-		elif is_instance_valid(player):
-			active_heroes.append(player)
+		elif is_instance_valid(main_hero):
+			active_heroes.append(main_hero)
 
 		for hero in active_heroes:
 			if not is_instance_valid(hero):
@@ -481,8 +481,8 @@ func enemy_died(dead_enemy: Node3D):
 			if hero.has_method("cancel_attack_on_target"):
 				hero.call("cancel_attack_on_target", dead_enemy)
 	else:
-		if is_instance_valid(player) and player.has_method("cancel_attack_on_target"):
-			player.cancel_attack_on_target(dead_enemy)
+		if is_instance_valid(main_hero) and main_hero.has_method("cancel_attack_on_target"):
+			main_hero.cancel_attack_on_target(dead_enemy)
 
 	# Remove o inimigo da lista de combate.
 	var index := combat_enemies.find(dead_enemy)
@@ -527,7 +527,7 @@ func enemy_died(dead_enemy: Node3D):
 		world_scroller.running = false
 
 		SaveManager.save_character(
-			player.character_stats,
+			main_hero.character_stats,
 			inventory
 		)
 
@@ -767,8 +767,8 @@ func resume_after_wave_transition() -> void:
 		for hero in party_manager.get_alive_heroes():
 			if hero.has_method("start_running"):
 				hero.call("start_running")
-	elif is_instance_valid(player) and player.has_method("start_running"):
-		player.start_running()
+	elif is_instance_valid(main_hero) and main_hero.has_method("start_running"):
+		main_hero.start_running()
 
 	world_scroller.running = true
 	state = State.RUNNING
