@@ -181,6 +181,30 @@ func get_main_hero() -> Node3D:
 	return main_hero if is_instance_valid(main_hero) else null
 
 
+# Retorna um herói vivo para sistemas que precisam de uma referência espacial
+# ou de gameplay, sem mudar a identidade do herói principal escolhido.
+func get_alive_reference_hero() -> Node3D:
+	if _is_hero_alive(main_hero):
+		return main_hero
+
+	if _is_hero_alive(companion_hero):
+		return companion_hero
+
+	for hero in get_alive_heroes():
+		if _is_hero_alive(hero):
+			return hero
+
+	return null
+
+
+func _is_hero_alive(hero: Node3D) -> bool:
+	if not is_instance_valid(hero):
+		return false
+
+	var dead_value = hero.get("dead")
+	return dead_value == null or not bool(dead_value)
+
+
 func get_companion_hero() -> Node3D:
 	return companion_hero if is_instance_valid(companion_hero) else null
 
