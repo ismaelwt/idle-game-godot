@@ -89,7 +89,7 @@ func save_global_gold(amount: int) -> bool:
 
 
 # Salva somente o inventário compartilhado, preservando os dados globais
-# e a progressão individual de todos os heróis. Não depende do Player na cena.
+# e a progressão individual de todos os heróis. Não depende de um nó de personagem específico na cena.
 func save_inventory(inventory: Inventory) -> bool:
 	if inventory == null or not is_instance_valid(inventory):
 		push_warning("SaveManager: inventário inválido; não foi salvo.")
@@ -220,7 +220,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 		var inventory_data = data.get("inventory", {})
 		if inventory_data is Dictionary:
 			deserialize_inventory(inventory, inventory_data)
-		# Dados individuais do herói têm precedência; migra o equipamento legado do Player.
+		# Dados individuais do herói têm precedência; migra o equipamento legado do herói antigo.
 		var saved_hero_equipment: Dictionary = hero_data.get("equipment", {})
 		if saved_hero_equipment.is_empty() and hero_id == "mage":
 			saved_hero_equipment = data.get("inventory", {}).get("equipped_items", {})
@@ -352,7 +352,7 @@ func serialize_inventory(inventory: Inventory) -> Dictionary:
 	for hero_id in inventory.equipped_by_hero:
 		data["equipped_by_hero"][str(hero_id)] = serialize_hero_equipment(inventory, str(hero_id))
 
-	# Mantém cópia do equipamento do Player para compatibilidade com saves antigos.
+	# Mantém cópia do equipamento legado para compatibilidade com saves antigos.
 	data["equipped_items"] = serialize_hero_equipment(inventory, "player")
 	return data
 
@@ -375,7 +375,7 @@ func deserialize_inventory(inventory: Inventory, data: Dictionary) -> void:
 		if saved_by_hero[hero_id] is Dictionary:
 			deserialize_hero_equipment(inventory, str(hero_id), saved_by_hero[hero_id])
 
-	# Migração: formato antigo tinha somente "equipped_items" para o Player.
+	# Migração: formato antigo tinha somente "equipped_items" para o herói legado.
 	if saved_by_hero.is_empty():
 		var legacy_equipped: Dictionary = data.get("equipped_items", {})
 		if not legacy_equipped.is_empty():
