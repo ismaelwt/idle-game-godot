@@ -168,13 +168,8 @@ func _is_knight(hero: Node) -> bool:
 	if not is_instance_valid(stats):
 		return false
 
-	var hero_id := str(stats.get("hero_id")).to_lower()
-	var node_name := str(hero.name).to_lower()
-
-	return (
-		node_name == "knight"
-		or hero_id == "knight"
-	)
+	var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+	return hero_id == "knight"
 
 
 func _is_mage(hero: Node) -> bool:
@@ -185,15 +180,8 @@ func _is_mage(hero: Node) -> bool:
 	if not is_instance_valid(stats):
 		return false
 
-	var hero_id := str(stats.get("hero_id")).to_lower()
-	var node_name := str(hero.name).to_lower()
-
-	return (
-		node_name == "player"
-		or node_name == "mage"
-		or hero_id == "mage"
-		or hero_id == "player"
-	)
+	var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+	return hero_id == "mage"
 
 
 func _on_party_changed(_heroes: Array[Node3D]) -> void:
