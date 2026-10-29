@@ -175,7 +175,7 @@ func _ready() -> void:
 
 
 # Quando a janela é aberta, consulta novamente a seleção atual.
-# Assim, a UI não fica presa ao primeiro herói encontrado em "player".
+# Assim, a UI não fica presa ao primeiro herói encontrado na cena.
 func _notification(what: int) -> void:
 	if what == NOTIFICATION_VISIBILITY_CHANGED and is_visible_in_tree():
 		call_deferred("_refresh_selected_hero")
