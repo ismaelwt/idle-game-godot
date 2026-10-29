@@ -139,6 +139,24 @@ func is_party_defeated() -> bool:
 	return not is_instance_valid(main_hero) or bool(main_hero.get("dead"))
 
 
+# Sistemas de câmera, spawn e salvamento precisam de um herói vivo,
+# não necessariamente do herói principal que morreu.
+func _get_alive_reference_hero() -> Node3D:
+	if is_instance_valid(party_manager):
+		var reference_hero := party_manager.get_alive_reference_hero()
+		if is_instance_valid(reference_hero):
+			return reference_hero
+
+	if is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		return main_hero
+
+	var selected_hero := _get_selected_hero()
+	if is_instance_valid(selected_hero) and not bool(selected_hero.get("dead")):
+		return selected_hero
+
+	return null
+
+
 func get_nearest_alive_hero_to(target: Node3D) -> Node3D:
 	if not is_instance_valid(target):
 		return null
@@ -332,9 +350,7 @@ func start_running():
 		return
 
 	if is_instance_valid(party_manager):
-		var selected_main := party_manager.get_main_hero()
-		if is_instance_valid(selected_main):
-			main_hero = selected_main
+		main_hero = _get_alive_reference_hero()
 
 	state = State.RUNNING
 
@@ -526,10 +542,27 @@ func enemy_died(dead_enemy: Node3D):
 		state = State.VICTORY
 		world_scroller.running = false
 
-		SaveManager.save_character(
-			main_hero.character_stats,
-			inventory
-		)
+		var reward_hero := _get_alive_reference_hero()
+		if is_instance_valid(reward_hero):
+			var reward_stats = reward_hero.get("character_stats")
+			if not is_instance_valid(reward_stats):
+				reward_stats = reward_hero.get_node_or_null("CharacterStats")
+
+			if is_instance_valid(reward_stats):
+				SaveManager.save_character(
+					reward_stats,
+					inventory,
+					str(reward_stats.get("hero_id"))
+				)
+			else:
+				push_warning(
+					"LevelController: não foi possível salvar a vitória; "
+					+ "CharacterStats do herói vivo não foi encontrado."
+				)
+		else:
+			print(
+				"LevelController: nenhum herói vivo para salvar após a vitória."
+			)
 
 		print("=== VICTORY ===")
 
@@ -764,10 +797,11 @@ func resume_after_wave_transition() -> void:
 		return
 
 	if is_instance_valid(party_manager):
+		main_hero = _get_alive_reference_hero()
 		for hero in party_manager.get_alive_heroes():
-			if hero.has_method("start_running"):
+			if is_instance_valid(hero) and hero.has_method("start_running"):
 				hero.call("start_running")
-	elif is_instance_valid(main_hero) and main_hero.has_method("start_running"):
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")) and main_hero.has_method("start_running"):
 		main_hero.start_running()
 
 	world_scroller.running = true
