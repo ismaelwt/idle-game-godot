@@ -197,8 +197,8 @@ func get_alive_reference_hero() -> Node3D:
 	return null
 
 
-func _is_hero_alive(hero: Node3D) -> bool:
-	if not is_instance_valid(hero):
+func _is_hero_alive(hero: Variant) -> bool:
+	if not is_instance_valid(hero) or not hero is Node3D:
 		return false
 
 	var dead_value = hero.get("dead")
