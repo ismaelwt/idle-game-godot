@@ -511,7 +511,18 @@ func die() -> void:
 
 func on_animation_finished(anim_name):
 	if anim_name == "knight/die":
-		queue_free()
+		# Não destruir o herói: a interface ainda precisa acessar seus
+		# CharacterStats e permitir distribuir atributos/equipar itens.
+		# Ele continua registrado, mas não participa mais do mundo/combat.
+		visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED
+
+		for collision_node in find_children("*", "CollisionShape3D", true, false):
+			collision_node.set_deferred("disabled", true)
+
+		for area_node in find_children("*", "Area3D", true, false):
+			area_node.set_deferred("monitoring", false)
+			area_node.set_deferred("monitorable", false)
 
 func show_damage(damage: float) -> void:
 	if not is_inside_tree():
