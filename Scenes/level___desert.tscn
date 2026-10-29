@@ -419,7 +419,7 @@ transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -1.0817871, 0, -23.9641
 visible = false
 animation_speed = 1.0
 
-[node name="Player" parent="SubViewportContainer/SubViewport" groups=["player"] instance=ExtResource("11_bgibu")]
+[node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("11_bgibu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -25)
 attack_range = 8.0
 attack_base_duration = 0.6
