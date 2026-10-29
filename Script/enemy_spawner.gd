@@ -108,17 +108,17 @@ func spawn_enemies() -> void:
 			if _has_property(enemy, "fallback_hero_target"):
 				enemy.set("fallback_hero_target", selected_hero)
 
-			var player_level: int = 1
+			var hero_level: int = 1
 			if is_instance_valid(selected_hero.get("character_stats")):
-				player_level = maxi(1, int(selected_hero.character_stats.level))
+				hero_level = maxi(1, int(selected_hero.character_stats.level))
 
 			var min_enemy_level: int = mini(
 				max_enemy_level_limit,
-				maxi(1, player_level + min_level_offset)
+				maxi(1, hero_level + min_level_offset)
 			)
 			var max_enemy_level: int = mini(
 				max_enemy_level_limit,
-				maxi(min_enemy_level, player_level + max_level_offset)
+				maxi(min_enemy_level, hero_level + max_level_offset)
 			)
 			var selected_level: int = randi_range(min_enemy_level, max_enemy_level)
 
@@ -232,11 +232,11 @@ func spawn_boss() -> void:
 	if _has_property(boss, "fallback_hero_target"):
 		boss.set("fallback_hero_target", selected_hero)
 
-	var player_level: int = 1
+	var hero_level: int = 1
 	if is_instance_valid(selected_hero) and is_instance_valid(selected_hero.get("character_stats")):
-		player_level = maxi(1, int(selected_hero.character_stats.level))
+		hero_level = maxi(1, int(selected_hero.character_stats.level))
 
-	var selected_level: int = mini(player_level, max_enemy_level_limit)
+	var selected_level: int = mini(hero_level, max_enemy_level_limit)
 	if boss.has_method("setup_level"):
 		boss.setup_level(selected_level)
 
@@ -248,7 +248,7 @@ func spawn_boss() -> void:
 		enemies.append(boss)
 
 	print(
-		"=== BOSS SPAWNADO === | Nível do jogador: ", player_level,
+		"=== BOSS SPAWNADO === | Nível do jogador: ", hero_level,
 		" | Nível do boss: ", selected_level,
 		" | Posição: ", boss.global_position
 	)
