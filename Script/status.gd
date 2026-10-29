@@ -95,7 +95,7 @@ func _ready() -> void:
 	pants_default_icon = pants_icon.texture
 	boots_default_icon = boots_icon.texture
 
-	# O status não escolhe mais um nó do grupo "player".
+	# O Status resolve o personagem por identidade, sem depender de grupos legados.
 	# Primeiro tenta resolver o herói selecionado; o seletor externo também
 	# pode atualizar a referência chamando set_selected_hero(hero).
 	active_hero = _find_selected_hero()
