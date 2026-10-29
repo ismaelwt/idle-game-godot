@@ -71,6 +71,10 @@ func _process(_delta):
 	if not is_instance_valid(world_scroller):
 		return
 
+	if not is_instance_valid(followed_hero):
+		followed_hero = _find_selected_hero()
+	if not is_instance_valid(followed_hero):
+		return
 
 	var viewport_size = (
 		sub_viewport
