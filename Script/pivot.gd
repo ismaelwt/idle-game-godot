@@ -73,7 +73,7 @@ func _process(_delta):
 	if not is_instance_valid(world_scroller):
 		return
 
-	if not is_instance_valid(followed_hero):
+	if not _is_hero_alive(followed_hero):
 		followed_hero = _find_selected_hero()
 	if not is_instance_valid(followed_hero):
 		return
@@ -173,19 +173,65 @@ func _process(_delta):
 
 
 func _find_selected_hero() -> Node3D:
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		var reference_hero := manager.get_alive_reference_hero()
+		if is_instance_valid(reference_hero):
+			return reference_hero
+
 	var selected_id := CharacterSelectionData.get_selected_character_id()
+	var candidates := get_tree().get_nodes_in_group("party_heroes")
+
 	var parent_node := get_parent()
 	if is_instance_valid(parent_node):
 		for candidate in parent_node.get_children():
-			if not candidate is Node3D:
-				continue
+			if candidate is Node3D and not candidates.has(candidate):
+				candidates.append(candidate)
+
+	for candidate in candidates:
+		if not candidate is Node3D or not _is_hero_alive(candidate):
+			continue
+
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if not is_instance_valid(stats):
+			stats = candidate.find_child("CharacterStats", true, false)
+
+		if is_instance_valid(stats):
+			var hero_id := CharacterSelectionData.normalize_hero_id(
+				str(stats.get("hero_id"))
+			)
+			if hero_id == selected_id:
+				return candidate
+
+	# O herói selecionado morreu; segue qualquer outro herói vivo.
+	for candidate in candidates:
+		if candidate is Node3D and _is_hero_alive(candidate):
 			var stats = candidate.get("character_stats")
 			if not is_instance_valid(stats):
 				stats = candidate.get_node_or_null("CharacterStats")
+			if not is_instance_valid(stats):
+				stats = candidate.find_child("CharacterStats", true, false)
 			if is_instance_valid(stats):
-				if CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
-					return candidate
-	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
-	if is_instance_valid(manager):
-		return manager.get_main_hero()
+				return candidate
+
 	return null
+
+
+func _is_hero_alive(hero: Node3D) -> bool:
+	if not is_instance_valid(hero) or not _has_property(hero, "dead"):
+		return false
+
+	return not bool(hero.get("dead"))
+
+
+func _has_property(object: Object, property_name: String) -> bool:
+	if not is_instance_valid(object):
+		return false
+
+	for property_info in object.get_property_list():
+		if str(property_info.get("name", "")) == property_name:
+			return true
+
+	return false
