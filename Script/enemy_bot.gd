@@ -42,10 +42,10 @@ extends Node3D
 @export var attack_hit_delay: float = 2.0
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
-@onready var animation_player = $AnimationPlayer
+@onready var animation_player = $Animationherói
 
 
-var player: Node3D
+var target_hero: Node3D
 
 var health: float
 var center_position: Vector3
@@ -104,13 +104,13 @@ func _process(delta):
 	# MOVIMENTO
 	# ==========================================
 
-	if not is_instance_valid(player):
+	if not is_instance_valid(target_hero):
 		return
 
 
-	# Movimento em direção ao Player.
+	# Movimento em direção ao herói.
 	var direction = global_position.direction_to(
-		player.global_position
+		target_hero.global_position
 	)
 
 
@@ -194,10 +194,10 @@ func die():
 	if level_controller:
 		level_controller.enemy_died(self)
 
-	player = get_tree().get_first_node_in_group("player")
+	target_hero = _get_nearest_alive_hero()
 
-	if player:
-		player.character_stats.add_xp(xp_reward)
+	if is_instance_valid(target_hero)
+		target_hero.character_stats.add_xp(xp_reward)
 		player.character_stats.add_gold(gold_reward)
 		SaveManager.save_character(player.character_stats)
 
@@ -219,9 +219,9 @@ func attack():
 	# ALVO
 	# ==========================================
 
-	var target_player = get_tree().get_first_node_in_group("player")
+	var target_hero = _get_nearest_alive_hero()
 
-	if not is_instance_valid(target_player):
+	if not is_instance_valid(target_hero):
 		attacking = false
 		return
 
@@ -481,3 +481,31 @@ func flash_hit():
 				mesh.material_override = null
 
 		await get_tree().create_timer(0.05).timeout
+
+
+func _get_nearest_alive_hero() -> Node3D:
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		var heroes := manager.get_alive_heroes()
+		var nearest: Node3D = null
+		var nearest_distance := INF
+		for hero in heroes:
+			if not is_instance_valid(hero) or bool(hero.get("dead")):
+				continue
+			var distance := global_position.distance_to(hero.global_position)
+			if distance < nearest_distance:
+				nearest_distance = distance
+				nearest = hero
+		if is_instance_valid(nearest):
+			return nearest
+
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate) or bool(candidate.get("dead")):
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats) and CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
+			return candidate
+	return null
