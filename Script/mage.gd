@@ -61,7 +61,7 @@ var basic_attack_lock := false
 var damage_buff_active: bool = false
 var damage_buff_instance: Node3D = null
 
-# Posição e rotação inicial do Player
+# Posição e rotação inicial do Mage
 var initial_position: Vector3
 var initial_rotation_y: float
 
@@ -118,7 +118,7 @@ func use_skill(skill_id: String, target: Node3D):
 		"fireball":
 
 			attack_animation_playing = true
-			animation_player.play("player/attack", animation_blend)
+			animation_player.play("mage/attack", animation_blend)
 
 			await get_tree().create_timer(0.5).timeout
 
@@ -151,7 +151,7 @@ func use_skill(skill_id: String, target: Node3D):
 		"energy_ball":
 
 			attack_animation_playing = true
-			animation_player.play("player/attack_2", animation_blend)
+			animation_player.play("mage/attack_2", animation_blend)
 
 			await get_tree().create_timer(0.5).timeout
 
@@ -191,7 +191,7 @@ func use_skill(skill_id: String, target: Node3D):
 			print("SKILL -> BUFF DE DANO")
 
 			animation_player.speed_scale = 1.0
-			animation_player.play("player/buff", animation_blend)
+			animation_player.play("mage/buff", animation_blend)
 
 			await animation_player.animation_finished
 
@@ -226,7 +226,7 @@ func use_skill(skill_id: String, target: Node3D):
 			print("SKILL -> CURA")
 
 			animation_player.speed_scale = 1.0
-			animation_player.play("player/heal", animation_blend)
+			animation_player.play("mage/heal", animation_blend)
 
 			await animation_player.animation_finished
 
@@ -265,7 +265,7 @@ func use_skill(skill_id: String, target: Node3D):
 			print("SKILL -> THUNDERSTORM")
 			
 			animation_player.speed_scale = 1.0
-			animation_player.play("player/attack_2", animation_blend)
+			animation_player.play("mage/attack_2", animation_blend)
 
 			#await animation_player.animation_finished
 			await get_tree().create_timer(1.2).timeout
@@ -291,7 +291,7 @@ func use_skill(skill_id: String, target: Node3D):
 				return
 
 		_:
-			push_warning("ID de skill desconhecido no Player: " + skill_id)
+			push_warning("ID de skill desconhecido no Mage: " + skill_id)
 			attacking = false
 			action_locked = false
 			current_attack_target = null
@@ -316,28 +316,28 @@ func _on_animation_finished(anim_name):
 
 	print("ANIMAÇÃO TERMINOU: ", anim_name)
 
-	if dead and anim_name != "player/die":
+	if dead and anim_name != "mage/die":
 		return
 
-	if anim_name == "player/attack":
+	if anim_name == "mage/attack":
 
 		animation_player.speed_scale = 1.0
 
 		animation_player.play(
-			"player/idle2",
+			"mage/idle2",
 			animation_blend
 		)
 
-	elif anim_name == "player/attack_2":
+	elif anim_name == "mage/attack_2":
 
 		animation_player.speed_scale = 1.0
 
 		animation_player.play(
-			"player/idle2",
+			"mage/idle2",
 			animation_blend
 		)
 
-	elif anim_name == "player/base_attack":
+	elif anim_name == "mage/base_attack":
 		print("base_attack terminou: ")
 		animation_player.speed_scale = 1.0
 
@@ -345,20 +345,20 @@ func _on_animation_finished(anim_name):
 			return
 
 		animation_player.play(
-			"player/idle2",
+			"mage/idle2",
 			animation_blend
 		)
 
-	elif anim_name == "player/buff":
+	elif anim_name == "mage/buff":
 
 		animation_player.speed_scale = 1.0
 
 		animation_player.play(
-			"player/idle2",
+			"mage/idle2",
 			animation_blend
 		)
 
-	elif anim_name == "player/die":
+	elif anim_name == "mage/die":
 
 		attacking = false
 		action_locked = false
@@ -378,12 +378,12 @@ func start_running():
 	animation_player.speed_scale = 1.0
 
 	animation_player.play(
-		"player/running",
+		"mage/running",
 		animation_blend
 	)
 
 func play_animation(_name):
-	animation_player.play("player/" + str(_name))
+	animation_player.play("mage/" + str(_name))
 
 func start_combat():
 
@@ -395,7 +395,7 @@ func start_combat():
 	animation_player.speed_scale = 1.0
 
 	animation_player.play(
-		"player/idle2",
+		"mage/idle2",
 		animation_blend
 	)
 
@@ -461,7 +461,7 @@ func take_damage(damage: float, damage_type: String = "physical"):
 	flash_hit()
 
 	print(
-		"Player recebeu ",
+		"Mage recebeu ",
 		final_damage,
 		" de dano. Vida: ",
 		health,
@@ -514,10 +514,10 @@ func die():
 	animation_player.speed_scale = 1.0
 
 	# Executa a morte
-	if animation_player.has_animation("player/die"):
+	if animation_player.has_animation("mage/die"):
 
 		animation_player.play(
-			"player/die",
+			"mage/die",
 			0.15
 		)
 
@@ -765,14 +765,14 @@ func basic_attack(target: Node3D):
 	print(
 		"base_attack INICIOU: 1")
 	animation_player.play(
-		"player/base_attack",
+		"mage/base_attack",
 		animation_blend
 	)
 
 
 	# Descobre a duração real da animação
 	var attack_animation = animation_player.get_animation(
-		"player/base_attack"
+		"mage/base_attack"
 	)
 
 	var attack_duration = attack_animation.length / effective_animation_speed
@@ -910,14 +910,14 @@ func cancel_attack_on_target(target: Node3D):
 		basic_attack_lock = false
 		action_locked = false
 
-		if animation_player.current_animation == "player/base_attack":
+		if animation_player.current_animation == "mage/base_attack":
 
 			animation_player.stop()
 			animation_player.speed_scale = 1.0
 
 			if not dead:
 				animation_player.play(
-					"player/idle2",
+					"mage/idle2",
 					animation_blend
 				)
 
@@ -949,7 +949,7 @@ func cancel_basic_attack():
 		current_basic_attack_projectile = null
 
 
-	if animation_player.current_animation == "player/base_attack":
+	if animation_player.current_animation == "mage/base_attack":
 
 		animation_player.stop()
 
@@ -958,7 +958,7 @@ func cancel_basic_attack():
 		if not dead:
 
 			animation_player.play(
-				"player/idle2",
+				"mage/idle2",
 				animation_blend
 			)
 
