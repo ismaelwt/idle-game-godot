@@ -22,6 +22,7 @@ signal finished
 
 var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
+var critical_damage_multiplier: float = 1.5
 var damage_multiplier: float = 1.0
 
 var center_target: Node3D
@@ -135,8 +136,9 @@ func _resolve_storm() -> void:
 
 	# O dano continua sendo aplicado a todos os inimigos na área.
 	var raw_damage: float = (damage + magic_bonus) * damage_multiplier
-	if randf() * 100.0 < critical_chance:
-		raw_damage *= 1.5
+	var is_critical: bool = randf() * 100.0 < critical_chance
+	if is_critical:
+		raw_damage *= critical_damage_multiplier
 	var final_damage: int = int(round(raw_damage))
 
 	for enemy in bolt_targets:
@@ -144,7 +146,7 @@ func _resolve_storm() -> void:
 			if enemy.get("dying") != true:
 				var health = enemy.get("health")
 				if health != null and float(health) > 0.0:
-					enemy.take_damage(final_damage)
+					enemy.take_damage(final_damage, is_critical)
 	
 	_finish_after_delay()
 
