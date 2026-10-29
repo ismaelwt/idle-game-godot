@@ -71,12 +71,12 @@ func _process(_delta: float) -> void:
 	# Atualiza a equipe antes de passar referências antigas para funções tipadas.
 	var mage_was_assigned := mage_hero != null
 	var knight_was_assigned := knight_hero != null
-	var player_was_assigned := selected_hero != null
+	var selected_hero_was_assigned := selected_hero != null
 
 	if (
 		(mage_was_assigned and not is_instance_valid(mage_hero))
 		or (knight_was_assigned and not is_instance_valid(knight_hero))
-		or (player_was_assigned and not is_instance_valid(selected_hero))
+		or (selected_hero_was_assigned and not is_instance_valid(selected_hero))
 	):
 		_refresh_heroes()
 
@@ -143,7 +143,7 @@ func _refresh_heroes() -> void:
 	$VBoxContainer/MageUI.visible = is_instance_valid(mage_hero)
 	$VBoxContainer/KnightUI.visible = is_instance_valid(knight_hero)
 
-	# Mantém player como referência ao herói principal para os botões existentes.
+	# Mantém selected_hero como referência ao herói principal para os botões existentes.
 	_update_selected_hero()
 
 
