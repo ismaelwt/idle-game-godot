@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://ddk1g73cbjxsy"]
+
+[ext_resource type="Texture2D" uid="uid://c78bajwbw1vdt" path="res://icons/plate-boots.png" id="1_3nm73"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_3vglh"]
+
+[resource]
+script = ExtResource("2_3vglh")
+item_id = &"plate_boots_01"
+item_name = "Grevas de aço"
+description = "Grevas de aço"
+icon = ExtResource("1_3nm73")
+item_type = 5
+item_class = 1
+strength_max = 2
+agility_max = 3
+intelligence_max = 1
+vitality_max = 4
+magic_damage_max = 1
+physical_defense_min = 3
+physical_defense_max = 5
+max_enchantment_slots = 1
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

@@ -3,15 +3,25 @@ extends Node
 class_name ItemDatabase
 
 const ITEMS: Array[ItemBase] = [
-	preload("res://Items/cajado_sombrio.tres"),
-	preload("res://Items/cajado_do_aprendiz.tres"),
-	preload("res://Items/frost_hood.tres"),
-	preload("res://Items/fire_hood.tres"),
+	preload("res://Items/Mage/cajado_sombrio.tres"),
+	preload("res://Items/Mage/cajado_do_aprendiz.tres"),
+	preload("res://Items/Mage/frost_hood.tres"),
+	preload("res://Items/Mage/fire_hood.tres"),
 	preload("res://Items/leather_boots.tres"),
-	preload("res://Items/terra_rob.tres"),
-	preload("res://Items/warlock_gloves.tres"),
-	preload("res://Items/prismatic_legs.tres"),
-	preload("res://Items/warlock_cloath.tres"),
+	preload("res://Items/Mage/terra_rob.tres"),
+	preload("res://Items/Mage/warlock_gloves.tres"),
+	preload("res://Items/Mage/prismatic_legs.tres"),
+	preload("res://Items/Mage/warlock_cloath.tres"),
+	
+	preload("res://Items/Knight/bastard_sword.tres"),
+	preload("res://Items/Knight/warlord_sword.tres"),
+	preload("res://Items/Knight/enchanted_sword.tres"),
+	preload("res://Items/Knight/plate_boots.tres"),
+	preload("res://Items/Knight/plate_gloves.tres"),
+	preload("res://Items/Knight/plate_chest.tres"),
+	preload("res://Items/Knight/plate_helmet.tres"),
+	preload("res://Items/Knight/plate_legs.tres"),
+	
 	preload("res://Items/Gems/gem_esmeralda.tres")
 ]
 

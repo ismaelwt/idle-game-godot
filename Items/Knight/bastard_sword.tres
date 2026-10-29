@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bc3c3slc0hd8x"]
+
+[ext_resource type="Texture2D" uid="uid://cobvsnghlk78v" path="res://icons/bastard-sword.png" id="1_kmb45"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_kyaob"]
+
+[resource]
+script = ExtResource("2_kyaob")
+item_id = &"bastard_sword_01"
+item_name = "Espada Bastarda"
+description = "Espada Bastarda"
+icon = ExtResource("1_kmb45")
+item_class = 1
+strength_max = 3
+agility_min = 1
+agility_max = 3
+intelligence_max = 1
+vitality_max = 2
+physical_damage_max = 3
+magic_damage_max = 1
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

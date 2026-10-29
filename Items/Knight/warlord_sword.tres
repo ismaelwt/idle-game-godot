@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://b7js5axxlj671"]
+
+[ext_resource type="Texture2D" uid="uid://bs4bm15ievnm8" path="res://icons/warlord-sword.png" id="1_s42gt"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_ox26w"]
+
+[resource]
+script = ExtResource("2_ox26w")
+item_id = &"warlord_sword_01"
+item_name = "Espada do Deus da Guerra"
+description = "Espada usada por um Deus da guerra"
+icon = ExtResource("1_s42gt")
+item_class = 1
+rarity = 3
+strength_min = 6
+strength_max = 8
+agility_min = 5
+agility_max = 7
+intelligence_max = 1
+vitality_min = 3
+vitality_max = 6
+physical_damage_min = 8
+physical_damage_max = 15
+magic_damage_max = 1
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

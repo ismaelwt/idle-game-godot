@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://d2vxmjaxqeyrw"]
+
+[ext_resource type="Texture2D" uid="uid://b4v3t7vxxbgul" path="res://icons/plate-legs.png" id="1_eqfbf"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_o8jh2"]
+
+[resource]
+script = ExtResource("2_o8jh2")
+item_id = &"plate_legs_01"
+item_name = "Calças de Aço"
+description = "Calças de Aço"
+icon = ExtResource("1_eqfbf")
+item_type = 4
+item_class = 1
+strength_max = 2
+agility_max = 4
+intelligence_max = 1
+vitality_max = 2
+magic_damage_max = 1
+physical_defense_min = 4
+physical_defense_max = 6
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

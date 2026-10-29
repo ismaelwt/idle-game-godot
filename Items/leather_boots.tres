@@ -12,6 +12,7 @@ icon = ExtResource("1_0olio")
 icon_slot_1 = ExtResource("1_0olio")
 icon_slot_2 = ExtResource("1_0olio")
 item_type = 5
+item_class = 3
 intelligence_max = 1
 magic_damage_max = 1
 metadata/_custom_type_script = "uid://o7xxtooqdtlf"

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://crv6113knhoba"]
+
+[ext_resource type="Texture2D" uid="uid://cn6ru6dae6xdm" path="res://icons/plate-helmet.png" id="1_62opi"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_0e5j3"]
+
+[resource]
+script = ExtResource("2_0e5j3")
+item_id = &"plate_helmet_01"
+item_name = "Elmo de Aço"
+description = "Elmo de Aço"
+icon = ExtResource("1_62opi")
+item_type = 1
+item_class = 1
+required_level = 3
+strength_max = 5
+agility_max = 3
+intelligence_max = 1
+vitality_max = 5
+magic_damage_max = 1
+physical_defense_min = 3
+physical_defense_max = 6
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

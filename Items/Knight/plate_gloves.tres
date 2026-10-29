@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://dcde2ac8mgncb"]
+
+[ext_resource type="Texture2D" uid="uid://f11y12d45nfs" path="res://icons/plate-gloves.png" id="1_kytk0"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_eu2rw"]
+
+[resource]
+script = ExtResource("2_eu2rw")
+item_id = &"plate_gloves_01"
+item_name = "Placas de Aço"
+description = "Placas de aço"
+icon = ExtResource("1_kytk0")
+item_type = 3
+item_class = 1
+strength_max = 3
+agility_max = 5
+intelligence_max = 1
+vitality_max = 2
+magic_damage_max = 1
+physical_defense_min = 3
+physical_defense_max = 6
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"
