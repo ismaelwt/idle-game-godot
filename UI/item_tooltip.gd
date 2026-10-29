@@ -38,7 +38,7 @@ func _ready() -> void:
 	hide()
 
 
-func show_item(item: ItemInstance) -> void:
+func show_item(item: ItemInstance, hero_level: int = -1) -> void:
 	if item == null or item.item_base == null:
 		hide()
 		return
@@ -57,7 +57,7 @@ func show_item(item: ItemInstance) -> void:
 	name_label.text = base.item_name
 	
 	level_label.text = "Nível: %d" % item.item_level
-	_update_level_label_color(item)
+	_update_level_label_color(item, hero_level)
 	level_label.show()
 	
 	rarity_label.text = ItemBase.Rarity.keys()[item.generated_rarity]
@@ -298,8 +298,8 @@ func _get_rarity_color(rarity: ItemBase.Rarity) -> Color:
 
 	return Color.WHITE
 
-func _update_level_label_color(item: ItemInstance) -> void:
-	
+func _update_level_label_color(item: ItemInstance, hero_level: int = -1) -> void:
+	# Gemas não exigem nível para serem usadas.
 	if item.item_base.item_type == ItemBase.ItemType.GEM:
 		level_label.add_theme_color_override(
 			"font_color",
@@ -307,21 +307,24 @@ func _update_level_label_color(item: ItemInstance) -> void:
 		)
 		return
 
-	var current_scene := get_tree().current_scene
+	# O Status informa o nível do herói que está sendo visualizado.
+	# Mantém a busca antiga como fallback para chamadas sem nível explícito.
+	if hero_level < 0:
+		var current_scene := get_tree().current_scene
 
-	if current_scene == null:
-		level_label.add_theme_color_override("font_color", Color("#b8b8b8"))
+		if current_scene != null:
+			var player = current_scene.find_child("Player", true, false)
+			if player != null and player.get("character_stats") != null:
+				hero_level = int(player.character_stats.level)
+
+	if hero_level < 0:
+		level_label.add_theme_color_override(
+			"font_color",
+			Color("#b8b8b8")
+		)
 		return
 
-	var player = current_scene.find_child("Player", true, false)
-
-	if player == null or player.character_stats == null:
-		level_label.add_theme_color_override("font_color", Color("#b8b8b8"))
-		return
-
-	var player_level: int = player.character_stats.level
-
-	if item.item_level > player_level:
+	if item.item_level > hero_level:
 		# Vermelho: nível insuficiente para equipar.
 		level_label.add_theme_color_override(
 			"font_color",
