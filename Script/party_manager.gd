@@ -213,6 +213,23 @@ func _set_hero_active(hero: Node3D, active: bool) -> void:
 	if not is_instance_valid(hero):
 		return
 
+	# Um herói morto pode continuar registrado para Status/inventário,
+	# mas nunca deve voltar a aparecer quando a equipe for atualizada.
+	var dead_value = hero.get("dead")
+	if dead_value != null and bool(dead_value):
+		hero.visible = false
+		hero.process_mode = Node.PROCESS_MODE_DISABLED
+		hero.set_process(false)
+		hero.set_physics_process(false)
+
+		for collision_node in hero.find_children("*", "CollisionShape3D", true, false):
+			collision_node.set_deferred("disabled", true)
+
+		for area_node in hero.find_children("*", "Area3D", true, false):
+			area_node.set_deferred("monitoring", false)
+			area_node.set_deferred("monitorable", false)
+		return
+
 	hero.visible = active
 	hero.process_mode = Node.PROCESS_MODE_INHERIT
 	hero.set_process(active)
