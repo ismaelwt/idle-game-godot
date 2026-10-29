@@ -423,7 +423,7 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 
-[node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes", "player"] instance=ExtResource("13_r5dji")]
+[node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("13_r5dji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
 attack_range = 7.0
 attack_base_duration = 0.6
