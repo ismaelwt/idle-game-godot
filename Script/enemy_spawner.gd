@@ -26,7 +26,7 @@ extends Node3D
 @export var max_enemy_level_limit: int = 5
 
 @onready var level_root: Node = get_parent()
-@onready var player: Node3D =  _get_selected_hero()
+@onready var selected_hero: Node3D =  _get_selected_hero()
 @onready var party_manager: PartyManager = get_parent().get_node_or_null("PartyManager") as PartyManager
 @onready var level_controller: Node = get_parent().get_node("LevelController")
 @onready var world_scroller: Node3D = get_parent().get_node("World/WorldScroller")
@@ -51,12 +51,12 @@ func _process(_delta: float) -> void:
 			continue
 		if bool(enemy.get("dying")):
 			continue
-		if not is_instance_valid(player):
+		if not is_instance_valid(selected_hero):
 			continue
 
-		var distance: float = enemy.global_position.distance_to(player.global_position)
+		var distance: float = enemy.global_position.distance_to(selected_hero.global_position)
 
-		if distance <= float(player.get("attack_range")):
+		if distance <= float(selected_hero.get("attack_range")):
 			level_controller.start_combat(enemy)
 
 		if not bool(enemy.get("in_combat")):
@@ -92,7 +92,7 @@ func spawn_enemies() -> void:
 		push_warning("Nenhum inimigo configurado na onda %d." % current_wave)
 		return
 
-	var spawn_center: Vector3 = player.global_position
+	var spawn_center: Vector3 = selected_hero.global_position
 	spawn_center.z += spawn_distance
 
 	for entry in spawn_list:
@@ -106,11 +106,11 @@ func spawn_enemies() -> void:
 				continue
 
 			if _has_property(enemy, "player"):
-				enemy.set("player", player)
+				enemy.set("player", selected_hero)
 
 			var player_level: int = 1
-			if is_instance_valid(player.get("character_stats")):
-				player_level = maxi(1, int(player.character_stats.level))
+			if is_instance_valid(selected_hero.get("character_stats")):
+				player_level = maxi(1, int(selected_hero.character_stats.level))
 
 			var min_enemy_level: int = mini(
 				max_enemy_level_limit,
@@ -230,18 +230,18 @@ func spawn_boss() -> void:
 		return
 
 	if _has_property(boss, "player"):
-		boss.set("player", player)
+		boss.set("player", selected_hero)
 
 	var player_level: int = 1
-	if is_instance_valid(player) and is_instance_valid(player.get("character_stats")):
-		player_level = maxi(1, int(player.character_stats.level))
+	if is_instance_valid(selected_hero) and is_instance_valid(selected_hero.get("character_stats")):
+		player_level = maxi(1, int(selected_hero.character_stats.level))
 
 	var selected_level: int = mini(player_level, max_enemy_level_limit)
 	if boss.has_method("setup_level"):
 		boss.setup_level(selected_level)
 
 	world_scroller.add_child(boss)
-	boss.global_position = player.global_position
+	boss.global_position = selected_hero.global_position
 	boss.global_position.z += spawn_distance
 
 	if not enemies.has(boss):
@@ -299,6 +299,28 @@ func _has_property(object: Object, property_name: String) -> bool:
 	return false
 
 func _get_selected_hero() -> Node3D:
-	var selected_id := str(CharacterSelectionData.selected_character).to_lower()
-	var node_name := "Knight" if selected_id == "knight" else "Player"
-	return get_parent().get_node_or_null(node_name) as Node3D
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	var parent_node := get_parent()
+	if not is_instance_valid(parent_node):
+		return null
+
+	var manager := parent_node.get_node_or_null("PartyManager") as PartyManager
+	if is_instance_valid(manager):
+		var main_hero := manager.get_main_hero()
+		if is_instance_valid(main_hero):
+			return main_hero
+
+	for candidate in parent_node.get_children():
+		if not candidate is Node3D:
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if not is_instance_valid(stats):
+			stats = candidate.find_child("CharacterStats", true, false)
+		if is_instance_valid(stats):
+			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			if hero_id == selected_id:
+				return candidate
+
+	return null
