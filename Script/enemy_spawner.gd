@@ -46,12 +46,17 @@ func _process(_delta: float) -> void:
 		if not is_instance_valid(enemies[i]):
 			enemies.remove_at(i)
 
+	# Se o herói de referência morreu ou foi liberado, usa outro herói vivo.
+	if not _is_hero_alive(selected_hero):
+		selected_hero = _get_selected_hero()
+
+	if not is_instance_valid(selected_hero):
+		return
+
 	for enemy in enemies:
 		if not is_instance_valid(enemy):
 			continue
 		if bool(enemy.get("dying")):
-			continue
-		if not is_instance_valid(selected_hero):
 			continue
 
 		var distance: float = enemy.global_position.distance_to(selected_hero.global_position)
@@ -65,6 +70,13 @@ func _process(_delta: float) -> void:
 
 
 func spawn_enemies() -> void:
+	if not _is_hero_alive(selected_hero):
+		selected_hero = _get_selected_hero()
+
+	if not is_instance_valid(selected_hero):
+		push_warning("EnemySpawner: nenhum herói vivo disponível para posicionar os inimigos.")
+		return
+
 	var selected_slots: Array[EnemySpawnSlot] = []
 
 	match current_wave:
@@ -109,8 +121,11 @@ func spawn_enemies() -> void:
 				enemy.set("fallback_hero_target", selected_hero)
 
 			var hero_level: int = 1
-			if is_instance_valid(selected_hero.get("character_stats")):
-				hero_level = maxi(1, int(selected_hero.character_stats.level))
+			var hero_stats = selected_hero.get("character_stats")
+			if not is_instance_valid(hero_stats):
+				hero_stats = selected_hero.get_node_or_null("CharacterStats")
+			if is_instance_valid(hero_stats):
+				hero_level = maxi(1, int(hero_stats.get("level")))
 
 			var min_enemy_level: int = mini(
 				max_enemy_level_limit,
@@ -228,7 +243,7 @@ func spawn_boss() -> void:
 		return
 
 	# Atualiza a referência caso o herói anterior tenha sido liberado.
-	if not is_instance_valid(selected_hero):
+	if not _is_hero_alive(selected_hero):
 		selected_hero = _get_selected_hero()
 
 	if not is_instance_valid(selected_hero):
@@ -328,28 +343,56 @@ func _has_property(object: Object, property_name: String) -> bool:
 	return false
 
 func _get_selected_hero() -> Node3D:
-	var selected_id := CharacterSelectionData.get_selected_character_id()
 	var parent_node := get_parent()
 	if not is_instance_valid(parent_node):
 		return null
 
 	var manager := parent_node.get_node_or_null("PartyManager") as PartyManager
 	if is_instance_valid(manager):
-		var main_hero := manager.get_main_hero()
-		if is_instance_valid(main_hero):
-			return main_hero
+		var reference_hero := manager.get_alive_reference_hero()
+		if is_instance_valid(reference_hero):
+			return reference_hero
 
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	var candidates := get_tree().get_nodes_in_group("party_heroes")
 	for candidate in parent_node.get_children():
-		if not candidate is Node3D:
+		if candidate is Node3D and not candidates.has(candidate):
+			candidates.append(candidate)
+
+	# Primeiro tenta preservar o personagem escolhido, se ele ainda estiver vivo.
+	for candidate in candidates:
+		if not candidate is Node3D or not _is_hero_alive(candidate):
 			continue
+
 		var stats = candidate.get("character_stats")
 		if not is_instance_valid(stats):
 			stats = candidate.get_node_or_null("CharacterStats")
 		if not is_instance_valid(stats):
 			stats = candidate.find_child("CharacterStats", true, false)
+
 		if is_instance_valid(stats):
-			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			var hero_id := CharacterSelectionData.normalize_hero_id(
+				str(stats.get("hero_id"))
+			)
 			if hero_id == selected_id:
 				return candidate
 
+	# Se o principal morreu, usa outro herói vivo registrado na equipe.
+	for candidate in candidates:
+		if candidate is Node3D and _is_hero_alive(candidate):
+			var stats = candidate.get("character_stats")
+			if not is_instance_valid(stats):
+				stats = candidate.get_node_or_null("CharacterStats")
+			if not is_instance_valid(stats):
+				stats = candidate.find_child("CharacterStats", true, false)
+			if is_instance_valid(stats):
+				return candidate
+
 	return null
+
+
+func _is_hero_alive(hero: Node3D) -> bool:
+	if not is_instance_valid(hero) or not _has_property(hero, "dead"):
+		return false
+
+	return not bool(hero.get("dead"))
