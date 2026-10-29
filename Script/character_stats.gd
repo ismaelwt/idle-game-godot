@@ -4,7 +4,7 @@ signal level_up_occurred
 signal attributes_changed
 
 @export_category("Identidade do Herói")
-@export var hero_id: String = "player"
+@export var hero_id: String = "mage"
 @export_enum("Mage", "Knight") var hero_class: String = "Mage"
 
 @onready var inventory: Inventory = get_tree().current_scene.find_child("Inventory", true, false)
