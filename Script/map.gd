@@ -70,17 +70,17 @@ func load_campaign_progress() -> void:
 		push_warning("MAPA | SaveManager Autoload não encontrado.")
 
 	# Compatibilidade temporária com saves antigos, nos quais o desbloqueio
-	# ainda estava salvo dentro de CharacterStats do Player.
-	var player_node := get_tree().get_first_node_in_group("player")
-	if player_node == null:
+	# ainda estava salvo dentro de CharacterStats do herói principal.
+	var selected_hero := _find_selected_hero()
+	if not is_instance_valid(selected_hero):
 		push_warning("MAPA | Progresso global não encontrado; mantendo fase 1 desbloqueada.")
 		return
 
-	if not "character_stats" in player_node:
-		push_warning("MAPA | O jogador não possui character_stats; mantendo fase 1 desbloqueada.")
+	if not "character_stats" in selected_hero:
+		push_warning("MAPA | O herói selecionado não possui character_stats; mantendo fase 1 desbloqueada.")
 		return
 
-	var stats = player_node.character_stats
+	var stats = selected_hero.character_stats
 	if stats != null and "unlocked_level" in stats:
 		unlocked_level = maxi(1, int(stats.unlocked_level))
 		print("MAPA | Usando unlocked_level legado de CharacterStats: ", unlocked_level)
@@ -150,3 +150,21 @@ func detect_current_stage() -> int:
 
 	push_warning("Cena não corresponde ao padrão level_N: " + scene_name)
 	return current_stage
+
+
+func _find_selected_hero() -> Node:
+	var selected_id := CharacterSelectionData.get_selected_character_id()
+	var manager := get_tree().get_first_node_in_group("party_manager") as PartyManager
+	if is_instance_valid(manager):
+		var main_hero := manager.get_main_hero()
+		if is_instance_valid(main_hero):
+			return main_hero
+	for candidate in get_tree().get_nodes_in_group("party_heroes"):
+		if not is_instance_valid(candidate):
+			continue
+		var stats = candidate.get("character_stats")
+		if not is_instance_valid(stats):
+			stats = candidate.get_node_or_null("CharacterStats")
+		if is_instance_valid(stats) and CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
+			return candidate
+	return null
