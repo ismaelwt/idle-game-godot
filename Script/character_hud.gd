@@ -125,11 +125,7 @@ func _refresh_heroes() -> void:
 		if not is_instance_valid(stats):
 			continue
 
-		var hero_id := str(stats.get("hero_id")).strip_edges().to_lower()
-		if is_instance_valid(CharacterSelectionData):
-			hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
-		elif hero_id == "player":
-			hero_id = "mage"
+		var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
 
 		match hero_id:
 			"mage":
