@@ -1012,11 +1012,24 @@ func _refresh_hero_switch_buttons() -> void:
 			character_stats.get("hero_id")
 		).strip_edges().to_lower()
 
-	# Exibe somente o botão do personagem selecionado.
-	knight_change_button.visible = current_hero_id == "knight"
-	mage_change_button.visible = current_hero_id == "mage"
+	# Mantém visível o herói atual e mostra o outro somente quando
+	# ele estiver disponível na equipe.
+	var knight_available := (
+		current_hero_id == "knight"
+		or is_instance_valid(_find_hero_by_id("knight"))
+	)
+	var mage_available := (
+		current_hero_id == "mage"
+		or is_instance_valid(_find_hero_by_id("mage"))
+	)
 
-	# Mantém o indicador de seleção no botão visível.
+	knight_change_button.visible = knight_available
+	mage_change_button.visible = mage_available
+
+	# O herói atual fica marcado e seu botão não precisa ser clicável.
+	knight_change_button.disabled = current_hero_id == "knight"
+	mage_change_button.disabled = current_hero_id == "mage"
+
 	if is_instance_valid(knight_selected_icon):
 		knight_selected_icon.visible = current_hero_id == "knight"
 
