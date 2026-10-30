@@ -37,7 +37,7 @@ enum GemEffect {
 	MAX_MANA,
 	PHYSICAL_DAMAGE,
 	MAGIC_DAMAGE,
-	DEFENSE,
+	DEFENSE, # Legado: gemas antigas aplicam o valor às duas defesas.
 	MAGIC_POWER,
 	LIFE_STEAL,
 	MANA_STEAL,
