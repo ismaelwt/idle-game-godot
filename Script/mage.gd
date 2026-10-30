@@ -136,13 +136,14 @@ func use_skill(skill_id: String, target: Node3D):
 			projectile.global_position = fireball_spawn.global_position
 			projectile.target = target
 			projectile.magic_bonus = character_stats.get_magic_bonus()
+			projectile.character_stats = character_stats
 			projectile.critical_chance = character_stats.get_critical_chance()
 			projectile.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
 
 			if damage_buff_active and is_instance_valid(damage_buff_instance):
-				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier
+				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
 			else:
-				projectile.damage_multiplier = 1.0
+				projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
 			await projectile.finished
 
@@ -179,9 +180,9 @@ func use_skill(skill_id: String, target: Node3D):
 			projectile.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
 
 			if damage_buff_active and is_instance_valid(damage_buff_instance):
-				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier
+				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
 			else:
-				projectile.damage_multiplier = 1.0
+				projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
 			await projectile.finished
 
@@ -277,13 +278,14 @@ func use_skill(skill_id: String, target: Node3D):
 
 			storm.center_target = target
 			storm.magic_bonus = character_stats.get_magic_bonus()
+			storm.character_stats = character_stats
 			storm.critical_chance = character_stats.get_critical_chance()
 			storm.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
 
 			if damage_buff_active and is_instance_valid(damage_buff_instance):
-				storm.damage_multiplier = damage_buff_instance.damage_buff_multiplier
+				storm.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
 			else:
-				storm.damage_multiplier = 1.0
+				storm.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
 			get_tree().current_scene.add_child(storm)
 
@@ -816,15 +818,16 @@ func basic_attack(target: Node3D):
 	projectile.global_position = fireball_spawn.global_position
 	projectile.target = target
 	projectile.basic_attack_level = character_stats.basic_attack_level
+	projectile.character_stats = character_stats
 	print("base_attack TARGET ", target.name)
 	projectile.magic_bonus = character_stats.get_magic_bonus()
 	projectile.critical_chance = character_stats.get_critical_chance()
 	projectile.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
 	
 	if damage_buff_active and is_instance_valid(damage_buff_instance):
-		projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier
+		projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
 	else:
-		projectile.damage_multiplier = 1.0
+		projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
 
 	await projectile.finished
