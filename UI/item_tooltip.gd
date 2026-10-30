@@ -249,7 +249,7 @@ func _get_gem_effect_name(effect: ItemBase.GemEffect) -> String:
 		ItemBase.GemEffect.MAGIC_DAMAGE:
 			return "Dano mágico"
 		ItemBase.GemEffect.DEFENSE:
-			return "Defesa"
+			return "Defesa física e mágica (legado)"
 		ItemBase.GemEffect.MAGIC_POWER:
 			return "Poder mágico"
 		ItemBase.GemEffect.LIFE_STEAL:
