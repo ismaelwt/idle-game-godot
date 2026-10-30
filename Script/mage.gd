@@ -138,7 +138,7 @@ func use_skill(skill_id: String, target: Node3D):
 			projectile.magic_bonus = character_stats.get_magic_bonus()
 			projectile.character_stats = character_stats
 			projectile.critical_chance = character_stats.get_critical_chance()
-			projectile.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
+			projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
 
 			if damage_buff_active and is_instance_valid(damage_buff_instance):
 				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
