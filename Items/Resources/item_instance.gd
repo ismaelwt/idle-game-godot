@@ -19,10 +19,11 @@ class_name ItemInstance
 @export var max_mana_bonus: int = 0
 @export var physical_damage_bonus: int = 0
 @export var magic_damage_bonus: int = 0
-@export var defense_bonus: int = 0 # Campo antigo; protege contra dano físico e mágico.
 @export var physical_defense_bonus: int = 0
 @export var magic_defense_bonus: int = 0
 @export var magic_power_bonus: float = 0.0
+@export var life_steal_bonus: float = 0.0
+@export var mana_steal_bonus: float = 0.0
 
 @export_category("Efeito da Gema")
 @export var gem_effect: ItemBase.GemEffect = ItemBase.GemEffect.NONE
