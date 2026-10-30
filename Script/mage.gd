@@ -176,6 +176,7 @@ func use_skill(skill_id: String, target: Node3D):
 			projectile.global_position = spawn_position
 			projectile.target = target
 			projectile.magic_bonus = character_stats.get_magic_bonus()
+			projectile.character_stats = character_stats
 			projectile.critical_chance = character_stats.get_critical_chance()
 			projectile.critical_damage_multiplier = character_stats.CRITICAL_DAMAGE_MULTIPLIER
 
