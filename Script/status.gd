@@ -27,6 +27,9 @@ var item_tooltip: ItemTooltip
 @onready var magic_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/MagicDefense
 @onready var physical_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/PhysicalDefense
 
+@onready var skill_tree: Control = $"../SkillTree"
+
+@onready var skill_tree_button = $CenterContainer/PanelContainer/Background/SkillsButton
 
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
 
@@ -137,7 +140,9 @@ func _ready() -> void:
 	agility_button.pressed.connect(_on_agility_pressed)
 	intelligence_button.pressed.connect(_on_intelligence_pressed)
 	vitality_button.pressed.connect(_on_vitality_pressed)
-
+	
+	skill_tree_button.pressed.connect(_on_skill_tree_button_pressed)
+	
 	close_button.pressed.connect(_on_close_pressed)
 	knight_change_button.pressed.connect(_on_knight_change_pressed)
 	mage_change_button.pressed.connect(_on_mage_change_pressed)
@@ -1096,3 +1101,6 @@ func _get_valid_active_hero_id() -> String:
 
 	character_stats = stats
 	return str(stats.get("hero_id"))
+
+func _on_skill_tree_button_pressed() -> void:
+	skill_tree.visible = not skill_tree.visible

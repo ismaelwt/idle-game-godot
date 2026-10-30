@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=124 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -57,6 +57,7 @@
 [ext_resource type="Texture2D" uid="uid://enm03es8ronf" path="res://icons/chest-armor.png" id="52_rgvj4"]
 [ext_resource type="Texture2D" uid="uid://ctef08pvcnevn" path="res://UI/UISprites/Knight_Avatar.png" id="53_4qhvg"]
 [ext_resource type="Texture2D" uid="uid://bgqkahavllawl" path="res://icons/gladius.png" id="53_h3qy2"]
+[ext_resource type="Texture2D" uid="uid://ctqiuorq6wxse" path="res://UI/blanck_button.png" id="53_t405x"]
 [ext_resource type="Texture2D" uid="uid://ikdcrw8tdtkw" path="res://icons/gloves.png" id="54_c2sqv"]
 [ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="54_tohvi"]
 [ext_resource type="Texture2D" uid="uid://dl4tfr2vvainy" path="res://UI/UISprites/Mage_Avatar.png" id="55_t405x"]
@@ -108,19 +109,16 @@ metadata/_custom_type_script = "uid://p802c5ldrgy"
 [sub_resource type="Resource" id="Resource_tohvi"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("10_t405x")
-amount = 0
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_t405x"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
-amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_rby12"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("10_t405x")
-amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_lue1o"]
@@ -187,55 +185,9 @@ font = ExtResource("18_x3b7j")
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
 bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xo1hl"]
-texture = ExtResource("31_1qp6s")
-expand_margin_left = 75.0
-expand_margin_top = 70.0
-expand_margin_right = 75.0
-expand_margin_bottom = 70.0
-
-[sub_resource type="LabelSettings" id="LabelSettings_ijtdf"]
+[sub_resource type="LabelSettings" id="LabelSettings_rby12"]
 font = ExtResource("18_x3b7j")
-
-[sub_resource type="LabelSettings" id="LabelSettings_c5xoi"]
-font = ExtResource("18_x3b7j")
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_nuasi"]
-color = Color(0.47715485, 0.31638956, 0.13299686, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfey3"]
-bg_color = Color(0, 0, 0, 0.24313726)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.96862745, 0.78039217, 0.4117647, 0.4117647)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2piv"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="LabelSettings" id="LabelSettings_e2piv"]
-font = ExtResource("18_x3b7j")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riph3"]
-bg_color = Color(0.36862746, 0.36862746, 0.36862746, 0.69803923)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijtdf"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_affgb"]
-bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm1xi"]
-bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
+font_size = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j13t8"]
 bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
@@ -291,6 +243,56 @@ font = ExtResource("18_x3b7j")
 
 [sub_resource type="LabelSettings" id="LabelSettings_5jii6"]
 font = ExtResource("18_x3b7j")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xo1hl"]
+texture = ExtResource("31_1qp6s")
+expand_margin_left = 75.0
+expand_margin_top = 70.0
+expand_margin_right = 75.0
+expand_margin_bottom = 70.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_ijtdf"]
+font = ExtResource("18_x3b7j")
+
+[sub_resource type="LabelSettings" id="LabelSettings_c5xoi"]
+font = ExtResource("18_x3b7j")
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_nuasi"]
+color = Color(0.47715485, 0.31638956, 0.13299686, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfey3"]
+bg_color = Color(0, 0, 0, 0.24313726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.96862745, 0.78039217, 0.4117647, 0.4117647)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2piv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="LabelSettings" id="LabelSettings_e2piv"]
+font = ExtResource("18_x3b7j")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riph3"]
+bg_color = Color(0.36862746, 0.36862746, 0.36862746, 0.69803923)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijtdf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_affgb"]
+bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm1xi"]
+bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5eas"]
 content_margin_left = 30.0
@@ -1054,6 +1056,7 @@ texture_normal = ExtResource("27_a6lkv")
 stretch_mode = 5
 
 [node name="SkillTreeButton" type="TextureButton" parent="SubViewportContainer/UI/CharacterHUD/HBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("28_jwru3")
@@ -1097,6 +1100,805 @@ offset_bottom = 247.0
 grow_horizontal = 0
 grow_vertical = 2
 texture_normal = ExtResource("30_w6q3x")
+
+[node name="Status" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vib74")
+script = ExtResource("49_62cx3")
+
+[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/Status"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PanelContainer" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+custom_minimum_size = Vector2(450, 545)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Background" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 420.0
+offset_bottom = 519.0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -122.000015
+offset_top = -138.0
+offset_right = 136.74988
+offset_bottom = 281.74994
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("31_1qp6s")
+
+[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -68.0
+offset_top = 31.0
+offset_right = -8.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_vertical = 8
+texture_normal = ExtResource("48_73j5b")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Forja" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -199.0
+offset_top = -37.0
+offset_right = -113.0
+offset_bottom = 3.0
+grow_horizontal = 2
+texture_normal = ExtResource("51_ghgdn")
+stretch_mode = 5
+
+[node name="AtributtesButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -63.0
+offset_top = 392.0
+offset_right = 23.0
+offset_bottom = 432.0
+grow_horizontal = 2
+texture_normal = ExtResource("53_t405x")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/AtributtesButton"]
+layout_mode = 0
+offset_left = 14.5
+offset_top = 13.0
+offset_right = 74.5
+offset_bottom = 32.0
+text = "Attributes"
+label_settings = SubResource("LabelSettings_rby12")
+
+[node name="SkillsButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 32.0
+offset_top = 392.0
+offset_right = 119.0
+offset_bottom = 432.0
+grow_horizontal = 2
+texture_normal = ExtResource("53_t405x")
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/SkillsButton"]
+layout_mode = 0
+offset_left = 14.5
+offset_top = 13.0
+offset_right = 74.5
+offset_bottom = 32.0
+text = "Skills"
+label_settings = SubResource("LabelSettings_rby12")
+horizontal_alignment = 1
+
+[node name="KnightAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -79.0
+offset_top = -34.0
+offset_right = -29.0
+offset_bottom = 16.0
+grow_horizontal = 2
+texture_normal = ExtResource("53_4qhvg")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SelectedPlayer" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/KnightAvatar"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 18.0
+offset_bottom = 33.0
+texture = ExtResource("54_tohvi")
+expand_mode = 1
+
+[node name="MageAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -14.0
+offset_top = -35.0
+offset_right = 36.0
+offset_bottom = 15.0
+grow_horizontal = 2
+texture_normal = ExtResource("55_t405x")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="SelectedPlayer" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/MageAvatar"]
+layout_mode = 0
+offset_left = -15.0
+offset_top = 18.0
+offset_bottom = 33.0
+texture = ExtResource("54_tohvi")
+expand_mode = 1
+
+[node name="ArcherAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 69.0
+offset_top = -46.0
+offset_right = 119.0
+offset_bottom = 4.0
+grow_horizontal = 2
+texture_normal = ExtResource("56_tohvi")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/ArcherAvatar"]
+visible = false
+layout_mode = 0
+offset_left = -15.0
+offset_top = 18.0
+offset_bottom = 33.0
+texture = ExtResource("54_tohvi")
+expand_mode = 1
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 420.0
+offset_bottom = 410.0
+
+[node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -258.0
+offset_top = 25.0
+offset_right = -53.0
+offset_bottom = 380.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
+
+[node name="PlayerBackground" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -156.0
+offset_top = -81.0
+offset_right = 156.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("50_ho6uo")
+stretch_mode = 5
+
+[node name="Helmet" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 26.0
+offset_right = 115.0
+offset_bottom = 66.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("51_0yaw2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Chest" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 95.0
+offset_right = 115.0
+offset_bottom = 135.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("52_rgvj4")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Weapon" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 56.0
+offset_right = 185.0
+offset_bottom = 96.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("53_h3qy2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Gloves" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 151.0
+offset_right = 56.0
+offset_bottom = 191.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("54_c2sqv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Pants" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 201.0
+offset_right = 115.0
+offset_bottom = 241.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("55_wpjht")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Boots" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 271.0
+offset_right = 115.0
+offset_bottom = 311.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("56_v7pp5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 39.0
+offset_right = 165.0
+offset_bottom = 544.0
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="VBoxContainer0" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
+layout_mode = 2
+text = "Status"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
+layout_mode = 2
+text = "Exp"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="Health" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
+layout_mode = 2
+text = "Health"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="Mana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
+layout_mode = 2
+text = "Mana"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer1" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PhysicalDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Physical Defense"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Magic Defense"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Atk Speed"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MaxHealth" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Max Health"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Max Mana"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LifeStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Life Steal Per hit"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="ManaStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Mana Steal Per hit"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="ManaRegeneration" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Mana Regeneration"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MagicPower" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Magic Power"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PhysicalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Physical Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MagicDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Magic Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="CriticalChance" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Critical Chance"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="CriticalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Critical Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+layout_mode = 2
+
+[node name="InventoryPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl"]
+layout_mode = 0
+offset_left = 255.0
+offset_top = -200.0
+offset_right = 480.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_k8xho")
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.043
+anchor_top = -0.030000001
+anchor_right = 1.051
+anchor_bottom = 1.0
+offset_left = -158.938
+offset_top = -65.229996
+offset_right = 155.06604
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("57_g0njp")
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+text = "Inventario"
+label_settings = SubResource("LabelSettings_w3147")
+
+[node name="ChestButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture_normal = ExtResource("58_ye3n6")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+
+[node name="ChestCount" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.827
+anchor_top = -0.67700005
+anchor_right = 0.827
+anchor_bottom = -0.67700005
+offset_left = -17.0
+offset_top = 15.080004
+offset_right = 2.0
+offset_bottom = 37.08
+theme_override_styles/normal = SubResource("StyleBoxFlat_27s1b")
+text = "2"
+label_settings = SubResource("LabelSettings_kwf64")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="SellAllButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 6
+texture_normal = ExtResource("59_honab")
+stretch_mode = 5
+
+[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+
+[node name="GoldLabel" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control"]
+layout_mode = 0
+offset_top = -9.0
+offset_right = 35.333374
+offset_bottom = 6.333336
+label_settings = SubResource("LabelSettings_4qhvg")
+vertical_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 15)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxLine_ibdrw")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ItemsGrid" type="GridContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+columns = 5
+
+[node name="AttributesControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl"]
+custom_minimum_size = Vector2(150, 400)
+layout_mode = 0
+offset_left = -580.0
+offset_top = -243.0
+offset_right = -292.0
+offset_bottom = 164.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ibdrw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 70.0
+offset_right = 245.0
+offset_bottom = 428.0
+theme_override_constants/separation = 20
+
+[node name="Points" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Points:"
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="AvailablePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Points"]
+layout_mode = 0
+offset_left = 157.0
+offset_right = 185.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="Strength" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Str:"
+label_settings = SubResource("LabelSettings_5jii6")
+
+[node name="StrengthPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_54lcq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Agility" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Agi:"
+label_settings = SubResource("LabelSettings_5jii6")
+
+[node name="AgilityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_54lcq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Intelligence" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Int:"
+label_settings = SubResource("LabelSettings_5jii6")
+
+[node name="IntelligencePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_54lcq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Vitality" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vit:"
+label_settings = SubResource("LabelSettings_5jii6")
+
+[node name="VitalityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 30.0
+offset_right = 73.0
+offset_bottom = 23.0
+label_settings = SubResource("LabelSettings_4k5rq")
+
+[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
+layout_mode = 0
+offset_left = 125.0
+offset_top = -3.5
+offset_right = 196.0
+offset_bottom = 26.5
+texture_normal = ExtResource("46_54lcq")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 249.0
+offset_right = 235.0
+offset_bottom = 253.0
+
+[node name="Control" type="LineEdit" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 259.0
+offset_right = 237.0
+offset_bottom = 349.0
+size_flags_vertical = 3
 
 [node name="SkillTree" type="Panel" parent="SubViewportContainer/UI"]
 visible = false
@@ -1714,759 +2516,6 @@ stretch_mode = 5
 
 [node name="SkillChangeDialog" type="ConfirmationDialog" parent="SubViewportContainer/UI/SkillTree"]
 dialog_text = "Essa alteração será aplicada na próxima rodada, quando o mapa for carregado novamente. Deseja continuar?"
-
-[node name="Status" type="Panel" parent="SubViewportContainer/UI"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vib74")
-script = ExtResource("49_62cx3")
-
-[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/Status"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="PanelContainer" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
-custom_minimum_size = Vector2(450, 545)
-layout_mode = 2
-mouse_filter = 2
-
-[node name="Background" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 25.0
-offset_right = 420.0
-offset_bottom = 519.0
-
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -196.0
-offset_top = -127.0
-offset_right = 123.0
-offset_bottom = 112.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("31_1qp6s")
-stretch_mode = 5
-
-[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -68.0
-offset_top = 31.0
-offset_right = -8.0
-offset_bottom = 90.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_vertical = 8
-texture_normal = ExtResource("48_73j5b")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Forja" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -199.0
-offset_top = -37.0
-offset_right = -113.0
-offset_bottom = 3.0
-grow_horizontal = 2
-texture_normal = ExtResource("51_ghgdn")
-stretch_mode = 5
-
-[node name="KnightAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -79.0
-offset_top = -34.0
-offset_right = -29.0
-offset_bottom = 16.0
-grow_horizontal = 2
-texture_normal = ExtResource("53_4qhvg")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="SelectedPlayer" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/KnightAvatar"]
-layout_mode = 0
-offset_left = -15.0
-offset_top = 18.0
-offset_bottom = 33.0
-texture = ExtResource("54_tohvi")
-expand_mode = 1
-
-[node name="MageAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -14.0
-offset_top = -35.0
-offset_right = 36.0
-offset_bottom = 15.0
-grow_horizontal = 2
-texture_normal = ExtResource("55_t405x")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="SelectedPlayer" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/MageAvatar"]
-layout_mode = 0
-offset_left = -15.0
-offset_top = 18.0
-offset_bottom = 33.0
-texture = ExtResource("54_tohvi")
-expand_mode = 1
-
-[node name="ArcherAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 69.0
-offset_top = -46.0
-offset_right = 119.0
-offset_bottom = 4.0
-grow_horizontal = 2
-texture_normal = ExtResource("56_tohvi")
-ignore_texture_size = true
-stretch_mode = 0
-
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/ArcherAvatar"]
-visible = false
-layout_mode = 0
-offset_left = -15.0
-offset_top = 18.0
-offset_bottom = 33.0
-texture = ExtResource("54_tohvi")
-expand_mode = 1
-
-[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 25.0
-offset_right = 420.0
-offset_bottom = 519.0
-
-[node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -258.0
-offset_top = 25.0
-offset_right = -58.0
-offset_bottom = 380.0
-grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
-
-[node name="PlayerBackground" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -156.0
-offset_top = -81.0
-offset_right = 156.0
-offset_bottom = 81.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("50_ho6uo")
-stretch_mode = 5
-
-[node name="Helmet" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 55.0
-offset_right = 120.0
-offset_bottom = 95.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Helmet"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("51_0yaw2")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Chest" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 124.0
-offset_right = 120.0
-offset_bottom = 164.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("52_rgvj4")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Chest"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Weapon" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 85.0
-offset_right = 190.0
-offset_bottom = 125.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("53_h3qy2")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Gloves" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 21.0
-offset_top = 180.0
-offset_right = 61.0
-offset_bottom = 220.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("54_c2sqv")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Pants" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 230.0
-offset_right = 120.0
-offset_bottom = 270.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("55_wpjht")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Boots" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 300.0
-offset_right = 120.0
-offset_bottom = 340.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
-
-[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-theme = SubResource("Theme_g18iw")
-texture = ExtResource("56_v7pp5")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -23.0
-offset_top = -13.0
-offset_right = 22.0
-offset_bottom = 11.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-theme = SubResource("Theme_g18iw")
-texture = SubResource("CompressedTexture2D_xo1hl")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 39.0
-offset_right = 165.0
-offset_bottom = 544.0
-size_flags_horizontal = 0
-theme_override_constants/separation = 20
-
-[node name="VBoxContainer0" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
-layout_mode = 2
-text = "Status"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
-layout_mode = 2
-text = "Exp"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="Health" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
-layout_mode = 2
-text = "Health"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="Mana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
-layout_mode = 2
-text = "Mana"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="VBoxContainer1" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PhysicalDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Physical Defense"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Magic Defense"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Atk Speed"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MaxHealth" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Max Health"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
-layout_mode = 2
-text = "Max Mana"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="VBoxContainer2" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="LifeStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Life Steal Per hit"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="ManaStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Mana Steal Per hit"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="ManaRegeneration" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Mana Regeneration"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MagicPower" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
-layout_mode = 2
-text = "Magic Power"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-size_flags_horizontal = 0
-
-[node name="VBoxContainer3" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-
-[node name="PhysicalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Physical Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MagicDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Magic Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="CriticalChance" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Critical Chance"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="CriticalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
-layout_mode = 2
-text = "Critical Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
-layout_mode = 2
-
-[node name="InventoryPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl"]
-layout_mode = 0
-offset_left = 255.0
-offset_top = -200.0
-offset_right = 480.0
-offset_bottom = 150.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_k8xho")
-
-[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.043
-anchor_top = -0.030000001
-anchor_right = 1.051
-anchor_bottom = 1.0
-offset_left = -158.938
-offset_top = -65.229996
-offset_right = 155.06604
-offset_bottom = 70.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("57_g0njp")
-stretch_mode = 5
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 8
-
-[node name="Header" type="HBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
-layout_mode = 2
-text = "Inventario"
-label_settings = SubResource("LabelSettings_w3147")
-
-[node name="ChestButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
-custom_minimum_size = Vector2(40, 40)
-layout_mode = 2
-texture_normal = ExtResource("58_ye3n6")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
-layout_mode = 2
-
-[node name="ChestCount" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/Control"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.827
-anchor_top = -0.67700005
-anchor_right = 0.827
-anchor_bottom = -0.67700005
-offset_left = -17.0
-offset_top = 15.080004
-offset_right = 2.0
-offset_bottom = 37.08
-theme_override_styles/normal = SubResource("StyleBoxFlat_27s1b")
-text = "2"
-label_settings = SubResource("LabelSettings_kwf64")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="SellAllButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header"]
-layout_mode = 2
-size_flags_horizontal = 6
-texture_normal = ExtResource("59_honab")
-stretch_mode = 5
-
-[node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
-layout_mode = 2
-
-[node name="GoldLabel" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control"]
-layout_mode = 0
-offset_top = -9.0
-offset_right = 35.333374
-offset_bottom = 6.333336
-label_settings = SubResource("LabelSettings_4qhvg")
-vertical_alignment = 1
-
-[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
-custom_minimum_size = Vector2(0, 15)
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxLine_ibdrw")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-
-[node name="ItemsGrid" type="GridContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-columns = 5
-
-[node name="AttributesControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
-layout_mode = 2
-
-[node name="PanelContainer" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl"]
-custom_minimum_size = Vector2(150, 400)
-layout_mode = 0
-offset_left = -558.0
-offset_top = -243.0
-offset_right = -270.0
-offset_bottom = 164.0
-theme_override_styles/panel = SubResource("StyleBoxTexture_ibdrw")
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 70.0
-offset_right = 245.0
-offset_bottom = 428.0
-theme_override_constants/separation = 20
-
-[node name="Points" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Points:"
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="AvailablePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Points"]
-layout_mode = 0
-offset_left = 157.0
-offset_right = 185.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="Strength" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Str:"
-label_settings = SubResource("LabelSettings_5jii6")
-
-[node name="StrengthPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
-layout_mode = 0
-offset_left = 30.0
-offset_right = 73.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Strength"]
-layout_mode = 0
-offset_left = 125.0
-offset_top = -3.5
-offset_right = 196.0
-offset_bottom = 26.5
-texture_normal = ExtResource("46_54lcq")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Agility" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Agi:"
-label_settings = SubResource("LabelSettings_5jii6")
-
-[node name="AgilityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
-layout_mode = 0
-offset_left = 30.0
-offset_right = 73.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Agility"]
-layout_mode = 0
-offset_left = 125.0
-offset_top = -3.5
-offset_right = 196.0
-offset_bottom = 26.5
-texture_normal = ExtResource("46_54lcq")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Intelligence" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Int:"
-label_settings = SubResource("LabelSettings_5jii6")
-
-[node name="IntelligencePoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
-layout_mode = 0
-offset_left = 30.0
-offset_right = 73.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Intelligence"]
-layout_mode = 0
-offset_left = 125.0
-offset_top = -3.5
-offset_right = 196.0
-offset_bottom = 26.5
-texture_normal = ExtResource("46_54lcq")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="Vitality" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Vit:"
-label_settings = SubResource("LabelSettings_5jii6")
-
-[node name="VitalityPoints" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
-layout_mode = 0
-offset_left = 30.0
-offset_right = 73.0
-offset_bottom = 23.0
-label_settings = SubResource("LabelSettings_4k5rq")
-
-[node name="Add" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Vitality"]
-layout_mode = 0
-offset_left = 125.0
-offset_top = -3.5
-offset_right = 196.0
-offset_bottom = 26.5
-texture_normal = ExtResource("46_54lcq")
-ignore_texture_size = true
-stretch_mode = 5
-
-[node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 249.0
-offset_right = 235.0
-offset_bottom = 253.0
-
-[node name="Control" type="LineEdit" parent="SubViewportContainer/UI/Status/CenterContainer/AttributesControl/PanelContainer"]
-layout_mode = 0
-offset_left = 50.0
-offset_top = 259.0
-offset_right = 237.0
-offset_bottom = 349.0
-size_flags_vertical = 3
 
 [node name="RetryPanel" type="Panel" parent="SubViewportContainer/UI"]
 visible = false
