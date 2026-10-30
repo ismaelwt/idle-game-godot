@@ -38,7 +38,11 @@ enum GemEffect {
 	PHYSICAL_DAMAGE,
 	MAGIC_DAMAGE,
 	DEFENSE,
-	MAGIC_POWER
+	MAGIC_POWER,
+	LIFE_STEAL,
+	MANA_STEAL,
+	PHYSICAL_DEFENSE,
+	MAGIC_DEFENSE
 }
 
 
@@ -118,10 +122,13 @@ func get_item_value() -> int:
 @export var magic_defense_min: int = 0
 @export var magic_defense_max: int = 0
 
-# Compatibilidade com recursos antigos. Defesa genérica protege contra os dois tipos.
-@export_group("Defesa Antiga (Compatibilidade)")
-@export var defense_min: int = 0
-@export var defense_max: int = 0
+@export_group("Roubo de Vida por Hit (%)")
+@export var life_steal_min: float = 0.0
+@export var life_steal_max: float = 0.0
+
+@export_group("Roubo de Mana por Hit (%)")
+@export var mana_steal_min: float = 0.0
+@export var mana_steal_max: float = 0.0
 
 @export_group("Poder Mágico (%)")
 @export var magic_power_min: float = 0.0
