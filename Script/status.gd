@@ -68,6 +68,7 @@ var active_hero
 var character_stats
 var inventory: Inventory
 var additional_status_labels: Dictionary = {}
+var selected_equipment_for_gem: ItemInstance = null
 
 
 
@@ -509,11 +510,22 @@ func get_item_tooltip(item: ItemInstance) -> String:
 func _on_inventory_slot_pressed(index: int) -> void:
 	if inventory == null:
 		return
-
 	if index < 0 or index >= inventory.equipment.size():
 		return
 
 	var item: ItemInstance = inventory.equipment[index]
+	if item == null or item.item_base == null:
+		return
+
+	if item.item_base.item_type == ItemBase.ItemType.GEM:
+		if not is_instance_valid(selected_equipment_for_gem):
+			print("Selecione primeiro um equipamento com slot de gema.")
+			return
+		if inventory.install_gem(selected_equipment_for_gem, item, str(character_stats.hero_id)):
+			selected_equipment_for_gem = null
+			if item_tooltip != null:
+				item_tooltip.hide_tooltip()
+		return
 
 	inventory.equip_item(item, str(character_stats.hero_id))
 
@@ -658,10 +670,22 @@ func _handle_equipment_tooltip(
 	event: InputEvent,
 	item_type: int
 ) -> void:
-	if not event is InputEventMouseMotion:
+	if not is_instance_valid(inventory):
 		return
 
-	if not is_instance_valid(inventory):
+	if event is InputEventMouseButton:
+		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
+			var selected_hero_id := _get_valid_active_hero_id()
+			if selected_hero_id.is_empty():
+				return
+			var selected_item: ItemInstance = inventory.get_equipped_items(selected_hero_id).get(item_type)
+			if selected_item != null and selected_item.enchantment_slots > selected_item.installed_enchantments.size():
+				selected_equipment_for_gem = selected_item
+				print("Equipamento selecionado para gema: ", selected_item.item_base.item_name)
+				get_viewport().set_input_as_handled()
+			return
+
+	if not event is InputEventMouseMotion:
 		return
 
 	if not is_instance_valid(item_tooltip):
