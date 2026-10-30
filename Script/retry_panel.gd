@@ -34,6 +34,9 @@ func _process(_delta):
 	if level_controller == null:
 		return
 
+	if SaveManager.automatic_retry:
+		return
+
 	if level_controller.state == level_controller.State.DEFEAT:
 		title_label.text = "DEFEAT"
 		visible = true
