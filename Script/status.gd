@@ -229,10 +229,12 @@ func update_status() -> void:
 		+ " / " + str(int(character_stats.max_mana))
 	)
 
-	_set_label_text(
-		damage_label,
-		"DAMAGE: " + str(character_stats.get_magic_bonus() + 3)
-	)
+	var displayed_damage: float
+	if _has_property(active_hero, "attack_damage"):
+		displayed_damage = float(active_hero.get("attack_damage")) + character_stats.get_physical_damage_bonus()
+	else:
+		displayed_damage = float(active_hero.get("basic_attack_damage")) + character_stats.basic_attack_level + character_stats.get_magic_bonus()
+	_set_label_text(damage_label, "DAMAGE: " + str(snappedf(displayed_damage, 0.1)))
 
 	_set_label_text(
 		attack_speed_label,
@@ -241,6 +243,8 @@ func update_status() -> void:
 	_set_label_text(max_health_label, "MAX HEALTH: " + str(int(active_hero.max_health)))
 	_set_label_text(max_mana_label, "MAX MANA: " + str(int(character_stats.max_mana)))
 
+	_set_additional_status("physical_damage", "PHYSICAL DAMAGE BONUS: %.1f" % character_stats.get_physical_damage_bonus())
+	_set_additional_status("magic_damage", "MAGIC DAMAGE BONUS: %.1f" % character_stats.get_magic_bonus())
 	_set_additional_status("physical_defense", "PHYSICAL DEFENSE: %.1f" % character_stats.get_equipment_bonus("physical_defense"))
 	_set_additional_status("magic_defense", "MAGIC DEFENSE: %.1f" % character_stats.get_equipment_bonus("magic_defense"))
 	_set_additional_status("critical_chance", "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
@@ -254,7 +258,7 @@ func update_status() -> void:
 func _create_additional_status_labels() -> void:
 	var container := $CenterContainer/PanelContainer/VBoxContainer as VBoxContainer
 	var entries := [
-		"physical_defense", "magic_defense", "critical_chance",
+		"physical_damage", "magic_damage", "physical_defense", "magic_defense", "critical_chance",
 		"critical_damage", "life_steal", "mana_steal",
 		"mana_regeneration", "magic_power"
 	]
@@ -280,15 +284,17 @@ func _get_display_attack_speed() -> float:
 	if not is_instance_valid(active_hero):
 		return 0.0
 
+	var interval_multiplier := character_stats.get_basic_attack_interval_multiplier()
+
 	if _has_property(active_hero, "attack_base_duration"):
 		var duration := float(active_hero.get("attack_base_duration"))
 		if duration > 0.0:
-			return 1.0 / duration
+			return 1.0 / (duration * interval_multiplier)
 
 	if _has_property(active_hero, "attack_cooldown"):
 		var cooldown := float(active_hero.get("attack_cooldown"))
 		if cooldown > 0.0:
-			return 1.0 / cooldown
+			return 1.0 / (cooldown * interval_multiplier)
 
 	return 0.0
 
