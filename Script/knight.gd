@@ -680,6 +680,9 @@ func start_running() -> void:
 
 
 func cancel_attack_on_target(target: Node3D) -> void:
+	if dead:
+		return
+
 	if not is_instance_valid(target) or current_attack_target != target:
 		return
 
@@ -697,8 +700,7 @@ func cancel_attack_on_target(target: Node3D) -> void:
 		animation_player.stop()
 		animation_player.speed_scale = animation_speed
 
-	if dead:
-		return
+	
 
 	if is_instance_valid(world_scroller) and world_scroller.running:
 		play_animation(running_animation)

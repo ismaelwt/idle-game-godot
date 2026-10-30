@@ -246,6 +246,10 @@ corner_radius_bottom_left = 15
 [node name="GoblinEnemy" groups=["enemies"] instance=ExtResource("1_2k1fa")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("2_oo8mk")
+health_per_level = 0.8
+damage_per_level = 0.45
+xp_per_level = 0.8
+gold_per_level = 0.25
 damage_color = Color(1, 1, 1, 1)
 
 [node name="Skeleton" parent="." index="0"]
