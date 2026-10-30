@@ -429,7 +429,6 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	item.max_mana_bonus = int(item_data.get("max_mana_bonus", 0))
 	item.physical_damage_bonus = int(item_data.get("physical_damage_bonus", 0))
 	item.magic_damage_bonus = int(item_data.get("magic_damage_bonus", 0))
-	item.weapon_damage = float(item_data.get("weapon_damage", 0.0))
 	item.critical_chance_bonus = float(item_data.get("critical_chance_bonus", 0.0))
 	item.critical_damage_bonus = float(item_data.get("critical_damage_bonus", 0.0))
 	item.magic_power_bonus = float(item_data.get("magic_power_bonus", 0.0))
@@ -443,6 +442,14 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 		1,
 		int(item_data.get("item_level", base.item_level))
 	)
+
+	# Migra itens salvos antes da inclusão do dano base das armas.
+	if item_data.has("weapon_damage"):
+		item.weapon_damage = float(item_data["weapon_damage"])
+	elif base.item_type == ItemBase.ItemType.WEAPON:
+		item.weapon_damage = base.weapon_damage * (
+			1.0 + float(item.item_level - 1) * 0.105263
+		)
 	# Restaura os dados específicos das gemas.
 	item.gem_effect = int(item_data.get("gem_effect", base.gem_effect)) as ItemBase.GemEffect
 
