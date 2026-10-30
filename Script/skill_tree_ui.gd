@@ -120,29 +120,24 @@ func _set_hero(hero: Node) -> void:
 		character_stats = null
 		return
 
-	var stats = hero.get("character_stats")
-	
-	print("HERÓI ENCONTRADO: ", hero.name)
-	print("HERO ID: ", stats.get("hero_id"))
-	print("HERO CLASS: ", stats.get("hero_class"))
-	print("SELEÇÃO GLOBAL: ", CharacterSelectionData.selected_character)
-	
-	if stats == null:
+	var stats = _get_hero_stats(hero)
+	if not is_instance_valid(stats):
 		push_warning("SkillTreeUI: o herói selecionado não possui character_stats.")
 		character_stats = null
 		return
 
 	character_stats = stats
-	var hero_class_value = character_stats.get("hero_class")
-	if hero_class_value != null:
-		var normalized_class := str(hero_class_value).to_lower()
-		if normalized_class == "knight" or normalized_class == "1":
-			tree_class = "Knight"
-		else:
-			tree_class = "Mage"
-			
-	print("CLASSE FINAL DA ÁRVORE: ", tree_class)
-	print("SKILLS DA ÁRVORE: ", _get_skill_mapping())
+
+	var hero_class_value := str(character_stats.get("hero_class")).strip_edges().to_lower()
+	var hero_id := CharacterSelectionData.normalize_hero_id(
+		str(character_stats.get("hero_id"))
+	)
+
+	if hero_class_value == "knight" or hero_class_value == "1" or hero_id == "knight":
+		tree_class = "Knight"
+	else:
+		tree_class = "Mage"
+
 	update_tree()
 
 
@@ -174,13 +169,8 @@ func _ready() -> void:
 	_refresh_selected_hero()
 
 
-# Quando a janela é aberta, consulta novamente a seleção atual.
-# Assim, a UI não fica presa ao primeiro herói encontrado na cena.
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_VISIBILITY_CHANGED and is_visible_in_tree():
-		call_deferred("_refresh_selected_hero")
-
-
+# A seleção é definida explicitamente por quem abre a árvore:
+# Character HUD envia o herói principal; Status envia o herói exibido.
 func _refresh_selected_hero() -> void:
 	print("========== SKILL TREE DEBUG ==========")
 	print("Seleção global: ", CharacterSelectionData.selected_character)
@@ -390,16 +380,7 @@ func set_selected_hero(hero: Node) -> void:
 	if not is_instance_valid(hero):
 		return
 
-	var stats = hero.get("character_stats")
-
-	if stats == null:
-		push_warning("O herói selecionado não possui character_stats.")
-		return
-
-	character_stats = stats
-	tree_class = str(stats.get("hero_class"))
-
-	update_tree()
+	_set_hero(hero)
 
 
 func _on_skill_pressed(skill_id: String) -> void:
