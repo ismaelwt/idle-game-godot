@@ -293,15 +293,25 @@ func serialize_item(item: ItemInstance) -> Dictionary:
 		"physical_damage_bonus": item.physical_damage_bonus,
 		"magic_damage_bonus": item.magic_damage_bonus,
 		"magic_power_bonus": item.magic_power_bonus,
-		"defense_bonus": item.defense_bonus,
 		"physical_defense_bonus": item.physical_defense_bonus,
 		"magic_defense_bonus": item.magic_defense_bonus,
+		"life_steal_bonus": item.life_steal_bonus,
+		"mana_steal_bonus": item.mana_steal_bonus,
 
 		"gem_effect": int(item.gem_effect),
 		"gem_effect_value": item.gem_effect_value,
 
-		"enchantment_slots": item.enchantment_slots
+		"enchantment_slots": item.enchantment_slots,
+		"installed_enchantments": _serialize_installed_gems(item)
 	}
+
+
+func _serialize_installed_gems(item: ItemInstance) -> Array[Dictionary]:
+	var gems: Array[Dictionary] = []
+	for enchantment in item.installed_enchantments:
+		if enchantment is ItemInstance and enchantment.item_base != null:
+			gems.append(serialize_item(enchantment))
+	return gems
 
 
 func serialize_hero_equipment(inventory: Inventory, hero_id: String) -> Dictionary:
@@ -417,9 +427,11 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	item.physical_damage_bonus = int(item_data.get("physical_damage_bonus", 0))
 	item.magic_damage_bonus = int(item_data.get("magic_damage_bonus", 0))
 	item.magic_power_bonus = float(item_data.get("magic_power_bonus", 0.0))
-	item.defense_bonus = int(item_data.get("defense_bonus", 0))
-	item.physical_defense_bonus = int(item_data.get("physical_defense_bonus", 0))
-	item.magic_defense_bonus = int(item_data.get("magic_defense_bonus", 0))
+	var legacy_defense := int(item_data.get("defense_bonus", 0))
+	item.physical_defense_bonus = int(item_data.get("physical_defense_bonus", legacy_defense))
+	item.magic_defense_bonus = int(item_data.get("magic_defense_bonus", legacy_defense))
+	item.life_steal_bonus = float(item_data.get("life_steal_bonus", 0.0))
+	item.mana_steal_bonus = float(item_data.get("mana_steal_bonus", 0.0))
 	
 	item.item_level = maxi(
 		1,
@@ -446,6 +458,15 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	)
 
 	item.installed_enchantments.clear()
+	for gem_data in item_data.get("installed_enchantments", []):
+		if not gem_data is Dictionary:
+			continue
+		var installed_gem := deserialize_item(gem_data, database)
+		if (
+			installed_gem != null
+			and installed_gem.item_base.item_type == ItemBase.ItemType.GEM
+		):
+			item.installed_enchantments.append(installed_gem)
 
 	return item
 
