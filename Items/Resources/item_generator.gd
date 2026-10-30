@@ -8,6 +8,7 @@ class_name ItemGenerator
 
 @export_category("Escalonamento")
 @export_range(0.0, 1.0, 0.01) var scaling_per_level: float = 0.05
+@export_range(0.0, 1.0, 0.001) var weapon_damage_scaling_per_level: float = 0.105263
 
 
 func generate_item(
@@ -36,6 +37,13 @@ func generate_item(
 	var multiplier: float = 1.0 + (
 		float(item.item_level - 1) * scaling_per_level
 	)
+
+	# Dano base da arma: escala linearmente com o nível do item.
+	# Com base 5, uma arma nível 20 chega a aproximadamente 15 de dano.
+	if base.item_type == ItemBase.ItemType.WEAPON:
+		item.weapon_damage = base.weapon_damage * (
+			1.0 + float(item.item_level - 1) * weapon_damage_scaling_per_level
+		)
 
 	# Gemas mantêm sua geração própria.
 	if base.item_type == ItemBase.ItemType.GEM:
@@ -91,6 +99,18 @@ func generate_item(
 	if base.mana_steal_min != 0.0 or base.mana_steal_max != 0.0:
 		available_attributes.append(&"mana_steal")
 
+	# Crítico só pode ser sorteado em armas, luvas e acessórios.
+	var can_roll_critical := base.item_type in [
+		ItemBase.ItemType.WEAPON,
+		ItemBase.ItemType.GLOVES,
+		ItemBase.ItemType.ACCESSORY
+	]
+	if can_roll_critical:
+		if base.critical_chance_min != 0.0 or base.critical_chance_max != 0.0:
+			available_attributes.append(&"critical_chance")
+		if base.critical_damage_min != 0.0 or base.critical_damage_max != 0.0:
+			available_attributes.append(&"critical_damage")
+
 	# Começa com todos os bônus zerados.
 	item.strength_bonus = 0
 	item.agility_bonus = 0
@@ -104,6 +124,8 @@ func generate_item(
 	item.magic_power_bonus = 0.0
 	item.life_steal_bonus = 0.0
 	item.mana_steal_bonus = 0.0
+	item.critical_chance_bonus = 0.0
+	item.critical_damage_bonus = 0.0
 
 	# Sorteia os atributos sem repetir nenhum.
 	var count := mini(attribute_count, available_attributes.size())
@@ -164,6 +186,16 @@ func generate_item(
 				item.mana_steal_bonus = randf_range(
 					base.mana_steal_min,
 					base.mana_steal_max
+				) * multiplier
+			&"critical_chance":
+				item.critical_chance_bonus = randf_range(
+					base.critical_chance_min,
+					base.critical_chance_max
+				) * multiplier
+			&"critical_damage":
+				item.critical_damage_bonus = randf_range(
+					base.critical_damage_min,
+					base.critical_damage_max
 				) * multiplier
 
 	# Sorteia os slots de encantamento.
