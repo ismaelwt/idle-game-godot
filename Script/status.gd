@@ -1005,34 +1005,24 @@ func _refresh_hero_switch_buttons() -> void:
 	if not is_instance_valid(mage_change_button):
 		return
 
-	# Mantém os botões habilitados apenas para heróis disponíveis.
-	knight_change_button.disabled = not is_instance_valid(
-		_find_hero_by_id("knight")
-	)
-
-	mage_change_button.disabled = not is_instance_valid(
-		_find_hero_by_id("mage")
-	)
-
 	# Identifica o herói atualmente exibido no Status.
 	var current_hero_id := ""
-
 	if is_instance_valid(character_stats):
 		current_hero_id = str(
 			character_stats.get("hero_id")
 		).strip_edges().to_lower()
 
-	# Mostra o indicador somente ao lado do herói ativo no Status.
+	# Exibe somente o botão do personagem selecionado.
+	knight_change_button.visible = current_hero_id == "knight"
+	mage_change_button.visible = current_hero_id == "mage"
+
+	# Mantém o indicador de seleção no botão visível.
 	if is_instance_valid(knight_selected_icon):
-		knight_selected_icon.visible = (
-			current_hero_id == "knight"
-		)
+		knight_selected_icon.visible = current_hero_id == "knight"
 
 	if is_instance_valid(mage_selected_icon):
-		mage_selected_icon.visible = (
-			current_hero_id == "mage"
-		)
-	
+		mage_selected_icon.visible = current_hero_id == "mage"
+
 
 # Localiza heróis pela identidade do CharacterStats, sem depender do nome do nó.
 func _find_selected_hero() -> Node:
