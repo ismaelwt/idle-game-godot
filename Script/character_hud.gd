@@ -225,6 +225,15 @@ func _update_selected_hero() -> void:
 		selected_hero = mage_hero
 
 func _on_skill_tree_button_pressed() -> void:
+	_update_selected_hero()
+
+	if not is_instance_valid(selected_hero):
+		push_warning("Não foi possível encontrar o herói principal para abrir a Skill Tree.")
+		return
+
+	if is_instance_valid(skill_tree) and skill_tree.has_method("set_selected_hero"):
+		skill_tree.set_selected_hero(selected_hero)
+
 	skill_tree.visible = not skill_tree.visible
 
 
