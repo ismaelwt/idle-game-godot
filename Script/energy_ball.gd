@@ -26,6 +26,7 @@ func get_description() -> String:
 var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
 var critical_damage_multiplier: float = 1.5
+var character_stats: Node
 
 @export_category("Explosão")
 @export var explosion_radius: float = 3.0
@@ -150,6 +151,10 @@ func explode(explosion_position: Vector3) -> void:
 		)
 
 		if distance <= explosion_radius:
+			var health_before_hit := maxf(float(node.health), 0.0)
+			var actual_damage := minf(float(final_damage), health_before_hit)
 			node.take_damage(final_damage, is_critical)
+			if is_instance_valid(character_stats):
+				character_stats.apply_on_hit_effects(actual_damage)
 
 	finish()
