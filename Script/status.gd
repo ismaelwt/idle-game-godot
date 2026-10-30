@@ -685,7 +685,7 @@ func _handle_equipment_tooltip(
 			if selected_hero_id.is_empty():
 				return
 			var selected_item: ItemInstance = inventory.get_equipped_items(selected_hero_id).get(item_type)
-			if selected_item != null and selected_item.enchantment_slots > selected_item.installed_enchantments.size():
+			if selected_item != null and selected_item.item_base != null and selected_item.enchantment_slots > selected_item.installed_enchantments.size():
 				selected_equipment_for_gem = selected_item
 				print("Equipamento selecionado para gema: ", selected_item.item_base.item_name)
 				get_viewport().set_input_as_handled()
@@ -1061,6 +1061,8 @@ func _find_selected_hero() -> Node:
 func set_selected_hero(hero: Node) -> void:
 	if not is_instance_valid(hero):
 		return
+
+	selected_equipment_for_gem = null
 	var new_stats = hero.get("character_stats")
 	if not is_instance_valid(new_stats):
 		return
