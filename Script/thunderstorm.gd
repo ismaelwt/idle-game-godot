@@ -24,6 +24,7 @@ var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
 var critical_damage_multiplier: float = 1.5
 var damage_multiplier: float = 1.0
+var character_stats: Node
 
 var center_target: Node3D
 var resolved: bool = false
@@ -146,7 +147,10 @@ func _resolve_storm() -> void:
 			if enemy.get("dying") != true:
 				var health = enemy.get("health")
 				if health != null and float(health) > 0.0:
+					var actual_damage := minf(float(final_damage), float(health))
 					enemy.take_damage(final_damage, is_critical)
+					if is_instance_valid(character_stats):
+						character_stats.apply_on_hit_effects(actual_damage)
 	
 	_finish_after_delay()
 
