@@ -373,7 +373,7 @@ func basic_attack(target: Node3D) -> void:
 			character_stats.get_physical_damage_bonus()
 		)
 
-				var raw_damage: float = (
+		var raw_damage: float = (
 			attack_damage
 			+ character_stats.get_weapon_damage_bonus()
 			+ physical_bonus
