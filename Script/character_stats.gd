@@ -480,6 +480,13 @@ func get_equipment_bonus(stat_name: String) -> float:
 				total += item.life_steal_bonus
 			"mana_steal":
 				total += item.mana_steal_bonus
+			"critical_chance":
+				total += item.critical_chance_bonus
+			"critical_damage":
+				total += item.critical_damage_bonus
+			"weapon_damage":
+				if item.item_base.item_type == ItemBase.ItemType.WEAPON:
+					total += item.weapon_damage
 
 		# As gemas instaladas no equipamento também concedem atributos.
 		for enchantment in item.installed_enchantments:
@@ -565,13 +572,30 @@ func get_physical_damage_bonus() -> int:
 
 func get_critical_chance() -> float:
 	var agility_steps := maxi(0, int(floor(float(get_total_agility() - 5) / float(AGILITY_POINTS_PER_CRIT_STEP))))
-	return minf(100.0, BASE_CRITICAL_CHANCE + agility_steps * CRIT_PER_AGILITY_STEP)
+		return minf(
+		100.0,
+		BASE_CRITICAL_CHANCE
+		+ agility_steps * CRIT_PER_AGILITY_STEP
+		+ get_equipment_bonus("critical_chance")
+	)
+
+
+func get_critical_damage_multiplier() -> float:
+	return maxf(
+		1.0,
+		CRITICAL_DAMAGE_MULTIPLIER
+		+ get_equipment_bonus("critical_damage") / 100.0
+	)
 
 
 func apply_critical_damage(base_damage: float) -> float:
 	if randf() * 100.0 < get_critical_chance():
-		return base_damage * CRITICAL_DAMAGE_MULTIPLIER
+		return base_damage * get_critical_damage_multiplier()
 	return base_damage
+
+
+func get_weapon_damage_bonus() -> float:
+	return maxf(0.0, get_equipment_bonus("weapon_damage"))
 
 
 func get_basic_attack_interval_multiplier() -> float:
@@ -594,6 +618,7 @@ func get_magic_bonus() -> float:
 	return (
 		(total_intelligence - 5) * magic_damage_per_int
 		+ get_equipment_bonus("magic_damage")
+		+ get_weapon_damage_bonus()
 	)
 
 
