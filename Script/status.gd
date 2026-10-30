@@ -282,7 +282,7 @@ func _get_display_attack_speed() -> float:
 	if not is_instance_valid(active_hero):
 		return 0.0
 
-	var interval_multiplier := character_stats.get_basic_attack_interval_multiplier()
+	var interval_multiplier: float = float(character_stats.get_basic_attack_interval_multiplier())
 
 	if _has_property(active_hero, "attack_base_duration"):
 		var duration := float(active_hero.get("attack_base_duration"))
