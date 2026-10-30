@@ -86,7 +86,6 @@ libraries = {
 script = ExtResource("8_ogjxi")
 hero_id = "knight"
 hero_class = "Knight"
-magic_damage_per_int = 0.33
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="3"]
 

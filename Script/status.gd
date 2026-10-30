@@ -8,16 +8,24 @@ var item_tooltip: ItemTooltip
 
 
 @onready var title_label = $CenterContainer/PanelContainer/VBoxContainer/Title
-@onready var level_label = $CenterContainer/PanelContainer/VBoxContainer/Level
-@onready var xp_label = $CenterContainer/PanelContainer/VBoxContainer/XP
 @onready var health_label = $CenterContainer/PanelContainer/VBoxContainer/Health
 @onready var mana_label = $CenterContainer/PanelContainer/VBoxContainer/Mana
 @onready var damage_label = $CenterContainer/PanelContainer/VBoxContainer/Damage
 @onready var attack_speed_label = $CenterContainer/PanelContainer/VBoxContainer/AttackSpeed
 @onready var max_health_label = $CenterContainer/PanelContainer/VBoxContainer/MaxHealth
 @onready var max_mana_label = $CenterContainer/PanelContainer/VBoxContainer/MaxMana
+@onready var physical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/PhysicalDamage
+@onready var magic_damage_label = $CenterContainer/PanelContainer/VBoxContainer/MagicDamage
+@onready var critical_chance_label = $CenterContainer/PanelContainer/VBoxContainer/CriticalChance
+@onready var critical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/CriticalDamage
+@onready var life_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/LifeStealPerHit
+@onready var mana_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/ManaStealPerHit
+@onready var mana_regeneration_label = $CenterContainer/PanelContainer/VBoxContainer/ManaRegeneration
+@onready var magic_power_label = $CenterContainer/PanelContainer/VBoxContainer/MagicPower
+@onready var magic_defense_label = $CenterContainer/PanelContainer/VBoxContainer/MagicDefense
+@onready var physical_defense_label = $CenterContainer/PanelContainer/VBoxContainer/PhysicalDefense
 
-@onready var gold_label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control/GoldLabel
+
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
 
 @onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
@@ -209,14 +217,6 @@ func update_status() -> void:
 	if not is_instance_valid(character_stats):
 		return
 
-	_set_label_text(level_label, "LEVEL: " + str(character_stats.level))
-
-	_set_label_text(
-		xp_label,
-		"XP: " + str(character_stats.xp)
-		+ " / " + str(character_stats.xp_to_next_level)
-	)
-
 	_set_label_text(
 		health_label,
 		"HEALTH: " + str(int(active_hero.health))
@@ -243,16 +243,16 @@ func update_status() -> void:
 	_set_label_text(max_health_label, "MAX HEALTH: " + str(int(active_hero.max_health)))
 	_set_label_text(max_mana_label, "MAX MANA: " + str(int(character_stats.max_mana)))
 
-	_set_additional_status("physical_damage", "PHYSICAL DAMAGE BONUS: %.1f" % character_stats.get_physical_damage_bonus())
-	_set_additional_status("magic_damage", "MAGIC DAMAGE BONUS: %.1f" % character_stats.get_magic_bonus())
-	_set_additional_status("physical_defense", "PHYSICAL DEFENSE: %.1f" % character_stats.get_equipment_bonus("physical_defense"))
-	_set_additional_status("magic_defense", "MAGIC DEFENSE: %.1f" % character_stats.get_equipment_bonus("magic_defense"))
-	_set_additional_status("critical_chance", "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
-	_set_additional_status("critical_damage", "CRITICAL DAMAGE: %.0f%%" % (character_stats.CRITICAL_DAMAGE_MULTIPLIER * 100.0))
-	_set_additional_status("life_steal", "LIFE STEAL PER HIT: %.1f%%" % character_stats.get_life_steal())
-	_set_additional_status("mana_steal", "MANA STEAL PER HIT: %.1f%%" % character_stats.get_mana_steal())
-	_set_additional_status("mana_regeneration", "MANA REGENERATION: %.1f / %.1fs" % [character_stats.get_mana_regeneration(), character_stats.mana_regen_interval])
-	_set_additional_status("magic_power", "MAGIC POWER: %.1f%%" % character_stats.get_equipment_bonus("magic_power"))
+	_set_label_text(physical_damage_label, "PHYSICAL DAMAGE BONUS: %.1f" + % character_stats.get_physical_damage_bonus())
+	_set_label_text(magic_damage_label, "MAGIC DAMAGE BONUS: %.1f" % character_stats.get_magic_bonus())
+	_set_label_text(critical_chance_label, "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
+	_set_label_text(critical_damage_label, "CRITICAL DAMAGE: %.0f%%" % (character_stats.CRITICAL_DAMAGE_MULTIPLIER * 100.0))
+	_set_label_text(life_steal_per_hit_label, "LIFE STEAL PER HIT: %.1f%%" % character_stats.get_life_steal())
+	_set_label_text(mana_steal_per_hit_label, "MANA STEAL PER HIT: %.1f%%" % character_stats.get_mana_steal())
+	_set_label_text(mana_regeneration_label, "MANA REGENERATION: %.1f / %.1fs" % [character_stats.get_mana_regeneration(), character_stats.mana_regen_interval])
+	_set_label_text(magic_power_label, "MAGIC POWER: %.1f%%" % character_stats.get_equipment_bonus("magic_power"))
+	_set_label_text(physical_defense_label, "PHYSICAL DEFENSE: %.1f" % character_stats.get_equipment_bonus("physical_defense"))
+	_set_label_text(magic_defense_label, "MAGIC DEFENSE: %.1f" % character_stats.get_equipment_bonus("magic_defense"))
 
 
 func _create_additional_status_labels() -> void:
@@ -371,7 +371,6 @@ func refresh_inventory() -> void:
 
 	chest_count_label.text = str(inventory.chest_count)
 	chest_button.disabled = inventory.chest_count <= 0
-	_set_label_text(gold_label, "GOLD: (" + str(GameManager.gold) + ")") 
 
 	var slots := items_grid.get_children()
 

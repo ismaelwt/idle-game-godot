@@ -89,7 +89,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9856715, 1.5276958)
 
 [node name="CharacterStats" type="Node" parent="." index="3"]
 script = ExtResource("8_dw050")
-magic_damage_per_int = 0.33
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="4"]
 
