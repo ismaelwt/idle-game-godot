@@ -100,6 +100,11 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 		_add_attribute("Mana máxima", item.max_mana_bonus)
 		_add_attribute("Dano físico", item.physical_damage_bonus)
 		_add_attribute("Dano mágico", item.magic_damage_bonus)
+		_add_attribute("Dano base da arma", item.weapon_damage)
+		if not is_zero_approx(item.critical_chance_bonus):
+			_add_attribute("Chance crítica", "%+.1f%%" % item.critical_chance_bonus)
+		if not is_zero_approx(item.critical_damage_bonus):
+			_add_attribute("Dano crítico", "%+.1f%%" % item.critical_damage_bonus)
 		if not is_zero_approx(item.magic_power_bonus):
 			_add_attribute("Poder mágico", "%+.1f%%" % item.magic_power_bonus)
 		_add_attribute("Defesa física", item.physical_defense_bonus)
