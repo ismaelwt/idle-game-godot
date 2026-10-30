@@ -637,6 +637,7 @@ func get_max_health_bonus() -> int:
 
 
 func _on_equipment_changed() -> void:
+	mana = minf(mana, max_mana)
 	attributes_changed.emit()
 
 func is_critical_hit() -> bool:
