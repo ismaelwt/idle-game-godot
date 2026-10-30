@@ -25,6 +25,7 @@ func get_description() -> String:
 var magic_bonus: float = 0.0
 var critical_chance: float = 1.0
 var critical_damage_multiplier: float = 1.5
+var character_stats: Node
 
 var target: Node3D
 var resolved := false
@@ -79,8 +80,11 @@ func _on_body_entered(body):
 		if is_critical:
 			raw_damage *= critical_damage_multiplier
 		var final_damage := int(round(raw_damage))
-
+		var health_before_hit := maxf(float(enemy.health), 0.0)
+		var actual_damage := minf(float(final_damage), health_before_hit)
 		enemy.take_damage(final_damage, is_critical)
+		if is_instance_valid(character_stats):
+			character_stats.apply_on_hit_effects(actual_damage)
 		finish()
 
 
