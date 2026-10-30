@@ -100,11 +100,14 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 		_add_attribute("Mana máxima", item.max_mana_bonus)
 		_add_attribute("Dano físico", item.physical_damage_bonus)
 		_add_attribute("Dano mágico", item.magic_damage_bonus)
-		_add_attribute("Poder mágico", "%+.1f%%" % item.magic_power_bonus)
+		if not is_zero_approx(item.magic_power_bonus):
+			_add_attribute("Poder mágico", "%+.1f%%" % item.magic_power_bonus)
 		_add_attribute("Defesa física", item.physical_defense_bonus)
 		_add_attribute("Defesa mágica", item.magic_defense_bonus)
-		_add_attribute("Roubo de vida por hit", "%+.1f%%" % item.life_steal_bonus)
-		_add_attribute("Roubo de mana por hit", "%+.1f%%" % item.mana_steal_bonus)
+		if not is_zero_approx(item.life_steal_bonus):
+			_add_attribute("Roubo de vida por hit", "%+.1f%%" % item.life_steal_bonus)
+		if not is_zero_approx(item.mana_steal_bonus):
+			_add_attribute("Roubo de mana por hit", "%+.1f%%" % item.mana_steal_bonus)
 		for gem in item.installed_enchantments:
 			if gem is ItemInstance:
 				_add_attribute("Gema: " + _get_gem_effect_name(gem.gem_effect), _get_gem_effect_value(gem))
