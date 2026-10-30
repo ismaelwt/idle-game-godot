@@ -8,12 +8,14 @@ var item_tooltip: ItemTooltip
 
 
 @onready var title_label = $CenterContainer/PanelContainer/VBoxContainer/Title
+@onready var xp_label = $CenterContainer/PanelContainer/VBoxContainer/XP
 @onready var health_label = $CenterContainer/PanelContainer/VBoxContainer/Health
 @onready var mana_label = $CenterContainer/PanelContainer/VBoxContainer/Mana
 @onready var damage_label = $CenterContainer/PanelContainer/VBoxContainer/Damage
 @onready var attack_speed_label = $CenterContainer/PanelContainer/VBoxContainer/AttackSpeed
 @onready var max_health_label = $CenterContainer/PanelContainer/VBoxContainer/MaxHealth
 @onready var max_mana_label = $CenterContainer/PanelContainer/VBoxContainer/MaxMana
+@onready var gold_label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control/GoldLabel
 @onready var physical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/PhysicalDamage
 @onready var magic_damage_label = $CenterContainer/PanelContainer/VBoxContainer/MagicDamage
 @onready var critical_chance_label = $CenterContainer/PanelContainer/VBoxContainer/CriticalChance
@@ -75,7 +77,6 @@ var boots_default_icon: Texture2D
 var active_hero
 var character_stats
 var inventory: Inventory
-var additional_status_labels: Dictionary = {}
 var selected_equipment_for_gem: ItemInstance = null
 
 
@@ -144,7 +145,6 @@ func _ready() -> void:
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
 	create_inventory_slots(45)
-	_create_additional_status_labels()
 
 	update_attributes()
 	update_status()
@@ -218,6 +218,12 @@ func update_status() -> void:
 		return
 
 	_set_label_text(
+		xp_label,
+		"XP: " + str(character_stats.xp)
+		+ " / " + str(character_stats.xp_to_next_level)
+	)
+
+	_set_label_text(
 		health_label,
 		"HEALTH: " + str(int(active_hero.health))
 		+ " / " + str(int(active_hero.max_health))
@@ -242,8 +248,9 @@ func update_status() -> void:
 	)
 	_set_label_text(max_health_label, "MAX HEALTH: " + str(int(active_hero.max_health)))
 	_set_label_text(max_mana_label, "MAX MANA: " + str(int(character_stats.max_mana)))
+	_set_label_text(gold_label, "GOLD: (" + str(GameManager.gold) + ")")
 
-	_set_label_text(physical_damage_label, "PHYSICAL DAMAGE BONUS: %.1f" + % character_stats.get_physical_damage_bonus())
+	_set_label_text(physical_damage_label, "PHYSICAL DAMAGE BONUS: %.1f" % character_stats.get_physical_damage_bonus())
 	_set_label_text(magic_damage_label, "MAGIC DAMAGE BONUS: %.1f" % character_stats.get_magic_bonus())
 	_set_label_text(critical_chance_label, "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
 	_set_label_text(critical_damage_label, "CRITICAL DAMAGE: %.0f%%" % (character_stats.CRITICAL_DAMAGE_MULTIPLIER * 100.0))
@@ -253,27 +260,6 @@ func update_status() -> void:
 	_set_label_text(magic_power_label, "MAGIC POWER: %.1f%%" % character_stats.get_equipment_bonus("magic_power"))
 	_set_label_text(physical_defense_label, "PHYSICAL DEFENSE: %.1f" % character_stats.get_equipment_bonus("physical_defense"))
 	_set_label_text(magic_defense_label, "MAGIC DEFENSE: %.1f" % character_stats.get_equipment_bonus("magic_defense"))
-
-
-func _create_additional_status_labels() -> void:
-	var container := $CenterContainer/PanelContainer/VBoxContainer as VBoxContainer
-	var entries := [
-		"physical_damage", "magic_damage", "physical_defense", "magic_defense", "critical_chance",
-		"critical_damage", "life_steal", "mana_steal",
-		"mana_regeneration", "magic_power"
-	]
-	for key in entries:
-		var label := Label.new()
-		label.name = "Extra_" + str(key)
-		label.add_theme_font_override("font", font)
-		label.add_theme_font_size_override("font_size", 14)
-		container.add_child(label)
-		additional_status_labels[key] = label
-
-
-func _set_additional_status(key: String, value: String) -> void:
-	var label: Label = additional_status_labels.get(key)
-	_set_label_text(label, value)
 
 
 func _get_display_attack_speed() -> float:
