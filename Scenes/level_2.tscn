@@ -2118,29 +2118,20 @@ layout_mode = 2
 text = "Mana"
 label_settings = SubResource("LabelSettings_46jet")
 
-[node name="Level" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Level"
-label_settings = SubResource("LabelSettings_46jet")
-
 [node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Exp"
 label_settings = SubResource("LabelSettings_46jet")
 
-[node name="Gold" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Gold"
-label_settings = SubResource("LabelSettings_46jet")
-
 [node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+visible = false
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
 [node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "Damage:"
+text = "Damage"
 label_settings = SubResource("LabelSettings_46jet")
 
 [node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
@@ -2156,6 +2147,56 @@ label_settings = SubResource("LabelSettings_46jet")
 [node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 text = "Max Mana"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="PhysicalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Physical Damage"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="MagicDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Magic Damage"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="CriticalChance" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Critical Chance"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="CriticalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Critical Damage"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="LifeStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Life Steal Per Hit"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="ManaStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mana Steal Per Hit"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="ManaRegeneration" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Mana Regeneration"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="MagicPower" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Magic Power"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="PhysicalDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Physical Defense"
+label_settings = SubResource("LabelSettings_46jet")
+
+[node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+text = "Magic Defense"
 label_settings = SubResource("LabelSettings_46jet")
 
 [node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
