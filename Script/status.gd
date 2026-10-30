@@ -7,25 +7,25 @@ var item_tooltip_scene = preload("res://UI/item_tooltip.tscn")
 var item_tooltip: ItemTooltip
 
 
-@onready var title_label = $CenterContainer/PanelContainer/VBoxContainer/Title
-@onready var xp_label = $CenterContainer/PanelContainer/VBoxContainer/XP
-@onready var health_label = $CenterContainer/PanelContainer/VBoxContainer/Health
-@onready var mana_label = $CenterContainer/PanelContainer/VBoxContainer/Mana
-@onready var damage_label = $CenterContainer/PanelContainer/VBoxContainer/Damage
-@onready var attack_speed_label = $CenterContainer/PanelContainer/VBoxContainer/AttackSpeed
-@onready var max_health_label = $CenterContainer/PanelContainer/VBoxContainer/MaxHealth
-@onready var max_mana_label = $CenterContainer/PanelContainer/VBoxContainer/MaxMana
+@onready var title_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0/Title
+@onready var xp_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0/XP
+@onready var health_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0/Health
+@onready var mana_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0/Mana
+@onready var damage_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/Damage
+@onready var attack_speed_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/AttackSpeed
+@onready var max_health_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/MaxHealth
+@onready var max_mana_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/MaxMana
 @onready var gold_label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Control/GoldLabel
-@onready var physical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/PhysicalDamage
-@onready var magic_damage_label = $CenterContainer/PanelContainer/VBoxContainer/MagicDamage
-@onready var critical_chance_label = $CenterContainer/PanelContainer/VBoxContainer/CriticalChance
-@onready var critical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/CriticalDamage
-@onready var life_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/LifeStealPerHit
-@onready var mana_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/ManaStealPerHit
-@onready var mana_regeneration_label = $CenterContainer/PanelContainer/VBoxContainer/ManaRegeneration
-@onready var magic_power_label = $CenterContainer/PanelContainer/VBoxContainer/MagicPower
-@onready var magic_defense_label = $CenterContainer/PanelContainer/VBoxContainer/MagicDefense
-@onready var physical_defense_label = $CenterContainer/PanelContainer/VBoxContainer/PhysicalDefense
+@onready var physical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3/PhysicalDamage
+@onready var magic_damage_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3/MagicDamage
+@onready var critical_chance_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3/CriticalChance
+@onready var critical_damage_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3/CriticalDamage
+@onready var life_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2/LifeStealPerHit
+@onready var mana_steal_per_hit_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2/ManaStealPerHit
+@onready var mana_regeneration_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2/ManaRegeneration
+@onready var magic_power_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2/MagicPower
+@onready var magic_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/MagicDefense
+@onready var physical_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/PhysicalDefense
 
 
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton

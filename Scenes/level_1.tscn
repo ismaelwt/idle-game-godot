@@ -1,4 +1,4 @@
-[gd_scene load_steps=123 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=122 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -236,15 +236,6 @@ corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm1xi"]
 bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hfp0m"]
-content_margin_left = 30.0
-content_margin_top = 25.0
-content_margin_right = 30.0
-content_margin_bottom = 25.0
-bg_color = Color(0, 0, 0, 0.015686275)
-border_color = Color(0, 0, 0, 0.74509805)
-border_blend = true
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j13t8"]
 bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
@@ -1742,14 +1733,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/Status/CenterContainer"]
-custom_minimum_size = Vector2(450, 250)
+[node name="PanelContainer" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
+custom_minimum_size = Vector2(450, 545)
 layout_mode = 2
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_hfp0m")
 
 [node name="Background" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-layout_mode = 2
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 420.0
+offset_bottom = 519.0
 
 [node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
 layout_mode = 1
@@ -1783,15 +1777,15 @@ texture_normal = ExtResource("48_73j5b")
 ignore_texture_size = true
 stretch_mode = 5
 
-[node name="TextureButton" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
+[node name="Forja" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -183.0
-offset_top = -48.0
-offset_right = -97.0
-offset_bottom = -8.0
+offset_left = -199.0
+offset_top = -37.0
+offset_right = -113.0
+offset_bottom = 3.0
 grow_horizontal = 2
 texture_normal = ExtResource("51_ghgdn")
 stretch_mode = 5
@@ -1801,10 +1795,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -63.0
-offset_top = -45.0
-offset_right = -13.0
-offset_bottom = 5.0
+offset_left = -79.0
+offset_top = -34.0
+offset_right = -29.0
+offset_bottom = 16.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_4qhvg")
 ignore_texture_size = true
@@ -1823,10 +1817,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 2.0
-offset_top = -46.0
-offset_right = 52.0
-offset_bottom = 4.0
+offset_left = -14.0
+offset_top = -35.0
+offset_right = 36.0
+offset_bottom = 15.0
 grow_horizontal = 2
 texture_normal = ExtResource("55_t405x")
 ignore_texture_size = true
@@ -1865,7 +1859,11 @@ texture = ExtResource("54_tohvi")
 expand_mode = 1
 
 [node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-layout_mode = 2
+anchors_preset = 0
+offset_left = 30.0
+offset_top = 25.0
+offset_right = 420.0
+offset_bottom = 519.0
 
 [node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
 layout_mode = 1
@@ -2099,104 +2097,129 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
-layout_mode = 2
+layout_mode = 0
+offset_left = 18.0
+offset_top = 39.0
+offset_right = 165.0
+offset_bottom = 544.0
 size_flags_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer0" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
 layout_mode = 2
 text = "Status"
 label_settings = SubResource("LabelSettings_sfey3")
 
-[node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="XP" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
 layout_mode = 2
 text = "Exp"
 label_settings = SubResource("LabelSettings_sfey3")
 
-[node name="Health" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="Health" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
 layout_mode = 2
 text = "Health"
 label_settings = SubResource("LabelSettings_sfey3")
 
-[node name="Mana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="Mana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer0"]
 layout_mode = 2
 text = "Mana"
 label_settings = SubResource("LabelSettings_sfey3")
 
 [node name="HSeparator" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-visible = false
 custom_minimum_size = Vector2(120, 0)
 layout_mode = 2
 size_flags_horizontal = 0
 
-[node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="VBoxContainer1" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "Damage"
-label_settings = SubResource("LabelSettings_sfey3")
 
-[node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Atk Speed"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MaxHealth" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Max Health"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Max Mana"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="PhysicalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Physical Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MagicDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Magic Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="CriticalChance" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Critical Chance"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="CriticalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Critical Damage"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="LifeStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Life Steal Per hit"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="ManaStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Mana Steal Per hit"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="ManaRegeneration" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Mana Regeneration"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="MagicPower" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Magic Power"
-label_settings = SubResource("LabelSettings_sfey3")
-
-[node name="PhysicalDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="PhysicalDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
 layout_mode = 2
 text = "Physical Defense"
 label_settings = SubResource("LabelSettings_sfey3")
 
-[node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+[node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
 layout_mode = 2
 text = "Magic Defense"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="Damage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="AttackSpeed" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Atk Speed"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MaxHealth" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Max Health"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MaxMana" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1"]
+layout_mode = 2
+text = "Max Mana"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="HSeparator2" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LifeStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Life Steal Per hit"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="ManaStealPerHit" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Mana Steal Per hit"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="ManaRegeneration" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Mana Regeneration"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MagicPower" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Magic Power"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="HSeparator3" type="HSeparator" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PhysicalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Physical Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="MagicDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Magic Damage"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="CriticalChance" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Critical Chance"
+label_settings = SubResource("LabelSettings_sfey3")
+
+[node name="CriticalDamage" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Critical Damage"
 label_settings = SubResource("LabelSettings_sfey3")
 
 [node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
