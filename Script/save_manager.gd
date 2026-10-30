@@ -292,6 +292,9 @@ func serialize_item(item: ItemInstance) -> Dictionary:
 		"max_mana_bonus": item.max_mana_bonus,
 		"physical_damage_bonus": item.physical_damage_bonus,
 		"magic_damage_bonus": item.magic_damage_bonus,
+		"weapon_damage": item.weapon_damage,
+		"critical_chance_bonus": item.critical_chance_bonus,
+		"critical_damage_bonus": item.critical_damage_bonus,
 		"magic_power_bonus": item.magic_power_bonus,
 		"physical_defense_bonus": item.physical_defense_bonus,
 		"magic_defense_bonus": item.magic_defense_bonus,
@@ -426,6 +429,9 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	item.max_mana_bonus = int(item_data.get("max_mana_bonus", 0))
 	item.physical_damage_bonus = int(item_data.get("physical_damage_bonus", 0))
 	item.magic_damage_bonus = int(item_data.get("magic_damage_bonus", 0))
+	item.weapon_damage = float(item_data.get("weapon_damage", 0.0))
+	item.critical_chance_bonus = float(item_data.get("critical_chance_bonus", 0.0))
+	item.critical_damage_bonus = float(item_data.get("critical_damage_bonus", 0.0))
 	item.magic_power_bonus = float(item_data.get("magic_power_bonus", 0.0))
 	var legacy_defense := int(item_data.get("defense_bonus", 0))
 	item.physical_defense_bonus = int(item_data.get("physical_defense_bonus", 0)) + legacy_defense
