@@ -572,7 +572,7 @@ func get_physical_damage_bonus() -> int:
 
 func get_critical_chance() -> float:
 	var agility_steps := maxi(0, int(floor(float(get_total_agility() - 5) / float(AGILITY_POINTS_PER_CRIT_STEP))))
-		return minf(
+	return minf(
 		100.0,
 		BASE_CRITICAL_CHANCE
 		+ agility_steps * CRIT_PER_AGILITY_STEP
