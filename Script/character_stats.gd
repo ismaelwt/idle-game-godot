@@ -38,7 +38,10 @@ var skill_order: Array[String] = []
 
 
 @export_category("Mana")
-@export var max_mana: float = 100.0
+@export var base_max_mana: float = 100.0
+var max_mana: float:
+	get:
+		return maxf(0.0, base_max_mana + get_equipment_bonus("max_mana"))
 @export var mana_regen_interval: float = 2.0
 @export var base_mana_regeneration: float = 2.0
 @export var mana_regeneration_per_int: float = 0.1
@@ -198,7 +201,7 @@ func restore_mana(amount: float):
 func get_mana_regeneration() -> float:
 
 	var intelligence_bonus = max(
-		intelligence - 5,
+		get_total_intelligence() - 5,
 		0
 	) * mana_regeneration_per_int
 
@@ -442,53 +445,107 @@ func invest_in_skill_stage() -> bool:
 	return true
 
 
-func get_equipment_bonus(stat_name: String) -> int:
+func get_equipment_bonus(stat_name: String) -> float:
 	if not is_instance_valid(inventory):
-		return 0
+		return 0.0
 
-	var total: int = 0
+	var total: float = 0.0
 
 	for item in inventory.get_equipped_items(hero_id).values():
-		if item == null or item.item_base == null:
+		if not item is ItemInstance or item.item_base == null:
 			continue
 
 		match stat_name:
 			"strength":
-				total += item.strength_bonus
+				total += float(item.strength_bonus)
 			"agility":
-				total += item.agility_bonus
+				total += float(item.agility_bonus)
 			"intelligence":
-				total += item.intelligence_bonus
+				total += float(item.intelligence_bonus)
 			"vitality":
-				total += item.vitality_bonus
+				total += float(item.vitality_bonus)
+			"max_mana":
+				total += float(item.max_mana_bonus)
 			"physical_damage":
-				total += item.physical_damage_bonus
+				total += float(item.physical_damage_bonus)
 			"magic_damage":
-				total += item.magic_damage_bonus
-			"defense":
-				total += item.defense_bonus
+				total += float(item.magic_damage_bonus)
 			"physical_defense":
-				total += item.physical_defense_bonus + item.defense_bonus
+				total += float(item.physical_defense_bonus)
 			"magic_defense":
-				total += item.magic_defense_bonus + item.defense_bonus
+				total += float(item.magic_defense_bonus)
+			"magic_power":
+				total += item.magic_power_bonus
+			"life_steal":
+				total += item.life_steal_bonus
+			"mana_steal":
+				total += item.mana_steal_bonus
+
+		# As gemas instaladas no equipamento também concedem atributos.
+		for enchantment in item.installed_enchantments:
+			if not enchantment is ItemInstance:
+				continue
+
+			var gem_value: float = enchantment.gem_effect_value
+			match enchantment.gem_effect:
+				ItemBase.GemEffect.STRENGTH:
+					if stat_name == "strength":
+						total += gem_value
+				ItemBase.GemEffect.AGILITY:
+					if stat_name == "agility":
+						total += gem_value
+				ItemBase.GemEffect.INTELLIGENCE:
+					if stat_name == "intelligence":
+						total += gem_value
+				ItemBase.GemEffect.VITALITY:
+					if stat_name == "vitality":
+						total += gem_value
+				ItemBase.GemEffect.MAX_MANA:
+					if stat_name == "max_mana":
+						total += gem_value
+				ItemBase.GemEffect.PHYSICAL_DAMAGE:
+					if stat_name == "physical_damage":
+						total += gem_value
+				ItemBase.GemEffect.MAGIC_DAMAGE:
+					if stat_name == "magic_damage":
+						total += gem_value
+				ItemBase.GemEffect.DEFENSE:
+					# Compatibilidade para gemas antigas de defesa genérica.
+					if stat_name == "physical_defense" or stat_name == "magic_defense":
+						total += gem_value
+				ItemBase.GemEffect.PHYSICAL_DEFENSE:
+					if stat_name == "physical_defense":
+						total += gem_value
+				ItemBase.GemEffect.MAGIC_DEFENSE:
+					if stat_name == "magic_defense":
+						total += gem_value
+				ItemBase.GemEffect.MAGIC_POWER:
+					if stat_name == "magic_power":
+						total += gem_value
+				ItemBase.GemEffect.LIFE_STEAL:
+					if stat_name == "life_steal":
+						total += gem_value
+				ItemBase.GemEffect.MANA_STEAL:
+					if stat_name == "mana_steal":
+						total += gem_value
 
 	return total
 
 
 func get_total_strength() -> int:
-	return strength + get_equipment_bonus("strength")
+	return strength + roundi(get_equipment_bonus("strength"))
 
 
 func get_total_agility() -> int:
-	return agility + get_equipment_bonus("agility")
+	return agility + roundi(get_equipment_bonus("agility"))
 
 
 func get_total_intelligence() -> int:
-	return intelligence + get_equipment_bonus("intelligence")
+	return intelligence + roundi(get_equipment_bonus("intelligence"))
 
 
 func get_total_vitality() -> int:
-	return vitality + get_equipment_bonus("vitality")
+	return vitality + roundi(get_equipment_bonus("vitality"))
 
 
 const DEFENSE_K: float = 200.0
@@ -503,7 +560,7 @@ const BASIC_ATTACK_MIN_INTERVAL_MULTIPLIER: float = 0.10
 
 func get_physical_damage_bonus() -> int:
 	var strength_steps := maxi(0, int(floor(float(get_total_strength() - 5) / 5.0)))
-	return strength_steps + get_equipment_bonus("physical_damage")
+	return strength_steps + roundi(get_equipment_bonus("physical_damage"))
 
 
 func get_critical_chance() -> float:
@@ -525,24 +582,59 @@ func get_basic_attack_interval_multiplier() -> float:
 func calculate_damage_after_defense(damage: float, damage_type: String = "physical") -> float:
 	var defense_value := 0.0
 	if damage_type == "magic":
-		defense_value = float(get_equipment_bonus("magic_defense"))
+		defense_value = get_equipment_bonus("magic_defense")
 	else:
-		defense_value = float(get_equipment_bonus("physical_defense"))
+		defense_value = get_equipment_bonus("physical_defense")
 	defense_value = maxf(defense_value, 0.0)
 	return maxf(damage, 0.0) * DEFENSE_K / (DEFENSE_K + defense_value)
 
 
 func get_magic_bonus() -> float:
 	var total_intelligence := get_total_intelligence()
-
 	return (
 		(total_intelligence - 5) * magic_damage_per_int
 		+ get_equipment_bonus("magic_damage")
 	)
 
 
+func get_magic_damage_multiplier() -> float:
+	return maxf(0.0, 1.0 + get_equipment_bonus("magic_power") / 100.0)
+
+
+func get_life_steal() -> float:
+	return maxf(0.0, get_equipment_bonus("life_steal"))
+
+
+func get_mana_steal() -> float:
+	return maxf(0.0, get_equipment_bonus("mana_steal"))
+
+
+func apply_on_hit_effects(damage_dealt: float) -> void:
+	if damage_dealt <= 0.0:
+		return
+
+	var hero := get_parent()
+	if not is_instance_valid(hero) or bool(hero.get("dead")):
+		return
+
+	var life_steal_amount := damage_dealt * get_life_steal() / 100.0
+	var current_health = hero.get("health")
+	var maximum_health = hero.get("max_health")
+
+	if life_steal_amount > 0.0 and current_health != null and maximum_health != null:
+		hero.set(
+			"health",
+			minf(float(current_health) + life_steal_amount, float(maximum_health))
+		)
+
+	var mana_steal_amount := damage_dealt * get_mana_steal() / 100.0
+	if mana_steal_amount > 0.0:
+		restore_mana(mana_steal_amount)
+
+
 func get_max_health_bonus() -> int:
 	return (get_total_vitality() - 5) * 10
+
 
 func _on_equipment_changed() -> void:
 	attributes_changed.emit()
