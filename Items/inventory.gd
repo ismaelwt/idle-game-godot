@@ -311,6 +311,46 @@ func install_gem(
 	return true
 
 
+func install_gem(
+	equipment_item: ItemInstance,
+	gem_item: ItemInstance,
+	hero_id: String = ""
+) -> bool:
+	if equipment_item == null or equipment_item.item_base == null:
+		return false
+	if gem_item == null or gem_item.item_base == null:
+		return false
+	if equipment_item.item_base.item_type == ItemBase.ItemType.GEM:
+		return false
+	if gem_item.item_base.item_type != ItemBase.ItemType.GEM:
+		return false
+	if equipment_item.installed_enchantments.size() >= equipment_item.enchantment_slots:
+		return false
+
+	var gem_index := equipment.find(gem_item)
+	if gem_index < 0:
+		return false
+
+	var resolved_id := hero_id if not hero_id.is_empty() else active_hero_id
+	var is_equipped := false
+	for equipped in get_equipped_items(resolved_id).values():
+		if equipped == equipment_item:
+			is_equipped = true
+			break
+	if not is_equipped and not equipment.has(equipment_item):
+		return false
+
+	equipment.remove_at(gem_index)
+	equipment_item.installed_enchantments.append(gem_item)
+	equipment_changed.emit()
+	inventory_changed.emit()
+	_save_inventory()
+	if is_equipped:
+		_save_hero_equipment(resolved_id)
+	print("=== GEMA INSTALADA === | ", gem_item.item_base.item_name, " -> ", equipment_item.item_base.item_name)
+	return true
+
+
 func unequip_item(item_type: ItemBase.ItemType, hero_id: String = "") -> bool:
 	var resolved_id := hero_id if not hero_id.is_empty() else active_hero_id
 	var hero_equipment := get_equipped_items(resolved_id)
