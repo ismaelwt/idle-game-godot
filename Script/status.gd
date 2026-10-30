@@ -67,6 +67,7 @@ var boots_default_icon: Texture2D
 var active_hero
 var character_stats
 var inventory: Inventory
+var additional_status_labels: Dictionary = {}
 
 
 
@@ -134,6 +135,7 @@ func _ready() -> void:
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
 	create_inventory_slots(45)
+	_create_additional_status_labels()
 
 	update_attributes()
 	update_status()
@@ -237,6 +239,36 @@ func update_status() -> void:
 	)
 	_set_label_text(max_health_label, "MAX HEALTH: " + str(int(active_hero.max_health)))
 	_set_label_text(max_mana_label, "MAX MANA: " + str(int(character_stats.max_mana)))
+
+	_set_additional_status("physical_defense", "PHYSICAL DEFENSE: %.1f" % character_stats.get_equipment_bonus("physical_defense"))
+	_set_additional_status("magic_defense", "MAGIC DEFENSE: %.1f" % character_stats.get_equipment_bonus("magic_defense"))
+	_set_additional_status("critical_chance", "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
+	_set_additional_status("critical_damage", "CRITICAL DAMAGE: %.0f%%" % (character_stats.CRITICAL_DAMAGE_MULTIPLIER * 100.0))
+	_set_additional_status("life_steal", "LIFE STEAL PER HIT: %.1f%%" % character_stats.get_life_steal())
+	_set_additional_status("mana_steal", "MANA STEAL PER HIT: %.1f%%" % character_stats.get_mana_steal())
+	_set_additional_status("mana_regeneration", "MANA REGENERATION: %.1f / %.1fs" % [character_stats.get_mana_regeneration(), character_stats.mana_regen_interval])
+	_set_additional_status("magic_power", "MAGIC POWER: %.1f%%" % character_stats.get_equipment_bonus("magic_power"))
+
+
+func _create_additional_status_labels() -> void:
+	var container := $CenterContainer/PanelContainer/VBoxContainer as VBoxContainer
+	var entries := [
+		"physical_defense", "magic_defense", "critical_chance",
+		"critical_damage", "life_steal", "mana_steal",
+		"mana_regeneration", "magic_power"
+	]
+	for key in entries:
+		var label := Label.new()
+		label.name = "Extra_" + str(key)
+		label.add_theme_font_override("font", font)
+		label.add_theme_font_size_override("font_size", 14)
+		container.add_child(label)
+		additional_status_labels[key] = label
+
+
+func _set_additional_status(key: String, value: String) -> void:
+	var label: Label = additional_status_labels.get(key)
+	_set_label_text(label, value)
 
 
 func _get_display_attack_speed() -> float:
@@ -438,7 +470,15 @@ func get_item_tooltip(item: ItemInstance) -> String:
 			ItemBase.GemEffect.MAGIC_DAMAGE:
 				tooltip += "Dano mágico: %+d\n" % roundi(item.gem_effect_value)
 			ItemBase.GemEffect.DEFENSE:
-				tooltip += "Defesa: %+d\n" % roundi(item.gem_effect_value)
+				tooltip += "Defesa física e mágica: %+d\n" % roundi(item.gem_effect_value)
+			ItemBase.GemEffect.PHYSICAL_DEFENSE:
+				tooltip += "Defesa física: %+d\n" % roundi(item.gem_effect_value)
+			ItemBase.GemEffect.MAGIC_DEFENSE:
+				tooltip += "Defesa mágica: %+d\n" % roundi(item.gem_effect_value)
+			ItemBase.GemEffect.LIFE_STEAL:
+				tooltip += "Roubo de vida por hit: +%.1f%%\n" % item.gem_effect_value
+			ItemBase.GemEffect.MANA_STEAL:
+				tooltip += "Roubo de mana por hit: +%.1f%%\n" % item.gem_effect_value
 			ItemBase.GemEffect.MAGIC_POWER:
 				tooltip += "Poder mágico: +%.1f%%\n" % item.gem_effect_value
 			ItemBase.GemEffect.NONE:
@@ -453,7 +493,10 @@ func get_item_tooltip(item: ItemInstance) -> String:
 	tooltip += "Vitalidade: %+d\n" % item.vitality_bonus
 	tooltip += "Dano físico: %+d\n" % item.physical_damage_bonus
 	tooltip += "Dano mágico: %+d\n" % item.magic_damage_bonus
-	tooltip += "Defesa: %+d\n" % item.defense_bonus
+	tooltip += "Defesa física: %+d\n" % item.physical_defense_bonus
+	tooltip += "Defesa mágica: %+d\n" % item.magic_defense_bonus
+	tooltip += "Roubo de vida: %+.1f%%\n" % item.life_steal_bonus
+	tooltip += "Roubo de mana: %+.1f%%\n" % item.mana_steal_bonus
 	tooltip += "Encantamentos: %d" % item.enchantment_slots
 
 	return tooltip
