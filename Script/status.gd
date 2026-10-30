@@ -277,10 +277,8 @@ func _set_additional_status(key: String, value: String) -> void:
 
 
 func _get_display_attack_speed() -> float:
-	# O Mago usa attack_base_duration como tempo de preparação do ataque.
-	# O Cavaleiro usa attack_cooldown como intervalo configurado entre ataques.
-	# Aqui apenas exibimos um valor compatível; a fórmula de Agilidade será
-	# ajustada depois, sem alterar a mecânica de combate neste momento.
+	# Exibe ataques por segundo usando o intervalo configurado de cada classe
+	# e o multiplicador de velocidade derivado da Agilidade total.
 	if not is_instance_valid(active_hero):
 		return 0.0
 
