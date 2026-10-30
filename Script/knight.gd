@@ -373,7 +373,11 @@ func basic_attack(target: Node3D) -> void:
 			character_stats.get_physical_damage_bonus()
 		)
 
-		var raw_damage: float = attack_damage + physical_bonus
+				var raw_damage: float = (
+			attack_damage
+			+ character_stats.get_weapon_damage_bonus()
+			+ physical_bonus
+		)
 
 		if frenzy_active and is_instance_valid(frenzy_instance):
 			var damage_multiplier = frenzy_instance.get(
@@ -387,7 +391,7 @@ func basic_attack(target: Node3D) -> void:
 		var final_damage: float = raw_damage
 
 		if is_critical:
-			final_damage *= character_stats.CRITICAL_DAMAGE_MULTIPLIER
+			final_damage *= character_stats.get_critical_damage_multiplier()
 
 		var health_before_hit := maxf(float(target.get("health")), 0.0)
 		var actual_damage := minf(final_damage, health_before_hit)
