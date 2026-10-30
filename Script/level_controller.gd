@@ -786,7 +786,12 @@ func prepare_next_wave_transition() -> void:
 	# Mantém a lógica anterior: a referência fica onde terminou e os
 	# outros heróis avançam a mesma distância no eixo Z.
 	for hero in active_heroes:
-		if hero == anchor or not is_instance_valid(hero) or bool(hero.get("dead")):
+		if (
+			hero == anchor
+			or not is_instance_valid(hero)
+			or not hero.is_inside_tree()
+			or bool(hero.get("dead"))
+		):
 			continue
 
 		var target_z: float = hero.global_position.z + displacement.z
@@ -814,13 +819,13 @@ func resume_after_wave_transition() -> void:
 
 
 func move_hero_to_z(hero: Node3D, target_z: float, speed: float = 3.5) -> void:
-	if not is_instance_valid(hero) or bool(hero.get("dead")):
+	if not is_instance_valid(hero) or not hero.is_inside_tree() or bool(hero.get("dead")):
 		return
 
 	if hero.has_method("start_running"):
 		hero.call("start_running")
 
-	while is_instance_valid(hero):
+	while is_instance_valid(hero) and hero.is_inside_tree():
 		if bool(hero.get("dead")):
 			return
 
@@ -838,7 +843,8 @@ func move_hero_to_z(hero: Node3D, target_z: float, speed: float = 3.5) -> void:
 		hero.global_position = current_position
 		await get_tree().process_frame
 
-	if is_instance_valid(hero):
+	# O herói pode ter sido removido da cena enquanto aguardava o próximo frame.
+	if is_instance_valid(hero) and hero.is_inside_tree():
 		hero.global_position.z = target_z
 		if hero.has_method("play_animation"):
 			hero.call("play_animation", "idle")
