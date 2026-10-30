@@ -391,7 +391,10 @@ func _on_item_pressed(item: ItemInstance) -> void:
 	print("Vitalidade: ", item.vitality_bonus)
 	print("Dano físico: ", item.physical_damage_bonus)
 	print("Dano mágico: ", item.magic_damage_bonus)
-	print("Defesa: ", item.defense_bonus)
+	print("Defesa física: ", item.physical_defense_bonus)
+	print("Defesa mágica: ", item.magic_defense_bonus)
+	print("Roubo de vida por hit: ", item.life_steal_bonus, "%")
+	print("Roubo de mana por hit: ", item.mana_steal_bonus, "%")
 
 
 func _on_close_pressed() -> void:
