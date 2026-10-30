@@ -100,8 +100,14 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 		_add_attribute("Mana máxima", item.max_mana_bonus)
 		_add_attribute("Dano físico", item.physical_damage_bonus)
 		_add_attribute("Dano mágico", item.magic_damage_bonus)
-		_add_attribute("Poder mágico", item.magic_power_bonus)
-		_add_attribute("Defesa", item.defense_bonus)
+		_add_attribute("Poder mágico", "%+.1f%%" % item.magic_power_bonus)
+		_add_attribute("Defesa física", item.physical_defense_bonus)
+		_add_attribute("Defesa mágica", item.magic_defense_bonus)
+		_add_attribute("Roubo de vida por hit", "%+.1f%%" % item.life_steal_bonus)
+		_add_attribute("Roubo de mana por hit", "%+.1f%%" % item.mana_steal_bonus)
+		for gem in item.installed_enchantments:
+			if gem is ItemInstance:
+				_add_attribute("Gema: " + _get_gem_effect_name(gem.gem_effect), _get_gem_effect_value(gem))
 
 		_create_enchantment_slots(item.enchantment_slots)
 
@@ -246,14 +252,21 @@ func _get_gem_effect_name(effect: ItemBase.GemEffect) -> String:
 			return "Defesa"
 		ItemBase.GemEffect.MAGIC_POWER:
 			return "Poder mágico"
+		ItemBase.GemEffect.LIFE_STEAL:
+			return "Roubo de vida por hit"
+		ItemBase.GemEffect.MANA_STEAL:
+			return "Roubo de mana por hit"
+		ItemBase.GemEffect.PHYSICAL_DEFENSE:
+			return "Defesa física"
+		ItemBase.GemEffect.MAGIC_DEFENSE:
+			return "Defesa mágica"
 		_:
 			return "Nenhum"
 
 
 func _get_gem_effect_value(item: ItemInstance) -> String:
-	if item.gem_effect == ItemBase.GemEffect.MAGIC_POWER:
+	if item.gem_effect in [ItemBase.GemEffect.MAGIC_POWER, ItemBase.GemEffect.LIFE_STEAL, ItemBase.GemEffect.MANA_STEAL]:
 		return "%+.1f%%" % item.gem_effect_value
-
 	return "%+d" % roundi(item.gem_effect_value)
 
 
