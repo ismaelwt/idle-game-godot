@@ -30,6 +30,8 @@ var item_tooltip: ItemTooltip
 @onready var skill_tree: Control = $"../SkillTree"
 
 @onready var skill_tree_button = $CenterContainer/PanelContainer/Background/SkillsButton
+@onready var attributes_button: TextureButton = $CenterContainer/PanelContainer/Background/AtributtesButton
+@onready var attributes_control: Control = $CenterContainer/AttributesControl
 
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
 
@@ -86,6 +88,7 @@ var selected_equipment_for_gem: ItemInstance = null
 
 func _ready() -> void:
 	hide()
+	attributes_control.hide()
 	title_label.text = "Status: ( " + str(CharacterSelectionData.selected_character.to_upper() + " )") 
 	# Cria uma única instância do tooltip personalizado.
 	item_tooltip = item_tooltip_scene.instantiate()
@@ -142,6 +145,7 @@ func _ready() -> void:
 	vitality_button.pressed.connect(_on_vitality_pressed)
 	
 	skill_tree_button.pressed.connect(_on_skill_tree_button_pressed)
+	attributes_button.pressed.connect(_on_attributes_button_pressed)
 	
 	close_button.pressed.connect(_on_close_pressed)
 	knight_change_button.pressed.connect(_on_knight_change_pressed)
@@ -1103,4 +1107,23 @@ func _get_valid_active_hero_id() -> String:
 	return str(stats.get("hero_id"))
 
 func _on_skill_tree_button_pressed() -> void:
+	if not is_instance_valid(active_hero):
+		return
+
+	if not is_instance_valid(skill_tree):
+		return
+
+	# A árvore aberta pelo Status deve usar o herói atualmente exibido,
+	# não a seleção global nem necessariamente o herói principal.
+	if skill_tree.has_method("set_selected_hero"):
+		skill_tree.set_selected_hero(active_hero)
+
 	skill_tree.visible = not skill_tree.visible
+
+
+func _on_attributes_button_pressed() -> void:
+	if not is_instance_valid(attributes_control):
+		return
+
+	update_attributes()
+	attributes_control.visible = not attributes_control.visible
