@@ -114,6 +114,17 @@ func get_item_value() -> int:
 @export var magic_damage_min: int = 0
 @export var magic_damage_max: int = 0
 
+@export_group("Dano Base da Arma")
+@export_range(0.0, 10000.0, 0.1) var weapon_damage: float = 0.0
+
+@export_group("Chance Crítica (%)")
+@export var critical_chance_min: float = 0.0
+@export var critical_chance_max: float = 0.0
+
+@export_group("Dano Crítico (%)")
+@export var critical_damage_min: float = 0.0
+@export var critical_damage_max: float = 0.0
+
 @export_group("Defesa Física")
 @export var physical_defense_min: int = 0
 @export var physical_defense_max: int = 0
