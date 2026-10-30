@@ -428,8 +428,8 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	item.magic_damage_bonus = int(item_data.get("magic_damage_bonus", 0))
 	item.magic_power_bonus = float(item_data.get("magic_power_bonus", 0.0))
 	var legacy_defense := int(item_data.get("defense_bonus", 0))
-	item.physical_defense_bonus = int(item_data.get("physical_defense_bonus", legacy_defense))
-	item.magic_defense_bonus = int(item_data.get("magic_defense_bonus", legacy_defense))
+	item.physical_defense_bonus = int(item_data.get("physical_defense_bonus", 0)) + legacy_defense
+	item.magic_defense_bonus = int(item_data.get("magic_defense_bonus", 0)) + legacy_defense
 	item.life_steal_bonus = float(item_data.get("life_steal_bonus", 0.0))
 	item.mana_steal_bonus = float(item_data.get("mana_steal_bonus", 0.0))
 	
