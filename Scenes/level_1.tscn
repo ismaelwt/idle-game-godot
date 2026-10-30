@@ -2196,7 +2196,7 @@ label_settings = SubResource("LabelSettings_sfey3")
 
 [node name="MagicDefense" type="Label" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "Magic Damage"
+text = "Magic Defense"
 label_settings = SubResource("LabelSettings_sfey3")
 
 [node name="InventoryControl" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer"]
