@@ -88,6 +88,7 @@ func _ready() -> void:
 		push_warning("Knight: WorldScroller não encontrado.")
 	animation_player.animation_finished.connect(on_animation_finished)
 	character_stats.level_up_occurred.connect(play_level_up_effect)
+	character_stats.attributes_changed.connect(_on_attributes_changed)
 	play_animation(idle_animation)
 
 func _process(delta: float) -> void:
@@ -388,7 +389,10 @@ func basic_attack(target: Node3D) -> void:
 		if is_critical:
 			final_damage *= character_stats.CRITICAL_DAMAGE_MULTIPLIER
 
+		var health_before_hit := maxf(float(target.get("health")), 0.0)
+		var actual_damage := minf(final_damage, health_before_hit)
 		target.take_damage(final_damage, is_critical)
+		character_stats.apply_on_hit_effects(actual_damage)
 
 		print("=== KNIGHT CAUSOU DANO ===")
 		print("Dano: ", final_damage)
@@ -454,6 +458,14 @@ func look_at_target(target: Node3D) -> void:
 		return
 
 	rotation.y = atan2(direction.x, direction.z)
+
+
+func _on_attributes_changed() -> void:
+	var old_max_health := max_health
+	max_health = 150.0 + character_stats.get_max_health_bonus()
+	if max_health > old_max_health:
+		health += max_health - old_max_health
+	health = clampf(health, 0.0, max_health)
 
 
 func take_damage(damage: float, damage_type: String = "physical") -> void:
