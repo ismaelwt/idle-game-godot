@@ -78,19 +78,18 @@ func generate_item(
 	if base.magic_damage_min != 0 or base.magic_damage_max != 0:
 		available_attributes.append(&"magic_damage")
 
-	var has_separate_defense := (
-		base.physical_defense_min != 0 or base.physical_defense_max != 0
-		or base.magic_defense_min != 0 or base.magic_defense_max != 0
-	)
 	if base.physical_defense_min != 0 or base.physical_defense_max != 0:
 		available_attributes.append(&"physical_defense")
 	if base.magic_defense_min != 0 or base.magic_defense_max != 0:
 		available_attributes.append(&"magic_defense")
-	if not has_separate_defense and (base.defense_min != 0 or base.defense_max != 0):
-		available_attributes.append(&"defense")
 
 	if base.magic_power_min != 0.0 or base.magic_power_max != 0.0:
 		available_attributes.append(&"magic_power")
+
+	if base.life_steal_min != 0.0 or base.life_steal_max != 0.0:
+		available_attributes.append(&"life_steal")
+	if base.mana_steal_min != 0.0 or base.mana_steal_max != 0.0:
+		available_attributes.append(&"mana_steal")
 
 	# Começa com todos os bônus zerados.
 	item.strength_bonus = 0
@@ -100,10 +99,11 @@ func generate_item(
 	item.max_mana_bonus = 0
 	item.physical_damage_bonus = 0
 	item.magic_damage_bonus = 0
-	item.defense_bonus = 0
 	item.physical_defense_bonus = 0
 	item.magic_defense_bonus = 0
 	item.magic_power_bonus = 0.0
+	item.life_steal_bonus = 0.0
+	item.mana_steal_bonus = 0.0
 
 	# Sorteia os atributos sem repetir nenhum.
 	var count := mini(attribute_count, available_attributes.size())
@@ -142,10 +142,6 @@ func generate_item(
 				item.magic_damage_bonus = roundi(
 					randi_range(base.magic_damage_min, base.magic_damage_max) * multiplier
 				)
-			&"defense":
-				item.defense_bonus = roundi(
-					randi_range(base.defense_min, base.defense_max) * multiplier
-				)
 			&"physical_defense":
 				item.physical_defense_bonus = roundi(
 					randi_range(base.physical_defense_min, base.physical_defense_max) * multiplier
@@ -158,6 +154,16 @@ func generate_item(
 				item.magic_power_bonus = randf_range(
 					base.magic_power_min,
 					base.magic_power_max
+				) * multiplier
+			&"life_steal":
+				item.life_steal_bonus = randf_range(
+					base.life_steal_min,
+					base.life_steal_max
+				) * multiplier
+			&"mana_steal":
+				item.mana_steal_bonus = randf_range(
+					base.mana_steal_min,
+					base.mana_steal_max
 				) * multiplier
 
 	# Sorteia os slots de encantamento.
