@@ -79,12 +79,14 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 	if base.item_type == ItemBase.ItemType.GEM:
 		_add_attribute(
 			"Efeito",
-			_get_gem_effect_name(item.gem_effect)
+			_get_gem_effect_name(item.gem_effect),
+			base.gem_color
 		)
 
 		_add_attribute(
 			"Valor",
-			_get_gem_effect_value(item)
+			_get_gem_effect_value(item),
+			base.gem_color
 		)
 
 		enchantments_label.hide()
@@ -196,7 +198,7 @@ func _clear_enchantment_slots() -> void:
 		child.queue_free()
 
 
-func _add_attribute(attribute_name: String, value: Variant) -> void:
+func _add_attribute(attribute_name: String, value: Variant, text_color: Color = Color.WHITE) -> void:
 	# Oculta atributos numéricos zerados.
 	if value is int or value is float:
 		if is_zero_approx(float(value)):
@@ -210,6 +212,8 @@ func _add_attribute(attribute_name: String, value: Variant) -> void:
 
 	label.add_theme_font_override("font", font)
 	label.add_theme_font_size_override("font_size", 14)
+	if text_color != Color.WHITE:
+		label.add_theme_color_override("font_color", text_color)
 	label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
 	attributes_container.add_child(label)
