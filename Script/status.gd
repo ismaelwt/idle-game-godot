@@ -272,7 +272,7 @@ func update_status() -> void:
 
 	var displayed_damage: float
 	if _has_property(active_hero, "attack_damage"):
-		displayed_damage = float(active_hero.get("attack_damage")) + character_stats.get_physical_damage_bonus()
+		displayed_damage = float(active_hero.get("attack_damage")) + character_stats.get_weapon_damage_bonus() + character_stats.get_physical_damage_bonus()
 	else:
 		displayed_damage = float(active_hero.get("basic_attack_damage")) + character_stats.basic_attack_level + character_stats.get_magic_bonus()
 	_set_label_text(damage_label, "DAMAGE: " + str(snappedf(displayed_damage, 0.1)))
@@ -288,7 +288,7 @@ func update_status() -> void:
 	_set_label_text(physical_damage_label, "PHYSICAL DAMAGE BONUS: %.1f" % character_stats.get_physical_damage_bonus())
 	_set_label_text(magic_damage_label, "MAGIC DAMAGE BONUS: %.1f" % character_stats.get_magic_bonus())
 	_set_label_text(critical_chance_label, "CRITICAL CHANCE: %.1f%%" % character_stats.get_critical_chance())
-	_set_label_text(critical_damage_label, "CRITICAL DAMAGE: %.0f%%" % (character_stats.CRITICAL_DAMAGE_MULTIPLIER * 100.0))
+	_set_label_text(critical_damage_label, "CRITICAL DAMAGE: %.0f%%" % (character_stats.get_critical_damage_multiplier() * 100.0))
 	_set_label_text(life_steal_per_hit_label, "LIFE STEAL PER HIT: %.1f%%" % character_stats.get_life_steal())
 	_set_label_text(mana_steal_per_hit_label, "MANA STEAL PER HIT: %.1f%%" % character_stats.get_mana_steal())
 	_set_label_text(mana_regeneration_label, "MANA REGENERATION: %.1f / %.1fs" % [character_stats.get_mana_regeneration(), character_stats.mana_regen_interval])
