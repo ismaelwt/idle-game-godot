@@ -240,11 +240,21 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	animation_player.speed_scale = 1.0
 	animation_player.play("knight/buff", 0.2)
 
+	var active_frenzy: Node3D = frenzy_instance
 	await animation_player.animation_finished
 
-	
+	# A skill pode ser interrompida (por exemplo, se o Knight morrer)
+	# enquanto a animação de buff ainda está tocando.
+	if (
+		my_attack_id != attack_id
+		or dead
+		or not is_instance_valid(active_frenzy)
+		or frenzy_instance != active_frenzy
+	):
+		return
+
 	# Duração e multiplicador são lidos da própria cena da skill.
-	var duration_value = frenzy_instance.get("duration")
+	var duration_value = active_frenzy.get("duration")
 	if duration_value == null:
 		frenzy_active = false
 		frenzy_instance.queue_free()
