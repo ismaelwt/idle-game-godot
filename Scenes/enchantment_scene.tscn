@@ -1,0 +1,209 @@
+[gd_scene load_steps=15 format=3 uid="uid://be7nonk80msxt"]
+
+[ext_resource type="Script" uid="uid://qw3qvcpfgino" path="res://Script/enchantment_scene.gd" id="1_osikl"]
+[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="1_uovdx"]
+[ext_resource type="Texture2D" uid="uid://b13qg8ugmd3cw" path="res://UI/Forja.png" id="2_jg0xs"]
+[ext_resource type="Texture2D" uid="uid://2bhe8mtr45vv" path="res://UI/UISprites/Window-slot.png" id="3_oqi50"]
+[ext_resource type="Texture2D" uid="uid://bp5nv4bv400y1" path="res://icons/disabled-fire-ray.png" id="4_xmp0y"]
+[ext_resource type="Texture2D" uid="uid://bxste58hol0h6" path="res://icons/fire-ray.png" id="5_qcetp"]
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="8_dfimo"]
+[ext_resource type="Texture2D" uid="uid://c6tqob0u70oe5" path="res://UI/UISprites/Icon_button_Check.png" id="9_hnipc"]
+[ext_resource type="Texture2D" uid="uid://gh1vol8sojgs" path="res://UI/UISprites/Icon_button__uncheck.png" id="10_e3h22"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kjjdd"]
+texture = ExtResource("1_uovdx")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mxuwq"]
+texture = ExtResource("3_oqi50")
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_qldij"]
+font = ExtResource("8_dfimo")
+font_size = 24
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wd7qt"]
+texture = ExtResource("3_oqi50")
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_74qgl"]
+font = ExtResource("8_dfimo")
+font_size = 12
+
+[node name="Enchantment" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_osikl")
+
+[node name="Panel" type="Panel" parent="."]
+custom_minimum_size = Vector2(325, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.5
+offset_top = -200.0
+offset_right = 162.5
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_kjjdd")
+
+[node name="TextureRect" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -43.0
+offset_top = 7.0
+offset_right = 43.0
+offset_bottom = 47.0
+grow_horizontal = 2
+texture = ExtResource("2_jg0xs")
+stretch_mode = 5
+
+[node name="Slot1" type="Panel" parent="Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 96.5
+offset_top = 77.0
+offset_right = 146.5
+offset_bottom = 127.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_mxuwq")
+
+[node name="Equipament" type="TextureButton" parent="Panel/Slot1"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_xmp0y")
+texture_disabled = ExtResource("5_qcetp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="Panel"]
+layout_mode = 0
+offset_left = 149.5
+offset_top = 92.0
+offset_right = 189.5
+offset_bottom = 116.0
+text = "+ "
+label_settings = SubResource("LabelSettings_qldij")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Panel" parent="Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 179.5
+offset_top = 77.0
+offset_right = 229.5
+offset_bottom = 127.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_wd7qt")
+
+[node name="Gem" type="TextureButton" parent="Panel/Slot2"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_xmp0y")
+texture_disabled = ExtResource("5_qcetp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="EnchantedItemSlot" type="Panel" parent="Panel"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 137.5
+offset_top = 156.0
+offset_right = 187.5
+offset_bottom = 206.0
+tooltip_text = "Fireball"
+theme_override_styles/panel = SubResource("StyleBoxTexture_wd7qt")
+
+[node name="EnchantedItem" type="TextureButton" parent="Panel/EnchantedItemSlot"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+tooltip_text = "FIREBALL
+DMG: 15 | COST: 8"
+texture_normal = ExtResource("4_xmp0y")
+texture_disabled = ExtResource("5_qcetp")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="HSeparator" type="HSeparator" parent="Panel"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -103.0
+offset_top = 20.0
+offset_right = 103.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label3" type="Label" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -104.0
+offset_top = 30.0
+offset_right = 104.0
+offset_bottom = 82.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Slot 1: Equipamentos com slots livre
+
+Slot 2: Gem com encantamentos"
+label_settings = SubResource("LabelSettings_74qgl")
+
+[node name="EnchantButton" type="TextureButton" parent="Panel"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -95.0
+offset_right = 20.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 0
+texture_normal = ExtResource("9_hnipc")
+texture_disabled = ExtResource("10_e3h22")
