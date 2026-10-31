@@ -78,13 +78,13 @@
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_l5pnh"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
 
-[sub_resource type="Sky" id="Sky_tohvi"]
+[sub_resource type="Sky" id="Sky_tn7sm"]
 sky_material = SubResource("PhysicalSkyMaterial_l5pnh")
 
 [sub_resource type="Environment" id="Environment_evnwi"]
 background_mode = 2
 background_energy_multiplier = 2.0
-sky = SubResource("Sky_tohvi")
+sky = SubResource("Sky_tn7sm")
 ssil_intensity = 4.0
 sdfgi_read_sky_light = false
 
@@ -436,6 +436,7 @@ script = ExtResource("14_vqvjq")
 script = ExtResource("15_k14j5")
 
 [node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
+visible = false
 script = ExtResource("13_45kkt")
 
 [node name="CharacterHUD" type="Control" parent="SubViewportContainer/UI"]

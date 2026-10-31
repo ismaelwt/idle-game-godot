@@ -25,6 +25,7 @@ transform = Transform3D(1, 0, 0, 0, 2, 0, 0, 0, 1, 0, 0, 0)
 script = ExtResource("1_xakaa")
 icon = ExtResource("2_yn1k3")
 disabled_icon = ExtResource("3_4l5nr")
+strike_duration = 1.5
 
 [node name="Cloud" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.919525, 0)

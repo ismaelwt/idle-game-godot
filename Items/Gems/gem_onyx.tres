@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://kvfwieowk27k"]
+
+[ext_resource type="Texture2D" uid="uid://dturdh1qv0hsj" path="res://icons/gem-onyx.png" id="1_jm5wu"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_advgo"]
+
+[resource]
+script = ExtResource("2_advgo")
+item_id = &"gem_onyx_01"
+item_name = "Onyx Negra"
+description = "Fragmento da pedra da escuridão"
+icon = ExtResource("1_jm5wu")
+item_type = 7
+item_class = 3
+critical_chance_max = 3.5
+gem_effect = 3
+gem_effect_min = 1.0
+gem_effect_max = 8.0
+gem_color = Color(0.3372549, 0.9647059, 0.2627451, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

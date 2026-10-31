@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://iygoxylg7wc1"]
+
+[ext_resource type="Texture2D" uid="uid://cjqwdbustlb40" path="res://icons/gem-ametista.png" id="1_f1ovv"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_42di8"]
+
+[resource]
+script = ExtResource("2_42di8")
+item_id = &"gem_ametista_01"
+item_name = "Ametista"
+description = "Fragmento da pedra do poder"
+icon = ExtResource("1_f1ovv")
+item_type = 7
+item_class = 3
+critical_chance_max = 3.5
+mana_steal_min = 3.0
+mana_steal_max = 8.0
+gem_effect = 3
+gem_effect_min = 1.0
+gem_effect_max = 8.0
+gem_color = Color(0.3372549, 0.9647059, 0.2627451, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"
