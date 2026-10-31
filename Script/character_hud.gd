@@ -1,6 +1,7 @@
 
 extends Control
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 const MAP_SCENE: PackedScene = preload("res://Scenes/minimap.tscn")
 const SHOP_SCENE: PackedScene = preload("res://Scenes/companion_shop.tscn")
 
@@ -125,7 +126,7 @@ func _refresh_heroes() -> void:
 		if not is_instance_valid(stats):
 			continue
 
-		var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+		var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 
 		match hero_id:
 			"mage":
