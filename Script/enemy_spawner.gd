@@ -1,5 +1,7 @@
 extends Node3D
 
+
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 @export_category("Boss")
 @export var boss_scene: PackedScene
 
@@ -371,7 +373,7 @@ func _get_selected_hero() -> Node3D:
 			stats = candidate.find_child("CharacterStats", true, false)
 
 		if is_instance_valid(stats):
-			var hero_id := CharacterSelectionData.normalize_hero_id(
+			var hero_id := CharacterSelectionDataScript.normalize_hero_id(
 				str(stats.get("hero_id"))
 			)
 			if hero_id == selected_id:
