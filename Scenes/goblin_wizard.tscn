@@ -1,6 +1,8 @@
 [gd_scene load_steps=14 format=3 uid="uid://dtcmflopapm0w"]
 
 [ext_resource type="PackedScene" uid="uid://0pjqp1tu2abo" path="res://Assets/GoblinWizard.fbx" id="1_657d5"]
+[ext_resource type="Script" path="res://Script/goblin_wizard.gd" id="7_wizard"]
+[ext_resource type="PackedScene" path="res://Scenes/enemy_fireball.tscn" id="8_fireball"]
 [ext_resource type="PackedScene" uid="uid://ce5pe0gykhmgo" path="res://Assets/CAJADO.fbx" id="2_bvwho"]
 [ext_resource type="Animation" uid="uid://dwno45w8mvujl" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_attack.res" id="2_iv3r0"]
 [ext_resource type="Animation" uid="uid://8kues7gl55sc" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_die.res" id="3_bvwho"]
@@ -242,6 +244,8 @@ corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
 [node name="GoblinWizard" instance=ExtResource("1_657d5")]
+script = ExtResource("7_wizard")
+projectile_scene = ExtResource("8_fireball")
 
 [node name="Skeleton" parent="Armature" index="0"]
 bones/0/position = Vector3(-0.0074503375, 0.6181402, -0.009843901)
