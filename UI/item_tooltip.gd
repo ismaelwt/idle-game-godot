@@ -117,8 +117,12 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 		if not is_zero_approx(item.mana_steal_bonus):
 			_add_attribute("Roubo de mana por hit", "%+.1f%%" % item.mana_steal_bonus)
 		for gem in item.installed_enchantments:
-			if gem is ItemInstance:
-				_add_attribute("Gema: " + _get_gem_effect_name(gem.gem_effect), _get_gem_effect_value(gem))
+			if gem is ItemInstance and gem.item_base != null:
+				_add_attribute(
+					"Gema: " + _get_gem_effect_name(gem.gem_effect),
+					_get_gem_effect_value(gem),
+					gem.item_base.gem_color
+				)
 
 		_create_enchantment_slots(item.enchantment_slots)
 
