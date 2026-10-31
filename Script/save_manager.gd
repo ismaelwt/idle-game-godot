@@ -355,6 +355,7 @@ func deserialize_hero_equipment(inventory: Inventory, hero_id: String, saved_equ
 func serialize_inventory(inventory: Inventory) -> Dictionary:
 	var data: Dictionary = {
 		"chest_count": inventory.chest_count,
+		"chest_levels": inventory.chest_levels.duplicate(),
 		"equipment": [],
 		"equipped_by_hero": {}
 	}
@@ -373,7 +374,20 @@ func serialize_inventory(inventory: Inventory) -> Dictionary:
 
 
 func deserialize_inventory(inventory: Inventory, data: Dictionary) -> void:
-	inventory.chest_count = int(data.get("chest_count", 0))
+	inventory.chest_count = maxi(0, int(data.get("chest_count", 0)))
+	inventory.chest_levels.clear()
+
+	var saved_chest_levels = data.get("chest_levels", [])
+	if saved_chest_levels is Array:
+		for chest_level in saved_chest_levels:
+			inventory.chest_levels.append(maxi(1, int(chest_level)))
+
+	# Migração: baús antigos não possuem nível salvo e passam a valer nível 1.
+	while inventory.chest_levels.size() < inventory.chest_count:
+		inventory.chest_levels.append(1)
+	while inventory.chest_levels.size() > inventory.chest_count:
+		inventory.chest_levels.pop_back()
+
 	inventory.equipment.clear()
 
 	var database := ItemDatabase.new()

@@ -55,19 +55,28 @@ func set_equipped_items(hero_id: String, items: Dictionary) -> void:
 # Quantidade de baús disponíveis para abrir.
 var chest_count: int = 0
 
+# Nível individual de cada baú, na mesma ordem em que foi recebido.
+# Baús antigos sem metadados são migrados para nível 1 ao carregar o save.
+var chest_levels: Array[int] = []
+
 # Gerador de equipamentos.
 var item_generator := ItemGenerator.new()
 
 
-func add_chest(amount: int = 1) -> void:
+func add_chest(amount: int = 1, boss_level: int = 1) -> void:
 	if amount <= 0:
 		return
+
+	var reward_level := maxi(1, boss_level)
+	for _i in range(amount):
+		chest_levels.append(reward_level)
 
 	chest_count += amount
 	inventory_changed.emit()
 
 	print("=== BAÚ ADICIONADO ===")
 	print("Total de baús: ", chest_count)
+	print("Nível da recompensa: ", reward_level)
 
 	_save_inventory()
 
@@ -151,15 +160,16 @@ func open_chest() -> ItemInstance:
 		if is_instance_valid(party_manager):
 			selected_hero = party_manager.get_main_hero()
 
-	var hero_level: int = 1
-	if is_instance_valid(selected_hero):
-		var stats = selected_hero.get("character_stats")
-		if is_instance_valid(stats):
-			hero_level = maxi(1, int(stats.get("level")))
-	# Os baús podem conceder itens de qualquer classe, independentemente
-	# do herói selecionado. O nível continua baseado nesse herói.
+	# O nível do baú foi definido pelo boss quando ele foi derrotado.
+	# Não consulta o nível do herói para calcular o equipamento.
+	if chest_levels.size() < chest_count:
+		# Compatibilidade com saves antigos que ainda não possuem a fila.
+		while chest_levels.size() < chest_count:
+			chest_levels.append(1)
+
+	var chest_level := maxi(1, chest_levels[0])
 	var item := item_generator.generate_chest_item(
-		hero_level,
+		chest_level,
 		ItemBase.ItemClass.ALL
 	)
 
@@ -169,6 +179,7 @@ func open_chest() -> ItemInstance:
 
 	# Consome um baú e guarda o equipamento.
 	chest_count -= 1
+	chest_levels.remove_at(0)
 	add_equipment(item)
 	inventory_changed.emit()
 

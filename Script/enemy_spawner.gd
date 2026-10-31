@@ -26,6 +26,7 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 @export var min_level_offset: int = 0
 @export var max_level_offset: int = 2
 @export var max_enemy_level_limit: int = 5
+@export var boss_level_limit: int = 150
 
 @onready var level_root: Node = get_parent()
 @onready var selected_hero: Node3D =  _get_selected_hero()
@@ -265,7 +266,7 @@ func spawn_boss() -> void:
 
 	var selected_level: int = mini(
 		hero_level,
-		max_enemy_level_limit
+		maxi(1, boss_level_limit)
 	)
 
 	var boss := boss_scene.instantiate() as Node3D

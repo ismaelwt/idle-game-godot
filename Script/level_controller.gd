@@ -542,8 +542,16 @@ func enemy_died(dead_enemy: Node3D):
 		print("=== PROGRESSO DA CAMPANHA ===")
 		print("Fase concluída: ", current_level)
 
-		inventory.add_chest(1)
-		print("=== BAÚ ADICIONADO AO INVENTÁRIO ===")
+		var defeated_boss_level := 1
+		if _has_property(dead_enemy, "boss_level"):
+			defeated_boss_level = maxi(1, int(dead_enemy.get("boss_level")))
+
+		inventory.add_chest(1, defeated_boss_level)
+		print(
+			"=== BAÚ ADICIONADO | NÍVEL DO BOSS: ",
+			defeated_boss_level,
+			" ==="
+		)
 
 		state = State.VICTORY
 		world_scroller.running = false
@@ -722,6 +730,15 @@ func resume_game():
 	paused = false
 
 	print("=== JOGO DESPAUSADO ===")
+
+
+func _has_property(object: Object, property_name: String) -> bool:
+	if not is_instance_valid(object):
+		return false
+	for property_info in object.get_property_list():
+		if String(property_info.get("name", "")) == property_name:
+			return true
+	return false
 
 
 func get_current_level_number() -> int:

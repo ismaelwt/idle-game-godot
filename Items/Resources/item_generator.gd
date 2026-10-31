@@ -13,7 +13,9 @@ class_name ItemGenerator
 
 func generate_item(
 	base: ItemBase,
-	player_level: int = 1
+	player_level: int = 1,
+	levels_below_override: int = -1,
+	levels_above_override: int = -1
 ) -> ItemInstance:
 	if base == null:
 		push_error("ItemGenerator: ItemBase inválido.")
@@ -28,8 +30,10 @@ func generate_item(
 
 	# Sorteia o nível do item conforme o nível do jogador.
 	var character_level := maxi(1, player_level)
-	var min_level := maxi(1, character_level - levels_below_player)
-	var max_level := maxi(min_level, character_level + levels_above_player)
+	var levels_below := levels_below_player if levels_below_override < 0 else levels_below_override
+	var levels_above := levels_above_player if levels_above_override < 0 else levels_above_override
+	var min_level := maxi(1, character_level - levels_below)
+	var max_level := maxi(min_level, character_level + levels_above)
 
 	item.item_level = randi_range(min_level, max_level)
 
@@ -249,4 +253,6 @@ func generate_chest_item(
 		)
 		return null
 
-	return generate_item(base, player_level)
+	# Recompensas de boss: itens podem vir até 2 níveis abaixo do boss,
+	# mas nunca acima do nível dele. O nível do personagem não participa.
+	return generate_item(base, player_level, 2, 0)
