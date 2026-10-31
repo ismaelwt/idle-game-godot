@@ -26,7 +26,9 @@ const ITEMS: Array[ItemBase] = [
 	preload("res://Items/Accessories/silver_necklace.tres"),
 	preload("res://Items/Accessories/leather_belt.tres"),
 
-	preload("res://Items/Gems/gem_esmeralda.tres")
+	preload("res://Items/Gems/gem_esmeralda.tres"),
+	preload("res://Items/Gems/gem_ametista.tres"),
+	preload("res://Items/Gems/gem_onyx.tres")
 ]
 
 # Chances fixas por raridade.
