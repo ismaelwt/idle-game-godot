@@ -1061,8 +1061,8 @@ func _find_hero_by_id(hero_id: String) -> Node:
 	if scene == null:
 		return null
 
-	# Preferir os heróis registrados no PartyManager, pois isso também
-	# respeita a disponibilidade real do companheiro.
+	# Quando existe PartyManager, ele é a fonte oficial da equipe:
+	# somente o herói principal e o companheiro comprado/equipado ficam registrados.
 	var manager := scene.find_child("PartyManager", true, false) as PartyManager
 	if is_instance_valid(manager):
 		for hero in manager.get_heroes():
@@ -1073,8 +1073,9 @@ func _find_hero_by_id(hero_id: String) -> Node:
 				var current_id := str(stats.get("hero_id")).strip_edges().to_lower()
 				if current_id == hero_id:
 					return hero
+		return null
 
-	# Fallback para heróis registrados no grupo comum.
+	# Compatibilidade para cenas antigas que ainda não possuem PartyManager.
 	for hero in get_tree().get_nodes_in_group("party_heroes"):
 		if not is_instance_valid(hero):
 			continue
@@ -1085,7 +1086,6 @@ func _find_hero_by_id(hero_id: String) -> Node:
 				return hero
 
 	return null
-
 
 func _get_hero_stats(hero: Node) -> Node:
 	if not is_instance_valid(hero):
