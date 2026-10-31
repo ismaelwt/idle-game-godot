@@ -1,6 +1,7 @@
 
 extends Panel
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 # ID da skill exibida em cada botão.
 # Para reorganizar a árvore, basta alterar estes valores.
 
@@ -129,7 +130,7 @@ func _set_hero(hero: Node) -> void:
 	character_stats = stats
 
 	var hero_class_value := str(character_stats.get("hero_class")).strip_edges().to_lower()
-	var hero_id := CharacterSelectionData.normalize_hero_id(
+	var hero_id := CharacterSelectionDataScript.normalize_hero_id(
 		str(character_stats.get("hero_id"))
 	)
 
@@ -195,7 +196,7 @@ func _find_selected_hero() -> Node:
 					continue
 				var stats := _get_hero_stats(hero)
 				if is_instance_valid(stats):
-					var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+					var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 					if hero_id == selected_id:
 						return hero
 
@@ -204,7 +205,7 @@ func _find_selected_hero() -> Node:
 			continue
 		var stats := _get_hero_stats(candidate)
 		if is_instance_valid(stats):
-			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 			if hero_id == selected_id:
 				return candidate
 
