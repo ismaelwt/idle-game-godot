@@ -10,7 +10,10 @@ enum ItemType {
 	PANTS,
 	BOOTS,
 	ACCESSORY,
-	GEM
+	GEM,
+	RING,
+	NECKLACE,
+	BELT
 }
 
 enum Rarity {
