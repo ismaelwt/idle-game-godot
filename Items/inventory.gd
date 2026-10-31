@@ -25,7 +25,10 @@ func _create_empty_equipment() -> Dictionary:
 		ItemBase.ItemType.CHEST: null,
 		ItemBase.ItemType.GLOVES: null,
 		ItemBase.ItemType.PANTS: null,
-		ItemBase.ItemType.BOOTS: null
+		ItemBase.ItemType.BOOTS: null,
+		ItemBase.ItemType.RING: null,
+		ItemBase.ItemType.NECKLACE: null,
+		ItemBase.ItemType.BELT: null
 	}
 
 
@@ -183,7 +186,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 	var hero_equipment := get_equipped_items(resolved_id)
 	var item_type: ItemBase.ItemType = item.item_base.item_type
 
-	# Por enquanto, acessórios não possuem espaço de equipamento.
+	# Cada acessório possui seu próprio espaço de equipamento.
 	if not hero_equipment.has(item_type):
 		print("Esse tipo de item não possui espaço para equipar.")
 		return false
