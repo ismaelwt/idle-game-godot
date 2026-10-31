@@ -384,7 +384,7 @@ func attack() -> void:
 
 	if distance <= attack_range + 0.01:
 		if target.has_method("take_damage"):
-			target.take_damage(attack_damage)
+			target.take_damage(attack_damage, "physical")
 
 	attacking = false
 
