@@ -4,6 +4,8 @@ extends Panel
 var font = preload("res://Fonts/Pix32.ttf")
 
 var item_tooltip_scene = preload("res://UI/item_tooltip.tscn")
+var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
+var enchantment_ui: EnchantmentScene
 var item_tooltip: ItemTooltip
 
 
@@ -156,6 +158,12 @@ func _ready() -> void:
 	attributes_button.pressed.connect(_on_attributes_button_pressed)
 	
 	close_button.pressed.connect(_on_close_pressed)
+	var forge_button: TextureButton = $CenterContainer/PanelContainer/Background/Forja
+	forge_button.pressed.connect(_on_forge_pressed)
+	enchantment_ui = enchantment_scene.instantiate() as EnchantmentScene
+	add_child(enchantment_ui)
+	enchantment_ui.setup(inventory)
+	enchantment_ui.hide()
 	knight_change_button.pressed.connect(_on_knight_change_pressed)
 	mage_change_button.pressed.connect(_on_mage_change_pressed)
 	chest_button.pressed.connect(_on_chest_pressed)
@@ -532,6 +540,10 @@ func _on_inventory_slot_pressed(index: int) -> void:
 	if item == null or item.item_base == null:
 		return
 
+	if is_instance_valid(enchantment_ui) and enchantment_ui.visible:
+		enchantment_ui.select_item(item)
+		return
+
 	if item.item_base.item_type == ItemBase.ItemType.GEM:
 		if not is_instance_valid(selected_equipment_for_gem):
 			print("Selecione primeiro um equipamento com slot de gema.")
@@ -710,6 +722,10 @@ func _handle_equipment_tooltip(
 				return
 			var selected_item: ItemInstance = inventory.get_equipped_items(selected_hero_id).get(item_type)
 			if selected_item != null and selected_item.item_base != null and selected_item.enchantment_slots > selected_item.installed_enchantments.size():
+				if is_instance_valid(enchantment_ui) and enchantment_ui.visible:
+					enchantment_ui.select_item(selected_item)
+					get_viewport().set_input_as_handled()
+					return
 				selected_equipment_for_gem = selected_item
 				print("Equipamento selecionado para gema: ", selected_item.item_base.item_name)
 				get_viewport().set_input_as_handled()
@@ -1202,3 +1218,12 @@ func _on_attributes_button_pressed() -> void:
 
 	update_attributes()
 	attributes_control.visible = not attributes_control.visible
+
+
+
+func _on_forge_pressed() -> void:
+	if not is_instance_valid(enchantment_ui):
+		return
+	enchantment_ui.visible = not enchantment_ui.visible
+	if enchantment_ui.visible:
+		enchantment_ui.setup(inventory)
