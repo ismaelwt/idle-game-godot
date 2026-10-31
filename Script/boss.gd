@@ -247,7 +247,7 @@ func _check_special_attack() -> void:
 		)
 
 		if target.has_method("take_damage"):
-			target.take_damage(special_damage)
+			target.take_damage(special_damage, "physical")
 
 
 func die() -> void:
@@ -357,7 +357,7 @@ func attack() -> void:
 
 	if distance <= attack_range:
 		if target.has_method("take_damage"):
-			target.take_damage(attack_damage)
+			target.take_damage(attack_damage, "physical")
 
 	attacking = false
 
