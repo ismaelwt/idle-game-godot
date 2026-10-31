@@ -1,5 +1,6 @@
 extends Control
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 # Fase atual exibida no mapa.
 @export var current_stage: int = 1
 
@@ -165,6 +166,6 @@ func _find_selected_hero() -> Node:
 		var stats = candidate.get("character_stats")
 		if not is_instance_valid(stats):
 			stats = candidate.get_node_or_null("CharacterStats")
-		if is_instance_valid(stats) and CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
+		if is_instance_valid(stats) and CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id"))) == selected_id:
 			return candidate
 	return null
