@@ -80,6 +80,9 @@ var weapon_default_icon: Texture2D
 var gloves_default_icon: Texture2D
 var pants_default_icon: Texture2D
 var boots_default_icon: Texture2D
+var necklace_default_icon: Texture2D
+var ring_default_icon: Texture2D
+var belt_default_icon: Texture2D
 
 var active_hero
 var character_stats
@@ -116,6 +119,9 @@ func _ready() -> void:
 	gloves_default_icon = gloves_icon.texture
 	pants_default_icon = pants_icon.texture
 	boots_default_icon = boots_icon.texture
+	necklace_default_icon = necklace_icon.texture
+	ring_default_icon = ring_icon.texture
+	belt_default_icon = belt_icon.texture
 
 	# O Status resolve o personagem por identidade, sem depender de grupos legados.
 	# Primeiro tenta resolver o herói selecionado; o seletor externo também
@@ -169,6 +175,9 @@ func _ready() -> void:
 	gloves_icon.gui_input.connect(_on_gloves_icon_gui_input)
 	pants_icon.gui_input.connect(_on_pants_icon_gui_input)
 	boots_icon.gui_input.connect(_on_boots_icon_gui_input)
+	necklace_icon.gui_input.connect(_on_necklace_icon_gui_input)
+	ring_icon.gui_input.connect(_on_ring_icon_gui_input)
+	belt_icon.gui_input.connect(_on_belt_icon_gui_input)
 
 	# Fecha o tooltip ao sair de cada slot.
 	helmet_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
@@ -177,6 +186,9 @@ func _ready() -> void:
 	gloves_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
 	pants_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
 	boots_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
+	necklace_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
+	ring_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
+	belt_icon.mouse_exited.connect(_on_equipment_icon_mouse_exited)
 
 	# Permite que os ícones recebam os eventos do mouse.
 	helmet_icon.mouse_filter = Control.MOUSE_FILTER_STOP
@@ -185,6 +197,9 @@ func _ready() -> void:
 	gloves_icon.mouse_filter = Control.MOUSE_FILTER_STOP
 	pants_icon.mouse_filter = Control.MOUSE_FILTER_STOP
 	boots_icon.mouse_filter = Control.MOUSE_FILTER_STOP
+	necklace_icon.mouse_filter = Control.MOUSE_FILTER_STOP
+	ring_icon.mouse_filter = Control.MOUSE_FILTER_STOP
+	belt_icon.mouse_filter = Control.MOUSE_FILTER_STOP
 
 	refresh_equipment_slots()
 	_refresh_hero_switch_buttons()
@@ -640,6 +655,21 @@ func refresh_equipment_slots() -> void:
 
 	update_boots_tooltip()
 
+	var necklace: ItemInstance = inventory.get_equipped_items(str(character_stats.hero_id)).get(
+		ItemBase.ItemType.NECKLACE
+	)
+	necklace_icon.texture = get_equipment_icon(necklace, necklace_default_icon) if necklace != null else necklace_default_icon
+
+	var ring: ItemInstance = inventory.get_equipped_items(str(character_stats.hero_id)).get(
+		ItemBase.ItemType.RING
+	)
+	ring_icon.texture = get_equipment_icon(ring, ring_default_icon) if ring != null else ring_default_icon
+
+	var belt: ItemInstance = inventory.get_equipped_items(str(character_stats.hero_id)).get(
+		ItemBase.ItemType.BELT
+	)
+	belt_icon.texture = get_equipment_icon(belt, belt_default_icon) if belt != null else belt_default_icon
+
 
 # ==========================================
 # ESCOLHER ÍCONE CONFORME ENCANTAMENTOS
@@ -718,6 +748,12 @@ func _handle_equipment_tooltip(
 				slot_name = "Calças"
 			ItemBase.ItemType.BOOTS:
 				slot_name = "Botas"
+			ItemBase.ItemType.NECKLACE:
+				slot_name = "Amuleto"
+			ItemBase.ItemType.RING:
+				slot_name = "Anel"
+			ItemBase.ItemType.BELT:
+				slot_name = "Cinto"
 
 		item_tooltip.show_empty_equipment_slot(slot_name)
 
@@ -864,6 +900,43 @@ func _on_boots_icon_gui_input(event: InputEvent) -> void:
 				item_tooltip.hide_tooltip()
 
 			get_viewport().set_input_as_handled()
+
+
+func _on_necklace_icon_gui_input(event: InputEvent) -> void:
+	_handle_equipment_tooltip(event, ItemBase.ItemType.NECKLACE)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		var hero_id := _get_valid_active_hero_id()
+		if hero_id.is_empty() or not is_instance_valid(inventory):
+			return
+		inventory.unequip_item(ItemBase.ItemType.NECKLACE, hero_id)
+		if item_tooltip != null:
+			item_tooltip.hide_tooltip()
+		get_viewport().set_input_as_handled()
+
+
+func _on_ring_icon_gui_input(event: InputEvent) -> void:
+	_handle_equipment_tooltip(event, ItemBase.ItemType.RING)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		var hero_id := _get_valid_active_hero_id()
+		if hero_id.is_empty() or not is_instance_valid(inventory):
+			return
+		inventory.unequip_item(ItemBase.ItemType.RING, hero_id)
+		if item_tooltip != null:
+			item_tooltip.hide_tooltip()
+		get_viewport().set_input_as_handled()
+
+
+func _on_belt_icon_gui_input(event: InputEvent) -> void:
+	_handle_equipment_tooltip(event, ItemBase.ItemType.BELT)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		var hero_id := _get_valid_active_hero_id()
+		if hero_id.is_empty() or not is_instance_valid(inventory):
+			return
+		inventory.unequip_item(ItemBase.ItemType.BELT, hero_id)
+		if item_tooltip != null:
+			item_tooltip.hide_tooltip()
+		get_viewport().set_input_as_handled()
+
 
 func _find_canvas_layer(node: Node) -> CanvasLayer:
 	var parent := node.get_parent()
