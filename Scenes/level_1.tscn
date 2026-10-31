@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=127 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -43,13 +43,16 @@
 [ext_resource type="Texture2D" uid="uid://bnvpdb5tjtofm" path="res://UI/Window_no_back_with_chains_lock.png" id="40_d08dg"]
 [ext_resource type="Texture2D" uid="uid://d0vymgdqe3r1g" path="res://icons/disabled-heart-plus.png" id="41_4udnt"]
 [ext_resource type="Texture2D" uid="uid://vjn2j8ehvdhv" path="res://icons/heart-plus.png" id="42_enyo0"]
+[ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
 [ext_resource type="Texture2D" uid="uid://cf15xx8dbnah7" path="res://icons/disabled-thunderstorm.png" id="43_3id4y"]
 [ext_resource type="Texture2D" uid="uid://cqkpps3dhq627" path="res://icons/thuderstorm-icon.png" id="44_qgr3v"]
 [ext_resource type="Texture2D" uid="uid://b4h5ca84m1px7" path="res://icons/plasma-bolt.png" id="45_m45or"]
 [ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
 [ext_resource type="Texture2D" uid="uid://clid7j7s6arav" path="res://UI/UISprites/Tab-skill.png" id="46_oxpbw"]
+[ext_resource type="Texture2D" uid="uid://mimvw1ydfp56" path="res://icons/belt.png" id="46_w8vhy"]
 [ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_re70m"]
 [ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
+[ext_resource type="Texture2D" uid="uid://bltsrlhfgr6lj" path="res://icons/power-ring.png" id="48_w8vhy"]
 [ext_resource type="Script" uid="uid://cxp2tv7l0i81c" path="res://Script/status.gd" id="49_62cx3"]
 [ext_resource type="Texture2D" uid="uid://ky7ellurff3k" path="res://icons/mage-bg.png" id="50_ho6uo"]
 [ext_resource type="Texture2D" uid="uid://cosmu0j2l8ojb" path="res://icons/barbute (1).png" id="51_0yaw2"]
@@ -1358,6 +1361,40 @@ texture = ExtResource("51_0yaw2")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Necklace" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 14.0
+offset_top = 26.0
+offset_right = 54.0
+offset_bottom = 66.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Necklace"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Necklace"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("42_lue1o")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Chest" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
 offset_left = 75.0
@@ -1394,10 +1431,10 @@ stretch_mode = 5
 
 [node name="Weapon" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
-offset_left = 145.0
-offset_top = 56.0
-offset_right = 185.0
-offset_bottom = 96.0
+offset_left = 135.0
+offset_top = 95.0
+offset_right = 175.0
+offset_bottom = 135.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
 
 [node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Weapon"]
@@ -1429,9 +1466,9 @@ stretch_mode = 5
 [node name="Gloves" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 151.0
+offset_top = 164.0
 offset_right = 56.0
-offset_bottom = 191.0
+offset_bottom = 204.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
 
 [node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Gloves"]
@@ -1460,12 +1497,46 @@ texture = SubResource("CompressedTexture2D_xo1hl")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="Belt" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 76.0
+offset_top = 164.0
+offset_right = 116.0
+offset_bottom = 204.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Belt"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("46_w8vhy")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Belt"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
 [node name="Pants" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
 offset_left = 75.0
-offset_top = 201.0
+offset_top = 229.0
 offset_right = 115.0
-offset_bottom = 241.0
+offset_bottom = 269.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
 
 [node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Pants"]
@@ -1497,9 +1568,9 @@ stretch_mode = 5
 [node name="Boots" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
 offset_left = 75.0
-offset_top = 271.0
+offset_top = 299.0
 offset_right = 115.0
-offset_bottom = 311.0
+offset_bottom = 339.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
 
 [node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Boots"]
@@ -1525,6 +1596,40 @@ grow_vertical = 2
 mouse_filter = 2
 theme = SubResource("Theme_g18iw")
 texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Ring" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel"]
+layout_mode = 0
+offset_left = 135.0
+offset_top = 26.0
+offset_right = 175.0
+offset_bottom = 66.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_y1rf3")
+
+[node name="Frame" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Ring"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -23.0
+offset_top = -13.0
+offset_right = 22.0
+offset_bottom = 11.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = SubResource("Theme_g18iw")
+texture = SubResource("CompressedTexture2D_xo1hl")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Icon" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control/PlayerPanel/Ring"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme = SubResource("Theme_g18iw")
+texture = ExtResource("48_w8vhy")
 expand_mode = 1
 stretch_mode = 5
 
@@ -1903,6 +2008,7 @@ offset_bottom = 349.0
 size_flags_vertical = 3
 
 [node name="SkillTree" type="Panel" parent="SubViewportContainer/UI"]
+visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

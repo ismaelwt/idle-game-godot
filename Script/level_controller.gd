@@ -92,7 +92,7 @@ func _ready():
 		show_warning("FIRST WAVE!!")
 
 
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_cancel"):
 		if get_tree().paused:
 			resume_game()

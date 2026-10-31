@@ -414,7 +414,7 @@ func process_skill_rotation(
 		state = hero_skill_states[hero_id]
 
 	var skill_ids: Array = state.get("skill_ids", [])
-	var skill_scenes: Array = state.get("skill_scenes", [])
+	var _skill_scenes: Array = state.get("skill_scenes", [])
 	var mana_costs: Array = state.get("skill_mana_costs", [])
 	var cooldowns: Array = state.get("skill_cooldowns", [])
 	var timers: Array = state.get("skill_timers", [])

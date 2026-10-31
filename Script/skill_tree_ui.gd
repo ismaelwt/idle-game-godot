@@ -176,7 +176,6 @@ func _refresh_selected_hero() -> void:
 	print("========== SKILL TREE DEBUG ==========")
 	print("Seleção global: ", CharacterSelectionData.selected_character)
 	var hero := _find_selected_hero()
-	print("Herói encontrado: ", hero.name if is_instance_valid(hero) else "NENHUM")
 	if is_instance_valid(hero):
 		_set_hero(hero)
 	else:
