@@ -97,10 +97,9 @@ func _refresh_ui() -> void:
 			selected_equipment.enchantment_slots - selected_equipment.installed_enchantments.size()
 		]
 	else:
-		description_label.text = "%s\n%s\nSerá adicionado: %s" % [
+		description_label.text = "%s\nGema: %s" % [
 			selected_equipment.item_base.item_name,
-			selected_gem.item_base.item_name,
-			_get_gem_effect_description(selected_gem)
+			selected_gem.item_base.item_name
 		]
 
 
