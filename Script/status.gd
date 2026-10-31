@@ -33,6 +33,7 @@ var item_tooltip: ItemTooltip
 
 @onready var skill_tree_button = $CenterContainer/PanelContainer/Background/SkillsButton
 @onready var attributes_button: TextureButton = $CenterContainer/PanelContainer/Background/AtributtesButton
+@onready var center_container: CenterContainer = $CenterContainer
 @onready var attributes_control: Control = $CenterContainer/AttributesControl
 
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
@@ -161,7 +162,7 @@ func _ready() -> void:
 	var forge_button: TextureButton = $CenterContainer/PanelContainer/Background/Forja
 	forge_button.pressed.connect(_on_forge_pressed)
 	enchantment_ui = enchantment_scene.instantiate() as EnchantmentScene
-	add_child(enchantment_ui)
+	center_container.add_child(enchantment_ui)
 	enchantment_ui.setup(inventory)
 	enchantment_ui.hide()
 	knight_change_button.pressed.connect(_on_knight_change_pressed)
@@ -1216,14 +1217,18 @@ func _on_attributes_button_pressed() -> void:
 	if not is_instance_valid(attributes_control):
 		return
 
+	if is_instance_valid(enchantment_ui):
+		enchantment_ui.hide()
+
 	update_attributes()
 	attributes_control.visible = not attributes_control.visible
-
 
 
 func _on_forge_pressed() -> void:
 	if not is_instance_valid(enchantment_ui):
 		return
+
+	attributes_control.hide()
 	enchantment_ui.visible = not enchantment_ui.visible
 	if enchantment_ui.visible:
 		enchantment_ui.setup(inventory)
