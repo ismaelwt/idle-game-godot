@@ -235,10 +235,10 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	show_damage(damage, is_critical)
 
 	if health <= 0.0:
-		wizard_die()
+		die()
 		return
 
-func wizard_die() -> void:
+func die() -> void:
 	if dying:
 		return
 
@@ -255,7 +255,7 @@ func wizard_die() -> void:
 
 	var level_controller = get_tree().get_first_node_in_group("level_controller")
 	if is_instance_valid(level_controller):
-		level_controller.enemy_wizard_died(self)
+		level_controller.enemy_died(self)
 
 	# Distribui as recompensas através do PartyManager.
 	var party_manager := get_tree().get_first_node_in_group(
