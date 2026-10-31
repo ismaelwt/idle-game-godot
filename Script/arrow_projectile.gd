@@ -122,7 +122,7 @@ func apply_target_damage() -> void:
 		return
 
 	if target.has_method("take_damage"):
-		target.call("take_damage", damage)
+		target.call("take_damage", damage, "physical")
 
 	finish()
 
