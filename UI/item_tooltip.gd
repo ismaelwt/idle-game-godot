@@ -293,12 +293,22 @@ func _get_gem_effect_name(effect: ItemBase.GemEffect) -> String:
 			return "Defesa física"
 		ItemBase.GemEffect.MAGIC_DEFENSE:
 			return "Defesa mágica"
+		ItemBase.GemEffect.CRITICAL_CHANCE:
+			return "Chance crítica"
+		ItemBase.GemEffect.CRITICAL_DAMAGE:
+			return "Dano crítico"
 		_:
 			return "Nenhum"
 
 
 func _get_gem_effect_value(item: ItemInstance) -> String:
-	if item.gem_effect in [ItemBase.GemEffect.MAGIC_POWER, ItemBase.GemEffect.LIFE_STEAL, ItemBase.GemEffect.MANA_STEAL]:
+	if item.gem_effect in [
+		ItemBase.GemEffect.MAGIC_POWER,
+		ItemBase.GemEffect.LIFE_STEAL,
+		ItemBase.GemEffect.MANA_STEAL,
+		ItemBase.GemEffect.CRITICAL_CHANCE,
+		ItemBase.GemEffect.CRITICAL_DAMAGE
+	]:
 		return "%+.1f%%" % item.gem_effect_value
 	return "%+d" % roundi(item.gem_effect_value)
 
