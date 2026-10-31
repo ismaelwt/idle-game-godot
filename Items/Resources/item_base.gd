@@ -152,6 +152,7 @@ func get_item_value() -> int:
 @export var gem_effect: GemEffect = GemEffect.NONE
 @export var gem_effect_min: float = 0.0
 @export var gem_effect_max: float = 0.0
+@export var gem_color: Color = Color("#c15cff")
 
 @export_category("Slots de Encantamento")
 @export_range(0, 2, 1) var min_enchantment_slots: int = 0
