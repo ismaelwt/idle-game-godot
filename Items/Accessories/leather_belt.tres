@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bacloo7g87mfr"]
+
+[ext_resource type="Texture2D" uid="uid://wl1jr5dybkfe" path="res://icons/leather-belt.png" id="1_meeye"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_xsfgw"]
+
+[resource]
+script = ExtResource("2_xsfgw")
+item_id = &"leather_belt_01"
+item_name = "Cinto de Couro"
+description = "Cinto de Couro"
+icon = ExtResource("1_meeye")
+item_type = 6
+item_class = 3
+intelligence_max = 1
+magic_damage_max = 1
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

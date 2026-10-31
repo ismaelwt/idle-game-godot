@@ -56,7 +56,9 @@ var item_tooltip: ItemTooltip
 @onready var gloves_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Gloves/Icon
 @onready var pants_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Pants/Icon
 @onready var boots_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Boots/Icon
-
+@onready var necklace_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Necklace/Icon
+@onready var ring_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Ring/Icon
+@onready var belt_icon: TextureRect = $CenterContainer/PanelContainer/Control/PlayerPanel/Belt/Icon
 # Atributos
 @onready var available_points_label: Label = $CenterContainer/AttributesControl/PanelContainer/VBoxContainer/Points/AvailablePoints
 
