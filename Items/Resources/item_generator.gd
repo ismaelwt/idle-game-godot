@@ -99,10 +99,13 @@ func generate_item(
 	if base.mana_steal_min != 0.0 or base.mana_steal_max != 0.0:
 		available_attributes.append(&"mana_steal")
 
-	# Crítico só pode ser sorteado em armas, luvas e acessórios.
+	# Crítico pode ser sorteado em armas, luvas, anéis e cintos.
+	# Amuletos (necklaces) seguem a regra dos demais equipamentos sem crítico.
 	var can_roll_critical := base.item_type in [
 		ItemBase.ItemType.WEAPON,
 		ItemBase.ItemType.GLOVES,
+		ItemBase.ItemType.RING,
+		ItemBase.ItemType.BELT,
 		ItemBase.ItemType.ACCESSORY
 	]
 	if can_roll_critical:
