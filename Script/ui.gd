@@ -1,6 +1,7 @@
 
 extends CanvasLayer
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 # =========================================================
 # REFERÊNCIAS
 # =========================================================
@@ -113,7 +114,7 @@ func _refresh_heroes() -> void:
 		if stats == null:
 			continue
 
-		var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+		var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 
 		if hero_id == "mage":
 			new_mage = hero
@@ -168,7 +169,7 @@ func _is_knight(hero: Node) -> bool:
 	if not is_instance_valid(stats):
 		return false
 
-	var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+	var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 	return hero_id == "knight"
 
 
@@ -180,7 +181,7 @@ func _is_mage(hero: Node) -> bool:
 	if not is_instance_valid(stats):
 		return false
 
-	var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+	var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 	return hero_id == "mage"
 
 
