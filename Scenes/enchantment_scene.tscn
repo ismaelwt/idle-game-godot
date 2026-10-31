@@ -45,15 +45,15 @@ grow_vertical = 2
 script = ExtResource("1_osikl")
 
 [node name="Panel" type="Panel" parent="."]
-custom_minimum_size = Vector2(325, 400)
+custom_minimum_size = Vector2(288, 407)
 layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_left = 85.0
-offset_top = -200.0
-offset_right = 410.0
-offset_bottom = 200.0
+offset_left = -580.0
+offset_top = -243.0
+offset_right = -292.0
+offset_bottom = 164.0
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_kjjdd")
 
