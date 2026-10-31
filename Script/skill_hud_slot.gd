@@ -1,6 +1,7 @@
 extends TextureButton
 
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 var slot_index: int = 0
 var is_drag_source := false
 
@@ -294,7 +295,7 @@ func _get_main_hero() -> Node:
 		if not is_instance_valid(stats):
 			stats = candidate.get_node_or_null("CharacterStats")
 		if is_instance_valid(stats):
-			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 			if hero_id == selected_id:
 				return candidate
 	return null
