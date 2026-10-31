@@ -60,7 +60,7 @@ func _initialize_party() -> void:
 	print("Principal: ", main_hero.name)
 	print(
 		"Companheiro: ",
-		companion_hero.name if is_instance_valid(companion_hero) else "nenhum"
+		str(companion_hero.name) if is_instance_valid(companion_hero) else "nenhum"
 	)
 	print("Total de heróis: ", get_heroes().size())
 
