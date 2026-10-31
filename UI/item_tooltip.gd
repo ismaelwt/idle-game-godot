@@ -2,6 +2,7 @@
 extends Panel
 class_name ItemTooltip
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 var font = preload("res://Fonts/Pix32.ttf")
 
 @onready var name_label: Label = $MarginContainer/VBoxContainer/NameLabel
@@ -375,7 +376,7 @@ func _add_class_requirement(item: ItemInstance, hero_id: String) -> void:
 	label.add_theme_font_size_override("font_size", 14)
 	label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
-	var normalized_hero_id := CharacterSelectionData.normalize_hero_id(hero_id)
+	var normalized_hero_id := CharacterSelectionDataScript.normalize_hero_id(hero_id)
 	if not normalized_hero_id.is_empty():
 		var hero_class := -1
 		match normalized_hero_id:
