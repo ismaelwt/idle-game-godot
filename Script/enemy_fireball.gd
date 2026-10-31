@@ -1,6 +1,8 @@
 extends Node3D
 
 @export_category("Movimento")
+@export var icon: Texture2D
+@export var disabled_icon: Texture2D
 @export var speed: float = 7.0
 @export var max_lifetime: float = 6.0
 @export var hit_distance: float = 0.45
