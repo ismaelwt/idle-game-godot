@@ -169,6 +169,10 @@ func _get_gem_effect_description(gem: ItemInstance) -> String:
 			return "Defesa física +%d" % roundi(value)
 		ItemBase.GemEffect.MAGIC_DEFENSE:
 			return "Defesa mágica +%d" % roundi(value)
+		ItemBase.GemEffect.CRITICAL_CHANCE:
+			return "Chance crítica +%.1f%%" % value
+		ItemBase.GemEffect.CRITICAL_DAMAGE:
+			return "Dano crítico +%.1f%%" % value
 		ItemBase.GemEffect.MAGIC_POWER:
 			return "Poder mágico +%.1f%%" % value
 		ItemBase.GemEffect.LIFE_STEAL:
