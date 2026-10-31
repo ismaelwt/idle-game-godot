@@ -1,5 +1,7 @@
 extends Node
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
+
 const SAVE_PATH := "user://savegame.json"
 
 var automatic_retry: bool = false
@@ -126,7 +128,7 @@ func save_character(character_stats, inventory = null, hero_id: String = "") -> 
 		hero_id = str(character_stats.get("hero_id"))
 	if hero_id.is_empty() or hero_id == "<null>":
 		hero_id = "mage"
-	hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
+	hero_id = CharacterSelectionDataScript.normalize_hero_id(hero_id)
 
 	var data := _read_save_data()
 	var heroes: Dictionary = data.get("heroes", {})
@@ -184,7 +186,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 		hero_id = str(character_stats.get("hero_id"))
 	if hero_id.is_empty() or hero_id == "<null>":
 		hero_id = "mage"
-	hero_id = CharacterSelectionData.normalize_hero_id(hero_id)
+	hero_id = CharacterSelectionDataScript.normalize_hero_id(hero_id)
 
 	if not FileAccess.file_exists(SAVE_PATH):
 		print("Nenhum save encontrado.")
