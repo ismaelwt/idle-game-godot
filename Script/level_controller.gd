@@ -2,6 +2,8 @@
 extends Node
 
 
+
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 enum State {
 	PREPARING,
 	RUNNING,
@@ -62,7 +64,7 @@ func _get_selected_hero() -> Node3D:
 
 		var candidate_id := str(stats.get("hero_id"))
 		if is_instance_valid(CharacterSelectionData):
-			candidate_id = CharacterSelectionData.normalize_hero_id(candidate_id)
+			candidate_id = CharacterSelectionDataScript.normalize_hero_id(candidate_id)
 		else:
 			candidate_id = candidate_id.to_lower()
 
