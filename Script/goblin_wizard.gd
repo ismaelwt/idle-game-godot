@@ -90,7 +90,7 @@ func _ready() -> void:
 	base_gold_reward = gold_reward
 
 	health = max_health
-	animation_player.play("goblin_wizard/wizard_walk")
+	animation_player.play("goblin_wizard/wizard_walk", 0.15)
 	update_health_bar()
 
 
@@ -137,7 +137,7 @@ func _process(delta: float) -> void:
 		look_at_target(target)
 
 	if animation_player.current_animation != "goblin_wizard/wizard_walk":
-		animation_player.play("goblin_wizard/wizard_walk")
+		animation_player.play("goblin_wizard/wizard_walk", 0.15)
 
 	var step_distance: float = minf(speed * delta, distance - attack_range)
 	global_position += direction.normalized() * step_distance
@@ -247,7 +247,7 @@ func die() -> void:
 	attacking = false
 	combat_target = null
 
-	animation_player.play("goblin_wizard/wizard_die")
+	animation_player.play("goblin_wizard/wizard_die", 0.15)
 
 	for child in get_children():
 		if child is StaticBody3D:
@@ -302,7 +302,7 @@ func attack() -> void:
 	look_at_target(target)
 	attacking = true
 	attack_timer = attack_cooldown
-	animation_player.play("goblin_wizard/wizard_attack")
+	animation_player.play("goblin_wizard/wizard_attack", 0.15)
 
 	await get_tree().create_timer(attack_hit_delay).timeout
 
@@ -352,14 +352,14 @@ func _finish_attack() -> void:
 		return
 
 	if is_instance_valid(animation_player):
-		animation_player.play("goblin_wizard/wizard_idle")
+		animation_player.play("goblin_wizard/wizard_idle",0.15)
 
 
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "goblin_wizard/wizard_attack":
 		if not dying:
 			attacking = false
-			animation_player.play("goblin_wizard/wizard_idle")
+			animation_player.play("goblin_wizard/wizard_idle", 0.15)
 	elif anim_name == "goblin_wizard/wizard_die":
 		queue_free()
 
@@ -381,7 +381,7 @@ func start_combat() -> void:
 	attacking = false
 	attack_timer = 0.0
 	animation_player.speed_scale = 1.0
-	animation_player.play("goblin_wizard/wizard_idle")
+	animation_player.play("goblin_wizard/wizard_idle", 0.15)
 
 func show_damage(damage: float, is_critical: bool = false) -> void:
 	if not is_inside_tree():

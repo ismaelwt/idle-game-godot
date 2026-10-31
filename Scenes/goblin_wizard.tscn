@@ -1,14 +1,14 @@
 [gd_scene load_steps=16 format=3 uid="uid://dtcmflopapm0w"]
 
 [ext_resource type="PackedScene" uid="uid://0pjqp1tu2abo" path="res://Assets/GoblinWizard.fbx" id="1_657d5"]
-[ext_resource type="Script" path="res://Script/goblin_wizard.gd" id="7_wizard"]
-[ext_resource type="PackedScene" path="res://Scenes/enemy_fireball.tscn" id="8_fireball"]
 [ext_resource type="PackedScene" uid="uid://ce5pe0gykhmgo" path="res://Assets/CAJADO.fbx" id="2_bvwho"]
 [ext_resource type="Animation" uid="uid://dwno45w8mvujl" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_attack.res" id="2_iv3r0"]
 [ext_resource type="Animation" uid="uid://8kues7gl55sc" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_die.res" id="3_bvwho"]
 [ext_resource type="Animation" uid="uid://cobx2xx8sumup" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_idle.res" id="4_axvnr"]
 [ext_resource type="Animation" uid="uid://dfb7vse0qqcx1" path="res://Anim/HumanoidEnemy/Wizard_enemy/wizard_walk.res" id="5_bdwpb"]
 [ext_resource type="Texture2D" uid="uid://cyc764aphwq62" path="res://UI/UISprites/exp-bar.png" id="6_iv3r0"]
+[ext_resource type="Script" uid="uid://bid1ua408nrgd" path="res://Script/goblin_wizard.gd" id="7_wizard"]
+[ext_resource type="PackedScene" path="res://Scenes/enemy_fireball.tscn" id="8_fireball"]
 
 [sub_resource type="Animation" id="Animation_35kl8"]
 resource_name = "Armature|Armature|mixamo_com|Layer0"
@@ -243,8 +243,12 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[node name="GoblinWizard" instance=ExtResource("1_657d5")]
+[node name="GoblinWizard" groups=["enemies"] instance=ExtResource("1_657d5")]
 script = ExtResource("7_wizard")
+speed = 2.0
+max_health = 55.0
+xp_reward = 80
+attack_hit_delay = 1.0
 projectile_scene = ExtResource("8_fireball")
 
 [node name="Skeleton" parent="Armature" index="0"]
@@ -308,7 +312,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.2497437e-09, 1.1095452, 0.
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2079494, 0.89269185, 1.2496257)
 
 [node name="HealthBarDisplay" type="Sprite3D" parent="." index="5"]
-transform = Transform3D(-1, 0, 1.509958e-07, 0, 1, 0, -1.509958e-07, 0, -1, -0.111114524, 1.5034983, 0.23750685)
+transform = Transform3D(-0.3, 0, 4.5298744e-08, 0, 0.3, 0, -4.5298744e-08, 0, -0.3, -0.111114524, 1.5034983, 0.23750685)
 offset = Vector2(50, 0)
 billboard = 1
 fixed_size = true
