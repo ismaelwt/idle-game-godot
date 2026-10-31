@@ -124,7 +124,7 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 					gem.item_base.gem_color
 				)
 
-		_create_enchantment_slots(item.enchantment_slots)
+		_create_enchantment_slots(item)
 
 	show()
 
@@ -239,14 +239,30 @@ func _format_bonus(value: Variant) -> String:
 	return str(value)
 
 
-func _create_enchantment_slots(amount: int) -> void:
-	var slot_count := clampi(amount, 0, 2)
+func _create_enchantment_slots(item: ItemInstance) -> void:
+	var slot_count := clampi(item.enchantment_slots, 0, 2)
 
 	for i in range(slot_count):
 		var slot := Panel.new()
 		slot.custom_minimum_size = Vector2(42, 42)
 		slot.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		enchantment_slots.add_child(slot)
+
+		# Cada gema instalada ocupa o slot correspondente; os demais ficam vazios.
+		if i >= item.installed_enchantments.size():
+			continue
+
+		var gem = item.installed_enchantments[i]
+		if not gem is ItemInstance or gem.item_base == null:
+			continue
+
+		var icon := TextureRect.new()
+		icon.texture = gem.item_base.icon
+		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		slot.add_child(icon)
 
 
 func _get_gem_effect_name(effect: ItemBase.GemEffect) -> String:
