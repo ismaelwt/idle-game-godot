@@ -114,6 +114,10 @@ func _set_slot_icon(button: TextureButton, item: ItemInstance) -> void:
 
 func _show_item_tooltip(item: ItemInstance) -> void:
 	if not is_instance_valid(item_tooltip):
+		var scene := get_tree().current_scene
+		if scene != null:
+			item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
+	if not is_instance_valid(item_tooltip):
 		return
 	if item == null or item.item_base == null:
 		item_tooltip.hide_tooltip()
