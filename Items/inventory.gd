@@ -349,7 +349,7 @@ func _find_hero_by_id(hero_id: String) -> Node:
 	if current_scene == null:
 		return null
 
-	var normalized_id := CharacterSelectionData.normalize_hero_id(hero_id)
+	var normalized_id := CharacterSelectionDataScript.normalize_hero_id(hero_id)
 
 	# O gerenciamento de inventário deve encontrar o herói mesmo morto.
 	# Não usar get_alive_heroes() para localizar dono de equipamento.
@@ -365,7 +365,7 @@ func _find_hero_by_id(hero_id: String) -> Node:
 			if not is_instance_valid(stats):
 				continue
 
-			var candidate_id := CharacterSelectionData.normalize_hero_id(
+			var candidate_id := CharacterSelectionDataScript.normalize_hero_id(
 				str(stats.get("hero_id"))
 			)
 			if candidate_id == normalized_id:
@@ -382,7 +382,7 @@ func _find_hero_by_id(hero_id: String) -> Node:
 		if not is_instance_valid(stats):
 			continue
 
-		var candidate_id := CharacterSelectionData.normalize_hero_id(
+		var candidate_id := CharacterSelectionDataScript.normalize_hero_id(
 			str(stats.get("hero_id"))
 		)
 		if candidate_id == normalized_id:
