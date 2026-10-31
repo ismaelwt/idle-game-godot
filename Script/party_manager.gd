@@ -1,6 +1,8 @@
 extends Node
 class_name PartyManager
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
+
 signal party_changed(heroes: Array[Node3D])
 
 @export_range(1, 3, 1) var max_party_size: int = 3
@@ -130,7 +132,7 @@ func _get_hero_id(hero: Node3D) -> String:
 		return ""
 
 	if is_instance_valid(CharacterSelectionData):
-		return CharacterSelectionData.normalize_hero_id(raw_id)
+		return CharacterSelectionDataScript.normalize_hero_id(raw_id)
 
 	return raw_id.strip_edges().to_lower()
 
