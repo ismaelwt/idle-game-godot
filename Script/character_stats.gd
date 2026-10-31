@@ -615,10 +615,17 @@ func calculate_damage_after_defense(damage: float, damage_type: String = "physic
 
 func get_magic_bonus() -> float:
 	var total_intelligence := get_total_intelligence()
+	var weapon_magic_damage: float = 0.0
+
+	# O dano base da arma só entra no dano mágico do Mage.
+	# Armas físicas do Knight não podem aumentar o dano mágico.
+	if CharacterSelectionData.normalize_hero_id(hero_id) == "mage":
+		weapon_magic_damage = get_weapon_damage_bonus()
+
 	return (
 		(total_intelligence - 5) * magic_damage_per_int
 		+ get_equipment_bonus("magic_damage")
-		+ get_weapon_damage_bonus()
+		+ weapon_magic_damage
 	)
 
 
