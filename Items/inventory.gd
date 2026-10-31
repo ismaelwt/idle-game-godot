@@ -2,6 +2,8 @@
 extends Node
 class_name Inventory
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
+
 signal equipment_changed
 signal inventory_changed
 
@@ -191,7 +193,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 		print("Esse item não está na mochila.")
 		return false
 
-	var normalized_hero_id := CharacterSelectionData.normalize_hero_id(resolved_id)
+	var normalized_hero_id := CharacterSelectionDataScript.normalize_hero_id(resolved_id)
 	var required_class: ItemBase.ItemClass = item.item_base.item_class
 	var hero_class: ItemBase.ItemClass
 	match normalized_hero_id:
