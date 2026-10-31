@@ -5,16 +5,27 @@ class_name EnchantmentScene
 @onready var gem_button: TextureButton = $Panel/Slot2/Gem
 @onready var preview_button: TextureButton = $Panel/EnchantedItemSlot/EnchantedItem
 @onready var description_label: Label = $Panel/Label3
+@onready var gem_effect_label: Label = $Panel/GemEffectLabel
 @onready var enchant_button: TextureButton = $Panel/EnchantButton
 
 var inventory: Inventory
 var selected_equipment: ItemInstance
 var selected_gem: ItemInstance
+var item_tooltip: ItemTooltip
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
 	enchant_button.pressed.connect(_on_enchant_pressed)
+	equipment_button.mouse_entered.connect(_on_equipment_slot_mouse_entered)
+	gem_button.mouse_entered.connect(_on_gem_slot_mouse_entered)
+	preview_button.mouse_entered.connect(_on_equipment_slot_mouse_entered)
+	equipment_button.mouse_exited.connect(_on_slot_mouse_exited)
+	gem_button.mouse_exited.connect(_on_slot_mouse_exited)
+	preview_button.mouse_exited.connect(_on_slot_mouse_exited)
+	var scene := get_tree().current_scene
+	if scene != null:
+		item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
 	_refresh_ui()
 
 
@@ -53,6 +64,10 @@ func _refresh_ui() -> void:
 	_set_slot_icon(equipment_button, selected_equipment)
 	_set_slot_icon(gem_button, selected_gem)
 	_set_slot_icon(preview_button, selected_equipment)
+	gem_effect_label.text = _get_gem_effect_description(selected_gem) if selected_gem != null else ""
+	gem_effect_label.visible = selected_gem != null
+	if selected_gem != null and selected_gem.item_base != null:
+		gem_effect_label.add_theme_color_override("font_color", selected_gem.item_base.gem_color)
 
 	var valid_selection := (
 		is_instance_valid(inventory)
@@ -94,6 +109,29 @@ func _set_slot_icon(button: TextureButton, item: ItemInstance) -> void:
 	button.texture_normal = item.item_base.icon if button.visible else null
 	button.texture_disabled = button.texture_normal
 	button.tooltip_text = item.item_base.item_name if button.visible else ""
+
+
+
+func _show_item_tooltip(item: ItemInstance) -> void:
+	if not is_instance_valid(item_tooltip):
+		return
+	if item == null or item.item_base == null:
+		item_tooltip.hide_tooltip()
+		return
+	item_tooltip.show_item(item)
+
+
+func _on_equipment_slot_mouse_entered() -> void:
+	_show_item_tooltip(selected_equipment)
+
+
+func _on_gem_slot_mouse_entered() -> void:
+	_show_item_tooltip(selected_gem)
+
+
+func _on_slot_mouse_exited() -> void:
+	if is_instance_valid(item_tooltip):
+		item_tooltip.hide_tooltip()
 
 
 func _is_equipped(item: ItemInstance) -> bool:
