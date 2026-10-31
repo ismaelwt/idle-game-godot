@@ -536,6 +536,12 @@ func get_equipment_bonus(stat_name: String) -> float:
 				ItemBase.GemEffect.MANA_STEAL:
 					if stat_name == "mana_steal":
 						total += gem_value
+				ItemBase.GemEffect.CRITICAL_CHANCE:
+					if stat_name == "critical_chance":
+						total += gem_value
+				ItemBase.GemEffect.CRITICAL_DAMAGE:
+					if stat_name == "critical_damage":
+						total += gem_value
 
 	return total
 
