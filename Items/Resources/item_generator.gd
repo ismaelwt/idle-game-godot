@@ -28,7 +28,7 @@ func generate_item(
 	item.generated_rarity = base.rarity
 	item.item_value = base.get_item_value()
 
-	# Sorteia o nível do item conforme o nível do jogador.
+	# Sorteia o nível do item conforme o nível de referência recebido.
 	var character_level := maxi(1, player_level)
 	var levels_below := levels_below_player if levels_below_override < 0 else levels_below_override
 	var levels_above := levels_above_player if levels_above_override < 0 else levels_above_override

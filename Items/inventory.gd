@@ -154,12 +154,6 @@ func open_chest() -> ItemInstance:
 		push_warning("Inventory: cena atual não encontrada.")
 		return null
 
-	var selected_hero := _find_hero_by_id(active_hero_id)
-	if not is_instance_valid(selected_hero):
-		var party_manager = get_tree().get_first_node_in_group("party_manager")
-		if is_instance_valid(party_manager):
-			selected_hero = party_manager.get_main_hero()
-
 	# O nível do baú foi definido pelo boss quando ele foi derrotado.
 	# Não consulta o nível do herói para calcular o equipamento.
 	if chest_levels.size() < chest_count:
