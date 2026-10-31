@@ -1,5 +1,6 @@
 extends Node
 
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 signal level_up_occurred
 signal attributes_changed
 
@@ -619,7 +620,7 @@ func get_magic_bonus() -> float:
 
 	# O dano base da arma só entra no dano mágico do Mage.
 	# Armas físicas do Knight não podem aumentar o dano mágico.
-	if CharacterSelectionData.normalize_hero_id(hero_id) == "mage":
+	if CharacterSelectionDataScript.normalize_hero_id(hero_id) == "mage":
 		weapon_magic_damage = get_weapon_damage_bonus()
 
 	return (
