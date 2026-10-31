@@ -1,6 +1,8 @@
 extends Node3D
 
 
+
+const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 @export_category("Movimento")
 @export var speed: float = 3.0
 @export var radius: float = 5.0
@@ -646,7 +648,7 @@ func _get_selected_hero_fallback() -> Node3D:
 		if not is_instance_valid(stats):
 			stats = candidate.get_node_or_null("CharacterStats")
 		if is_instance_valid(stats):
-			var hero_id := CharacterSelectionData.normalize_hero_id(str(stats.get("hero_id")))
+			var hero_id := CharacterSelectionDataScript.normalize_hero_id(str(stats.get("hero_id")))
 			if hero_id == selected_id:
 				return candidate
 	return null
