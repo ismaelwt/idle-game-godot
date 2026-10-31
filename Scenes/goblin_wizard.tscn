@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://dtcmflopapm0w"]
+[gd_scene load_steps=16 format=3 uid="uid://dtcmflopapm0w"]
 
 [ext_resource type="PackedScene" uid="uid://0pjqp1tu2abo" path="res://Assets/GoblinWizard.fbx" id="1_657d5"]
 [ext_resource type="Script" path="res://Script/goblin_wizard.gd" id="7_wizard"]
