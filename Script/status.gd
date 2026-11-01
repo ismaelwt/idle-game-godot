@@ -599,7 +599,10 @@ func _on_inventory_slot_mouse_exited() -> void:
 # ==========================================
 
 func refresh_equipment_slots() -> void:
-	if inventory == null:
+	if not is_instance_valid(inventory):
+		return
+
+	if not is_instance_valid(character_stats):
 		return
 
 	var helmet: ItemInstance = inventory.get_equipped_items(str(character_stats.hero_id)).get(

@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=124 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -9,8 +9,6 @@
 [ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_4qhvg"]
 [ext_resource type="PackedScene" uid="uid://bo6p3qj6i6y23" path="res://Scenes/goblin_boss.tscn" id="7_tohvi"]
 [ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_rby12"]
-[ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="10_t405x"]
-[ext_resource type="PackedScene" uid="uid://dtcmflopapm0w" path="res://Scenes/goblin_wizard.tscn" id="11_r5dji"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
@@ -110,29 +108,15 @@ script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
-[sub_resource type="Resource" id="Resource_r5dji"]
-script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("11_r5dji")
-metadata/_custom_type_script = "uid://p802c5ldrgy"
-
 [sub_resource type="Resource" id="Resource_tohvi"]
-script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("10_t405x")
-metadata/_custom_type_script = "uid://p802c5ldrgy"
-
-[sub_resource type="Resource" id="Resource_t405x"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
-[sub_resource type="Resource" id="Resource_rby12"]
+[sub_resource type="Resource" id="Resource_npx7t"]
 script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("11_r5dji")
-metadata/_custom_type_script = "uid://p802c5ldrgy"
-
-[sub_resource type="Resource" id="Resource_lue1o"]
-script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("10_t405x")
+enemy_scene = ExtResource("7_4qhvg")
+amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qhvg"]
@@ -408,16 +392,16 @@ script = ExtResource("5_soyxa")
 [node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_rby12")
 boss_scene = ExtResource("7_tohvi")
-wave_1_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_4qhvg"), SubResource("Resource_r5dji")])
-wave_2_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_tohvi"), SubResource("Resource_t405x")])
-wave_3_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_rby12"), SubResource("Resource_lue1o")])
+wave_1_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_4qhvg")])
+wave_2_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_tohvi")])
+wave_3_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_npx7t")])
 spawn_distance = 25.0
 spawn_spacing = 2.0
 x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
-max_enemy_level_limit = 15
-boss_level_limit = 5
+max_level_offset = 0
+boss_level_limit = 4
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)

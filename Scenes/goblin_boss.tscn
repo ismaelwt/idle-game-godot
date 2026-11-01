@@ -247,10 +247,9 @@ corner_radius_bottom_left = 15
 transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 0, 0, 0)
 script = ExtResource("2_qnq01")
 health_per_level = 0.88
-damage_per_level = 1.0
+damage_per_level = 0.6
 xp_per_level = 0.9
 gold_per_level = 0.9
-attack_cooldown = 2.0
 special_attack_damage_multiplier = 2.5
 
 [node name="Skeleton" parent="." index="0"]

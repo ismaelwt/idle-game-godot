@@ -13,8 +13,8 @@ extends Node3D
 
 @export_category("Level Scaling")
 @export var enemy_level: int = 1
-@export var health_per_level: float = 0.25
-@export var damage_per_level: float = 0.12
+@export var health_per_level: float = 0.18
+@export var damage_per_level: float = 0.07
 @export var xp_per_level: float = 0.20
 @export var gold_per_level: float = 0.10
 

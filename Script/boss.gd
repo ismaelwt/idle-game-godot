@@ -13,13 +13,12 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 
 
 @export_category("Vida")
-@export var max_health: float = 100.0
+@export var max_health: float = 60.0
 
 
 @export_category("Level Scaling")
 @export var boss_level: int = 1
-
-@export var health_per_level: float = 0.25
+@export var health_per_level: float = 0.2
 @export var damage_per_level: float = 0.12
 @export var xp_per_level: float = 0.20
 @export var gold_per_level: float = 0.10
@@ -58,8 +57,8 @@ var level_label: Label3D
 
 @export_category("Ataque")
 @export var attack_range: float = 3.0
-@export var attack_cooldown: float = 1.5
-@export var attack_damage: float = 12.0
+@export var attack_cooldown: float = 2.0
+@export var attack_damage: float = 8.0
 @export var attack_hit_delay: float = 1.0
 
 
