@@ -267,6 +267,16 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 	_save_hero_equipment(resolved_id)
 	return true
 
+func get_enchantment_cost(equipment_item: ItemInstance) -> int:
+	if not is_instance_valid(equipment_item):
+		return 0
+	var installed_count := equipment_item.installed_enchantments.size()
+	if installed_count >= equipment_item.enchantment_slots or installed_count >= 2:
+		return 0
+	var multiplier := 5 if installed_count == 0 else 10
+	return maxi(equipment_item.item_value, 0) * multiplier
+
+
 func install_gem(
 	equipment_item: ItemInstance,
 	gem_item: ItemInstance,
@@ -300,6 +310,16 @@ func install_gem(
 
 	var is_in_inventory := equipment.has(equipment_item)
 	if not is_equipped and not is_in_inventory:
+		return false
+
+	var game_manager = get_node_or_null("/root/GameManager")
+	if not is_instance_valid(game_manager):
+		push_error("Inventory: GameManager não encontrado; encantamento cancelado.")
+		return false
+
+	var enchantment_cost := get_enchantment_cost(equipment_item)
+	if enchantment_cost <= 0 or not game_manager.spend_gold(enchantment_cost):
+		print("Ouro insuficiente para encantar este equipamento. Custo: ", enchantment_cost)
 		return false
 
 	equipment.remove_at(gem_index)
