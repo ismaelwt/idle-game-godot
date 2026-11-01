@@ -32,9 +32,15 @@ func _ready() -> void:
 	preview_gem_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	preview_gem_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	preview_button.add_child(preview_gem_icon)
+	if not GameManager.gold_changed.is_connected(_on_gold_changed):
+		GameManager.gold_changed.connect(_on_gold_changed)
 	var scene := get_tree().current_scene
 	if scene != null:
 		item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
+	_refresh_ui()
+
+
+func _on_gold_changed(_new_amount: int) -> void:
 	_refresh_ui()
 
 
@@ -113,10 +119,14 @@ func _refresh_ui() -> void:
 			selected_equipment.enchantment_slots - selected_equipment.installed_enchantments.size()
 		]
 	else:
-		description_label.text = "%s\nGema: %s" % [
+		description_label.text = "%s\nGema: %s\nEfeito: %s\nCusto: %d ouro" % [
 			selected_equipment.item_base.item_name,
-			selected_gem.item_base.item_name
+			selected_gem.item_base.item_name,
+			_get_gem_effect_description(selected_gem),
+			enchantment_cost
 		]
+		if not has_gold:
+			description_label.text += "\nOuro insuficiente."
 
 
 func _set_slot_icon(button: TextureButton, item: ItemInstance) -> void:
