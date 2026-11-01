@@ -106,7 +106,9 @@ func _refresh_ui() -> void:
 	if valid_selection:
 		enchantment_cost = inventory.get_enchantment_cost(selected_equipment)
 	var game_manager = get_node_or_null("/root/GameManager")
-	var has_gold := is_instance_valid(game_manager) and game_manager.has_enough_gold(enchantment_cost)
+	var has_gold: bool = false
+	if is_instance_valid(game_manager):
+		has_gold = bool(game_manager.has_enough_gold(enchantment_cost))
 	enchant_button.disabled = not valid_selection or not has_gold
 
 	if selected_equipment == null and selected_gem == null:
