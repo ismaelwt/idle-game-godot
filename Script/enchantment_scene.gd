@@ -12,6 +12,7 @@ var inventory: Inventory
 var selected_equipment: ItemInstance
 var selected_gem: ItemInstance
 var item_tooltip: ItemTooltip
+var preview_gem_icon: TextureRect
 
 
 func _ready() -> void:
@@ -23,6 +24,14 @@ func _ready() -> void:
 	equipment_button.mouse_exited.connect(_on_slot_mouse_exited)
 	gem_button.mouse_exited.connect(_on_slot_mouse_exited)
 	preview_button.mouse_exited.connect(_on_slot_mouse_exited)
+	preview_gem_icon = TextureRect.new()
+	preview_gem_icon.custom_minimum_size = Vector2(18, 18)
+	preview_gem_icon.size = Vector2(18, 18)
+	preview_gem_icon.position = Vector2(29, 29)
+	preview_gem_icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	preview_gem_icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	preview_gem_icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	preview_button.add_child(preview_gem_icon)
 	var scene := get_tree().current_scene
 	if scene != null:
 		item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
@@ -64,6 +73,8 @@ func _refresh_ui() -> void:
 	_set_slot_icon(equipment_button, selected_equipment)
 	_set_slot_icon(gem_button, selected_gem)
 	_set_slot_icon(preview_button, selected_equipment)
+	preview_gem_icon.texture = selected_gem.item_base.icon if selected_gem != null and selected_gem.item_base != null and selected_equipment != null else null
+	preview_gem_icon.visible = preview_gem_icon.texture != null
 	gem_effect_label.text = _get_gem_effect_description(selected_gem) if selected_gem != null else ""
 	gem_effect_label.visible = selected_gem != null
 	if selected_gem != null and selected_gem.item_base != null:
@@ -85,7 +96,12 @@ func _refresh_ui() -> void:
 		)
 	)
 
-	enchant_button.disabled = not valid_selection
+	var enchantment_cost := 0
+	if valid_selection:
+		enchantment_cost = inventory.get_enchantment_cost(selected_equipment)
+	var game_manager = get_node_or_null("/root/GameManager")
+	var has_gold := is_instance_valid(game_manager) and game_manager.has_enough_gold(enchantment_cost)
+	enchant_button.disabled = not valid_selection or not has_gold
 
 	if selected_equipment == null and selected_gem == null:
 		description_label.text = "Selecione um equipamento e uma gema no inventário."
@@ -125,7 +141,10 @@ func _show_item_tooltip(item: ItemInstance) -> void:
 
 
 func _on_equipment_slot_mouse_entered() -> void:
-	_show_item_tooltip(selected_equipment)
+	if selected_equipment != null and selected_gem != null and is_instance_valid(item_tooltip):
+		item_tooltip.show_enchantment_preview(selected_equipment, selected_gem)
+	else:
+		_show_item_tooltip(selected_equipment)
 
 
 func _on_gem_slot_mouse_entered() -> void:
