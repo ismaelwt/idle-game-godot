@@ -138,6 +138,16 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 	_update_position()
 
 
+func show_enchantment_preview(item: ItemInstance, preview_gem: ItemInstance) -> void:
+	if item == null or item.item_base == null or preview_gem == null or preview_gem.item_base == null:
+		hide_tooltip()
+		return
+	var preview_item := item.duplicate(true) as ItemInstance
+	preview_item.installed_enchantments = item.installed_enchantments.duplicate()
+	preview_item.installed_enchantments.append(preview_gem)
+	show_item(preview_item)
+
+
 func _fit_tooltip_to_content() -> void:
 	var margin_container := $MarginContainer as MarginContainer
 	var vbox := $MarginContainer/VBoxContainer as VBoxContainer
