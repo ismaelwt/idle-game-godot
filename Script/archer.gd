@@ -169,7 +169,7 @@ func basic_attack(target: Node3D) -> void:
 		+ character_stats.get_physical_damage_bonus()
 		+ character_stats.get_weapon_damage_bonus()
 	)
-	var is_critical := character_stats.is_critical_hit()
+	var is_critical: bool = character_stats.is_critical_hit()
 	var final_damage := raw_damage
 	if is_critical:
 		final_damage *= character_stats.get_critical_damage_multiplier()
