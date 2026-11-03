@@ -40,6 +40,7 @@ var item_tooltip: ItemTooltip
 
 @onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
 @onready var mage_change_button: TextureButton = $CenterContainer/PanelContainer/Background/MageAvatar
+@onready var archer_change_button: TextureButton = $CenterContainer/PanelContainer/Background/ArcherAvatar
 
 @onready var knight_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/KnightAvatar/SelectedPlayer
 @onready var mage_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/MageAvatar/SelectedPlayer
@@ -167,6 +168,7 @@ func _ready() -> void:
 	enchantment_ui.hide()
 	knight_change_button.pressed.connect(_on_knight_change_pressed)
 	mage_change_button.pressed.connect(_on_mage_change_pressed)
+	archer_change_button.pressed.connect(_on_archer_change_pressed)
 	chest_button.pressed.connect(_on_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
@@ -1049,6 +1051,10 @@ func _on_mage_change_pressed() -> void:
 	_select_hero_by_id("mage")
 
 
+func _on_archer_change_pressed() -> void:
+	_select_hero_by_id("archer")
+
+
 func _select_hero_by_id(hero_id: String) -> void:
 	var hero := _find_hero_by_id(hero_id)
 	if not is_instance_valid(hero):
@@ -1103,40 +1109,27 @@ func _get_hero_stats(hero: Node) -> Node:
 
 
 func _refresh_hero_switch_buttons() -> void:
-	if not is_instance_valid(knight_change_button):
+	if not is_instance_valid(knight_change_button) or not is_instance_valid(mage_change_button):
 		return
 
-	if not is_instance_valid(mage_change_button):
-		return
-
-	# Identifica o herói atualmente exibido no Status.
 	var current_hero_id := ""
 	if is_instance_valid(character_stats):
-		current_hero_id = str(
-			character_stats.get("hero_id")
-		).strip_edges().to_lower()
+		current_hero_id = str(character_stats.get("hero_id")).strip_edges().to_lower()
 
-	# Mantém visível o herói atual e mostra o outro somente quando
-	# ele estiver disponível na equipe.
-	var knight_available := (
-		current_hero_id == "knight"
-		or is_instance_valid(_find_hero_by_id("knight"))
-	)
-	var mage_available := (
-		current_hero_id == "mage"
-		or is_instance_valid(_find_hero_by_id("mage"))
-	)
+	var knight_available := current_hero_id == "knight" or is_instance_valid(_find_hero_by_id("knight"))
+	var mage_available := current_hero_id == "mage" or is_instance_valid(_find_hero_by_id("mage"))
+	var archer_available := current_hero_id == "archer" or is_instance_valid(_find_hero_by_id("archer"))
 
 	knight_change_button.visible = knight_available
 	mage_change_button.visible = mage_available
+	archer_change_button.visible = archer_available
 
-	# O herói atual fica marcado e seu botão não precisa ser clicável.
 	knight_change_button.disabled = current_hero_id == "knight"
 	mage_change_button.disabled = current_hero_id == "mage"
+	archer_change_button.disabled = current_hero_id == "archer"
 
 	if is_instance_valid(knight_selected_icon):
 		knight_selected_icon.visible = current_hero_id == "knight"
-
 	if is_instance_valid(mage_selected_icon):
 		mage_selected_icon.visible = current_hero_id == "mage"
 
