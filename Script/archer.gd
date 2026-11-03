@@ -38,6 +38,7 @@ var current_attack_target: Node3D = null
 
 
 func _ready() -> void:
+	set_meta("hero_id", "archer")
 	SaveManager.load_character(
 		character_stats,
 		character_stats.inventory,
