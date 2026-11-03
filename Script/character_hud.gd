@@ -278,6 +278,11 @@ func _update_selected_hero() -> void:
 func _on_skill_tree_button_pressed() -> void:
 	_update_selected_hero()
 
+	if is_instance_valid(selected_hero):
+		var selected_stats := _get_character_stats(selected_hero)
+		if is_instance_valid(selected_stats) and str(selected_stats.get("hero_id")) == "archer":
+			return
+
 	if not is_instance_valid(selected_hero):
 		push_warning("Não foi possível encontrar o herói principal para abrir a Skill Tree.")
 		return
