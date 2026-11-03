@@ -180,8 +180,6 @@ func basic_attack(target: Node3D) -> void:
 	projectile.global_rotation = arrow_spawn.global_rotation
 	projectile.setup(target, self, final_damage, is_critical)
 
-	var target_health := maxf(float(target.get("health")), 0.0)
-	character_stats.apply_on_hit_effects(minf(final_damage, target_health))
 	_finish_attack()
 
 
