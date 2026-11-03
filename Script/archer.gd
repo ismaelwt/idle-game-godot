@@ -98,10 +98,9 @@ func _process(delta: float) -> void:
 		play_animation("archer_walk")
 		return
 
-	if get_horizontal_distance_to(target) <= attack_range and attack_timer <= 0.0:
-		basic_attack(target)
-	else:
-		play_animation("archer_idle")
+	# O CombatController é o único responsável por iniciar ataques.
+	# Aqui o Archer apenas mantém a animação de espera quando está no alcance.
+	play_animation("archer_idle")
 
 
 func find_nearest_enemy_in_detection_range() -> Node3D:
