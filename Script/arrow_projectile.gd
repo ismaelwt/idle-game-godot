@@ -125,7 +125,7 @@ func apply_target_damage() -> void:
 		return
 
 	if target.has_method("take_damage"):
-		var shooter_stats = shooter.get("character_stats") if is_instance_valid(shooter) else null
+		var shooter_stats = shooter.get_node_or_null("CharacterStats") if is_instance_valid(shooter) else null
 		if is_instance_valid(shooter_stats):
 			var target_health := maxf(float(target.get("health")), 0.0)
 			shooter_stats.apply_on_hit_effects(minf(damage, target_health))
