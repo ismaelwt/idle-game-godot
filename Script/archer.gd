@@ -150,7 +150,7 @@ func basic_attack(target: Node3D) -> void:
 	attack_id += 1
 	var current_id := attack_id
 
-	var interval_multiplier := character_stats.get_basic_attack_interval_multiplier()
+	var interval_multiplier: float = character_stats.get_basic_attack_interval_multiplier()
 	attack_timer = attack_cooldown * interval_multiplier
 
 	look_at_target(target)
