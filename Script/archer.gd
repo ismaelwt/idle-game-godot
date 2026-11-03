@@ -213,11 +213,25 @@ func look_at_target(target: Node3D) -> void:
 func take_damage(damage: float, damage_type: String = "physical") -> void:
 	if dead:
 		return
+
 	var final_damage: float = character_stats.calculate_damage_after_defense(damage, damage_type)
-	health = maxf(health - final_damage, 0.0)
-	show_damage(final_damage)
+	health -= final_damage
+
 	flash_hit()
+
+	print(
+		"Archer recebeu ",
+		damage,
+		" de dano. Vida: ",
+		health,
+		"/",
+		max_health
+	)
+
+	show_damage(final_damage)
+
 	if health <= 0.0:
+		health = 0.0
 		die()
 
 
@@ -285,51 +299,46 @@ func show_damage(damage: float) -> void:
 	while elapsed < damage_duration and is_instance_valid(label) and is_inside_tree():
 		elapsed += get_process_delta_time()
 		var progress := clampf(elapsed / damage_duration, 0.0, 1.0)
-		label.global_position = start_position + Vector3(0.0, sin(PI * progress) * 1.2, 0.0)
-		await get_tree().process_frame
-	if is_instance_valid(label):
-		label.queue_free()
+		label.global_position = start_position + Vector3(0.0, sin(PI * progress) * 1func flash_hit() -> void:
+	var meshes = find_children(
+		"*",
+		"MeshInstance3D",
+		true,
+		false
+	)
 
-
-func flash_hit() -> void:
-	var affected_surfaces: Array[Dictionary] = []
-
-	# Aplica o flash em todos os MeshInstance3D do modelo, incluindo
-	# os meshes que são filhos do Skeleton, sem esperar entre cada peça.
-	for mesh in find_children("*", "MeshInstance3D", true, false):
-		if not is_instance_valid(mesh) or mesh.mesh == null:
-			continue
-
-		for surface_index in range(mesh.mesh.get_surface_count()):
-			var original_override: Material = mesh.get_surface_override_material(surface_index)
-			var source_material: Material = original_override
-
-			if source_material == null:
-				source_material = mesh.get_active_material(surface_index)
-
-			if not source_material is BaseMaterial3D:
+	for _i in range(2):
+		for mesh in meshes:
+			if not is_instance_valid(mesh):
 				continue
 
-			var flash_material := source_material.duplicate() as BaseMaterial3D
+			if is_instance_valid(level_up_effect):
+				if mesh == level_up_effect or level_up_effect.is_ancestor_of(mesh):
+					continue
+
+			var material = mesh.get_active_material(0)
+
+			if material == null or material is ShaderMaterial:
+				continue
+
+			var flash_material = material.duplicate()
 			flash_material.albedo_color = Color(1.0, 0.03, 0.03, 1.0)
 			flash_material.emission_enabled = true
-			flash_material.emission = Color.RED
-			flash_material.emission_energy_multiplier = 2.0
+			flash_material.emission = Color(1.0, 0.0, 0.0, 1.0)
+			flash_material.emission_energy_multiplier = 3.0
 
-			mesh.set_surface_override_material(surface_index, flash_material)
-			affected_surfaces.append({
-				"mesh": mesh,
-				"surface": surface_index,
-				"original_override": original_override
-			})
+			mesh.material_override = flash_material
 
-	# Todos os meshes piscam juntos e recuperam seus materiais originais.
-	await get_tree().create_timer(0.08).timeout
+		await get_tree().create_timer(0.08).timeout
 
-	for entry in affected_surfaces:
-		var mesh: MeshInstance3D = entry["mesh"]
-		if is_instance_valid(mesh):
-			mesh.set_surface_override_material(
-				int(entry["surface"]),
-				entry["original_override"]
-			)
+		for mesh in meshes:
+			if not is_instance_valid(mesh):
+				continue
+
+			if is_instance_valid(level_up_effect):
+				if mesh == level_up_effect or level_up_effect.is_ancestor_of(mesh):
+					continue
+
+			mesh.material_override = null
+
+		await get_tree().create_timer(0.05).timeout
