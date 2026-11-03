@@ -174,6 +174,10 @@ func _create_archer_ui() -> void:
 	if is_instance_valid(skill_bar):
 		skill_bar.hide()
 
+	var mana_frame := archer_ui.get_node_or_null("ManaFrame")
+	if is_instance_valid(mana_frame):
+		mana_frame.hide()
+
 	var avatar := archer_ui.get_node_or_null("Avatar") as TextureRect
 	if is_instance_valid(avatar):
 		avatar.texture = load("res://UI/UISprites/Archer_Avatar.png")
