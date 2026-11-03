@@ -179,8 +179,8 @@ func basic_attack(target: Node3D) -> void:
 	projectile.global_position = arrow_spawn.global_position
 	projectile.global_rotation = arrow_spawn.global_rotation
 	projectile.setup(target, self, final_damage, is_critical)
-
-	_finish_attack()
+	# Mantém attacking=true até a animação de disparo terminar,
+	# como no EnemyArcher. O sinal animation_finished libera o próximo ataque.
 
 
 func _finish_attack() -> void:
