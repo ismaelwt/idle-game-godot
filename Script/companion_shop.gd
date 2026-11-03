@@ -63,7 +63,7 @@ func _setup_hero_column(
 	price: int
 ) -> void:
 	title_label.text = display_name
-	description_label.text = "Um companheiro que poderá acompanhar seu herói.\nPreço: %d ouro" % price
+	#description_label.text = "Um companheiro que poderá acompanhar seu herói.\nPreço: %d ouro" % price
 	buy_button.pressed.connect(_on_buy_pressed.bind(hero_id))
 	equip_button.pressed.connect(_on_equip_pressed.bind(hero_id))
 	unequip_button.pressed.connect(_on_unequip_pressed.bind(hero_id))
@@ -96,7 +96,8 @@ func _refresh_hero_column(
 		buy_button.visible = false
 		equip_button.visible = false
 		unequip_button.visible = false
-		status_label.text = "Seu personagem principal."
+		gold_label.visible = false
+		status_label.text = "Escolhido ✓"
 		return
 
 	buy_button.visible = not is_owned
@@ -107,15 +108,15 @@ func _refresh_hero_column(
 	unequip_button.disabled = false
 
 	if is_equipped:
-		status_label.text = "Este companion está equipado."
+		status_label.text = "Equipado ✓"
 	elif is_owned:
-		status_label.text = "Companion adquirido. Você pode equipá-lo."
+		status_label.text = "Adquirido ✓"
 	elif price <= 0:
 		status_label.text = "Preço indisponível."
 	elif GameManager.gold < price:
-		status_label.text = "Você ainda não tem ouro suficiente."
+		status_label.text = "Sem ouro"
 	else:
-		status_label.text = "Disponível para compra."
+		status_label.text = "Disponível"
 
 
 func _on_buy_pressed(hero_id: String) -> void:
