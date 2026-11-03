@@ -13,6 +13,12 @@ var shop_panel: Control
 var selected_hero: Node3D = null
 var mage_hero: Node3D = null
 var knight_hero: Node3D = null
+var archer_hero: Node3D = null
+var archer_ui: Control = null
+var archer_health_bar: ProgressBar = null
+var archer_mana_bar: ProgressBar = null
+var archer_level_label: Label = null
+var archer_xp_bar: ProgressBar = null
 var party_manager: PartyManager = null
 
 # VIDA E MANA
@@ -44,6 +50,7 @@ var party_manager: PartyManager = null
 @onready var shop_button: TextureButton = $CompanionShop
 
 func _ready() -> void:
+	_create_archer_ui()
 	shop_button.pressed.connect(_on_shop_button_pressed)
 	map_button.pressed.connect(_on_map_button_pressed)
 	skill_tree_button.pressed.connect(_on_skill_tree_button_pressed)
@@ -72,11 +79,13 @@ func _process(_delta: float) -> void:
 	# Atualiza a equipe antes de passar referências antigas para funções tipadas.
 	var mage_was_assigned := mage_hero != null
 	var knight_was_assigned := knight_hero != null
+	var archer_was_assigned := archer_hero != null
 	var selected_hero_was_assigned := selected_hero != null
 
 	if (
 		(mage_was_assigned and not is_instance_valid(mage_hero))
 		or (knight_was_assigned and not is_instance_valid(knight_hero))
+		or (archer_was_assigned and not is_instance_valid(archer_hero))
 		or (selected_hero_was_assigned and not is_instance_valid(selected_hero))
 	):
 		_refresh_heroes()
@@ -91,6 +100,11 @@ func _process(_delta: float) -> void:
 		_update_hero_ui(knight_hero, "knight")
 	else:
 		$VBoxContainer/KnightUI.visible = false
+
+	if is_instance_valid(archer_hero):
+		_update_hero_ui(archer_hero, "archer")
+	elif is_instance_valid(archer_ui):
+		archer_ui.visible = false
 
 	# Os pontos de habilidade e o painel de status pertencem ao herói principal.
 	_update_selected_hero()
@@ -117,6 +131,7 @@ func _refresh_heroes() -> void:
 
 	var new_mage: Node3D = null
 	var new_knight: Node3D = null
+	var new_archer: Node3D = null
 
 	for hero in manager.get_heroes():
 		if not is_instance_valid(hero):
@@ -133,15 +148,41 @@ func _refresh_heroes() -> void:
 				new_mage = hero
 			"knight":
 				new_knight = hero
+			"archer":
+				new_archer = hero
 
 	mage_hero = new_mage
 	knight_hero = new_knight
+	archer_hero = new_archer
 
 	$VBoxContainer/MageUI.visible = is_instance_valid(mage_hero)
 	$VBoxContainer/KnightUI.visible = is_instance_valid(knight_hero)
+	if is_instance_valid(archer_ui):
+		archer_ui.visible = is_instance_valid(archer_hero)
 
 	# Mantém selected_hero como referência ao herói principal para os botões existentes.
 	_update_selected_hero()
+
+
+func _create_archer_ui() -> void:
+	var template: Control = $VBoxContainer/MageUI
+	archer_ui = template.duplicate() as Control
+	archer_ui.name = "ArcherUI"
+	$VBoxContainer.add_child(archer_ui)
+
+	var skill_bar := archer_ui.get_node_or_null("SkillBar")
+	if is_instance_valid(skill_bar):
+		skill_bar.hide()
+
+	var avatar := archer_ui.get_node_or_null("Avatar") as TextureRect
+	if is_instance_valid(avatar):
+		avatar.texture = load("res://UI/UISprites/Archer_Avatar.png")
+
+	archer_health_bar = archer_ui.get_node("HealthFrame/HealthProgressBar") as ProgressBar
+	archer_mana_bar = archer_ui.get_node("ManaFrame/ManaProgressBar") as ProgressBar
+	archer_level_label = archer_ui.get_node("LevelContainer/LevelLabel") as Label
+	archer_xp_bar = archer_ui.get_node("XpBarControl/XPBar") as ProgressBar
+	archer_ui.hide()
 
 
 func _get_character_stats(hero: Node) -> Node:
@@ -184,6 +225,11 @@ func _update_hero_ui(hero: Node3D, hero_id: String) -> void:
 			mana_bar = knight_mana_bar
 			level_label = knight_level_label
 			xp_bar = knight_xp_bar
+		"archer":
+			health_bar = archer_health_bar
+			mana_bar = archer_mana_bar
+			level_label = archer_level_label
+			xp_bar = archer_xp_bar
 		_:
 			return
 
