@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://celjcdxc6pbya"]
+[gd_scene load_steps=14 format=3 uid="uid://celjcdxc6pbya"]
 
 [ext_resource type="Script" uid="uid://ceh52kk748qh" path="res://Script/companion_shop.gd" id="1_dgo3d"]
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="2_f2w83"]
@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://f0kjosgcdrlw" path="res://UI/UISprites/Icon_button_Equip_buyed_item.png" id="6_dxfu2"]
 [ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="7_dxfu2"]
 [ext_resource type="Texture2D" uid="uid://gh1vol8sojgs" path="res://UI/UISprites/Icon_button__uncheck.png" id="7_yqpfo"]
+[ext_resource type="Texture2D" uid="uid://cv7g8frp1rykp" path="res://UI/UISprites/Archer_Avatar.png" id="9_jkhgm"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dgo3d"]
 
@@ -57,78 +58,171 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_2yyh0")
 
-[node name="Control" type="Control" parent="PanelContainer/Control"]
-custom_minimum_size = Vector2(130, 150)
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/Control"]
 layout_mode = 1
-anchors_preset = 4
+anchors_preset = 8
+anchor_left = 0.5
 anchor_top = 0.5
+anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 33.0
-offset_top = -117.0
-offset_right = 163.0
-offset_bottom = 33.0
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Control/Control"]
-custom_minimum_size = Vector2(130, 150)
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.03846154
-anchor_top = -0.16
-anchor_right = 1.0384616
-anchor_bottom = 1.1733333
+offset_left = -182.0
+offset_top = -133.0
+offset_right = 216.0
+offset_bottom = 134.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = -10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/Control/HBoxContainer"]
+layout_mode = 2
 theme_override_constants/separation = 4
 metadata/_edit_use_anchors_ = true
 
-[node name="AvatarMage" type="TextureRect" parent="PanelContainer/Control/Control/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-texture = ExtResource("3_1awpb")
-stretch_mode = 3
-
-[node name="AvatarKnight" type="TextureRect" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="AvatarKnight" type="TextureRect" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 texture = ExtResource("4_jkhgm")
 stretch_mode = 3
 
-[node name="TitleLabel" type="Label" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1qwha")
 horizontal_alignment = 1
 
-[node name="GoldLabel" type="Label" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="GoldLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1qwha")
 horizontal_alignment = 1
 
-[node name="DescriptionLabel" type="Label" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(130, 0)
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1qwha")
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="StatusLabel" type="Label" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 label_settings = SubResource("LabelSettings_1qwha")
 horizontal_alignment = 1
 
-[node name="BuyButton" type="TextureButton" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="BuyButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("5_dxfu2")
 stretch_mode = 5
 
-[node name="EquipButton" type="TextureButton" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="EquipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("6_dxfu2")
 stretch_mode = 5
 
-[node name="UnequipButton" type="TextureButton" parent="PanelContainer/Control/Control/VBoxContainer"]
+[node name="UnequipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("7_yqpfo")
+stretch_mode = 5
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PanelContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(130, 150)
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="AvatarMage" type="TextureRect" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_1awpb")
+stretch_mode = 3
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="BuyButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("5_dxfu2")
+stretch_mode = 5
+
+[node name="EquipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("6_dxfu2")
+stretch_mode = 5
+
+[node name="UnequipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("7_yqpfo")
+stretch_mode = 5
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="PanelContainer/Control/HBoxContainer"]
+custom_minimum_size = Vector2(130, 150)
+layout_mode = 2
+theme_override_constants/separation = 4
+metadata/_edit_use_anchors_ = true
+
+[node name="AvatarArcher" type="TextureRect" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("9_jkhgm")
+stretch_mode = 3
+
+[node name="TitleLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="GoldLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StatusLabel" type="Label" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+label_settings = SubResource("LabelSettings_1qwha")
+horizontal_alignment = 1
+
+[node name="BuyButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("5_dxfu2")
+stretch_mode = 5
+
+[node name="EquipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+size_flags_vertical = 4
+texture_normal = ExtResource("6_dxfu2")
+stretch_mode = 5
+
+[node name="UnequipButton" type="TextureButton" parent="PanelContainer/Control/HBoxContainer/VBoxContainer3"]
 layout_mode = 2
 size_flags_vertical = 4
 texture_normal = ExtResource("7_yqpfo")

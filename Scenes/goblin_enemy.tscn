@@ -251,6 +251,7 @@ damage_per_level = 0.45
 xp_per_level = 0.8
 gold_per_level = 0.25
 damage_color = Color(1, 1, 1, 1)
+attack_cooldown = 2.0
 
 [node name="Skeleton" parent="." index="0"]
 bones/0/position = Vector3(0.0009858042, 0.6016142, -0.008564903)

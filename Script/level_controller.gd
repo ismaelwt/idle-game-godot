@@ -44,7 +44,7 @@ var automatic_retry: bool = false
 
 
 func _get_selected_hero() -> Node3D:
-	var selected_id := "mage"
+	var selected_id := "archer"
 	if is_instance_valid(CharacterSelectionData):
 		selected_id = CharacterSelectionData.get_selected_character_id()
 

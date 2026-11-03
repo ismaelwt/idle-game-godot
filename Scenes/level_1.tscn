@@ -400,12 +400,18 @@ spawn_spacing = 2.0
 x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
-max_level_offset = 0
-max_enemy_level_limit = 15
-boss_level_limit = 12
+max_level_offset = 260
+max_enemy_level_limit = 260
+boss_level_limit = 292
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_w8vhy")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.9682617, 0, -27.561035)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
+attack_range = 8.0
+attack_damage = 25.0
+animation_blend = 0.15
+damage_font_size = 2000
+damage_duration = 1.0
+damage_color = Color(0.98195344, 0.982595, 0.9816391, 1)
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
@@ -1266,26 +1272,24 @@ texture = ExtResource("54_tohvi")
 expand_mode = 1
 
 [node name="ArcherAvatar" type="TextureButton" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background"]
-visible = false
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 69.0
-offset_top = -46.0
-offset_right = 119.0
-offset_bottom = 4.0
+offset_left = 53.0
+offset_top = -34.0
+offset_right = 103.0
+offset_bottom = 16.0
 grow_horizontal = 2
 texture_normal = ExtResource("56_tohvi")
 ignore_texture_size = true
 stretch_mode = 0
 
 [node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Background/ArcherAvatar"]
-visible = false
 layout_mode = 0
 offset_left = -15.0
-offset_top = 18.0
-offset_bottom = 33.0
+offset_top = 17.0
+offset_bottom = 32.0
 texture = ExtResource("54_tohvi")
 expand_mode = 1
 

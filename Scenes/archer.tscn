@@ -21,9 +21,10 @@ _data = {
 [node name="Archer" instance=ExtResource("1_22a32")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
 script = ExtResource("2_qp52x")
+attack_cooldown = 2.0
 
 [node name="metarig" parent="." index="0"]
-transform = Transform3D(-18.387053, 878.89484, -38.811726, -19.1746, 38.410614, 878.8956, 879.5425, 19.210917, 18.34913, 0.8227978, -0.84428835, -0.18219925)
+transform = Transform3D(-18.387054, 878.89484, -38.811726, -19.174603, 38.410614, 878.8956, 879.54254, 19.210917, 18.34913, 0.8227978, -0.84428835, -0.18219925)
 
 [node name="Skeleton" parent="metarig" index="0"]
 bones/1/rotation = Quaternion(-0.01595872, -0.028422983, -0.05975701, 0.9976806)
@@ -57,6 +58,12 @@ bones/49/rotation = Quaternion(0.27969205, -0.08907345, -0.0029117276, 0.9559445
 bones/50/rotation = Quaternion(-0.5127146, -0.057027906, -0.1813651, 0.8372445)
 bones/51/rotation = Quaternion(-3.4484378e-06, 0.9639027, -0.2662547, -9.814787e-07)
 
+[node name="Cube_003" parent="metarig/Skeleton" index="8"]
+visible = false
+
+[node name="Dagger" parent="metarig/Skeleton" index="9"]
+visible = false
+
 [node name="BoneAttachment3D" type="BoneAttachment3D" parent="metarig/Skeleton" index="21"]
 transform = Transform3D(-0.96070075, 0.27175504, -0.056589767, -0.26383775, -0.9573074, -0.118116334, -0.08627248, -0.09854399, 0.9913861, 0.010618757, -0.0015087107, 0.016488042)
 bone_name = "hand.L.001"
@@ -70,13 +77,14 @@ libraries = {
 &"archer": SubResource("AnimationLibrary_qp52x")
 }
 
-
 [node name="CharacterStats" type="Node" parent="." index="2"]
 script = ExtResource("6_stats")
 hero_id = "archer"
 hero_class = "Archer"
 
 [node name="ArrowSpawn" type="Marker3D" parent="." index="3"]
-position = Vector3(0, 11.5, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7144203, 13.505005, 12.338104)
 
 [node name="LevelUpEffect" parent="." index="4" instance=ExtResource("7_level")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+visible = false
