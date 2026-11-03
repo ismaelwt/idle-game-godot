@@ -423,7 +423,11 @@ func process_skill_rotation(
 	var skill_count: int = skill_ids.size()
 
 	if skill_count == 0:
-		if is_enemy_alive(target) and hero.has_method("basic_attack"):
+		if (
+			is_enemy_alive(target)
+			and hero.has_method("basic_attack")
+			and can_attempt_basic_attack(hero, target)
+		):
 			hero.call("basic_attack", target)
 		return
 
