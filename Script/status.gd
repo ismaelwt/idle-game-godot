@@ -1197,6 +1197,8 @@ func _get_valid_active_hero_id() -> String:
 func _on_skill_tree_button_pressed() -> void:
 	if not is_instance_valid(active_hero):
 		return
+	if is_instance_valid(character_stats) and str(character_stats.get("hero_id")) == "archer":
+		return
 
 	if not is_instance_valid(skill_tree):
 		return
