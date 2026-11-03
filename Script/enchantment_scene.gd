@@ -82,7 +82,8 @@ func _refresh_ui() -> void:
 	preview_gem_icon.texture = selected_gem.item_base.icon if selected_gem != null and selected_gem.item_base != null and selected_equipment != null else null
 	preview_gem_icon.visible = preview_gem_icon.texture != null
 	gem_effect_label.text = _get_gem_effect_description(selected_gem) if selected_gem != null else ""
-	gem_effect_label.visible = selected_gem != null
+	# O efeito já aparece no texto principal; manter este label oculto evita sobrepor o custo.
+	gem_effect_label.visible = false
 	if selected_gem != null and selected_gem.item_base != null:
 		gem_effect_label.add_theme_color_override("font_color", selected_gem.item_base.gem_color)
 
