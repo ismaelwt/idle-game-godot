@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://3frkx64fx3r2"]
+[gd_scene load_steps=11 format=3 uid="uid://3frkx64fx3r2"]
 
 [ext_resource type="PackedScene" uid="uid://s711lshtg0if" path="res://Assets/Archer/Archer.fbx" id="1_22a32"]
 [ext_resource type="Animation" uid="uid://gfqd7vodvd13" path="res://Anim/archer/archer_attack.res" id="2_i11xr"]
@@ -7,6 +7,8 @@
 [ext_resource type="Animation" uid="uid://6e8fhd4k78nt" path="res://Anim/archer/archer_die.res" id="3_lxifh"]
 [ext_resource type="Animation" uid="uid://dbkxag5gvwh6e" path="res://Anim/archer/archer_idle.res" id="4_qp52x"]
 [ext_resource type="Animation" uid="uid://daat5p3ci8fv4" path="res://Anim/archer/archer_walk.res" id="5_fhmuk"]
+[ext_resource type="Script" uid="uid://j0arlcl8j7oe" path="res://Script/character_stats.gd" id="6_stats"]
+[ext_resource type="PackedScene" uid="uid://b8fvofvx52gao" path="res://Scenes/level_up_effect.tscn" id="7_level"]
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qp52x"]
 _data = {
@@ -67,3 +69,14 @@ transform = Transform3D(-0.0028246704, 0.00028080994, -0.0009707641, 0.001004980
 libraries = {
 &"archer": SubResource("AnimationLibrary_qp52x")
 }
+
+
+[node name="CharacterStats" type="Node" parent="." index="2"]
+script = ExtResource("6_stats")
+hero_id = "archer"
+hero_class = "Archer"
+
+[node name="ArrowSpawn" type="Marker3D" parent="." index="3"]
+position = Vector3(0, 1.15, 0)
+
+[node name="LevelUpEffect" parent="." index="4" instance=ExtResource("7_level")]
