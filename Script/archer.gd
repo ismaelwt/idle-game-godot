@@ -213,7 +213,7 @@ func look_at_target(target: Node3D) -> void:
 func take_damage(damage: float, damage_type: String = "physical") -> void:
 	if dead:
 		return
-	var final_damage := character_stats.calculate_damage_after_defense(damage, damage_type)
+	var final_damage: float = character_stats.calculate_damage_after_defense(damage, damage_type)
 	health = maxf(health - final_damage, 0.0)
 	show_damage(final_damage)
 	flash_hit()
