@@ -22,6 +22,10 @@ const ITEMS: Array[ItemBase] = [
 	preload("res://Items/Knight/plate_helmet.tres"),
 	preload("res://Items/Knight/plate_legs.tres"),
 	
+	preload("res://Items/Archer/crystal_bow.tres"),
+	preload("res://Items/Archer/steel_bow.tres"),
+	preload("res://Items/Archer/golden_bow.tres"),
+	
 	preload("res://Items/Accessories/golden_ring.tres"),
 	preload("res://Items/Accessories/silver_necklace.tres"),
 	preload("res://Items/Accessories/leather_belt.tres"),

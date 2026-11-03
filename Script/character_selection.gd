@@ -3,10 +3,12 @@ extends Node3D
 
 @onready var mage: Node3D = $SubViewportContainer/SubViewport/Mage
 @onready var knight: Node3D = $SubViewportContainer/SubViewport/Knight
+@onready var archer: Node3D = $SubViewportContainer/SubViewport/Archer
 @onready var spotlight: SpotLight3D = $SubViewportContainer/SubViewport/World/SelectionSpotlight
 
 @onready var spotlight_position1: Node3D = $SubViewportContainer/SubViewport/World/SpotLightPosition1
 @onready var spotlight_position2: Node3D = $SubViewportContainer/SubViewport/World/SpotLightPosition2
+@onready var spotlight_position3: Node3D = $SubViewportContainer/SubViewport/World/SpotLightPosition3
 
 @onready var next: TextureButton = $SubViewportContainer/CanvasLayer/Panel/Next
 @onready var previous: TextureButton = $SubViewportContainer/CanvasLayer/Panel/Previous
@@ -17,7 +19,7 @@ var selected_index: int = 0
 
 
 func _ready() -> void:
-	characters = [knight, mage]
+	characters = [knight, archer, mage]
 	next.pressed.connect(select_next)
 	previous.pressed.connect(select_previous)
 	start_button.pressed.connect(on_started_pressed)
@@ -53,7 +55,9 @@ func update_selection() -> void:
 
 	if selected_character == mage:
 		spotlight.global_position = spotlight_position2.global_position
-	else:
+	elif selected_character == archer:
+		spotlight.global_position = spotlight_position3.global_position
+	else: 
 		spotlight.global_position = spotlight_position1.global_position
 
 	print("Personagem selecionado: ", selected_character.name)

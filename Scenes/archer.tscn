@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://3frkx64fx3r2"]
+
+[ext_resource type="PackedScene" uid="uid://s711lshtg0if" path="res://Assets/Archer/Archer.fbx" id="1_22a32"]
+[ext_resource type="Animation" uid="uid://gfqd7vodvd13" path="res://Anim/archer/archer_attack.res" id="2_i11xr"]
+[ext_resource type="PackedScene" uid="uid://c18w8wsvv3c65" path="res://Assets/BowModel/Bow.fbx" id="2_lxifh"]
+[ext_resource type="Script" uid="uid://77qtlicyl5s" path="res://Script/archer.gd" id="2_qp52x"]
+[ext_resource type="Animation" uid="uid://6e8fhd4k78nt" path="res://Anim/archer/archer_die.res" id="3_lxifh"]
+[ext_resource type="Animation" uid="uid://dbkxag5gvwh6e" path="res://Anim/archer/archer_idle.res" id="4_qp52x"]
+[ext_resource type="Animation" uid="uid://daat5p3ci8fv4" path="res://Anim/archer/archer_walk.res" id="5_fhmuk"]
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qp52x"]
+_data = {
+&"archer_attack": ExtResource("2_i11xr"),
+&"archer_die": ExtResource("3_lxifh"),
+&"archer_idle": ExtResource("4_qp52x"),
+&"archer_walk": ExtResource("5_fhmuk")
+}
+
+[node name="Archer" instance=ExtResource("1_22a32")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+script = ExtResource("2_qp52x")
+
+[node name="metarig" parent="." index="0"]
+transform = Transform3D(-18.387053, 878.89484, -38.811726, -19.1746, 38.410614, 878.8956, 879.5425, 19.210917, 18.34913, 0.8227978, -0.84428835, -0.18219925)
+
+[node name="Skeleton" parent="metarig" index="0"]
+bones/1/rotation = Quaternion(-0.01595872, -0.028422983, -0.05975701, 0.9976806)
+bones/2/rotation = Quaternion(-0.05328242, -0.0050352705, -0.009299194, 0.99852353)
+bones/3/rotation = Quaternion(-0.11265574, -0.0025474117, -0.010168353, 0.99357885)
+bones/4/rotation = Quaternion(0.30135188, 0.014379249, 0.008561235, 0.95336616)
+bones/5/rotation = Quaternion(-0.061628815, 0.016254816, 0.003980423, 0.99795884)
+bones/6/rotation = Quaternion(-0.085535206, 0.015804173, 0.0055034133, 0.99619466)
+bones/12/rotation = Quaternion(0.4243148, 0.3571881, 0.6330659, -0.5400011)
+bones/13/rotation = Quaternion(0.121785864, 0.42879882, 0.1235805, 0.886582)
+bones/14/rotation = Quaternion(0.113050185, -0.056639746, -0.0016252368, 0.9919723)
+bones/15/rotation = Quaternion(0.028750248, -0.39415306, 0.011565627, 0.9185223)
+bones/16/rotation = Quaternion(-0.025743995, -0.09697902, -0.5088158, 0.85500807)
+bones/17/rotation = Quaternion(-0.07493349, 0.038779046, -0.548503, 0.83188075)
+bones/20/rotation = Quaternion(0.32085392, 0.49625823, -0.28954053, 0.7529588)
+bones/21/rotation = Quaternion(-0.2692365, -0.013691585, -0.012115396, 0.9629006)
+bones/24/rotation = Quaternion(-0.4415564, 0.4222844, 0.5896982, 0.52816653)
+bones/25/rotation = Quaternion(0.40630552, -0.5462855, 0.36997676, 0.6321433)
+bones/26/rotation = Quaternion(0.90820605, 0.017217621, 0.0041985735, 0.41814792)
+bones/27/rotation = Quaternion(-0.12048361, 0.5435512, -0.17573583, 0.8118823)
+bones/28/rotation = Quaternion(-0.055453233, 0.0024099562, 0.5122303, 0.85705274)
+bones/29/rotation = Quaternion(-0.06973143, -0.023659823, 0.6999061, 0.7104289)
+bones/32/rotation = Quaternion(0.26446852, -0.1890794, 0.17600146, 0.929155)
+bones/33/rotation = Quaternion(-0.38915923, 0.014933045, 0.024175767, 0.9207322)
+bones/42/rotation = Quaternion(0.8489137, 0.1810028, -0.37812397, 0.32187867)
+bones/43/rotation = Quaternion(0.36319327, 0.0699411, 0.02671289, 0.9287009)
+bones/44/rotation = Quaternion(-0.5881857, -0.07625681, 0.09735667, 0.79921466)
+bones/45/rotation = Quaternion(-5.1844395e-06, 0.9595163, -0.28165329, -1.114925e-06)
+bones/48/rotation = Quaternion(0.8924933, -0.12608728, 0.18298419, 0.39252332)
+bones/49/rotation = Quaternion(0.27969205, -0.08907345, -0.0029117276, 0.95594454)
+bones/50/rotation = Quaternion(-0.5127146, -0.057027906, -0.1813651, 0.8372445)
+bones/51/rotation = Quaternion(-3.4484378e-06, 0.9639027, -0.2662547, -9.814787e-07)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="metarig/Skeleton" index="21"]
+transform = Transform3D(-0.96070075, 0.27175504, -0.056589767, -0.26383775, -0.9573074, -0.118116334, -0.08627248, -0.09854399, 0.9913861, 0.010618757, -0.0015087107, 0.016488042)
+bone_name = "hand.L.001"
+bone_idx = 16
+
+[node name="Bow" parent="metarig/Skeleton/BoneAttachment3D" index="0" instance=ExtResource("2_lxifh")]
+transform = Transform3D(-0.0028246704, 0.00028080994, -0.0009707641, 0.0010049805, 0.00047807943, -0.0027859388, -0.000106072235, -0.0029483184, -0.0005442086, 0.009568989, -0.0028668835, 0.00015872065)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
+libraries = {
+&"archer": SubResource("AnimationLibrary_qp52x")
+}

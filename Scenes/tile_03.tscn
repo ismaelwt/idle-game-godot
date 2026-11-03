@@ -1,8 +1,8 @@
 [gd_scene load_steps=35 format=3 uid="uid://mpt1iubn4rnd"]
 
 [ext_resource type="Shader" uid="uid://m0mhk6kvavkj" path="res://Shaders/ground.gdshader" id="2_gl6a3"]
-[ext_resource type="Texture2D" uid="uid://cqmfv340eehr" path="res://Assets/Polygon-Mega Survival Forest/Textures/TerrainTextures/Grass.png" id="2_pw6ir"]
-[ext_resource type="Texture2D" uid="uid://baa1tbih7bpla" path="res://Assets/Polygon-Mega Survival Forest/Textures/Textures/Rock_Part_02/Classic_Version/SM_Small_Marbel_Stone_Atlas_01.png" id="3_gl6a3"]
+[ext_resource type="Texture2D" uid="uid://ddlwfl7gpy178" path="res://UI/pixellab---Fantasy-RPG-Grass-Texture----1793528640711.png" id="2_w3dc0"]
+[ext_resource type="Texture2D" uid="uid://d4ftkvvrnqt1" path="res://UI/pixel-stone-ground.png" id="3_oyrtw"]
 [ext_resource type="Script" uid="uid://fcswi5sgg1l8" path="res://Script/ground.gd" id="5_7y7hr"]
 [ext_resource type="PackedScene" uid="uid://rrtfkax415do" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Grass_02.prefab.scn" id="6_4h106"]
 [ext_resource type="PackedScene" uid="uid://kghudq6nt608" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Agave.prefab.scn" id="7_12cwd"]
@@ -38,11 +38,11 @@ size = Vector2(2.03, 2.01)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uktat"]
 render_priority = 1
 shader = ExtResource("2_gl6a3")
-shader_parameter/grass_texture = ExtResource("3_gl6a3")
-shader_parameter/dirt_texture = ExtResource("2_pw6ir")
-shader_parameter/path_width = 0.090000004275
+shader_parameter/grass_texture = ExtResource("3_oyrtw")
+shader_parameter/dirt_texture = ExtResource("2_w3dc0")
+shader_parameter/path_width = 0.21200001007
 shader_parameter/path_softness = 0.5
-shader_parameter/pixel_size = 32.0000014725
+shader_parameter/pixel_size = 128.00000603249998
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_redxg"]
 next_pass = SubResource("ShaderMaterial_uktat")

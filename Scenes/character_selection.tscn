@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dq8ikoedncwll"]
+[gd_scene load_steps=24 format=3 uid="uid://dq8ikoedncwll"]
 
 [ext_resource type="Script" uid="uid://dnu24abo6csr7" path="res://Script/character_selection.gd" id="1_l3v1h"]
 [ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="2_i640r"]
@@ -8,8 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://bni7pph36bvhd" path="res://Scenes/character_selection_mage.tscn" id="5_pwu4o"]
 [ext_resource type="Script" uid="uid://c1ia1hug0lo5h" path="res://Script/character_selection_mage.gd" id="6_pwu4o"]
 [ext_resource type="PackedScene" uid="uid://h3ih3dedib01" path="res://Scenes/bonfire.tscn" id="7_yr170"]
+[ext_resource type="PackedScene" uid="uid://be1ycj01agtgu" path="res://Scenes/character_selection_archer.tscn" id="8_a2e1g"]
 [ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="8_bqtcc"]
 [ext_resource type="AudioStream" uid="uid://c05ib3e1c0g7o" path="res://Sounds/CharacterSelection/character_selection.mp3" id="8_rr1ac"]
+[ext_resource type="Script" uid="uid://blwsdvsq0s3od" path="res://Script/character_selection_archer.gd" id="9_5ow1g"]
 [ext_resource type="Texture2D" uid="uid://72d0iowg4c6n" path="res://UI/CharacterSelectionUI/element_6.png" id="10_f561k"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="11_pslhg"]
 [ext_resource type="Texture2D" uid="uid://du7fanycp8jeg" path="res://UI/CharacterSelectionUI/Select_Hero.png" id="12_pslhg"]
@@ -115,10 +117,13 @@ omni_range = 4.0
 omni_attenuation = 0.0
 
 [node name="SpotLightPosition1" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.616, 3.76, -0.242)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.616, 3.76, -0.02524878)
 
 [node name="SpotLightPosition2" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.48306537, 3.76, -1.5572647)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40324616, 3.76, -1.6588085)
+
+[node name="SpotLightPosition3" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6249254, 3.76, -1.3336817)
 
 [node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1.5320886, 0, -1.2855752, 0, 2.0000002, 0, 1.2855749, 0, 1.5320889, -4, 1, 2)
@@ -131,6 +136,7 @@ size = 6.0
 far = 250.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
+transform = Transform3D(1, 1.4901161e-08, -2.9802322e-08, 1.4901161e-08, 1, -2.9802322e-08, 2.9802322e-08, 0, 1, 0.045491695, -0.0009293556, 0.0014867783)
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_yr170")
@@ -140,12 +146,16 @@ surface_material_override/0 = SubResource("ShaderMaterial_rr1ac")
 transform = Transform3D(0.69364077, 0, 0.7203211, 0, 1, 0, -0.7203211, 0, 0.69364077, 0.023498535, 0.017150879, -0.032836914)
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_ve3h0")]
-transform = Transform3D(0.100403614, 0, 0.28269967, 0, 0.2999999, 0, -0.28269967, 0, 0.100403614, -2.7962825, 2.584383, 0.16120619)
+transform = Transform3D(0.100403614, 0, 0.28269967, 0, 0.2999999, 0, -0.28269967, 0, 0.100403614, -2.7962825, 2.584383, 0.35544485)
 script = ExtResource("4_pwu4o")
 
 [node name="Mage" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_pwu4o")]
-transform = Transform3D(0.6297116, 0, 0.4934199, 0, 0.79999995, 0, -0.4934199, 0, 0.6297116, -0.6620915, 2.5809855, -1.2770509)
+transform = Transform3D(0.79387754, 0, 0.09878421, 0, 0.79999995, 0, -0.09878421, 0, 0.79387754, 0.4234798, 2.5809855, -1.2770509)
 script = ExtResource("6_pwu4o")
+
+[node name="Archer" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_a2e1g")]
+transform = Transform3D(-0.015563392, 0, 0.07847153, 0, 0.08, 0, -0.07847153, 0, -0.015563392, -1.6633301, 2.5673828, -1.0001221)
+script = ExtResource("9_5ow1g")
 
 [node name="Fire" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_yr170")]
 transform = Transform3D(1.6933157, 0, 1.0642753, 0, 2, 0, -1.0642753, 0, 1.6933157, -0.62442386, 2.5502522, 0.9891846)
@@ -190,10 +200,10 @@ metadata/_edit_use_anchors_ = true
 [node name="Knight" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.2951389
-anchor_top = 0.29166666
-anchor_right = 0.4027778
-anchor_bottom = 0.34104937
+anchor_left = 0.2638889
+anchor_top = 0.29475307
+anchor_right = 0.3715278
+anchor_bottom = 0.3441358
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("10_f561k")
@@ -216,10 +226,10 @@ vertical_alignment = 1
 [node name="Mage" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.5434028
-anchor_top = 0.26674077
-anchor_right = 0.63943756
-anchor_bottom = 0.31635803
+anchor_left = 0.6267361
+anchor_top = 0.29297534
+anchor_right = 0.7227709
+anchor_bottom = 0.3425926
 offset_top = 0.15197754
 offset_right = 0.36791992
 grow_horizontal = 2
@@ -235,6 +245,32 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "MAGE Lv. 1"
+label_settings = SubResource("LabelSettings_l3v1h")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Archer" type="TextureRect" parent="SubViewportContainer/CanvasLayer/Panel/Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4513889
+anchor_top = 0.2345679
+anchor_right = 0.5590278
+anchor_bottom = 0.2839506
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_f561k")
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="SubViewportContainer/CanvasLayer/Panel/Control/Archer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -2.0
+offset_bottom = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "ARCHER Lv. 1"
 label_settings = SubResource("LabelSettings_l3v1h")
 horizontal_alignment = 1
 vertical_alignment = 1

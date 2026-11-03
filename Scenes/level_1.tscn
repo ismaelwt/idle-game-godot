@@ -1,4 +1,4 @@
-[gd_scene load_steps=124 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=125 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -7,8 +7,9 @@
 [ext_resource type="Script" uid="uid://oqcdm8pjfoih" path="res://Script/level_controller.gd" id="5_soyxa"]
 [ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="6_yy84a"]
 [ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_4qhvg"]
-[ext_resource type="PackedScene" uid="uid://bo6p3qj6i6y23" path="res://Scenes/goblin_boss.tscn" id="7_tohvi"]
+[ext_resource type="PackedScene" uid="uid://0koc8hde0sjn" path="res://Scenes/boss_goblin.tscn" id="7_lue1o"]
 [ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_rby12"]
+[ext_resource type="PackedScene" uid="uid://3frkx64fx3r2" path="res://Scenes/archer.tscn" id="10_w8vhy"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
@@ -328,8 +329,8 @@ render_target_update_mode = 4
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
-light_color = Color(5.0055983e-06, 0.6417036, 0.8064364, 1)
-light_energy = 0.8
+light_color = Color(0.10499778, 0.73127425, 0.77004266, 1)
+light_energy = 0.5
 light_indirect_energy = 0.5
 light_bake_mode = 1
 shadow_bias = 0.2
@@ -340,9 +341,8 @@ sky_mode = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(-0.881476, 0.047373705, -0.4698463, -0.41536787, 0.39554948, 0.81915206, 0.2246537, 0.9172219, -0.32898995, -16.333925, 21.972055, -21.354462)
-light_color = Color(1.0529996, 0.998022, 0.46565846, 1)
+light_color = Color(0.95473546, 0.95871025, 0.96134657, 1)
 light_energy = 0.5
-light_indirect_energy = 0.5
 light_bake_mode = 1
 shadow_enabled = true
 shadow_bias = 0.2
@@ -391,7 +391,7 @@ script = ExtResource("5_soyxa")
 
 [node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_rby12")
-boss_scene = ExtResource("7_tohvi")
+boss_scene = ExtResource("7_lue1o")
 wave_1_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_4qhvg")])
 wave_2_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_tohvi")])
 wave_3_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_npx7t")])
@@ -401,7 +401,11 @@ x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
 max_level_offset = 0
-boss_level_limit = 4
+max_enemy_level_limit = 15
+boss_level_limit = 12
+
+[node name="Archer" parent="SubViewportContainer/SubViewport" instance=ExtResource("10_w8vhy")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.9682617, 0, -27.561035)
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
@@ -1288,8 +1292,8 @@ expand_mode = 1
 [node name="Control" type="Control" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer"]
 anchors_preset = 0
 offset_left = 45.0
-offset_top = 25.0
-offset_right = 435.0
+offset_top = 46.0
+offset_right = 422.0
 offset_bottom = 410.0
 
 [node name="PlayerPanel" type="Panel" parent="SubViewportContainer/UI/Status/CenterContainer/PanelContainer/Control"]
@@ -1297,10 +1301,9 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -258.0
-offset_top = 25.0
-offset_right = -53.0
-offset_bottom = 380.0
+offset_left = -263.0
+offset_right = -58.0
+offset_bottom = 355.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
 
@@ -1760,7 +1763,7 @@ layout_mode = 2
 layout_mode = 0
 offset_left = 255.0
 offset_top = -200.0
-offset_right = 480.0
+offset_right = 500.0
 offset_bottom = 150.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_k8xho")
 
@@ -1779,21 +1782,23 @@ anchor_left = -0.043
 anchor_top = -0.030000001
 anchor_right = 1.051
 anchor_bottom = 1.0
-offset_left = -158.938
-offset_top = -65.229996
-offset_right = 155.06604
-offset_bottom = 70.0
+offset_left = -57.464985
+offset_top = -90.5
+offset_right = 68.97803
+offset_bottom = 135.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("57_g0njp")
-stretch_mode = 5
+stretch_mode = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/Status/CenterContainer/InventoryControl/InventoryPanel"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = -1
+anchor_right = 1.069
 anchor_bottom = 1.0
+offset_top = 1.0
+offset_right = 0.09500122
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8

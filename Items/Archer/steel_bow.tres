@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://ccjild470mbw4"]
+
+[ext_resource type="Texture2D" uid="uid://qk5whpxmkpbm" path="res://icons/steel-bow-1.png.png" id="1_g0tci"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_bsgua"]
+
+[resource]
+script = ExtResource("2_bsgua")
+item_id = &"steel_bow_01"
+item_name = "Arco de Ferro"
+description = "Arco de Ferro "
+icon = ExtResource("1_g0tci")
+item_class = 2
+strength_max = 3
+agility_min = 1
+agility_max = 3
+intelligence_max = 1
+vitality_max = 2
+physical_damage_max = 3
+magic_damage_max = 1
+weapon_damage = 5.0
+critical_chance_min = 1.0
+critical_chance_max = 2.0
+critical_damage_min = 5.0
+critical_damage_max = 10.0
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"
