@@ -292,16 +292,44 @@ func show_damage(damage: float) -> void:
 
 
 func flash_hit() -> void:
+	var affected_surfaces: Array[Dictionary] = []
+
+	# Aplica o flash em todos os MeshInstance3D do modelo, incluindo
+	# os meshes que são filhos do Skeleton, sem esperar entre cada peça.
 	for mesh in find_children("*", "MeshInstance3D", true, false):
-		var material = mesh.get_active_material(0)
-		if material == null or material is ShaderMaterial:
+		if not is_instance_valid(mesh) or mesh.mesh == null:
 			continue
-		var flash_material = material.duplicate()
-		flash_material.albedo_color = Color(1.0, 0.03, 0.03, 1.0)
-		flash_material.emission_enabled = true
-		flash_material.emission = Color.RED
-		flash_material.emission_energy_multiplier = 2.0
-		mesh.material_override = flash_material
-		await get_tree().create_timer(0.08).timeout
+
+		for surface_index in range(mesh.mesh.get_surface_count()):
+			var original_override: Material = mesh.get_surface_override_material(surface_index)
+			var source_material: Material = original_override
+
+			if source_material == null:
+				source_material = mesh.get_active_material(surface_index)
+
+			if not source_material is BaseMaterial3D:
+				continue
+
+			var flash_material := source_material.duplicate() as BaseMaterial3D
+			flash_material.albedo_color = Color(1.0, 0.03, 0.03, 1.0)
+			flash_material.emission_enabled = true
+			flash_material.emission = Color.RED
+			flash_material.emission_energy_multiplier = 2.0
+
+			mesh.set_surface_override_material(surface_index, flash_material)
+			affected_surfaces.append({
+				"mesh": mesh,
+				"surface": surface_index,
+				"original_override": original_override
+			})
+
+	# Todos os meshes piscam juntos e recuperam seus materiais originais.
+	await get_tree().create_timer(0.08).timeout
+
+	for entry in affected_surfaces:
+		var mesh: MeshInstance3D = entry["mesh"]
 		if is_instance_valid(mesh):
-			mesh.material_override = null
+			mesh.set_surface_override_material(
+				int(entry["surface"]),
+				entry["original_override"]
+			)
