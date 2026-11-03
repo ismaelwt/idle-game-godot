@@ -38,9 +38,11 @@ func on_started_pressed() -> void:
 	var selected_character: Node3D = characters[selected_index]
 
 	if selected_character == mage:
-		CharacterSelectionData.selected_character = "mage"
+		CharacterSelectionData.set_selected_character("mage")
+	elif selected_character == archer:
+		CharacterSelectionData.set_selected_character("archer")
 	else:
-		CharacterSelectionData.selected_character = "knight"
+		CharacterSelectionData.set_selected_character("knight")
 
 	print(
 		"Classe escolhida: ",
