@@ -90,7 +90,7 @@ func _refresh_hero_column(
 
 	var is_main_hero: bool = hero_id == main_hero_id
 	var is_owned: bool = GameManager.owns_companion(hero_id)
-	var is_equipped: bool = GameManager.active_companion_id == hero_id
+	var is_equipped: bool = GameManager.equipped_companion_ids.has(hero_id)
 
 	if is_main_hero:
 		buy_button.visible = false
@@ -103,12 +103,16 @@ func _refresh_hero_column(
 	buy_button.visible = not is_owned
 	buy_button.disabled = GameManager.gold < price or price <= 0
 	equip_button.visible = is_owned and not is_equipped
-	equip_button.disabled = false
+	var party_manager := get_tree().current_scene.find_child("PartyManager", true, false)
+	var party_limit := int(party_manager.get("max_party_size")) if is_instance_valid(party_manager) else 3
+	equip_button.disabled = GameManager.equipped_companion_ids.size() >= maxi(0, party_limit - 1)
 	unequip_button.visible = is_owned and is_equipped
 	unequip_button.disabled = false
 
 	if is_equipped:
 		status_label.text = "Equipado ✓"
+	elif is_owned and equip_button.disabled:
+		status_label.text = "Limite da equipe atingido"
 	elif is_owned:
 		status_label.text = "Adquirido ✓"
 	elif price <= 0:
@@ -133,8 +137,8 @@ func _on_equip_pressed(hero_id: String) -> void:
 
 
 func _on_unequip_pressed(hero_id: String) -> void:
-	if GameManager.active_companion_id == hero_id:
-		GameManager.unequip_companion()
+	if GameManager.equipped_companion_ids.has(hero_id):
+		GameManager.unequip_companion(hero_id)
 	_refresh_ui()
 
 

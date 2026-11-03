@@ -145,38 +145,44 @@ func _refresh_companion() -> void:
 	if not is_instance_valid(main_hero):
 		return
 
-	var active_id := ""
-	if is_instance_valid(_game_manager):
-		active_id = str(_game_manager.get("active_companion_id")).strip_edges().to_lower()
+	var active_ids: Array[String] = []
+	var saved_ids = _game_manager.get("equipped_companion_ids") if is_instance_valid(_game_manager) else []
+	if saved_ids is Array:
+		for saved_id in saved_ids:
+			var normalized_id := CharacterSelectionDataScript.normalize_hero_id(str(saved_id))
+			if not normalized_id.is_empty() and not active_ids.has(normalized_id):
+				active_ids.append(normalized_id)
+	elif is_instance_valid(_game_manager):
+		var legacy_id := str(_game_manager.get("active_companion_id")).strip_edges().to_lower()
+		if not legacy_id.is_empty():
+			active_ids.append(legacy_id)
 
-	var desired_companion: Node3D = null
-	if (
-		not active_id.is_empty()
-		and is_instance_valid(_game_manager)
-		and _game_manager.has_method("owns_companion")
-		and bool(_game_manager.owns_companion(active_id))
-	):
-		for candidate in _discover_heroes():
-			if candidate == main_hero:
-				continue
-			if _get_hero_id(candidate) == active_id:
-				desired_companion = candidate
-				break
+	var desired_companions: Array[Node3D] = []
+	for active_id in active_ids:
+		if (
+			is_instance_valid(_game_manager)
+			and _game_manager.has_method("owns_companion")
+			and bool(_game_manager.owns_companion(active_id))
+		):
+			for candidate in _discover_heroes():
+				if candidate == main_hero or desired_companions.has(candidate):
+					continue
+				if _get_hero_id(candidate) == active_id:
+					desired_companions.append(candidate)
+					break
 
-	# Remove um companheiro anterior se ele foi desequipado/trocado.
-	if is_instance_valid(companion_hero) and companion_hero != desired_companion:
-		var previous_companion := companion_hero
-		companion_hero = null
-		_set_hero_active(previous_companion, false)
-		unregister_hero(previous_companion)
+	# Reconcilia a equipe sem trocar o principal ao equipar outro companion.
+	for previous_companion in get_heroes():
+		if previous_companion != main_hero and not desired_companions.has(previous_companion):
+			_set_hero_active(previous_companion, false)
+			unregister_hero(previous_companion)
 
-	if not is_instance_valid(desired_companion):
-		companion_hero = null
-		return
-
-	companion_hero = desired_companion
-	_set_hero_active(companion_hero, true)
-	register_hero(companion_hero)
+	companion_hero = null
+	for desired_companion in desired_companions:
+		if register_hero(desired_companion):
+			_set_hero_active(desired_companion, true)
+			if not is_instance_valid(companion_hero):
+				companion_hero = desired_companion
 
 
 func get_main_hero() -> Node3D:

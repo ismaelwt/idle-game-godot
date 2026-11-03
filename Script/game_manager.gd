@@ -18,8 +18,17 @@ var global_flags: Dictionary = {}
 # Exemplo: {"wolf_companion": true}
 var owned_companions: Dictionary = {}
 
-# ID do companion atualmente equipado.
-var active_companion_id: String = ""
+# IDs dos companions equipados. O limite total continua sendo três heróis.
+var equipped_companion_ids: Array[String] = []
+# Compatibilidade com sistemas que esperam um único companion.
+var active_companion_id: String:
+	get:
+		return equipped_companion_ids[0] if not equipped_companion_ids.is_empty() else ""
+	set(value):
+		equipped_companion_ids = []
+		var normalized := str(value).strip_edges().to_lower()
+		if not normalized.is_empty():
+			equipped_companion_ids.append(normalized)
 
 var _is_initializing: bool = true
 
@@ -153,17 +162,15 @@ func load_global_components(data: Dictionary) -> void:
 		else {}
 	)
 
-	active_companion_id = str(
-		data.get("active_companion_id", "")
-	)
-
-	# Evita carregar um companion equipado que não consta
-	# como adquirido no save.
-	if (
-		not active_companion_id.is_empty()
-		and not owns_companion(active_companion_id)
-	):
-		active_companion_id = ""
+	var saved_equipped = data.get("equipped_companion_ids", [])
+	equipped_companion_ids = []
+	if saved_equipped is Array and not saved_equipped.is_empty():
+		for companion_id in saved_equipped:
+			_add_loaded_companion(str(companion_id))
+	else:
+		_add_loaded_companion(str(data.get("active_companion_id", "")))
+	while equipped_companion_ids.size() > _get_companion_limit():
+		equipped_companion_ids.pop_back()
 
 	gold_changed.emit(gold)
 	global_state_changed.emit()
@@ -183,8 +190,18 @@ func _save_global_state() -> bool:
 		"opened_chests": opened_chests,
 		"flags": global_flags,
 		"owned_companions": owned_companions,
-		"active_companion_id": active_companion_id
+		"active_companion_id": active_companion_id,
+		"equipped_companion_ids": equipped_companion_ids
 	})
+
+
+func _add_loaded_companion(companion_id: String) -> void:
+	var normalized := companion_id.strip_edges().to_lower()
+	if normalized.is_empty() or equipped_companion_ids.has(normalized):
+		return
+	if equipped_companion_ids.size() >= 2 or not owns_companion(normalized):
+		return
+	equipped_companion_ids.append(normalized)
 
 
 func unlock_level(level: int, persist: bool = true) -> void:
@@ -265,40 +282,55 @@ func purchase_companion(
 
 
 func equip_companion(companion_id: String) -> bool:
-	if not owns_companion(companion_id):
+	var normalized := companion_id.strip_edges().to_lower()
+	if not owns_companion(normalized):
 		print("Não é possível equipar companion não adquirido: ", companion_id)
 		return false
 
-	if active_companion_id == companion_id:
+	if equipped_companion_ids.has(normalized):
 		return true
+	if equipped_companion_ids.size() >= _get_companion_limit():
+		print("Limite de companions equipados atingido.")
+		return false
 
-	var previous_companion := active_companion_id
-	active_companion_id = companion_id
+	equipped_companion_ids.append(normalized)
 
 	if not _save_global_state():
-		active_companion_id = previous_companion
+		equipped_companion_ids.erase(normalized)
 		return false
 
 	companion_state_changed.emit()
 	global_state_changed.emit()
 
-	print("COMPANION EQUIPADO: ", active_companion_id)
+	print("COMPANION EQUIPADO: ", normalized)
 	return true
 
 
-func unequip_companion() -> bool:
-	if active_companion_id.is_empty():
+func _get_companion_limit() -> int:
+	var scene := get_tree().current_scene if is_inside_tree() else null
+	if is_instance_valid(scene):
+		var manager := scene.find_child("PartyManager", true, false)
+		if is_instance_valid(manager) and manager.get("max_party_size") != null:
+			return maxi(0, int(manager.get("max_party_size")) - 1)
+	return 2
+
+
+func unequip_companion(companion_id: String = "") -> bool:
+	var normalized := companion_id.strip_edges().to_lower()
+	if normalized.is_empty():
+		normalized = active_companion_id
+	if normalized.is_empty() or not equipped_companion_ids.has(normalized):
 		return true
 
-	var previous_companion := active_companion_id
-	active_companion_id = ""
+	var previous_companions := equipped_companion_ids.duplicate()
+	equipped_companion_ids.erase(normalized)
 
 	if not _save_global_state():
-		active_companion_id = previous_companion
+		equipped_companion_ids = previous_companions
 		return false
 
 	companion_state_changed.emit()
 	global_state_changed.emit()
 
-	print("COMPANION DESEQUIPADO")
+	print("COMPANION DESEQUIPADO: ", normalized)
 	return true
