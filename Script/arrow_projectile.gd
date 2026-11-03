@@ -12,6 +12,7 @@ var target: Node3D = null
 var shooter: Node3D = null
 var lifetime: float = 0.0
 var resolved: bool = false
+var is_critical: bool = false
 
 @onready var area: Area3D = $Arrow/Area3D
 
@@ -24,11 +25,13 @@ func _ready() -> void:
 func setup(
 	target_node: Node3D,
 	shooter_node: Node3D,
-	projectile_damage: float
+	projectile_damage: float,
+	critical_hit: bool = false
 ) -> void:
 	target = target_node
 	shooter = shooter_node
 	damage = projectile_damage
+	is_critical = critical_hit
 
 
 func _process(delta: float) -> void:
@@ -122,7 +125,11 @@ func apply_target_damage() -> void:
 		return
 
 	if target.has_method("take_damage"):
-		target.call("take_damage", damage, "physical")
+		var shooter_stats = shooter.get("character_stats") if is_instance_valid(shooter) else null
+		if is_instance_valid(shooter_stats):
+			target.call("take_damage", damage, is_critical)
+		else:
+			target.call("take_damage", damage, "physical")
 
 	finish()
 
