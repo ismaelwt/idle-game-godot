@@ -213,25 +213,11 @@ func look_at_target(target: Node3D) -> void:
 func take_damage(damage: float, damage_type: String = "physical") -> void:
 	if dead:
 		return
-
 	var final_damage: float = character_stats.calculate_damage_after_defense(damage, damage_type)
-	health -= final_damage
-
-	flash_hit()
-
-	print(
-		"Archer recebeu ",
-		damage,
-		" de dano. Vida: ",
-		health,
-		"/",
-		max_health
-	)
-
+	health = maxf(health - final_damage, 0.0)
 	show_damage(final_damage)
-
+	flash_hit()
 	if health <= 0.0:
-		health = 0.0
 		die()
 
 
@@ -299,7 +285,13 @@ func show_damage(damage: float) -> void:
 	while elapsed < damage_duration and is_instance_valid(label) and is_inside_tree():
 		elapsed += get_process_delta_time()
 		var progress := clampf(elapsed / damage_duration, 0.0, 1.0)
-		label.global_position = start_position + Vector3(0.0, sin(PI * progress) * 1func flash_hit() -> void:
+		label.global_position = start_position + Vector3(0.0, sin(PI * progress) * 1.2, 0.0)
+		await get_tree().process_frame
+	if is_instance_valid(label):
+		label.queue_free()
+
+
+func flash_hit() -> void:
 	var meshes = find_children(
 		"*",
 		"MeshInstance3D",
