@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://dh3j0rbvgmnpo"]
+[gd_scene load_steps=16 format=3 uid="uid://dh3j0rbvgmnpo"]
 
 [ext_resource type="PackedScene" uid="uid://dcal1vsjsdpbu" path="res://Assets/GoblinEnemy.fbx" id="1_2k1fa"]
 [ext_resource type="Animation" uid="uid://c1e320xhmegwi" path="res://Anim/HumanoidEnemy/attack.res" id="2_d2gqx"]
 [ext_resource type="Script" uid="uid://c1qensq8rawg" path="res://Script/enemy.gd" id="2_oo8mk"]
+[ext_resource type="Script" path="res://Script/EnemyBehaviors/melee_behavior.gd" id="9_melee"]
 [ext_resource type="Animation" uid="uid://dqmvhvj4mw7yb" path="res://Anim/HumanoidEnemy/die.res" id="3_oo8mk"]
 [ext_resource type="Animation" uid="uid://bagmxr5jaqpeu" path="res://Anim/HumanoidEnemy/idle.res" id="4_n705r"]
 [ext_resource type="Animation" uid="uid://cqet6wkpf86jl" path="res://Anim/HumanoidEnemy/walk.res" id="5_l6js0"]
@@ -338,3 +339,6 @@ grow_horizontal = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_l6js0")
 value = 100.0
 show_percentage = false
+
+[node name="MeleeBehavior" type="Node" parent="."]
+script = ExtResource("9_melee")
