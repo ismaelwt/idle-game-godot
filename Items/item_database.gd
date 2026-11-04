@@ -1,5 +1,5 @@
 
-extends Node
+extends RefCounted
 class_name ItemDatabase
 
 const ITEMS: Array[ItemBase] = [
