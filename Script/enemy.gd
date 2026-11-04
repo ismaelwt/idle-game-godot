@@ -488,8 +488,10 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 
 
 func show_gold_reward() -> void:
-	var scene := get_tree().current_scene
-	if not is_instance_valid(scene):
+	# O ícone precisa ficar no mesmo mundo 3D do inimigo (dentro do SubViewport).
+	# Adicioná-lo ao current_scene pode colocá-lo em outro viewport e deixá-lo invisível.
+	var world_parent := get_parent()
+	if not is_instance_valid(world_parent):
 		return
 
 	var coin_icon := Sprite3D.new()
@@ -498,17 +500,15 @@ func show_gold_reward() -> void:
 	coin_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	coin_icon.no_depth_test = true
 	coin_icon.render_priority = 4
-	coin_icon.pixel_size = 0.001
+	coin_icon.pixel_size = 0.01
 	coin_icon.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
 	coin_icon.modulate = Color.WHITE
 
-	# O visual fica na cena principal para continuar aparecendo
-	# mesmo depois que a animação de morte remover o inimigo.
-	scene.add_child(coin_icon)
+	world_parent.add_child(coin_icon)
 	coin_icon.global_position = global_position + Vector3(0.0, 1.2, 0.0)
 
 	var start_position := coin_icon.global_position
-	var tween := scene.create_tween()
+	var tween := coin_icon.create_tween()
 	tween.set_parallel(true)
 	tween.tween_property(
 		coin_icon,
@@ -523,7 +523,6 @@ func show_gold_reward() -> void:
 		0.9
 	).set_delay(0.15)
 	tween.chain().tween_callback(coin_icon.queue_free)
-
 
 func update_health_bar() -> void:
 	if not is_instance_valid(health_bar):
