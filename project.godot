@@ -21,6 +21,7 @@ SkillTree="*res://Script/skill_tree.gd"
 SceneLoader="*res://Script/scene_loader.gd"
 CharacterSelectionData="*res://Script/character_selection_data.gd"
 GameManager="*res://Script/game_manager.gd"
+AudioManager="*res://Script/audio_manager.gd"
 
 [display]
 
@@ -35,3 +36,7 @@ enabled=PackedStringArray("res://addons/mixamo_animation_retargeter/plugin.cfg")
 
 textures/canvas_textures/default_texture_filter=3
 lights_and_shadows/directional_shadow/soft_shadow_filter_quality=0
+
+[audio]
+
+default_bus_layout="res://default_bus_layout.tres"
