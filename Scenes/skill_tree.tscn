@@ -1,99 +1,43 @@
-[gd_scene load_steps=35 format=3]
-
-[ext_resource type="Script" uid="uid://dxem2h5omvu7y" path="res://Script/skill_tree_ui.gd" id="30_x2ai2"]
-
-[ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
-
-[ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_re70m"]
-
-[ext_resource type="Texture2D" uid="uid://bp5nv4bv400y1" path="res://icons/disabled-fire-ray.png" id="32_47bk8"]
-
-[ext_resource type="Texture2D" uid="uid://bxste58hol0h6" path="res://icons/fire-ray.png" id="33_ccdby"]
-
-[ext_resource type="Texture2D" uid="uid://8roovoey6nle" path="res://UI/UISprites/Icon_button_plus_symbol.png" id="34_3xv1y"]
-
-[ext_resource type="Texture2D" uid="uid://gd8xpf27t8sj" path="res://UI/UISprites/Icon_button_minus_symbol.png" id="35_yqakh"]
-
-[ext_resource type="Texture2D" uid="uid://cmo1gyfdyqkkv" path="res://icons/disabled-burning-passion.png" id="36_cgw15"]
-
-[ext_resource type="Texture2D" uid="uid://djx1qqwcbt54w" path="res://icons/burning-passion.png" id="37_515xq"]
-
-[ext_resource type="Texture2D" uid="uid://bn5h4dh50snuf" path="res://icons/disabled-comet-spark.png" id="38_7me5w"]
-
-[ext_resource type="Texture2D" uid="uid://ddjnlxqlqmdpn" path="res://icons/comet-spark.png" id="39_xokrd"]
-
-[ext_resource type="Texture2D" uid="uid://bnvpdb5tjtofm" path="res://UI/Window_no_back_with_chains_lock.png" id="40_d08dg"]
-
-[ext_resource type="Texture2D" uid="uid://d0vymgdqe3r1g" path="res://icons/disabled-heart-plus.png" id="41_4udnt"]
-
-[ext_resource type="Texture2D" uid="uid://vjn2j8ehvdhv" path="res://icons/heart-plus.png" id="42_enyo0"]
-
-[ext_resource type="Texture2D" uid="uid://cf15xx8dbnah7" path="res://icons/disabled-thunderstorm.png" id="43_3id4y"]
-
-[ext_resource type="Texture2D" uid="uid://cqkpps3dhq627" path="res://icons/thuderstorm-icon.png" id="44_qgr3v"]
-
-[ext_resource type="Texture2D" uid="uid://b4h5ca84m1px7" path="res://icons/plasma-bolt.png" id="45_m45or"]
-
-[ext_resource type="Texture2D" uid="uid://clid7j7s6arav" path="res://UI/UISprites/Tab-skill.png" id="46_oxpbw"]
-
-[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
+[gd_scene load_steps=34 format=3 uid="uid://c74vxrisntvst"]
 
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
-
-[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
-
+[ext_resource type="Script" uid="uid://dxem2h5omvu7y" path="res://Script/skill_tree_ui.gd" id="30_x2ai2"]
 [ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
+[ext_resource type="Texture2D" uid="uid://bp5nv4bv400y1" path="res://icons/disabled-fire-ray.png" id="32_47bk8"]
+[ext_resource type="Texture2D" uid="uid://bxste58hol0h6" path="res://icons/fire-ray.png" id="33_ccdby"]
+[ext_resource type="Texture2D" uid="uid://8roovoey6nle" path="res://UI/UISprites/Icon_button_plus_symbol.png" id="34_3xv1y"]
+[ext_resource type="Texture2D" uid="uid://gd8xpf27t8sj" path="res://UI/UISprites/Icon_button_minus_symbol.png" id="35_yqakh"]
+[ext_resource type="Texture2D" uid="uid://cmo1gyfdyqkkv" path="res://icons/disabled-burning-passion.png" id="36_cgw15"]
+[ext_resource type="Texture2D" uid="uid://djx1qqwcbt54w" path="res://icons/burning-passion.png" id="37_515xq"]
+[ext_resource type="Texture2D" uid="uid://bn5h4dh50snuf" path="res://icons/disabled-comet-spark.png" id="38_7me5w"]
+[ext_resource type="Texture2D" uid="uid://ddjnlxqlqmdpn" path="res://icons/comet-spark.png" id="39_xokrd"]
+[ext_resource type="Texture2D" uid="uid://bnvpdb5tjtofm" path="res://UI/Window_no_back_with_chains_lock.png" id="40_d08dg"]
+[ext_resource type="Texture2D" uid="uid://d0vymgdqe3r1g" path="res://icons/disabled-heart-plus.png" id="41_4udnt"]
+[ext_resource type="Texture2D" uid="uid://vjn2j8ehvdhv" path="res://icons/heart-plus.png" id="42_enyo0"]
+[ext_resource type="Texture2D" uid="uid://cf15xx8dbnah7" path="res://icons/disabled-thunderstorm.png" id="43_3id4y"]
+[ext_resource type="Texture2D" uid="uid://cqkpps3dhq627" path="res://icons/thuderstorm-icon.png" id="44_qgr3v"]
+[ext_resource type="Texture2D" uid="uid://b4h5ca84m1px7" path="res://icons/plasma-bolt.png" id="45_m45or"]
+[ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
+[ext_resource type="Texture2D" uid="uid://clid7j7s6arav" path="res://UI/UISprites/Tab-skill.png" id="46_oxpbw"]
+[ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_re70m"]
+[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
-bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
-
-bg_color = Color(0.14117648, 0.14117648, 0.14117648, 0.70980394)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.9490196, 0.6392157, 0.41960785, 0.93333334)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-default_font = ExtResource("18_x3b7j")
-
-load_path = "res://.godot/imported/Window-slot.png-f0eb6b9bac7f4e956e2781cf01cec74b.ctex"
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
 bg_color = Color(0, 0, 0, 0.40784314)
 border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.230315, 0.23031494, 0.23031479, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 expand_margin_left = 15.0
 expand_margin_top = 15.0
 expand_margin_right = 15.0
 expand_margin_bottom = 15.0
 shadow_color = Color(0, 0, 0, 0.7058824)
-
-font = ExtResource("18_x3b7j")
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-
-texture = ExtResource("57_g0njp")
-
-font = ExtResource("18_x3b7j")
-
-font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xo1hl"]
 texture = ExtResource("31_1qp6s")
@@ -102,18 +46,14 @@ expand_margin_top = 70.0
 expand_margin_right = 75.0
 expand_margin_bottom = 70.0
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_ijtdf"]
 font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="LabelSettings" id="LabelSettings_c5xoi"]
 font = ExtResource("18_x3b7j")
 
-
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_nuasi"]
 color = Color(0.47715485, 0.31638956, 0.13299686, 1)
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sfey3"]
 bg_color = Color(0, 0, 0, 0.24313726)
@@ -123,14 +63,11 @@ border_width_right = 3
 border_width_bottom = 3
 border_color = Color(0.96862745, 0.78039217, 0.4117647, 0.4117647)
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e2piv"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_e2piv"]
 font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_riph3"]
 bg_color = Color(0.36862746, 0.36862746, 0.36862746, 0.69803923)
@@ -139,10 +76,8 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ijtdf"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_affgb"]
 bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0)
@@ -151,13 +86,10 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wm1xi"]
 bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
 
-
 [node name="SkillTree" type="Panel"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -772,4 +704,3 @@ stretch_mode = 5
 
 [node name="SkillChangeDialog" type="ConfirmationDialog" parent="."]
 dialog_text = "Essa alteração será aplicada na próxima rodada, quando o mapa for carregado novamente. Deseja continuar?"
-

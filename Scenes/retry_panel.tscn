@@ -1,24 +1,24 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=14 format=3 uid="uid://bb75iltxfdh65"]
 
+[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
+[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
 [ext_resource type="Script" uid="uid://75cb4rq3ixe1" path="res://Script/retry_panel.gd" id="60_0vx6l"]
 [ext_resource type="Texture2D" uid="uid://bu4n212oc0cpd" path="res://UI/UISprites/Window.png" id="61_egw17"]
-[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
 [ext_resource type="Texture2D" uid="uid://e8etrxpp53ok" path="res://UI/UISprites/Retry.png" id="62_17s6b"]
 [ext_resource type="Texture2D" uid="uid://dveswenxmwfsw" path="res://UI/UISprites/Map.png" id="63_hyae8"]
 [ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="64_0jucf"]
 [ext_resource type="Texture2D" uid="uid://cka0x1itkiqh7" path="res://UI/UISprites/Icon_button_arrow_turning_on.png" id="65_dwn4r"]
 [ext_resource type="Texture2D" uid="uid://djslkugbuk3bw" path="res://UI/UISprites/Icon_button_arrow_turning_off.png" id="66_x3r2u"]
-[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
-bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
+bg_color = Color(0.7294118, 0.7294118, 0.7294118, 0.12156863)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5eas"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i0l3s"]
 content_margin_left = 30.0
 content_margin_top = 25.0
 content_margin_right = 30.0
 content_margin_bottom = 25.0
-bg_color = Color(0, 0, 0, 0)
+bg_color = Color(0.23921569, 0.23921569, 0.23921569, 0.5372549)
 border_color = Color(0, 0, 0, 0.74509805)
 border_blend = true
 
@@ -29,7 +29,6 @@ font = ExtResource("18_x3b7j")
 font = ExtResource("18_x3b7j")
 
 [node name="RetryPanel" type="Panel"]
-visible = false
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -39,7 +38,6 @@ grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_vib74")
 script = ExtResource("60_0vx6l")
 
-
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -47,16 +45,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_bottom = -1.5258789e-05
 
-
 [node name="PanelContainer" type="PanelContainer" parent="CenterContainer"]
 custom_minimum_size = Vector2(380, 250)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_m5eas")
-
+theme_override_styles/panel = SubResource("StyleBoxFlat_i0l3s")
 
 [node name="Background" type="Control" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
-
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
@@ -74,7 +69,6 @@ grow_vertical = 2
 texture = ExtResource("61_egw17")
 stretch_mode = 6
 
-
 [node name="CloseButton" type="TextureButton" parent="CenterContainer/PanelContainer/Background/TextureRect"]
 layout_mode = 1
 anchors_preset = 7
@@ -91,41 +85,33 @@ grow_vertical = 0
 texture_normal = ExtResource("48_73j5b")
 stretch_mode = 5
 
-
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-
 [node name="Title" type="Label" parent="CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
-text = "Defeated!!!"
 label_settings = SubResource("LabelSettings_d42f2")
 horizontal_alignment = 1
-
 
 [node name="Retry" type="TextureButton" parent="CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("62_17s6b")
 stretch_mode = 5
 
-
 [node name="Map" type="TextureButton" parent="CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("63_hyae8")
 stretch_mode = 5
-
 
 [node name="Next" type="TextureButton" parent="CenterContainer/PanelContainer/VBoxContainer"]
 layout_mode = 2
 texture_normal = ExtResource("64_0jucf")
 stretch_mode = 5
 
-
 [node name="Control" type="Control" parent="CenterContainer/PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
-
 
 [node name="EnableAutoRetryButton" type="TextureButton" parent="CenterContainer/PanelContainer/Control"]
 z_index = 1
@@ -143,7 +129,6 @@ texture_normal = ExtResource("65_dwn4r")
 ignore_texture_size = true
 stretch_mode = 5
 
-
 [node name="DisableAutoRetryButton" type="TextureButton" parent="CenterContainer/PanelContainer/Control"]
 z_index = 1
 layout_mode = 1
@@ -160,7 +145,6 @@ texture_normal = ExtResource("66_x3r2u")
 ignore_texture_size = true
 stretch_mode = 5
 
-
 [node name="Label" type="Label" parent="CenterContainer/PanelContainer/Control"]
 layout_mode = 0
 offset_left = 224.0
@@ -169,5 +153,3 @@ offset_right = 307.0
 offset_bottom = 204.0
 text = "Auto Retry:"
 label_settings = SubResource("LabelSettings_g18iw")
-
-

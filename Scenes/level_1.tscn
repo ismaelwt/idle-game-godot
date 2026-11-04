@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=25 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -16,22 +16,6 @@
 [ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_d8dne"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="14_yy84a"]
 [ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_0jgxx"]
-[ext_resource type="Texture2D" uid="uid://bi60c71gul2v6" path="res://UI/UISprites/characterUI/hp_icon.png" id="15_ghgdn"]
-[ext_resource type="Script" uid="uid://ccsoe75qt5qxb" path="res://Script/character_hud.gd" id="16_npx7t"]
-[ext_resource type="Texture2D" uid="uid://e06xyp7ikun3" path="res://UI/UISprites/characterUI/mp_icon.png" id="16_w6q3x"]
-[ext_resource type="Texture2D" uid="uid://chnwpajyjhr3e" path="res://UI/UISprites/characterUI/Mage.png" id="17_soyxa"]
-[ext_resource type="Texture2D" uid="uid://bt1gvsf66bmbw" path="res://UI/CharacterSelectionUI/element_2.png" id="17_w6q3x"]
-[ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
-[ext_resource type="Texture2D" uid="uid://dyqpovl1t4jyp" path="res://UI/UISprites/characterUI/Knight.png" id="23_tohvi"]
-[ext_resource type="Texture2D" uid="uid://2mqxcw8cptnr" path="res://UI/UISprites/elements/element_4.png" id="23_u8waq"]
-[ext_resource type="Script" uid="uid://dkls6mhvlbhll" path="res://Script/skill_hud_slot.gd" id="25_nvvmv"]
-[ext_resource type="Texture2D" uid="uid://b5h7074odeald" path="res://UI/UISprites/configurations_icon_button.png" id="26_yy7ss"]
-[ext_resource type="Texture2D" uid="uid://di7j4kx1xv6ju" path="res://UI/UISprites/InventoryButton.png" id="27_a6lkv"]
-[ext_resource type="Texture2D" uid="uid://cerk8axxjseyy" path="res://UI/UISprites/SkillsButton.png" id="28_jwru3"]
-[ext_resource type="Texture2D" uid="uid://dlimabx3shrb1" path="res://UI/UISprites/MapButton.png" id="29_vesd6"]
-[ext_resource type="Texture2D" uid="uid://bll7o8pdsmhbl" path="res://UI/UISprites/Icon_button_ShopCart.png" id="30_w6q3x"]
-[ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
-[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -75,155 +59,7 @@ enemy_scene = ExtResource("7_4qhvg")
 amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qhvg"]
-bg_color = Color(0, 0, 0, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tohvi"]
-bg_color = Color(1, 0.105882354, 0, 1)
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t405x"]
-bg_color = Color(0, 0, 0, 0)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rby12"]
-bg_color = Color(0.23529412, 0.7372549, 0.9882353, 1)
-corner_radius_top_right = 15
-corner_radius_bottom_right = 15
-
-[sub_resource type="LabelSettings" id="LabelSettings_kjoi8"]
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwf64"]
-bg_color = Color(0.8156863, 0.5411765, 0, 0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xo1hl"]
-bg_color = Color(0.7394663, 0.4176499, 0.22714403, 0.6509804)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bq53a"]
-bg_color = Color(0.41342682, 0.34807652, 0.25594318, 1)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.24142537, 0.11934135, 0.014748032, 0.5921569)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="LabelSettings" id="LabelSettings_nuasi"]
-font = ExtResource("18_x3b7j")
-font_size = 18
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27s1b"]
-bg_color = Color(0.67058825, 0.49803922, 0.23921569, 0.8235294)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-
-[sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
-font = ExtResource("18_x3b7j")
-
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
-
-bg_color = Color(0.14117648, 0.14117648, 0.14117648, 0.70980394)
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color(0.9490196, 0.6392157, 0.41960785, 0.93333334)
-corner_radius_top_left = 5
-corner_radius_top_right = 5
-corner_radius_bottom_right = 5
-corner_radius_bottom_left = 5
-
-default_font = ExtResource("18_x3b7j")
-
-load_path = "res://.godot/imported/Window-slot.png-f0eb6b9bac7f4e956e2781cf01cec74b.ctex"
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-bg_color = Color(0, 0, 0, 0.40784314)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.230315, 0.23031494, 0.23031479, 1)
-expand_margin_left = 15.0
-expand_margin_top = 15.0
-expand_margin_right = 15.0
-expand_margin_bottom = 15.0
-shadow_color = Color(0, 0, 0, 0.7058824)
-
-font = ExtResource("18_x3b7j")
-
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-
-texture = ExtResource("57_g0njp")
-
-font = ExtResource("18_x3b7j")
-
-font = ExtResource("18_x3b7j")
-
-texture = ExtResource("31_1qp6s")
-expand_margin_left = 75.0
-expand_margin_top = 70.0
-expand_margin_right = 75.0
-expand_margin_bottom = 70.0
-
-font = ExtResource("18_x3b7j")
-
-font = ExtResource("18_x3b7j")
-
-color = Color(0.47715485, 0.31638956, 0.13299686, 1)
-
-bg_color = Color(0, 0, 0, 0.24313726)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.96862745, 0.78039217, 0.4117647, 0.4117647)
-
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-font = ExtResource("18_x3b7j")
-
-bg_color = Color(0.36862746, 0.36862746, 0.36862746, 0.69803923)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-
-bg_color = Color(0.6, 0.6, 0.6, 0)
-
-bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_right = 10
-corner_radius_bottom_left = 10
-
-bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
-
-
-
-
-
 [node name="Level_1" type="Node3D"]
-
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 texture_filter = 1
@@ -239,15 +75,12 @@ stretch_shrink = 3
 mouse_target = true
 metadata/_edit_use_anchors_ = true
 
-
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(384, 216)
 render_target_update_mode = 4
 
-
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
-
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
@@ -261,7 +94,6 @@ shadow_blur = 0.1
 directional_shadow_mode = 1
 sky_mode = 1
 
-
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(-0.881476, 0.047373705, -0.4698463, -0.41536787, 0.39554948, 0.81915206, 0.2246537, 0.9172219, -0.32898995, -16.333925, 21.972055, -21.354462)
 light_color = Color(0.95473546, 0.95871025, 0.96134657, 1)
@@ -273,36 +105,28 @@ shadow_opacity = 0.85
 shadow_blur = 0.1
 directional_shadow_mode = 1
 
-
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
 environment = SubResource("Environment_d42f2")
-
 
 [node name="WorldScroller" type="Node3D" parent="SubViewportContainer/SubViewport/World" groups=["world_scroller"]]
 script = ExtResource("1_eh1ed")
 speed = 4.0
 
-
 [node name="Tile_00" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
 
-
 [node name="Tile_01" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
-
 
 [node name="Tile_02" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
-
 [node name="Tile_03" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
-
 
 [node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(-1.7320505, 0, 1, 0, 2, 0, -1, 0, -1.7320505, 0, 0, -25)
 script = ExtResource("3_ghgdn")
 hero_z_offset = -4.0
-
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
 transform = Transform3D(0.1545085, -0.2377641, 0.41181955, 0, 0.43301263, 0.25, -0.47552833, -0.077254236, 0.13380827, 5, 4, -0.5)
@@ -311,17 +135,14 @@ current = true
 size = 10.0
 far = 250.0
 
-
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
 cast_shadow = 0
 extra_cull_margin = 16384.0
 mesh = SubResource("QuadMesh_nx14l")
 surface_material_override/0 = SubResource("ShaderMaterial_kjoi8")
 
-
 [node name="LevelController" type="Node3D" parent="SubViewportContainer/SubViewport" groups=["level_controller"]]
 script = ExtResource("5_soyxa")
-
 
 [node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_rby12")
@@ -334,10 +155,8 @@ spawn_spacing = 2.0
 x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
-max_level_offset = 5
-max_enemy_level_limit = 15
-boss_level_limit = 15
-
+max_level_offset = 0
+boss_level_limit = 5
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_w8vhy")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
@@ -348,7 +167,6 @@ damage_font_size = 2000
 damage_duration = 1.0
 damage_color = Color(0.98195344, 0.982595, 0.9816391, 1)
 
-
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
 melee_range = 3.0
@@ -356,7 +174,6 @@ damage_font_size = 350
 damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
-
 
 [node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("13_r5dji")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
@@ -367,19 +184,14 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.53871167, 0, 0.038604088, 1)
 
-
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_d8dne")
-
 
 [node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
 script = ExtResource("13_soyxa")
 
-
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_yy84a")
 
-
 [node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
 script = ExtResource("15_0jgxx")
-
