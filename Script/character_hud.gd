@@ -283,6 +283,10 @@ func _on_skill_tree_button_pressed() -> void:
 		if is_instance_valid(selected_stats) and str(selected_stats.get("hero_id")) == "archer":
 			return
 
+	# Reutiliza a referência da cena mesmo quando ela foi aberta pelo Status.
+	if not is_instance_valid(skill_tree):
+		skill_tree = get_parent().get_node_or_null("SkillTree") as Control
+
 	if is_instance_valid(skill_tree):
 		skill_tree.queue_free()
 		skill_tree = null
