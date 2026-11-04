@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://dpd5ncpm2mo38"]
+[gd_scene load_steps=17 format=3 uid="uid://dpd5ncpm2mo38"]
 
 [ext_resource type="PackedScene" uid="uid://dcal1vsjsdpbu" path="res://Assets/GoblinEnemy.fbx" id="1_kq24e"]
 [ext_resource type="PackedScene" uid="uid://c18w8wsvv3c65" path="res://Assets/BowModel/Bow.fbx" id="2_273ox"]
-[ext_resource type="Script" uid="uid://8bhbc2prl18e" path="res://Script/enemy_archer.gd" id="2_hjvj6"]
+[ext_resource type="Script" uid="uid://c1qensq8rawg" path="res://Script/enemy.gd" id="2_hjvj6"]
+[ext_resource type="Script" path="res://Script/EnemyBehaviors/archer_behavior.gd" id="10_archer"]
 [ext_resource type="Animation" uid="uid://dqmvhvj4mw7yb" path="res://Anim/HumanoidEnemy/die.res" id="2_r6vuh"]
 [ext_resource type="Animation" uid="uid://cqet6wkpf86jl" path="res://Anim/HumanoidEnemy/walk.res" id="3_273ox"]
 [ext_resource type="PackedScene" uid="uid://deio2xpb8r2bd" path="res://Scenes/arrow_projectile_1.tscn" id="3_hjvj6"]
@@ -246,9 +247,23 @@ corner_radius_bottom_left = 15
 [node name="GoblinEnemy" groups=["enemies"] instance=ExtResource("1_kq24e")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
 script = ExtResource("2_hjvj6")
-speed = 2.0
-damage_outline_size = 128
+speed = 0.5
+max_health = 30.0
+xp_reward = 45
+gold_reward = 16
+damage_color = Color(1, 1, 1, 1)
+damage_per_level = 0.06
+attack_range = 15.0
+attack_cooldown = 2.0
+attack_damage = 5.0
+attack_hit_delay = 0.35
+approach_enabled = true
 projectile_scene = ExtResource("3_hjvj6")
+idle_animation = &"enemy_archer/bow_idle"
+walk_animation = &"enemy_archer/walk"
+attack_animation = &"enemy_archer/bow_attack"
+death_animation = &"enemy_archer/die"
+damage_outline_size = 128
 
 [node name="Skeleton" parent="." index="0"]
 bones/0/position = Vector3(-0.0048484923, 0.60676676, 0.0052563013)
@@ -360,3 +375,6 @@ value = 100.0
 show_percentage = false
 
 [editable path="Skeleton/BoneAttachment3D/Bow"]
+
+[node name="ArcherBehavior" type="Node" parent="."]
+script = ExtResource("10_archer")
