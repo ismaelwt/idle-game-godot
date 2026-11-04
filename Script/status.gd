@@ -458,8 +458,10 @@ func _on_item_pressed(item: ItemInstance) -> void:
 
 
 func _on_close_pressed() -> void:
-	if item_tooltip != null:
+	if is_instance_valid(item_tooltip):
 		item_tooltip.hide_tooltip()
+		item_tooltip.queue_free()
+		item_tooltip = null
 
 	# Fecha e libera toda a interface do Status; ela será recriada ao abrir novamente.
 	queue_free()
