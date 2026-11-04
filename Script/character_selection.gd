@@ -1,6 +1,8 @@
 
 extends Node3D
 
+const SELECTION_MUSIC: AudioStream = preload("res://Sounds/CharacterSelection/character_selection.mp3")
+
 @onready var mage: Node3D = $SubViewportContainer/SubViewport/Mage
 @onready var knight: Node3D = $SubViewportContainer/SubViewport/Knight
 @onready var archer: Node3D = $SubViewportContainer/SubViewport/Archer
@@ -20,10 +22,15 @@ var selected_index: int = 0
 
 func _ready() -> void:
 	characters = [knight, archer, mage]
+	AudioManager.play_music(SELECTION_MUSIC, 1.0)
 	next.pressed.connect(select_next)
 	previous.pressed.connect(select_previous)
 	start_button.pressed.connect(on_started_pressed)
 	update_selection()
+
+func _exit_tree() -> void:
+	AudioManager.stop_music(1.0)
+
 
 func select_next() -> void:
 	selected_index = (selected_index + 1) % characters.size()
