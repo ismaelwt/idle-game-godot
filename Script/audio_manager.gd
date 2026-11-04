@@ -74,7 +74,7 @@ func stop_music(fade_duration: float = 0.0) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and event.pressed and (event.button_index == MOUSE_BUTTON_LEFT or event.button_index == MOUSE_BUTTON_RIGHT):
 		var hovered := get_viewport().gui_get_hovered_control()
 		if _is_interactive_control(hovered):
 			play_ui_interaction()
@@ -89,7 +89,7 @@ func _input(event: InputEvent) -> void:
 
 
 func play_ui_interaction() -> void:
-	play_sfx(UI_INTERACTION_SOUND)
+	play_sfx(UI_INTERACTION_SOUND, randf_range(0.95, 1.05))
 
 
 func _is_interactive_control(control: Control) -> bool:
