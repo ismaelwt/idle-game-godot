@@ -434,7 +434,7 @@ func _on_progress_button_pressed() -> void:
 # =========================================================
 
 func _on_close_pressed() -> void:
-	hide()
+	queue_free()
 
 
 func _on_add_skill_pressed(skill_id: String) -> void:
