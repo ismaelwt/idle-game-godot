@@ -70,7 +70,7 @@ func update_behavior(delta: float) -> void:
 
 	if direction.length_squared() > 0.001:
 		if enemy.animation_player.current_animation != enemy.walk_animation:
-			enemy.animation_player.play("enemy/walk")
+			enemy.animation_player.play(enemy.walk_animation)
 
 		enemy.look_at_target(target)
 
