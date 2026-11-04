@@ -1,67 +1,40 @@
-[gd_scene load_steps=42 format=3]
-
-[ext_resource type="Script" uid="uid://cxp2tv7l0i81c" path="res://Script/status.gd" id="49_62cx3"]
-
-[ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
-
-[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
-
-[ext_resource type="Texture2D" uid="uid://b13qg8ugmd3cw" path="res://UI/Forja.png" id="51_ghgdn"]
-
-[ext_resource type="Texture2D" uid="uid://ctqiuorq6wxse" path="res://UI/blanck_button.png" id="53_t405x"]
-
-[ext_resource type="Texture2D" uid="uid://ctef08pvcnevn" path="res://UI/UISprites/Knight_Avatar.png" id="53_4qhvg"]
-
-[ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="54_tohvi"]
-
-[ext_resource type="Texture2D" uid="uid://dl4tfr2vvainy" path="res://UI/UISprites/Mage_Avatar.png" id="55_t405x"]
-
-[ext_resource type="Texture2D" uid="uid://cv7g8frp1rykp" path="res://UI/UISprites/Archer_Avatar.png" id="56_tohvi"]
-
-[ext_resource type="Texture2D" uid="uid://ky7ellurff3k" path="res://icons/mage-bg.png" id="50_ho6uo"]
-
-[ext_resource type="Texture2D" uid="uid://cosmu0j2l8ojb" path="res://icons/barbute (1).png" id="51_0yaw2"]
-
-[ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
-
-[ext_resource type="Texture2D" uid="uid://enm03es8ronf" path="res://icons/chest-armor.png" id="52_rgvj4"]
-
-[ext_resource type="Texture2D" uid="uid://bgqkahavllawl" path="res://icons/gladius.png" id="53_h3qy2"]
-
-[ext_resource type="Texture2D" uid="uid://ikdcrw8tdtkw" path="res://icons/gloves.png" id="54_c2sqv"]
-
-[ext_resource type="Texture2D" uid="uid://mimvw1ydfp56" path="res://icons/belt.png" id="46_w8vhy"]
-
-[ext_resource type="Texture2D" uid="uid://b4j4pexby1uv1" path="res://icons/armored-pants.png" id="55_wpjht"]
-
-[ext_resource type="Texture2D" uid="uid://uc7tof6wpa0h" path="res://icons/leg-armor.png" id="56_v7pp5"]
-
-[ext_resource type="Texture2D" uid="uid://bltsrlhfgr6lj" path="res://icons/power-ring.png" id="48_w8vhy"]
-
-[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
-
-[ext_resource type="Texture2D" uid="uid://cprnmkg6ju63b" path="res://UI/UISprites/Icon_button_Chest.png" id="58_ye3n6"]
-
-[ext_resource type="Texture2D" uid="uid://nigh4conaguo" path="res://UI/UISprites/Icon_button_Sell_All_Itens.png" id="59_honab"]
-
-[ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
-
-[ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_re70m"]
+[gd_scene load_steps=42 format=3 uid="uid://wr8k7inmswj4"]
 
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
+[ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
+[ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
+[ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
+[ext_resource type="Texture2D" uid="uid://mimvw1ydfp56" path="res://icons/belt.png" id="46_w8vhy"]
+[ext_resource type="Texture2D" uid="uid://c28dw1tnsa1ru" path="res://icons/disabled-plus-button.png" id="47_re70m"]
+[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
+[ext_resource type="Texture2D" uid="uid://bltsrlhfgr6lj" path="res://icons/power-ring.png" id="48_w8vhy"]
+[ext_resource type="Script" uid="uid://cxp2tv7l0i81c" path="res://Script/status.gd" id="49_62cx3"]
+[ext_resource type="Texture2D" uid="uid://ky7ellurff3k" path="res://icons/mage-bg.png" id="50_ho6uo"]
+[ext_resource type="Texture2D" uid="uid://cosmu0j2l8ojb" path="res://icons/barbute (1).png" id="51_0yaw2"]
+[ext_resource type="Texture2D" uid="uid://b13qg8ugmd3cw" path="res://UI/Forja.png" id="51_ghgdn"]
+[ext_resource type="Texture2D" uid="uid://enm03es8ronf" path="res://icons/chest-armor.png" id="52_rgvj4"]
+[ext_resource type="Texture2D" uid="uid://ctef08pvcnevn" path="res://UI/UISprites/Knight_Avatar.png" id="53_4qhvg"]
+[ext_resource type="Texture2D" uid="uid://bgqkahavllawl" path="res://icons/gladius.png" id="53_h3qy2"]
+[ext_resource type="Texture2D" uid="uid://ctqiuorq6wxse" path="res://UI/blanck_button.png" id="53_t405x"]
+[ext_resource type="Texture2D" uid="uid://ikdcrw8tdtkw" path="res://icons/gloves.png" id="54_c2sqv"]
+[ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="54_tohvi"]
+[ext_resource type="Texture2D" uid="uid://dl4tfr2vvainy" path="res://UI/UISprites/Mage_Avatar.png" id="55_t405x"]
+[ext_resource type="Texture2D" uid="uid://b4j4pexby1uv1" path="res://icons/armored-pants.png" id="55_wpjht"]
+[ext_resource type="Texture2D" uid="uid://cv7g8frp1rykp" path="res://UI/UISprites/Archer_Avatar.png" id="56_tohvi"]
+[ext_resource type="Texture2D" uid="uid://uc7tof6wpa0h" path="res://icons/leg-armor.png" id="56_v7pp5"]
+[ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
+[ext_resource type="Texture2D" uid="uid://cprnmkg6ju63b" path="res://UI/UISprites/Icon_button_Chest.png" id="58_ye3n6"]
+[ext_resource type="Texture2D" uid="uid://nigh4conaguo" path="res://UI/UISprites/Icon_button_Sell_All_Itens.png" id="59_honab"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
 bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
-
 
 [sub_resource type="LabelSettings" id="LabelSettings_rby12"]
 font = ExtResource("18_x3b7j")
 font_size = 12
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j13t8"]
 bg_color = Color(0.124404095, 0.10801899, 0.09396889, 0.49803922)
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y1rf3"]
 bg_color = Color(0.14117648, 0.14117648, 0.14117648, 0.70980394)
@@ -75,19 +48,15 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
-
 [sub_resource type="Theme" id="Theme_g18iw"]
 default_font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xo1hl"]
 load_path = "res://.godot/imported/Window-slot.png-f0eb6b9bac7f4e956e2781cf01cec74b.ctex"
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_sfey3"]
 font = ExtResource("18_x3b7j")
 font_size = 12
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k8xho"]
 bg_color = Color(0, 0, 0, 0.40784314)
@@ -102,10 +71,8 @@ expand_margin_right = 15.0
 expand_margin_bottom = 15.0
 shadow_color = Color(0, 0, 0, 0.7058824)
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_w3147"]
 font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27s1b"]
 bg_color = Color(0.67058825, 0.49803922, 0.23921569, 0.8235294)
@@ -114,32 +81,26 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
 font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="LabelSettings" id="LabelSettings_4qhvg"]
 font = ExtResource("18_x3b7j")
 font_size = 12
 
-
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ibdrw"]
-
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ibdrw"]
 texture = ExtResource("57_g0njp")
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_4k5rq"]
 font = ExtResource("18_x3b7j")
-
 
 [sub_resource type="LabelSettings" id="LabelSettings_5jii6"]
 font = ExtResource("18_x3b7j")
 
-
 [node name="Status" type="Panel"]
+z_index = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1043,4 +1004,3 @@ offset_top = 259.0
 offset_right = 237.0
 offset_bottom = 349.0
 size_flags_vertical = 3
-

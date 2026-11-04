@@ -318,6 +318,7 @@ func _on_status_button_pressed() -> void:
 		return
 
 	get_parent().add_child(status_player)
+	status_player.visible = true
 	status_player.set_selected_hero(selected_hero)
 
 
