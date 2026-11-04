@@ -258,6 +258,10 @@ func attack() -> void:
 
 
 func _on_animation_finished(anim_name: StringName) -> void:
+	var behavior := get_node_or_null("EnemyBehavior")
+	if is_instance_valid(behavior) and behavior.has_method("on_animation_finished"):
+		behavior.call("on_animation_finished", anim_name)
+
 	if anim_name == attack_animation:
 		if not dying:
 			attacking = false
