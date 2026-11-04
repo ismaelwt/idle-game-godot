@@ -20,13 +20,13 @@
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
 
-[sub_resource type="Sky" id="Sky_t405x"]
+[sub_resource type="Sky" id="Sky_8i23i"]
 sky_material = SubResource("PhysicalSkyMaterial_5jii6")
 
 [sub_resource type="Environment" id="Environment_d42f2"]
 background_mode = 2
 background_energy_multiplier = 2.0
-sky = SubResource("Sky_t405x")
+sky = SubResource("Sky_8i23i")
 ssil_intensity = 4.0
 sdfgi_read_sky_light = false
 
@@ -51,6 +51,7 @@ metadata/_custom_type_script = "uid://p802c5ldrgy"
 [sub_resource type="Resource" id="Resource_tohvi"]
 script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
+amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_npx7t"]

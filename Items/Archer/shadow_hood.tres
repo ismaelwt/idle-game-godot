@@ -9,6 +9,7 @@ item_id = &"shadow_hood_01"
 item_name = "Capuz das sombas"
 description = "Capuz das sombras"
 icon = ExtResource("1_0kmg2")
+item_type = 1
 item_class = 2
 rarity = 2
 strength_max = 3

@@ -514,7 +514,7 @@ func show_gold_reward() -> void:
 	amount_label.font_size = 100
 	amount_label.outline_size = damage_outline_size
 	amount_label.outline_modulate = damage_outline_color
-	amount_label.text = str(int(gold_reward))
+	amount_label.text = "(" + str( int(gold_reward))  + ")"
 	amount_label.modulate = Color(1.0, 0.8, 0.0, 1.0)
 	amount_label.no_depth_test = true
 	amount_label.render_priority = 3
@@ -529,15 +529,15 @@ func show_gold_reward() -> void:
 		screen_right = camera.global_basis.x.normalized()
 
 	coin_icon.position = reward_visual.to_local(
-		reward_visual.global_position - screen_right * 0.18
+		reward_visual.global_position - screen_right * 0.50
 	)
 	amount_label.position = reward_visual.to_local(
-		reward_visual.global_position + screen_right * 0.18
+		reward_visual.global_position + screen_right * 0.50
 	)
 
 	var start_position: Vector3 = global_position + Vector3(
 		0.0,
-		damage_height,
+		damage_height + 2.0,
 		0.0
 	)
 	reward_visual.global_position = start_position

@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8jds7pio5pvl"]
+
+[ext_resource type="PackedScene" uid="uid://l66qjptmv58h" path="res://Assets/gobline_estandarte_pixel.fbx" id="1_akxmp"]
+[ext_resource type="Texture2D" uid="uid://dg6mg68fgmxso" path="res://Assets/pixellab---Goblin-Danger-Banner---2D-Pi-1793811889040.png" id="2_gk55h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5vqi1"]
+resource_name = "Material.003"
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("2_gk55h")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 0.0
+texture_filter = 0
+texture_repeat = false
+
+[node name="gobline_estandarte_pixel" instance=ExtResource("1_akxmp")]
+
+[node name="Plane" parent="." index="0"]
+material_override = SubResource("StandardMaterial3D_5vqi1")
