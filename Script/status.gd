@@ -1206,6 +1206,10 @@ func _on_skill_tree_button_pressed() -> void:
 	if is_instance_valid(character_stats) and str(character_stats.get("hero_id")) == "archer":
 		return
 
+	# Reutiliza a árvore caso ela tenha sido aberta pelo HUD.
+	if not is_instance_valid(skill_tree):
+		skill_tree = get_parent().get_node_or_null("SkillTree") as Control
+
 	if is_instance_valid(skill_tree):
 		skill_tree.queue_free()
 		skill_tree = null
