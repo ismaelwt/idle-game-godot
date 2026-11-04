@@ -194,6 +194,10 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	update_health_bar()
 	show_damage(damage, is_critical)
 
+	var behavior := get_node_or_null("EnemyBehavior")
+	if is_instance_valid(behavior) and behavior.has_method("on_enemy_damaged"):
+		behavior.call("on_enemy_damaged")
+
 	if health <= 0.0:
 		die()
 		return
