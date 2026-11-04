@@ -1,4 +1,4 @@
-[gd_scene load_steps=64 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=52 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -31,15 +31,7 @@
 [ext_resource type="Texture2D" uid="uid://dlimabx3shrb1" path="res://UI/UISprites/MapButton.png" id="29_vesd6"]
 [ext_resource type="Texture2D" uid="uid://bll7o8pdsmhbl" path="res://UI/UISprites/Icon_button_ShopCart.png" id="30_w6q3x"]
 [ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
-[ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
-[ext_resource type="Script" uid="uid://75cb4rq3ixe1" path="res://Script/retry_panel.gd" id="60_0vx6l"]
-[ext_resource type="Texture2D" uid="uid://bu4n212oc0cpd" path="res://UI/UISprites/Window.png" id="61_egw17"]
-[ext_resource type="Texture2D" uid="uid://e8etrxpp53ok" path="res://UI/UISprites/Retry.png" id="62_17s6b"]
-[ext_resource type="Texture2D" uid="uid://dveswenxmwfsw" path="res://UI/UISprites/Map.png" id="63_hyae8"]
-[ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="64_0jucf"]
-[ext_resource type="Texture2D" uid="uid://cka0x1itkiqh7" path="res://UI/UISprites/Icon_button_arrow_turning_on.png" id="65_dwn4r"]
-[ext_resource type="Texture2D" uid="uid://djslkugbuk3bw" path="res://UI/UISprites/Icon_button_arrow_turning_off.png" id="66_x3r2u"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -139,8 +131,6 @@ corner_radius_bottom_left = 25
 [sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
 font = ExtResource("18_x3b7j")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
-bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
 
 font = ExtResource("18_x3b7j")
 font_size = 12
@@ -228,20 +218,8 @@ corner_radius_bottom_left = 10
 
 bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m5eas"]
-content_margin_left = 30.0
-content_margin_top = 25.0
-content_margin_right = 30.0
-content_margin_bottom = 25.0
-bg_color = Color(0, 0, 0, 0)
-border_color = Color(0, 0, 0, 0.74509805)
-border_blend = true
 
-[sub_resource type="LabelSettings" id="LabelSettings_d42f2"]
-font = ExtResource("18_x3b7j")
 
-[sub_resource type="LabelSettings" id="LabelSettings_g18iw"]
-font = ExtResource("18_x3b7j")
 
 
 [node name="Level_1" type="Node3D"]
@@ -404,147 +382,4 @@ script = ExtResource("14_yy84a")
 
 [node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
 script = ExtResource("15_0jgxx")
-
-
-[node name="RetryPanel" type="Panel" parent="SubViewportContainer/UI"]
-visible = false
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -3.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_vib74")
-script = ExtResource("60_0vx6l")
-
-
-[node name="CenterContainer" type="CenterContainer" parent="SubViewportContainer/UI/RetryPanel"]
-layout_mode = 1
-anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -1.5258789e-05
-
-
-[node name="PanelContainer" type="PanelContainer" parent="SubViewportContainer/UI/RetryPanel/CenterContainer"]
-custom_minimum_size = Vector2(380, 250)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_m5eas")
-
-
-[node name="Background" type="Control" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
-layout_mode = 2
-
-
-[node name="TextureRect" type="TextureRect" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Background"]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = -0.333
-anchor_top = -0.49300003
-anchor_right = 1.292
-anchor_bottom = 1.4130001
-offset_left = 11.560013
-offset_top = 6.600006
-offset_right = -0.44000244
-offset_bottom = 4.6999817
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("61_egw17")
-stretch_mode = 6
-
-
-[node name="CloseButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Background/TextureRect"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -36.0
-offset_top = -79.30002
-offset_right = 40.0
-offset_bottom = -16.0
-grow_horizontal = 2
-grow_vertical = 0
-texture_normal = ExtResource("48_73j5b")
-stretch_mode = 5
-
-
-[node name="VBoxContainer" type="VBoxContainer" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-
-[node name="Title" type="Label" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-text = "Defeated!!!"
-label_settings = SubResource("LabelSettings_d42f2")
-horizontal_alignment = 1
-
-
-[node name="Retry" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("62_17s6b")
-stretch_mode = 5
-
-
-[node name="Map" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("63_hyae8")
-stretch_mode = 5
-
-
-[node name="Next" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/VBoxContainer"]
-layout_mode = 2
-texture_normal = ExtResource("64_0jucf")
-stretch_mode = 5
-
-
-[node name="Control" type="Control" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer"]
-layout_mode = 2
-mouse_filter = 2
-
-
-[node name="EnableAutoRetryButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
-z_index = 1
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.95300007
-anchor_top = -0.065000005
-anchor_right = 1.047
-anchor_bottom = 0.085
-offset_left = 1.039978
-offset_top = 191.0
-offset_right = 0.95999146
-offset_bottom = 191.0
-texture_normal = ExtResource("65_dwn4r")
-ignore_texture_size = true
-stretch_mode = 5
-
-
-[node name="DisableAutoRetryButton" type="TextureButton" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
-z_index = 1
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.95300007
-anchor_top = -0.065000005
-anchor_right = 1.047
-anchor_bottom = 0.085
-offset_left = 1.039978
-offset_top = 191.0
-offset_right = 0.95999146
-offset_bottom = 191.0
-texture_normal = ExtResource("66_x3r2u")
-ignore_texture_size = true
-stretch_mode = 5
-
-
-[node name="Label" type="Label" parent="SubViewportContainer/UI/RetryPanel/CenterContainer/PanelContainer/Control"]
-layout_mode = 0
-offset_left = 224.0
-offset_top = 181.0
-offset_right = 307.0
-offset_bottom = 204.0
-text = "Auto Retry:"
-label_settings = SubResource("LabelSettings_g18iw")
 
