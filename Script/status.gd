@@ -29,7 +29,7 @@ var item_tooltip: ItemTooltip
 @onready var magic_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/MagicDefense
 @onready var physical_defense_label = $CenterContainer/PanelContainer/VBoxContainer/VBoxContainer1/PhysicalDefense
 
-@onready var skill_tree: Control = $"../SkillTree"
+var skill_tree: Control = null
 
 @onready var skill_tree_button = $CenterContainer/PanelContainer/Background/SkillsButton
 @onready var attributes_button: TextureButton = $CenterContainer/PanelContainer/Background/AtributtesButton
@@ -1206,16 +1206,25 @@ func _on_skill_tree_button_pressed() -> void:
 	if is_instance_valid(character_stats) and str(character_stats.get("hero_id")) == "archer":
 		return
 
-	if not is_instance_valid(skill_tree):
+	if is_instance_valid(skill_tree):
+		skill_tree.queue_free()
+		skill_tree = null
 		return
 
-	# A árvore aberta pelo Status deve usar o herói atualmente exibido,
-	# não a seleção global nem necessariamente o herói principal.
-	if skill_tree.has_method("set_selected_hero"):
-		skill_tree.set_selected_hero(active_hero)
+	# A árvore aberta pelo Status usa o herói atualmente exibido.
+	var skill_tree_scene := load("res://Scenes/skill_tree.tscn") as PackedScene
+	if skill_tree_scene == null:
+		push_error("Não foi possível carregar Scenes/skill_tree.tscn.")
+		return
 
-	skill_tree.visible = not skill_tree.visible
+	skill_tree = skill_tree_scene.instantiate() as Control
+	if skill_tree == null:
+		push_error("A cena SkillTree não possui uma raiz Control válida.")
+		return
 
+	get_parent().add_child(skill_tree)
+	skill_tree.visible = true
+	skill_tree.set_selected_hero(active_hero)
 
 func _on_attributes_button_pressed() -> void:
 	if not is_instance_valid(attributes_control):
