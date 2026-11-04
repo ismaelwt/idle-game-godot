@@ -87,11 +87,11 @@ func _ready() -> void:
 	base_gold_reward = gold_reward
 
 	health = max_health
-	updatfunc _process(delta: float) -> void:
+
+func _process(delta: float) -> void:
 	var melee_behavior := get_node_or_null("MeleeBehavior")
 	if is_instance_valid(melee_behavior):
 		melee_behavior.call("update_behavior", delta)
- step_distance
 
 
 
