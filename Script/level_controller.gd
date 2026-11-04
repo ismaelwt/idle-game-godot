@@ -4,6 +4,7 @@ extends Node
 
 
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
+const LEVEL_MUSIC: AudioStream = preload("res://Sounds/forest_rhythm.mp3")
 enum State {
 	PREPARING,
 	RUNNING,
@@ -84,6 +85,7 @@ func _ready():
 
 	automatic_retry = SaveManager.load_auto_retry()
 
+	AudioManager.play_music(LEVEL_MUSIC, 1.0)
 	start_running()
 
 	await get_tree().create_timer(1.0).timeout
