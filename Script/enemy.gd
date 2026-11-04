@@ -361,9 +361,8 @@ func play_gold_drop_sound() -> void:
 	if not is_inside_tree():
 		return
 
-	AudioManager.play_sfx_3d(
+	AudioManager.play_sfx(
 		GOLD_DROP_SOUND,
-		global_position,
 		randf_range(0.95, 1.05)
 	)
 
