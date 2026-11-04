@@ -65,7 +65,6 @@ const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
 const GOLD_DROP_SOUND: AudioStream = preload("res://Sounds/drop_coin.mp3")
 
-@onready var audio_player = $AudioStreamPlayer
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
 @onready var health_bar_display: Sprite3D = $HealthBarDisplay
@@ -362,17 +361,11 @@ func play_gold_drop_sound() -> void:
 	if not is_inside_tree():
 		return
 
-	var audio_parent: Node = get_tree().current_scene
-	if audio_parent == null:
-		audio_parent = get_parent()
-
-	if audio_parent == null:
-		return
-
-	audio_player.stream = GOLD_DROP_SOUND
-	audio_player.finished.connect(audio_player.queue_free)
-	audio_player.pitch_scale = randf_range(0.95, 1.05)
-	audio_player.play()
+	AudioManager.play_sfx_3d(
+		GOLD_DROP_SOUND,
+		global_position,
+		randf_range(0.95, 1.05)
+	)
 
 
 func show_gold_reward() -> void:
