@@ -2,8 +2,15 @@
 extends CanvasLayer
 
 const CHARACTER_HUD_SCENE: PackedScene = preload("res://Scenes/character_hud.tscn")
+const RETRY_PANEL_SCENE: PackedScene = preload("res://Scenes/retry_panel.tscn")
 
 func _enter_tree() -> void:
+	# RetryPanel precisa existir antes da HUD, pois a HUD resolve ../RetryPanel em @onready.
+	if get_node_or_null("RetryPanel") == null:
+		var retry_panel := RETRY_PANEL_SCENE.instantiate()
+		retry_panel.name = "RetryPanel"
+		add_child(retry_panel)
+
 	if get_node_or_null("CharacterHUD") == null:
 		var character_hud := CHARACTER_HUD_SCENE.instantiate()
 		character_hud.name = "CharacterHUD"
