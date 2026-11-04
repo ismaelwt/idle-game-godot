@@ -495,27 +495,24 @@ func show_gold_reward() -> void:
 	if tree == null:
 		return
 
-	var label := Label3D.new()
-	label.name = "GoldRewardVisual"
-	label.font = DAMAGE_FONT
-	label.font_size = damage_font_size
-	label.outline_size = damage_outline_size
-	label.outline_modulate = damage_outline_color
-	label.text = "+" + str(int(gold_reward)) + " GOLD"
-	label.modulate = Color(1.0, 0.8, 0.0, 1.0)
-	label.no_depth_test = true
-	label.render_priority = 3
-	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	var coin_icon := Sprite3D.new()
+	coin_icon.name = "GoldRewardVisual"
+	coin_icon.texture = GOLD_ICON
+	coin_icon.pixel_size = 0.02
+	coin_icon.modulate = Color.WHITE
+	coin_icon.no_depth_test = true
+	coin_icon.render_priority = 3
+	coin_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 
-	add_child(label)
-	label.top_level = true
+	add_child(coin_icon)
+	coin_icon.top_level = true
 
 	var start_position: Vector3 = global_position + Vector3(
 		0.0,
 		damage_height,
 		0.0
 	)
-	label.global_position = start_position
+	coin_icon.global_position = start_position
 
 	var direction := Vector3(
 		randf_range(-1.0, 1.0),
@@ -528,11 +525,11 @@ func show_gold_reward() -> void:
 	var elapsed := 0.0
 
 	while elapsed < damage_duration:
-		if not is_instance_valid(label):
+		if not is_instance_valid(coin_icon):
 			return
 
 		if not is_inside_tree():
-			label.queue_free()
+			coin_icon.queue_free()
 			return
 
 		elapsed += get_process_delta_time()
@@ -547,7 +544,7 @@ func show_gold_reward() -> void:
 		)
 		var vertical_offset: float = sin(PI * progress) * pop_height
 
-		label.global_position = (
+		coin_icon.global_position = (
 			start_position
 			+ horizontal_offset
 			+ Vector3(0.0, vertical_offset, 0.0)
@@ -555,8 +552,8 @@ func show_gold_reward() -> void:
 
 		await tree.process_frame
 
-	if is_instance_valid(label):
-		label.queue_free()
+	if is_instance_valid(coin_icon):
+		coin_icon.queue_free()
 
 func update_health_bar() -> void:
 	if not is_instance_valid(health_bar):
