@@ -53,6 +53,7 @@ var level_label: Label3D
 @export var attack_hit_delay: float = 1.0
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
+const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
 
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
@@ -287,6 +288,7 @@ func die() -> void:
 	attacking = false
 	combat_target = null
 
+	show_gold_reward()
 	animation_player.play("enemy/die")
 
 	# Desativa os colisores imediatamente.
@@ -483,6 +485,45 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 
 	if is_instance_valid(label):
 		label.queue_free()
+
+
+func show_gold_reward() -> void:
+	var scene := get_tree().current_scene
+	if not is_instance_valid(scene):
+		return
+
+	var coin_icon := Sprite3D.new()
+	coin_icon.name = "GoldRewardVisual"
+	coin_icon.texture = GOLD_ICON
+	coin_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	coin_icon.no_depth_test = true
+	coin_icon.render_priority = 4
+	coin_icon.pixel_size = 0.001
+	coin_icon.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
+	coin_icon.modulate = Color.WHITE
+
+	# O visual fica na cena principal para continuar aparecendo
+	# mesmo depois que a animação de morte remover o inimigo.
+	scene.add_child(coin_icon)
+	coin_icon.global_position = global_position + Vector3(0.0, 1.2, 0.0)
+
+	var start_position := coin_icon.global_position
+	var tween := scene.create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(
+		coin_icon,
+		"global_position",
+		start_position + Vector3(0.0, 0.8, 0.0),
+		0.9
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.tween_property(
+		coin_icon,
+		"modulate:a",
+		0.0,
+		0.9
+	).set_delay(0.15)
+	tween.chain().tween_callback(coin_icon.queue_free)
+
 
 func update_health_bar() -> void:
 	if not is_instance_valid(health_bar):
