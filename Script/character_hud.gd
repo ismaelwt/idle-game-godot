@@ -40,7 +40,7 @@ var party_manager: PartyManager = null
 @onready var skill_tree_button: TextureButton = $HBoxContainer/SkillTreeButton
 @onready var skill_tree_button_points_label: Label = $HBoxContainer/SkillTreeButton/PointsLabel
 
-@onready var status_player: Control = $"../Status"
+var status_player: Control = null
 @onready var status_button: TextureButton = $HBoxContainer/StatusButton
 
 @onready var retry_panel: Control = $"../RetryPanel"
@@ -296,17 +296,29 @@ func _on_skill_tree_button_pressed() -> void:
 func _on_status_button_pressed() -> void:
 	_update_selected_hero()
 
+	# Se já estiver aberto, libera a cena e seus recursos.
+	if is_instance_valid(status_player):
+		status_player.queue_free()
+		status_player = null
+		return
+
 	# O herói pode estar morto e ainda assim precisa continuar gerenciável.
 	if not is_instance_valid(selected_hero):
 		push_warning("Não foi possível encontrar o herói selecionado.")
 		return
 
-	if not is_instance_valid(status_player):
-		push_warning("Painel de status não encontrado.")
+	var status_scene := load("res://Scenes/status.tscn") as PackedScene
+	if status_scene == null:
+		push_error("Não foi possível carregar Scenes/status.tscn.")
 		return
 
+	status_player = status_scene.instantiate() as Control
+	if status_player == null:
+		push_error("A cena Status não possui uma raiz Control válida.")
+		return
+
+	get_parent().add_child(status_player)
 	status_player.set_selected_hero(selected_hero)
-	status_player.visible = not status_player.visible
 
 
 func _on_retry_panel_button_pressed() -> void:
