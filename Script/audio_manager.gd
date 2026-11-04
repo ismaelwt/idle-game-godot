@@ -37,7 +37,7 @@ func play_music(stream: AudioStream, fade_duration: float = 0.0) -> void:
 	music_player.stream = stream
 
 	if fade_duration <= 0.0:
-		music_player.volume_db = linear_to_db(maxf(music_volume, 0.0001))
+		music_player.volume_db = 0.0
 		music_player.play()
 		return
 
@@ -48,7 +48,7 @@ func play_music(stream: AudioStream, fade_duration: float = 0.0) -> void:
 	music_tween.tween_property(
 		music_player,
 		"volume_db",
-		linear_to_db(maxf(music_volume, 0.0001)),
+		0.0,
 		fade_duration
 	)
 
