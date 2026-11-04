@@ -46,7 +46,7 @@ var status_player: Control = null
 @onready var retry_panel: Control = $"../RetryPanel"
 @onready var retry_panel_button: TextureButton = $HBoxContainer/RetryPanelButton
 
-@onready var skill_tree: Control = $"../SkillTree"
+var skill_tree: Control = null
 @onready var shop_button: TextureButton = $CompanionShop
 
 func _ready() -> void:
@@ -283,15 +283,28 @@ func _on_skill_tree_button_pressed() -> void:
 		if is_instance_valid(selected_stats) and str(selected_stats.get("hero_id")) == "archer":
 			return
 
+	if is_instance_valid(skill_tree):
+		skill_tree.queue_free()
+		skill_tree = null
+		return
+
 	if not is_instance_valid(selected_hero):
 		push_warning("Não foi possível encontrar o herói principal para abrir a Skill Tree.")
 		return
 
-	if is_instance_valid(skill_tree) and skill_tree.has_method("set_selected_hero"):
-		skill_tree.set_selected_hero(selected_hero)
+	var skill_tree_scene := load("res://Scenes/skill_tree.tscn") as PackedScene
+	if skill_tree_scene == null:
+		push_error("Não foi possível carregar Scenes/skill_tree.tscn.")
+		return
 
-	skill_tree.visible = not skill_tree.visible
+	skill_tree = skill_tree_scene.instantiate() as Control
+	if skill_tree == null:
+		push_error("A cena SkillTree não possui uma raiz Control válida.")
+		return
 
+	get_parent().add_child(skill_tree)
+	skill_tree.visible = true
+	skill_tree.set_selected_hero(selected_hero)
 
 func _on_status_button_pressed() -> void:
 	_update_selected_hero()
