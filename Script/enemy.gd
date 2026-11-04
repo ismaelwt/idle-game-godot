@@ -52,6 +52,14 @@ var level_label: Label3D
 @export var attack_cooldown: float = 1.0
 @export var attack_damage: float = 3.0
 @export var attack_hit_delay: float = 1.0
+@export var approach_enabled: bool = true
+@export var projectile_scene: PackedScene
+
+@export_category("Animações")
+@export var idle_animation: StringName = &"enemy/idle"
+@export var walk_animation: StringName = &"enemy/walk"
+@export var attack_animation: StringName = &"enemy/attack"
+@export var death_animation: StringName = &"enemy/die"
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
@@ -77,7 +85,7 @@ func _ready() -> void:
 	health_bar_display.visible = true
 	animation_player.animation_finished.connect(_on_animation_finished)
 
-	animation_player.play("enemy/walk")
+	animation_player.play(walk_animation)
 
 	center_position = global_position
 
@@ -206,7 +214,7 @@ func die() -> void:
 	combat_target = null
 
 	show_gold_reward()
-	animation_player.play("enemy/die")
+	animation_player.play(death_animation)
 
 	# Desativa os colisores imediatamente.
 	for child in get_children():
@@ -245,12 +253,12 @@ func attack() -> void:
 
 
 func _on_animation_finished(anim_name: StringName) -> void:
-	if anim_name == "enemy/attack":
+	if anim_name == attack_animation:
 		if not dying:
 			attacking = false
-			animation_player.play("enemy/idle")
+			animation_player.play(idle_animation)
 
-	elif anim_name == "enemy/die":
+	elif anim_name == death_animation:
 		queue_free()
 
 func show_damage(damage: float, is_critical: bool = false) -> void:
