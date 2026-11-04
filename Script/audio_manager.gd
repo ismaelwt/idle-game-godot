@@ -1,4 +1,6 @@
 extends Node
+
+const UI_INTERACTION_SOUND: AudioStream = preload("res://sounds/interact.wav")
 const SETTINGS_PATH := "user://audio_settings.cfg"
 const SETTINGS_SECTION := "audio"
 
@@ -11,6 +13,7 @@ var sfx_volume: float = 0.8
 
 
 func _ready() -> void:
+	set_process_input(true)
 	_create_music_player()
 	_load_settings()
 	_apply_all_volumes()
@@ -67,6 +70,35 @@ func stop_music(fade_duration: float = 0.0) -> void:
 	music_tween = create_tween()
 	music_tween.tween_property(music_player, "volume_db", -80.0, fade_duration)
 	music_tween.tween_callback(music_player.stop)
+
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		var hovered := get_viewport().gui_get_hovered_control()
+		if _is_interactive_control(hovered):
+			play_ui_interaction()
+	elif event is InputEventScreenTouch and event.pressed:
+		var hovered := get_viewport().gui_get_hovered_control()
+		if _is_interactive_control(hovered):
+			play_ui_interaction()
+	elif event.is_action_pressed("ui_accept") and not event.is_echo():
+		var focused := get_viewport().gui_get_focus_owner()
+		if _is_interactive_control(focused):
+			play_ui_interaction()
+
+
+func play_ui_interaction() -> void:
+	play_sfx(UI_INTERACTION_SOUND)
+
+
+func _is_interactive_control(control: Control) -> bool:
+	var current := control
+	while is_instance_valid(current):
+		if current is BaseButton or current is Range or current is LineEdit or current is TextEdit or current is ItemList or current is Tree or current is TabBar:
+			return true
+		current = current.get_parent() as Control
+	return false
 
 
 func play_sfx(stream: AudioStream, pitch_scale: float = 1.0) -> void:
