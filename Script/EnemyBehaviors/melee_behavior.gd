@@ -69,7 +69,7 @@ func update_behavior(delta: float) -> void:
 	direction.y = 0.0
 
 	if direction.length_squared() > 0.001:
-		if enemy.animation_player.current_animation != "enemy/walk":
+		if enemy.animation_player.current_animation != enemy.walk_animation:
 			enemy.animation_player.play("enemy/walk")
 
 		enemy.look_at_target(target)
@@ -110,7 +110,7 @@ func attack() -> void:
 
 	enemy.attacking = true
 	enemy.attack_timer = enemy.attack_cooldown
-	enemy.animation_player.play("enemy/attack")
+	enemy.animation_player.play(enemy.attack_animation)
 
 	await enemy.get_tree().create_timer(enemy.attack_hit_delay).timeout
 
@@ -153,4 +153,4 @@ func start_combat() -> void:
 	enemy.attacking = false
 	enemy.attack_timer = 0.0
 	enemy.animation_player.speed_scale = 1.0
-	enemy.animation_player.play("enemy/idle")
+	enemy.animation_player.play(enemy.idle_animation)
