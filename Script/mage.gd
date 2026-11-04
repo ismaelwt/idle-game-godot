@@ -131,6 +131,8 @@ func use_skill(skill_id: String, target: Node3D):
 				current_attack_target = null
 				return
 
+			AudioManager.play_sfx(preload("res://Sounds/fireball.mp3"), randf_range(0.95, 1.05))
+
 			var projectile = fireball_scene.instantiate()
 			get_tree().current_scene.add_child(projectile)
 			projectile.global_position = fireball_spawn.global_position
@@ -809,6 +811,8 @@ func basic_attack(target: Node3D):
 	# ==========================================
 	# CRIA PROJÉTIL
 	# ==========================================
+
+	AudioManager.play_sfx(preload("res://Sounds/fireball.mp3"), randf_range(0.95, 1.05))
 
 	var projectile = base_attack_scene.instantiate()
 
