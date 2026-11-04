@@ -82,7 +82,7 @@ corner_radius_bottom_left = 25
 font = ExtResource("18_x3b7j")
 
 
-[node name="CharacterHUD" type="Control" parent="."]
+[node name="CharacterHUD" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
