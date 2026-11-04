@@ -1,5 +1,6 @@
 
 extends Node3D
+class_name Enemy
 
 @export_category("Movimento")
 @export var speed: float = 2.0
@@ -86,95 +87,11 @@ func _ready() -> void:
 	base_gold_reward = gold_reward
 
 	health = max_health
-	update_health_bar()
-
-
-func _process(delta: float) -> void:
-	if dying:
-		return
-
-	if attacking:
-		return
-
-	if in_combat:
-		# Atualiza o alvo caso tenha morrido ou ficado inválido.
-		if not is_valid_combat_target(combat_target):
-			combat_target = select_combat_target()
-
-		if not is_instance_valid(combat_target):
-			in_combat = false
-			return
-
-		# Mede a distância horizontal, ignorando a altura.
-		var enemy_position := Vector2(
-			global_position.x,
-			global_position.z
-		)
-
-		var target_position := Vector2(
-			combat_target.global_position.x,
-			combat_target.global_position.z
-		)
-
-		var enemy_distance := enemy_position.distance_to(target_position)
-
-		# Se o alvo sair do alcance, volta a persegui-lo.
-		if enemy_distance > attack_range + 0.01:
-			in_combat = false
-			attack_timer = 0.0
-			return
-
-		attack_timer -= delta
-
-		if attack_timer <= 0.0:
-			attack()
-
-		return
-
-	# Persegue o herói vivo mais próximo.
-	var target := get_nearest_hero()
-
-	if not is_instance_valid(target):
-		return
-
-	var enemy_pos := Vector2(
-		global_position.x,
-		global_position.z
-	)
-
-	var target_pos := Vector2(
-		target.global_position.x,
-		target.global_position.z
-	)
-
-	var distance := enemy_pos.distance_to(target_pos)
-
-	# Ao chegar ao alcance, fixa o alvo e inicia o combate.
-	if distance <= attack_range + 0.01:
-		combat_target = target
-		start_combat()
-		return
-
-	
-	# Continua perseguindo o herói.
-	var direction := target.global_position - global_position
-	direction.y = 0.0
-
-	if direction.length_squared() > 0.001:
-		# Toca a animação de caminhada enquanto se movimenta.
-		if animation_player.current_animation != "enemy/walk":
-			animation_player.play("enemy/walk")
-
-		# Mantém a orientação para o alvo.
-		look_at_target(target)
-
-		# Avança em direção ao herói.
-		var step_distance: float = minf(
-			speed * delta,
-			maxf(distance - attack_range, 0.0)
-		)
-
-		global_position += direction.normalized() * step_distance
+	updatfunc _process(delta: float) -> void:
+	var melee_behavior := get_node_or_null("MeleeBehavior")
+	if is_instance_valid(melee_behavior):
+		melee_behavior.call("update_behavior", delta)
+ step_distance
 
 
 
@@ -322,73 +239,9 @@ func die() -> void:
 
 
 func attack() -> void:
-	if attacking or dying:
-		return
-
-	# Revalida o alvo sem perder um alvo válido já selecionado.
-	if not is_valid_combat_target(combat_target):
-		combat_target = get_nearest_hero()
-
-	if not is_instance_valid(combat_target):
-		in_combat = false
-		return
-
-	var target: Node3D = combat_target
-
-	# Mede a distância no plano X/Z.
-	var enemy_pos := Vector2(
-		global_position.x,
-		global_position.z
-	)
-
-	var target_pos := Vector2(
-		target.global_position.x,
-		target.global_position.z
-	)
-
-	var distance := enemy_pos.distance_to(target_pos)
-
-	if distance > attack_range + 0.01:
-		in_combat = false
-		attack_timer = 0.0
-		return
-
-	attacking = true
-	attack_timer = attack_cooldown
-
-	animation_player.play("enemy/attack")
-
-	# Espera o momento do impacto.
-	await get_tree().create_timer(attack_hit_delay).timeout
-
-	if not is_instance_valid(self) or dying:
-		return
-
-	# Verifica se o alvo continua válido.
-	if not is_valid_combat_target(target):
-		attacking = false
-		in_combat = false
-		combat_target = null
-		return
-
-	# Confere novamente o alcance antes de aplicar o dano.
-	enemy_pos = Vector2(
-		global_position.x,
-		global_position.z
-	)
-
-	target_pos = Vector2(
-		target.global_position.x,
-		target.global_position.z
-	)
-
-	distance = enemy_pos.distance_to(target_pos)
-
-	if distance <= attack_range + 0.01:
-		if target.has_method("take_damage"):
-			target.take_damage(attack_damage, "physical")
-
-	attacking = false
+	var melee_behavior := get_node_or_null("MeleeBehavior")
+	if is_instance_valid(melee_behavior):
+		melee_behavior.call("attack")
 
 
 func _on_animation_finished(anim_name: StringName) -> void:
@@ -583,22 +436,9 @@ func update_health_bar() -> void:
 
 
 func start_combat() -> void:
-	if dying or health <= 0.0:
-		return
-
-	# Preserva o alvo que já foi escolhido pela perseguição.
-	if not is_valid_combat_target(combat_target):
-		combat_target = get_nearest_hero()
-
-	if not is_instance_valid(combat_target):
-		return
-
-	in_combat = true
-	attacking = false
-	attack_timer = 0.0
-
-	animation_player.speed_scale = 1.0
-	animation_player.play("enemy/idle")
+	var melee_behavior := get_node_or_null("MeleeBehavior")
+	if is_instance_valid(melee_behavior):
+		melee_behavior.call("start_combat")
 
 
 func flash_hit() -> void:
