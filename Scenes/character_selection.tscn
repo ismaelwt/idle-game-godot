@@ -1,6 +1,7 @@
-[gd_scene load_steps=24 format=3 uid="uid://dq8ikoedncwll"]
+[gd_scene load_steps=25 format=3 uid="uid://dq8ikoedncwll"]
 
 [ext_resource type="Script" uid="uid://dnu24abo6csr7" path="res://Script/character_selection.gd" id="1_l3v1h"]
+[ext_resource type="PackedScene" uid="uid://fgafivbrl7ty" path="res://Scenes/torch.tscn" id="2_8eyk7"]
 [ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="2_i640r"]
 [ext_resource type="PackedScene" uid="uid://cxm1g2vbtpghc" path="res://Scenes/character_selection_tile.tscn" id="3_ve3h0"]
 [ext_resource type="Script" uid="uid://cif7ma31nrvyy" path="res://Script/character_selection_knight.gd" id="4_pwu4o"]
@@ -124,6 +125,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40324616, 3.76, -1.6588085)
 
 [node name="SpotLightPosition3" type="Node3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6249254, 3.76, -1.3336817)
+
+[node name="Torch" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_8eyk7")]
+transform = Transform3D(2.5304375, 0, 14.785019, 0, 15.000001, 0, -14.785019, 0, 2.5304375, -3.5132751, 3.6687622, -0.5400696)
+
+[node name="Torch2" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_8eyk7")]
+transform = Transform3D(14.445251, 0, -4.041615, 0, 14.999999, 0, 4.041615, 0, 14.445251, -0.6088562, 3.2822876, -4.0888596)
 
 [node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1.5320886, 0, -1.2855752, 0, 2.0000002, 0, 1.2855749, 0, 1.5320889, -4, 1, 2)

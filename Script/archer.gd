@@ -22,6 +22,8 @@ const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const ARROW_PROJECTILE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+
+@onready var animation_player_bow: AnimationPlayer = $metarig/Skeleton/BoneAttachment3D/Bow/AnimationPlayer
 @onready var character_stats: Node = $CharacterStats
 @onready var arrow_spawn: Marker3D = $ArrowSpawn
 @onready var level_up_effect: Node3D = get_node_or_null("LevelUpEffect")
@@ -154,7 +156,8 @@ func basic_attack(target: Node3D) -> void:
 	attack_timer = attack_cooldown * interval_multiplier
 
 	look_at_target(target)
-	play_animation("archer_attack")
+	play_animation("archer_attack2")
+	animation_player_bow.play("Armature|Bow_Fire")
 
 	await get_tree().create_timer(attack_hit_delay).timeout
 
@@ -196,9 +199,10 @@ func play_animation(animation_name: String) -> void:
 		return
 	if animation_player.has_animation(full_name):
 		animation_player.speed_scale = animation_speed
-		if animation_name == "archer_attack":
-			animation_player.speed_scale = animation_speed
+		if animation_name == "archer_attack2":
+			animation_player.speed_scale = 2.0
 		animation_player.play(full_name, animation_blend)
+		animation_player_bow.play("Armature|Bow_Fire")
 
 
 func look_at_target(target: Node3D) -> void:
@@ -236,7 +240,7 @@ func die() -> void:
 
 
 func _on_animation_finished(animation_name: StringName) -> void:
-	if animation_name == "archer/archer_attack" and not dead:
+	if animation_name == "archer/archer_attack2" and not dead:
 		_finish_attack()
 	elif animation_name == "archer/archer_die":
 		_finish_death()

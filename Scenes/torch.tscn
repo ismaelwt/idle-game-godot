@@ -1,0 +1,58 @@
+[gd_scene load_steps=9 format=3 uid="uid://fgafivbrl7ty"]
+
+[ext_resource type="PackedScene" uid="uid://d2unmvtoa8i4d" path="res://Assets/Torch.fbx" id="1_wced7"]
+[ext_resource type="Shader" uid="uid://cdps0bavy68ul" path="res://Shaders/fireball.gdshader" id="2_h1t0l"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_beu3c"]
+
+[sub_resource type="Gradient" id="Gradient_spjw2"]
+offsets = PackedFloat32Array(0.26791278, 0.9096573)
+colors = PackedColorArray(0.99607843, 0, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_50u72"]
+gradient = SubResource("Gradient_spjw2")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kg6dd"]
+noise_type = 4
+seed = 555
+frequency = 0.0194
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qgf2b"]
+noise = SubResource("FastNoiseLite_kg6dd")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ufd5"]
+render_priority = 0
+shader = ExtResource("2_h1t0l")
+shader_parameter/noise_sampler = SubResource("NoiseTexture2D_qgf2b")
+shader_parameter/gradient_sampler = SubResource("GradientTexture1D_50u72")
+shader_parameter/emission_strength = 2.0
+shader_parameter/dither_scale = 2.0
+shader_parameter/dither_strength = 0.0
+
+[node name="Torch" instance=ExtResource("1_wced7")]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." index="1"]
+transform = Transform3D(0.0001829469, -5.992244e-05, -0.0198414, -3.3295317e-05, -0.022502745, 5.195248e-05, -0.011617534, 6.354851e-05, -0.00031260037, 0, 0.061855197, -9.877719e-05)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_beu3c")
+surface_material_override/0 = SubResource("ShaderMaterial_7ufd5")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="." index="2"]
+transform = Transform3D(-0.01160903, 0.0009247223, 0.000109595516, -0.0004773289, -0.022483855, 4.414137e-05, 6.517779e-05, 4.490784e-05, 0.019843576, 0, 0.06891086, 0.00068247283)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_beu3c")
+surface_material_override/0 = SubResource("ShaderMaterial_7ufd5")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="." index="3"]
+transform = Transform3D(0.009989543, -0.0018668218, -0.004256282, -0.0004199328, -0.045890905, 4.5502366e-05, -0.0021260185, 0.00029276052, -0.02000801, 0, 0.06875218, -0.00081899203)
+cast_shadow = 0
+mesh = SubResource("QuadMesh_beu3c")
+surface_material_override/0 = SubResource("ShaderMaterial_7ufd5")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="4"]
+transform = Transform3D(0.0045409505, 0, -0.19994844, 0, 0.2, 0, 0.19994844, 0, 0.004540951, 0, 0.058459472, 0)
+light_color = Color(0.627451, 0.23921569, 0.078431375, 1)
+omni_range = 4.0
+omni_attenuation = 0.0

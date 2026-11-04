@@ -164,6 +164,7 @@ boss_level_limit = 15
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
 attack_range = 8.0
 attack_damage = 8.0
+attack_hit_delay = 1.0
 animation_blend = 0.15
 damage_font_size = 2000
 damage_duration = 1.0

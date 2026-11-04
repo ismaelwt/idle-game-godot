@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://dkg7kmvhl0m7e"]
+
+[ext_resource type="PackedScene" uid="uid://c18w8wsvv3c65" path="res://Assets/BowModel/Bow.fbx" id="1_aj83j"]
+
+[node name="Bow" instance=ExtResource("1_aj83j")]
+
+[node name="Armature" parent="." index="0"]
+transform = Transform3D(100, 0, 0, 0, -2.3841858e-05, 99.99999, 0, -99.99999, -2.3841858e-05, -1.2413604, 0, 0)
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/1/rotation = Quaternion(-1.18229096e-07, -9.787415e-08, 0.723699, 0.6901158)
+bones/2/rotation = Quaternion(-0.050882656, 0.7052734, 0.050882634, 0.7052739)
+bones/3/rotation = Quaternion(-0.072418995, -1.8677854e-07, -8.034038e-08, 0.9973743)
+bones/4/rotation = Quaternion(-0.13790917, 3.704188e-08, -6.680626e-08, 0.9904449)
+bones/7/rotation = Quaternion(3.7387936e-06, 3.7013122e-06, -0.723699, 0.6901158)
+bones/8/rotation = Quaternion(0.05137276, 0.70523417, -0.05137217, 0.70524234)
+bones/10/rotation = Quaternion(0.13790922, 9.16732e-08, 2.1010916e-08, 0.9904449)
+bones/13/rotation = Quaternion(-1.7683243e-15, -9.473099e-16, 1, -1.3315805e-07)
+bones/16/rotation = Quaternion(0.5894583, -0.3905624, -0.58945817, -0.39056244)
+bones/23/rotation = Quaternion(0.5894583, 0.39056247, -0.5894581, 0.3905625)
