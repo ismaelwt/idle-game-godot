@@ -44,6 +44,7 @@ var item_tooltip: ItemTooltip
 
 @onready var knight_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/KnightAvatar/SelectedPlayer
 @onready var mage_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/MageAvatar/SelectedPlayer
+@onready var archer_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/ArcherAvatar/SelectedPlayer
 
 @onready var inventory_panel = $CenterContainer/InventoryControl/InventoryPanel
 @onready var items_grid: GridContainer = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer/ItemsGrid
@@ -997,8 +998,8 @@ func _on_level_up():
 func update_attributes():
 	if not character_stats:
 		return
-
-	_set_label_text(available_points_label, "(" + str(character_stats.attribute_points) + ")")
+	var hero_id := str(character_stats.get("hero_id")).strip_edges().to_lower()
+	_set_label_text(available_points_label, hero_id.to_upper() + " (" + str(character_stats.attribute_points) + ")")
 	_set_label_text(strength_label, "(" + str(character_stats.get_total_strength()) + ")")
 	_set_label_text(agility_label, "(" + str(character_stats.get_total_agility()) + ")")
 	_set_label_text(intelligence_label, "(" + str(character_stats.get_total_intelligence()) + ")")
@@ -1132,6 +1133,8 @@ func _refresh_hero_switch_buttons() -> void:
 		knight_selected_icon.visible = current_hero_id == "knight"
 	if is_instance_valid(mage_selected_icon):
 		mage_selected_icon.visible = current_hero_id == "mage"
+	if is_instance_valid(archer_selected_icon):
+		archer_selected_icon.visible = current_hero_id == "archer"
 
 
 # Localiza heróis pela identidade do CharacterStats, sem depender do nome do nó.

@@ -229,7 +229,7 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_gts0c"]
-size = Vector3(0.24773127, 0.7980957, 0.70428824)
+size = Vector3(0.24773127, 0.7980957, 0.49715468)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_jui4a"]
 viewport_path = NodePath("SubViewport")
@@ -290,7 +290,7 @@ libraries = {
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.256822, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
-transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.013235963, 0.55733466, 0.16448145)
+transform = Transform3D(2, 0, 1.4210855e-14, 0, 2, 0, -1.4210855e-14, 0, 2, -0.013235963, 0.55733466, -0.04265211)
 shape = SubResource("BoxShape3D_gts0c")
 debug_color = Color(0.059259094, 0.5750445, 0.8187562, 0.41960785)
 

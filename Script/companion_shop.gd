@@ -86,7 +86,6 @@ func _refresh_hero_column(
 	unequip_button: TextureButton,
 	price: int
 ) -> void:
-	gold_label.text = "Ouro: %d" % GameManager.gold
 
 	var is_main_hero: bool = hero_id == main_hero_id
 	var is_owned: bool = GameManager.owns_companion(hero_id)
@@ -120,6 +119,7 @@ func _refresh_hero_column(
 	elif GameManager.gold < price:
 		status_label.text = "Sem ouro"
 	else:
+		gold_label.text = "Ouro: %d" % GameManager.gold
 		status_label.text = "Disponível"
 
 

@@ -25,6 +25,10 @@ const ITEMS: Array[ItemBase] = [
 	preload("res://Items/Archer/crystal_bow.tres"),
 	preload("res://Items/Archer/steel_bow.tres"),
 	preload("res://Items/Archer/golden_bow.tres"),
+	preload("res://Items/Archer/shadow_hood.tres"),
+	preload("res://Items/Archer/evil_hood.tres"),
+	preload("res://Items/Archer/archer_armor.tres"),
+	preload("res://Items/Archer/master_archer_armor.tres"),
 	
 	preload("res://Items/Accessories/golden_ring.tres"),
 	preload("res://Items/Accessories/silver_necklace.tres"),
