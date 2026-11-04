@@ -1,6 +1,14 @@
 
 extends CanvasLayer
 
+const CHARACTER_HUD_SCENE: PackedScene = preload("res://Scenes/character_hud.tscn")
+
+func _enter_tree() -> void:
+	if get_node_or_null("CharacterHUD") == null:
+		var character_hud := CHARACTER_HUD_SCENE.instantiate()
+		character_hud.name = "CharacterHUD"
+		add_child(character_hud)
+
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 # =========================================================
 # REFERÊNCIAS
