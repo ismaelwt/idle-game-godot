@@ -340,5 +340,5 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_l6js0")
 value = 100.0
 show_percentage = false
 
-[node name="MeleeBehavior" type="Node" parent="."]
+[node name="EnemyBehavior" type="Node" parent="."]
 script = ExtResource("9_melee")
