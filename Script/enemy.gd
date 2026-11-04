@@ -488,41 +488,75 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 
 
 func show_gold_reward() -> void:
-	# O ícone precisa ficar no mesmo mundo 3D do inimigo (dentro do SubViewport).
-	# Adicioná-lo ao current_scene pode colocá-lo em outro viewport e deixá-lo invisível.
-	var world_parent := get_parent()
-	if not is_instance_valid(world_parent):
+	if not is_inside_tree():
 		return
 
-	var coin_icon := Sprite3D.new()
-	coin_icon.name = "GoldRewardVisual"
-	coin_icon.texture = GOLD_ICON
-	coin_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
-	coin_icon.no_depth_test = true
-	coin_icon.render_priority = 4
-	coin_icon.pixel_size = 0.01
-	coin_icon.alpha_cut = SpriteBase3D.ALPHA_CUT_DISCARD
-	coin_icon.modulate = Color.WHITE
+	var tree := get_tree()
+	if tree == null:
+		return
 
-	world_parent.add_child(coin_icon)
-	coin_icon.global_position = global_position + Vector3(0.0, 1.2, 0.0)
+	var label := Label3D.new()
+	label.name = "GoldRewardVisual"
+	label.font = DAMAGE_FONT
+	label.font_size = damage_font_size
+	label.outline_size = damage_outline_size
+	label.outline_modulate = damage_outline_color
+	label.text = "+" + str(int(gold_reward)) + " GOLD"
+	label.modulate = Color(1.0, 0.8, 0.0, 1.0)
+	label.no_depth_test = true
+	label.render_priority = 3
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 
-	var start_position := coin_icon.global_position
-	var tween := coin_icon.create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(
-		coin_icon,
-		"global_position",
-		start_position + Vector3(0.0, 0.8, 0.0),
-		0.9
-	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_property(
-		coin_icon,
-		"modulate:a",
+	add_child(label)
+	label.top_level = true
+
+	var start_position: Vector3 = global_position + Vector3(
 		0.0,
-		0.9
-	).set_delay(0.15)
-	tween.chain().tween_callback(coin_icon.queue_free)
+		damage_height,
+		0.0
+	)
+	label.global_position = start_position
+
+	var direction := Vector3(
+		randf_range(-1.0, 1.0),
+		0.0,
+		randf_range(-1.0, 1.0)
+	).normalized()
+
+	var horizontal_distance: float = randf_range(0.5, 1.0)
+	var pop_height: float = randf_range(0.8, 1.4)
+	var elapsed := 0.0
+
+	while elapsed < damage_duration:
+		if not is_instance_valid(label):
+			return
+
+		if not is_inside_tree():
+			label.queue_free()
+			return
+
+		elapsed += get_process_delta_time()
+		var progress: float = clamp(
+			elapsed / damage_duration,
+			0.0,
+			1.0
+		)
+
+		var horizontal_offset: Vector3 = (
+			direction * horizontal_distance * progress
+		)
+		var vertical_offset: float = sin(PI * progress) * pop_height
+
+		label.global_position = (
+			start_position
+			+ horizontal_offset
+			+ Vector3(0.0, vertical_offset, 0.0)
+		)
+
+		await tree.process_frame
+
+	if is_instance_valid(label):
+		label.queue_free()
 
 func update_health_bar() -> void:
 	if not is_instance_valid(health_bar):
