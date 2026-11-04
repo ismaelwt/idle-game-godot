@@ -177,6 +177,8 @@ func basic_attack(target: Node3D) -> void:
 	if is_critical:
 		final_damage *= character_stats.get_critical_damage_multiplier()
 
+	AudioManager.play_sfx(preload("res://Sounds/arrow_shot.mp3"), randf_range(0.95, 1.05))
+
 	var projectile := ARROW_PROJECTILE.instantiate()
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = arrow_spawn.global_position
