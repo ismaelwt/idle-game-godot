@@ -1,0 +1,200 @@
+[gd_scene load_steps=25 format=3 uid="uid://b2ndfvpsdf7l4"]
+
+[ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
+[ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
+[ext_resource type="Script" uid="uid://je2wchg1jbf0" path="res://Script/pivot.gd" id="3_ghgdn"]
+[ext_resource type="Shader" uid="uid://c6qhkhar3xobg" path="res://Shaders/edge_detection.gdshader" id="4_w6q3x"]
+[ext_resource type="Script" uid="uid://oqcdm8pjfoih" path="res://Script/level_controller.gd" id="5_soyxa"]
+[ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="6_yy84a"]
+[ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_4qhvg"]
+[ext_resource type="PackedScene" uid="uid://0koc8hde0sjn" path="res://Scenes/boss_goblin.tscn" id="7_lue1o"]
+[ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_rby12"]
+[ext_resource type="PackedScene" uid="uid://3frkx64fx3r2" path="res://Scenes/archer.tscn" id="10_w8vhy"]
+[ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
+[ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
+[ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
+[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_d8dne"]
+[ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="14_yy84a"]
+[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_0jgxx"]
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
+ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
+
+[sub_resource type="Sky" id="Sky_8i23i"]
+sky_material = SubResource("PhysicalSkyMaterial_5jii6")
+
+[sub_resource type="Environment" id="Environment_d42f2"]
+background_mode = 2
+background_energy_multiplier = 2.0
+sky = SubResource("Sky_8i23i")
+ssil_intensity = 4.0
+sdfgi_read_sky_light = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_nx14l"]
+flip_faces = true
+size = Vector2(2, 2)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjoi8"]
+render_priority = 0
+shader = ExtResource("4_w6q3x")
+shader_parameter/lightIntensity = 1.25
+shader_parameter/lineAlpha = 0.7
+shader_parameter/useLighting = true
+shader_parameter/lineHighlight = 0.1
+shader_parameter/lineShadow = 0.1
+
+[sub_resource type="Resource" id="Resource_4qhvg"]
+script = ExtResource("6_yy84a")
+enemy_scene = ExtResource("7_4qhvg")
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="Resource" id="Resource_tohvi"]
+script = ExtResource("6_yy84a")
+enemy_scene = ExtResource("7_4qhvg")
+amount = 2
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="Resource" id="Resource_npx7t"]
+script = ExtResource("6_yy84a")
+enemy_scene = ExtResource("7_4qhvg")
+amount = 2
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[node name="Level_1" type="Node3D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+texture_filter = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+stretch_shrink = 3
+mouse_target = true
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(384, 216)
+render_target_update_mode = 4
+
+[node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
+light_color = Color(0.10499778, 0.73127425, 0.77004266, 1)
+light_energy = 0.5
+light_indirect_energy = 0.5
+light_bake_mode = 1
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+sky_mode = 1
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
+transform = Transform3D(-0.881476, 0.047373705, -0.4698463, -0.41536787, 0.39554948, 0.81915206, 0.2246537, 0.9172219, -0.32898995, -16.333925, 21.972055, -21.354462)
+light_color = Color(0.95473546, 0.95871025, 0.96134657, 1)
+light_energy = 0.5
+light_bake_mode = 1
+shadow_enabled = true
+shadow_bias = 0.2
+shadow_opacity = 0.85
+shadow_blur = 0.1
+directional_shadow_mode = 1
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport/World"]
+environment = SubResource("Environment_d42f2")
+
+[node name="WorldScroller" type="Node3D" parent="SubViewportContainer/SubViewport/World" groups=["world_scroller"]]
+script = ExtResource("1_eh1ed")
+speed = 4.0
+
+[node name="Tile_00" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
+
+[node name="Tile_01" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
+
+[node name="Tile_02" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="Tile_03" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
+
+[node name="Pivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(-1.7320505, 0, 1, 0, 2, 0, -1, 0, -1.7320505, 0, 0, -25)
+script = ExtResource("3_ghgdn")
+hero_z_offset = -4.0
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/Pivot"]
+transform = Transform3D(0.1545085, -0.2377641, 0.41181955, 0, 0.43301263, 0.25, -0.47552833, -0.077254236, 0.13380827, 5, 4, -0.5)
+projection = 1
+current = true
+size = 10.0
+far = 250.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
+cast_shadow = 0
+extra_cull_margin = 16384.0
+mesh = SubResource("QuadMesh_nx14l")
+surface_material_override/0 = SubResource("ShaderMaterial_kjoi8")
+
+[node name="LevelController" type="Node3D" parent="SubViewportContainer/SubViewport" groups=["level_controller"]]
+script = ExtResource("5_soyxa")
+
+[node name="EnemySpawner" type="Node3D" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("10_rby12")
+boss_scene = ExtResource("7_lue1o")
+wave_1_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_4qhvg")])
+wave_2_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_tohvi")])
+wave_3_slots = Array[ExtResource("6_yy84a")]([SubResource("Resource_npx7t")])
+spawn_distance = 25.0
+spawn_spacing = 2.0
+x_spacing = 0.5
+spawn_radius = 2.5
+min_enemy_spacing = 1.0
+max_level_offset = 0
+max_enemy_level_limit = 15
+boss_level_limit = 15
+
+[node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_w8vhy")]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
+attack_range = 8.0
+attack_damage = 8.0
+attack_hit_delay = 1.0
+animation_blend = 0.15
+damage_font_size = 2000
+damage_duration = 1.0
+damage_color = Color(0.98195344, 0.982595, 0.9816391, 1)
+
+[node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
+melee_range = 3.0
+damage_font_size = 350
+damage_height = 2.0
+damage_duration = 1.0
+damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
+
+[node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("13_r5dji")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
+attack_range = 7.0
+attack_base_duration = 0.6
+damage_font_size = 90
+damage_height = 2.0
+damage_duration = 1.0
+damage_color = Color(0.53871167, 0, 0.038604088, 1)
+
+[node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("14_d8dne")
+
+[node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
+script = ExtResource("13_soyxa")
+
+[node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
+script = ExtResource("14_yy84a")
+
+[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
+script = ExtResource("15_0jgxx")

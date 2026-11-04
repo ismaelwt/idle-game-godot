@@ -40,8 +40,8 @@ extends Node3D
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 
 const KNIGHT_ATTACK_SOUNDS: Array[AudioStream] = [
-	preload("res://Sounds/knight/knight_attack_1.mp3"),
-	preload("res://Sounds/knight/knight_attack_2.mp3")
+	preload("res://Sounds/knight_attack_1.mp3"),
+	preload("res://Sounds/knight_attack_2.mp3")
 ]
 
 var health: float = 0.0
@@ -355,8 +355,6 @@ func basic_attack(target: Node3D) -> void:
 
 	look_at_target(target)
 
-	AudioManager.play_sfx(KNIGHT_ATTACK_SOUNDS.pick_random(), randf_range(0.95, 1.05))
-
 	animation_player.speed_scale = animation_speed
 	play_animation(attack_animation)
 
@@ -364,7 +362,9 @@ func basic_attack(target: Node3D) -> void:
 	print("Alvo: ", target.name)
 
 	await get_tree().create_timer(attack_hit_delay).timeout
-
+	
+	AudioManager.play_sfx(KNIGHT_ATTACK_SOUNDS.pick_random(), randf_range(0.95, 1.05))
+	
 	if my_attack_id != attack_id:
 		return
 
