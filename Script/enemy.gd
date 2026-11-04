@@ -502,7 +502,7 @@ func show_gold_reward() -> void:
 
 	var coin_icon := Sprite3D.new()
 	coin_icon.texture = GOLD_ICON
-	coin_icon.pixel_size = 0.02
+	coin_icon.pixel_size = 0.01
 	coin_icon.modulate = Color.WHITE
 	coin_icon.no_depth_test = true
 	coin_icon.render_priority = 3
@@ -511,7 +511,7 @@ func show_gold_reward() -> void:
 
 	var amount_label := Label3D.new()
 	amount_label.font = DAMAGE_FONT
-	amount_label.font_size = damage_font_size
+	amount_label.font_size = 100
 	amount_label.outline_size = damage_outline_size
 	amount_label.outline_modulate = damage_outline_color
 	amount_label.text = str(int(gold_reward))
@@ -522,8 +522,8 @@ func show_gold_reward() -> void:
 	reward_visual.add_child(amount_label)
 
 	# Ícone à esquerda e quantidade à direita.
-	coin_icon.position = Vector3(-0.18, 0.0, 0.0)
-	amount_label.position = Vector3(0.18, 0.0, 0.0)
+	coin_icon.position = Vector3(-0.55, 0.0, 0.0)
+	amount_label.position = Vector3(0.55, 0.0, 0.0)
 
 	var start_position: Vector3 = global_position + Vector3(
 		0.0,
