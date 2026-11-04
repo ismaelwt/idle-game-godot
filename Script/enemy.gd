@@ -521,9 +521,19 @@ func show_gold_reward() -> void:
 	amount_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	reward_visual.add_child(amount_label)
 
-	# Ícone à esquerda e quantidade à direita.
-	coin_icon.position = Vector3(-0.55, 0.0, 0.0)
-	amount_label.position = Vector3(0.55, 0.0, 0.0)
+	# Posiciona os elementos no eixo horizontal da câmera,
+	# para que fiquem lado a lado também na visão isométrica.
+	var camera := get_viewport().get_camera_3d()
+	var screen_right := Vector3.RIGHT
+	if is_instance_valid(camera):
+		screen_right = camera.global_basis.x.normalized()
+
+	coin_icon.position = reward_visual.to_local(
+		reward_visual.global_position - screen_right * 0.18
+	)
+	amount_label.position = reward_visual.to_local(
+		reward_visual.global_position + screen_right * 0.18
+	)
 
 	var start_position: Vector3 = global_position + Vector3(
 		0.0,
