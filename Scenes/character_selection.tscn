@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://dq8ikoedncwll"]
+[gd_scene load_steps=24 format=3 uid="uid://dq8ikoedncwll"]
 
 [ext_resource type="Script" uid="uid://dnu24abo6csr7" path="res://Script/character_selection.gd" id="1_l3v1h"]
 [ext_resource type="PackedScene" uid="uid://fgafivbrl7ty" path="res://Scenes/torch.tscn" id="2_8eyk7"]
@@ -11,7 +11,6 @@
 [ext_resource type="PackedScene" uid="uid://h3ih3dedib01" path="res://Scenes/bonfire.tscn" id="7_yr170"]
 [ext_resource type="PackedScene" uid="uid://be1ycj01agtgu" path="res://Scenes/character_selection_archer.tscn" id="8_a2e1g"]
 [ext_resource type="Texture2D" uid="uid://dfyfgtns8hbbt" path="res://UI/CharacterSelectionUI/Icon_button.png" id="8_bqtcc"]
-[ext_resource type="AudioStream" uid="uid://c05ib3e1c0g7o" path="res://Sounds/CharacterSelection/character_selection.mp3" id="8_rr1ac"]
 [ext_resource type="Script" uid="uid://blwsdvsq0s3od" path="res://Script/character_selection_archer.gd" id="9_5ow1g"]
 [ext_resource type="Texture2D" uid="uid://72d0iowg4c6n" path="res://UI/CharacterSelectionUI/element_6.png" id="10_f561k"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="11_pslhg"]
@@ -329,8 +328,3 @@ grow_vertical = 0
 texture_normal = ExtResource("13_l3v1h")
 stretch_mode = 5
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_rr1ac")
-volume_db = -10.0
-autoplay = true
-parameters/looping = true
