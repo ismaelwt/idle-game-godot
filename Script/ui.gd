@@ -14,6 +14,8 @@ func _enter_tree() -> void:
 	if get_node_or_null("CharacterHUD") == null:
 		var character_hud := CHARACTER_HUD_SCENE.instantiate()
 		character_hud.name = "CharacterHUD"
+		# A raiz da HUD ocupa a tela inteira; não deve bloquear cliques no RetryPanel.
+		character_hud.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		add_child(character_hud)
 
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
