@@ -98,11 +98,11 @@ offset_bottom = 4.0
 theme_override_constants/separation = 105
 
 
-[node name="MageUI" type="Control" parent="CharacterHUD/VBoxContainer"]
+[node name="MageUI" type="Control" parent="VBoxContainer"]
 layout_mode = 2
 
 
-[node name="HealthFrame" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="HealthFrame" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -118,7 +118,7 @@ texture = ExtResource("15_ghgdn")
 expand_mode = 1
 
 
-[node name="HealthProgressBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/MageUI/HealthFrame"]
+[node name="HealthProgressBar" type="ProgressBar" parent="VBoxContainer/MageUI/HealthFrame"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.32900003
@@ -138,7 +138,7 @@ value = 75.0
 show_percentage = false
 
 
-[node name="ManaFrame" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="ManaFrame" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -154,7 +154,7 @@ texture = ExtResource("16_w6q3x")
 stretch_mode = 5
 
 
-[node name="ManaProgressBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/MageUI/ManaFrame"]
+[node name="ManaProgressBar" type="ProgressBar" parent="VBoxContainer/MageUI/ManaFrame"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.321
@@ -174,7 +174,7 @@ value = 75.0
 show_percentage = false
 
 
-[node name="LevelContainer" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="LevelContainer" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -188,7 +188,7 @@ texture = ExtResource("17_w6q3x")
 expand_mode = 1
 
 
-[node name="LevelLabel" type="Label" parent="CharacterHUD/VBoxContainer/MageUI/LevelContainer"]
+[node name="LevelLabel" type="Label" parent="VBoxContainer/MageUI/LevelContainer"]
 layout_mode = 0
 offset_left = 14.166666
 offset_top = 7.499996
@@ -197,7 +197,7 @@ offset_bottom = 23.66666
 label_settings = SubResource("LabelSettings_kjoi8")
 
 
-[node name="Avatar" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="Avatar" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -212,14 +212,14 @@ texture = ExtResource("17_soyxa")
 expand_mode = 1
 
 
-[node name="XpBarControl" type="Control" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="XpBarControl" type="Control" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 
-[node name="TextureRect" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI/XpBarControl"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MageUI/XpBarControl"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -235,7 +235,7 @@ texture = ExtResource("23_u8waq")
 expand_mode = 1
 
 
-[node name="XPBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/MageUI/XpBarControl"]
+[node name="XPBar" type="ProgressBar" parent="VBoxContainer/MageUI/XpBarControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -256,7 +256,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_xo1hl")
 show_percentage = false
 
 
-[node name="SkillBar" type="HBoxContainer" parent="CharacterHUD/VBoxContainer/MageUI"]
+[node name="SkillBar" type="HBoxContainer" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 76.0
@@ -266,13 +266,13 @@ offset_bottom = 93.194496
 scale = Vector2(1.2, 1.2)
 
 
-[node name="SkillContainer" type="Panel" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar"]
+[node name="SkillContainer" type="Panel" parent="VBoxContainer/MageUI/SkillBar"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bq53a")
 
 
-[node name="Skill1" type="TextureButton" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer"]
+[node name="Skill1" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051000003
@@ -286,7 +286,7 @@ offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -299,7 +299,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.071
@@ -318,7 +318,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="Skill2" type="TextureButton" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer"]
+[node name="Skill2" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38500002
@@ -332,7 +332,7 @@ offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -345,7 +345,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.034
@@ -364,7 +364,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="Skill3" type="TextureButton" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer"]
+[node name="Skill3" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38500002
@@ -378,7 +378,7 @@ offset_bottom = 0.45400047
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -391,7 +391,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.042000003
@@ -410,11 +410,11 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="KnightUI" type="Control" parent="CharacterHUD/VBoxContainer"]
+[node name="KnightUI" type="Control" parent="VBoxContainer"]
 layout_mode = 2
 
 
-[node name="HealthFrame" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="HealthFrame" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -429,7 +429,7 @@ texture = ExtResource("15_ghgdn")
 expand_mode = 1
 
 
-[node name="HealthProgressBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/KnightUI/HealthFrame"]
+[node name="HealthProgressBar" type="ProgressBar" parent="VBoxContainer/KnightUI/HealthFrame"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.32900003
@@ -449,7 +449,7 @@ value = 75.0
 show_percentage = false
 
 
-[node name="ManaFrame" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="ManaFrame" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -465,7 +465,7 @@ texture = ExtResource("16_w6q3x")
 stretch_mode = 5
 
 
-[node name="ManaProgressBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/KnightUI/ManaFrame"]
+[node name="ManaProgressBar" type="ProgressBar" parent="VBoxContainer/KnightUI/ManaFrame"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.321
@@ -485,7 +485,7 @@ value = 75.0
 show_percentage = false
 
 
-[node name="LevelContainer" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="LevelContainer" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -499,7 +499,7 @@ texture = ExtResource("17_w6q3x")
 expand_mode = 1
 
 
-[node name="LevelLabel" type="Label" parent="CharacterHUD/VBoxContainer/KnightUI/LevelContainer"]
+[node name="LevelLabel" type="Label" parent="VBoxContainer/KnightUI/LevelContainer"]
 layout_mode = 0
 offset_left = 14.166666
 offset_top = 7.499996
@@ -508,7 +508,7 @@ offset_bottom = 23.66666
 label_settings = SubResource("LabelSettings_kjoi8")
 
 
-[node name="Avatar" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="Avatar" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -523,13 +523,13 @@ texture = ExtResource("23_tohvi")
 expand_mode = 1
 
 
-[node name="XpBarControl" type="Control" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="XpBarControl" type="Control" parent="VBoxContainer/KnightUI"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 
-[node name="TextureRect" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI/XpBarControl"]
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/KnightUI/XpBarControl"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -545,7 +545,7 @@ texture = ExtResource("23_u8waq")
 expand_mode = 1
 
 
-[node name="XPBar" type="ProgressBar" parent="CharacterHUD/VBoxContainer/KnightUI/XpBarControl"]
+[node name="XPBar" type="ProgressBar" parent="VBoxContainer/KnightUI/XpBarControl"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -566,7 +566,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_xo1hl")
 show_percentage = false
 
 
-[node name="SkillBar" type="HBoxContainer" parent="CharacterHUD/VBoxContainer/KnightUI"]
+[node name="SkillBar" type="HBoxContainer" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = -1
 offset_left = 76.0
@@ -576,13 +576,13 @@ offset_bottom = 93.194496
 scale = Vector2(1.2, 1.2)
 
 
-[node name="SkillContainer" type="Panel" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar"]
+[node name="SkillContainer" type="Panel" parent="VBoxContainer/KnightUI/SkillBar"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bq53a")
 
 
-[node name="Skill1" type="TextureButton" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer"]
+[node name="Skill1" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.051000003
@@ -596,7 +596,7 @@ offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -609,7 +609,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.071
@@ -628,7 +628,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="Skill2" type="TextureButton" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer"]
+[node name="Skill2" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38500002
@@ -642,7 +642,7 @@ offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -655,7 +655,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.034
@@ -674,7 +674,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="Skill3" type="TextureButton" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer"]
+[node name="Skill3" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.38500002
@@ -688,7 +688,7 @@ offset_bottom = 0.45400047
 script = ExtResource("25_nvvmv")
 
 
-[node name="Icon" type="TextureRect" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
+[node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.07700001
@@ -701,7 +701,7 @@ expand_mode = 1
 stretch_mode = 6
 
 
-[node name="CooldownLabel" type="Label" parent="CharacterHUD/VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
+[node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.042000003
@@ -735,7 +735,7 @@ grow_vertical = 0
 theme_override_constants/separation = 30
 
 
-[node name="RetryPanelButton" type="TextureButton" parent="CharacterHUD/HBoxContainer"]
+[node name="RetryPanelButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
 texture_normal = ExtResource("26_yy7ss")
@@ -743,14 +743,14 @@ ignore_texture_size = true
 stretch_mode = 5
 
 
-[node name="StatusButton" type="TextureButton" parent="CharacterHUD/HBoxContainer"]
+[node name="StatusButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("27_a6lkv")
 stretch_mode = 5
 
 
-[node name="SkillTreeButton" type="TextureButton" parent="CharacterHUD/HBoxContainer"]
+[node name="SkillTreeButton" type="TextureButton" parent="HBoxContainer"]
 visible = false
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
@@ -758,7 +758,7 @@ texture_normal = ExtResource("28_jwru3")
 stretch_mode = 5
 
 
-[node name="PointsLabel" type="Label" parent="CharacterHUD/HBoxContainer/SkillTreeButton"]
+[node name="PointsLabel" type="Label" parent="HBoxContainer/SkillTreeButton"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.827
@@ -776,7 +776,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 
-[node name="MapButton" type="TextureButton" parent="CharacterHUD/HBoxContainer"]
+[node name="MapButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("29_vesd6")
