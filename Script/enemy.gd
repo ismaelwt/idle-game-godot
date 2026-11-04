@@ -63,6 +63,7 @@ var level_label: Label3D
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
+const GOLD_DROP_SOUND: AudioStream = preload("res://Sounds/drop_coin.mp3")
 
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
@@ -348,6 +349,26 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 		label.queue_free()
 
 
+func play_gold_drop_sound() -> void:
+	if not is_inside_tree():
+		return
+
+	var audio_parent: Node = get_tree().current_scene
+	if audio_parent == null:
+		audio_parent = get_parent()
+
+	if audio_parent == null:
+		return
+
+	var audio_player := AudioStreamPlayer3D.new()
+	audio_player.name = "GoldDropSound"
+	audio_player.stream = GOLD_DROP_SOUND
+	audio_parent.add_child(audio_player)
+	audio_player.global_position = global_position
+	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.play()
+
+
 func show_gold_reward() -> void:
 	if not is_inside_tree():
 		return
@@ -355,6 +376,8 @@ func show_gold_reward() -> void:
 	var tree := get_tree()
 	if tree == null:
 		return
+
+	play_gold_drop_sound()
 
 	var reward_visual := Node3D.new()
 	reward_visual.name = "GoldRewardVisual"
