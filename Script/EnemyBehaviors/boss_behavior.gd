@@ -144,3 +144,11 @@ func _distance_to(target: Node3D) -> float:
 	var a := Vector2(enemy.global_position.x, enemy.global_position.z)
 	var b := Vector2(target.global_position.x, target.global_position.z)
 	return a.distance_to(b)
+
+
+func on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"enemy/boss_especial_attack":
+		special_attack_in_progress = false
+		if is_instance_valid(enemy) and not enemy.dying:
+			enemy.attacking = false
+			enemy.animation_player.play(enemy.idle_animation)
