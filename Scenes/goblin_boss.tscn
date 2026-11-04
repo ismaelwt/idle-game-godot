@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://bo6p3qj6i6y23"]
+[gd_scene load_steps=16 format=3 uid="uid://bo6p3qj6i6y23"]
 
 [ext_resource type="PackedScene" uid="uid://dcal1vsjsdpbu" path="res://Assets/GoblinEnemy.fbx" id="1_rne63"]
 [ext_resource type="Animation" uid="uid://c1e320xhmegwi" path="res://Anim/HumanoidEnemy/attack.res" id="2_b0roq"]
-[ext_resource type="Script" uid="uid://dr24psfp32skh" path="res://Script/boss.gd" id="2_qnq01"]
+[ext_resource type="Script" uid="uid://c1qensq8rawg" path="res://Script/enemy.gd" id="2_qnq01"]
+[ext_resource type="Script" path="res://Script/EnemyBehaviors/boss_behavior.gd" id="9_boss"]
 [ext_resource type="Animation" uid="uid://dqmvhvj4mw7yb" path="res://Anim/HumanoidEnemy/die.res" id="3_qnq01"]
 [ext_resource type="Animation" uid="uid://bagmxr5jaqpeu" path="res://Anim/HumanoidEnemy/idle.res" id="4_rfkv1"]
 [ext_resource type="Animation" uid="uid://cqet6wkpf86jl" path="res://Anim/HumanoidEnemy/walk.res" id="5_lsw23"]
@@ -246,11 +247,25 @@ corner_radius_bottom_left = 15
 [node name="GoblinBossEnemy" groups=["enemies"] instance=ExtResource("1_rne63")]
 transform = Transform3D(-2, 0, -1.7484555e-07, 0, 2, 0, 1.7484555e-07, 0, -2, 0, 0, 0)
 script = ExtResource("2_qnq01")
+speed = 3.0
+max_health = 60.0
 health_per_level = 0.88
 damage_per_level = 0.6
 xp_per_level = 0.9
 gold_per_level = 0.9
-special_attack_damage_multiplier = 2.5
+xp_reward = 220
+gold_reward = 50
+damage_height = 2.5
+damage_end_height = 2.9
+damage_outline_size = 8
+attack_range = 3.0
+attack_cooldown = 2.0
+attack_damage = 8.0
+attack_hit_delay = 1.0
+idle_animation = &"enemy/idle"
+walk_animation = &"enemy/walk"
+attack_animation = &"enemy/attack"
+death_animation = &"enemy/die"
 
 [node name="Skeleton" parent="." index="0"]
 bones/0/position = Vector3(0.00019518984, 0.6423371, 0.010245907)
@@ -339,3 +354,8 @@ grow_horizontal = 2
 theme_override_styles/fill = SubResource("StyleBoxFlat_32dj3")
 value = 100.0
 show_percentage = false
+
+[node name="EnemyBehavior" type="Node" parent="."]
+script = ExtResource("9_boss")
+special_attack_damage_multiplier = 2.5
+special_attack_health_threshold = 0.5
