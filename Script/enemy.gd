@@ -532,14 +532,7 @@ func show_gold_reward() -> void:
 	)
 	reward_visual.global_position = start_position
 
-	var direction := Vector3(
-		randf_range(-1.0, 1.0),
-		0.0,
-		randf_range(-1.0, 1.0)
-	).normalized()
-
-	var horizontal_distance: float = randf_range(0.5, 1.0)
-	var pop_height: float = randf_range(0.8, 1.4)
+	var rise_height: float = 1.5
 	var elapsed := 0.0
 
 	while elapsed < damage_duration:
@@ -557,16 +550,14 @@ func show_gold_reward() -> void:
 			1.0
 		)
 
-		var horizontal_offset: Vector3 = (
-			direction * horizontal_distance * progress
-		)
-		var vertical_offset: float = sin(PI * progress) * pop_height
-
+		# Sobe continuamente, sem deslocamento lateral, e desaparece gradualmente.
 		reward_visual.global_position = (
-			start_position
-			+ horizontal_offset
-			+ Vector3(0.0, vertical_offset, 0.0)
+			start_position + Vector3(0.0, rise_height * progress, 0.0)
 		)
+
+		var alpha: float = 1.0 - progress
+		coin_icon.modulate.a = alpha
+		amount_label.modulate.a = alpha
 
 		await tree.process_frame
 
