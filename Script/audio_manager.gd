@@ -1,6 +1,4 @@
 extends Node
-class_name AudioManager
-
 const SETTINGS_PATH := "user://audio_settings.cfg"
 const SETTINGS_SECTION := "audio"
 
