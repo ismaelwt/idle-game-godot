@@ -97,7 +97,7 @@ func _ready() -> void:
 	health = max_health
 
 func _process(delta: float) -> void:
-	var melee_behavior := get_node_or_null("MeleeBehavior")
+	var melee_behavior := get_node_or_null("EnemyBehavior")
 	if is_instance_valid(melee_behavior):
 		melee_behavior.call("update_behavior", delta)
 
@@ -247,7 +247,7 @@ func die() -> void:
 
 
 func attack() -> void:
-	var melee_behavior := get_node_or_null("MeleeBehavior")
+	var melee_behavior := get_node_or_null("EnemyBehavior")
 	if is_instance_valid(melee_behavior):
 		melee_behavior.call("attack")
 
@@ -444,7 +444,7 @@ func update_health_bar() -> void:
 
 
 func start_combat() -> void:
-	var melee_behavior := get_node_or_null("MeleeBehavior")
+	var melee_behavior := get_node_or_null("EnemyBehavior")
 	if is_instance_valid(melee_behavior):
 		melee_behavior.call("start_combat")
 
