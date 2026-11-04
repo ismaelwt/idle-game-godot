@@ -65,6 +65,7 @@ const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
 const GOLD_DROP_SOUND: AudioStream = preload("res://Sounds/drop_coin.mp3")
 
+@onready var audio_player = $AudioStreamPlayer
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
 @onready var health_bar_display: Sprite3D = $HealthBarDisplay
@@ -368,12 +369,9 @@ func play_gold_drop_sound() -> void:
 	if audio_parent == null:
 		return
 
-	var audio_player := AudioStreamPlayer3D.new()
-	audio_player.name = "GoldDropSound"
 	audio_player.stream = GOLD_DROP_SOUND
-	audio_parent.add_child(audio_player)
-	audio_player.global_position = global_position
 	audio_player.finished.connect(audio_player.queue_free)
+	audio_player.pitch_scale = randf_range(0.95, 1.05)
 	audio_player.play()
 
 
