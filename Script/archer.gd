@@ -20,6 +20,7 @@ extends Node3D
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const ARROW_PROJECTILE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
+const HEALING_SCENE: PackedScene = preload("res://Scenes/healing_effect.tscn")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -139,6 +140,53 @@ func get_horizontal_distance_to(target: Node3D) -> float:
 	return Vector2(global_position.x, global_position.z).distance_to(
 		Vector2(target.global_position.x, target.global_position.z)
 	)
+
+
+func use_skill(skill_id: String, target: Node3D) -> void:
+	if skill_id != "heal":
+		push_warning("Skill desconhecida no Archer: " + skill_id)
+		return
+
+	if dead or attacking or not is_enemy_alive(target):
+		return
+
+	# Invalida qualquer ataque básico que ainda esteja aguardando o disparo.
+	attack_id += 1
+	var my_attack_id: int = attack_id
+
+	attacking = true
+	current_attack_target = null
+
+	# O Archer não possui animação de cura; mantém o idle durante o cast.
+	play_animation("archer_idle")
+
+	print("ARCHER -> SKILL HEAL")
+
+	# Mantém o mesmo tempo de execução e o mesmo efeito de cura do Mage.
+	var healing_instance := HEALING_SCENE.instantiate()
+	get_tree().current_scene.add_child(healing_instance)
+	healing_instance.global_position = global_position
+
+	var old_health: float = health
+	health = minf(health + float(healing_instance.healing_amount), max_health)
+	var healed_amount: float = health - old_health
+
+	print("=== CURA DO ARCHER APLICADA ===")
+	print("Vida recuperada: ", healed_amount)
+	print("Vida atual: ", health, "/", max_health)
+
+	# Libera a rotação de combate; o efeito visual continua durante sua duração.
+	attacking = false
+	current_attack_target = null
+
+	await get_tree().create_timer(float(healing_instance.duration)).timeout
+
+	if is_instance_valid(healing_instance):
+		healing_instance.queue_free()
+
+	# Não altera estados de uma ação mais recente ou de um Archer morto.
+	if my_attack_id != attack_id or dead:
+		return
 
 
 func basic_attack(target: Node3D) -> void:
