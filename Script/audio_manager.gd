@@ -10,6 +10,7 @@ var music_tween: Tween
 var master_volume: float = 1.0
 var music_volume: float = 0.7
 var sfx_volume: float = 0.8
+var is_muted: bool = false
 
 
 func _ready() -> void:
@@ -142,6 +143,14 @@ func set_master_volume(value: float) -> void:
 	_save_settings()
 
 
+func set_muted(value: bool) -> void:
+	is_muted = value
+	var master_index := AudioServer.get_bus_index("Master")
+	if master_index != -1:
+		AudioServer.set_bus_mute(master_index, is_muted)
+	_save_settings()
+
+
 func set_music_volume(value: float) -> void:
 	music_volume = clampf(value, 0.0, 1.0)
 	_apply_bus_volume("Music", music_volume)
@@ -158,6 +167,10 @@ func _apply_all_volumes() -> void:
 	_apply_bus_volume("Master", master_volume)
 	_apply_bus_volume("Music", music_volume)
 	_apply_bus_volume("SFX", sfx_volume)
+
+	var master_index := AudioServer.get_bus_index("Master")
+	if master_index != -1:
+		AudioServer.set_bus_mute(master_index, is_muted)
 
 
 func _apply_bus_volume(bus_name: String, value: float) -> void:
@@ -192,6 +205,7 @@ func _load_settings() -> void:
 		0.0,
 		1.0
 	)
+	is_muted = bool(config.get_value(SETTINGS_SECTION, "is_muted", is_muted))
 
 
 func _save_settings() -> void:
@@ -199,6 +213,7 @@ func _save_settings() -> void:
 	config.set_value(SETTINGS_SECTION, "master_volume", master_volume)
 	config.set_value(SETTINGS_SECTION, "music_volume", music_volume)
 	config.set_value(SETTINGS_SECTION, "sfx_volume", sfx_volume)
+	config.set_value(SETTINGS_SECTION, "is_muted", is_muted)
 
 	var error := config.save(SETTINGS_PATH)
 	if error != OK:
