@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://soosefshdpkq"]
+[gd_scene load_steps=31 format=3 uid="uid://soosefshdpkq"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
 [ext_resource type="PackedScene" uid="uid://mpt1iubn4rnd" path="res://Scenes/tile_03.tscn" id="3_gqssx"]
@@ -74,6 +74,12 @@ metadata/_custom_type_script = "uid://p802c5ldrgy"
 [sub_resource type="Resource" id="Resource_s80er"]
 script = ExtResource("6_wpmth")
 enemy_scene = ExtResource("11_f7ucr")
+metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="Resource" id="Resource_nbwsh"]
+script = ExtResource("6_wpmth")
+enemy_scene = ExtResource("7_e5i8k")
+amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [node name="Level_3" type="Node3D"]
@@ -166,7 +172,7 @@ script = ExtResource("10_cvu23")
 boss_scene = ExtResource("7_j77fg")
 wave_1_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_4qhvg"), SubResource("Resource_ki8bc")])
 wave_2_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_tohvi"), SubResource("Resource_kgmqw")])
-wave_3_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_npx7t"), SubResource("Resource_s80er")])
+wave_3_slots = Array[ExtResource("6_wpmth")]([SubResource("Resource_npx7t"), SubResource("Resource_s80er"), SubResource("Resource_nbwsh")])
 spawn_distance = 25.0
 spawn_spacing = 2.0
 x_spacing = 0.5
@@ -197,10 +203,10 @@ damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
 attack_range = 7.0
 attack_base_duration = 0.6
-damage_font_size = 90
+damage_font_size = 350
 damage_height = 2.0
 damage_duration = 1.0
-damage_color = Color(0.53871167, 0, 0.038604088, 1)
+damage_color = Color(0.93281716, 0.9340785, 0.937522, 1)
 
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_rkt0a")

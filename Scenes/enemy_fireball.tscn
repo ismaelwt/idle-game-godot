@@ -1,14 +1,14 @@
-[gd_scene load_steps=14 format=3 ]
+[gd_scene load_steps=14 format=3 uid="uid://cve30hxrp03qk"]
 
-[ext_resource type="Script" path="res://Script/enemy_fireball.gd" id="1_24qo1"]
+[ext_resource type="Script" uid="uid://bm1p724p10hkn" path="res://Script/enemy_fireball.gd" id="1_24qo1"]
 [ext_resource type="Texture2D" uid="uid://dxumxyrr2dxuu" path="res://icons/disabled-fire-ray-2.png" id="2_nnmsm"]
 [ext_resource type="ArrayMesh" uid="uid://bp0niqir1xie8" path="res://Assets/fireball_v2.obj" id="2_po4an"]
 [ext_resource type="Texture2D" uid="uid://bvx6q7m3qfpqe" path="res://icons/fire-ray-2.png" id="3_i312e"]
 [ext_resource type="Shader" uid="uid://cdps0bavy68ul" path="res://Shaders/fireball.gdshader" id="3_nnmsm"]
 
 [sub_resource type="Gradient" id="Gradient_ikn8r"]
-offsets = PackedFloat32Array(0.26791278, 0.9096573)
-colors = PackedColorArray(0.99607843, 0, 0, 1, 1, 1, 0, 1)
+offsets = PackedFloat32Array(0.15300547, 0.4180328)
+colors = PackedColorArray(0.9960334, 0.56201816, 0, 1, 0.9999998, 0.2186907, 0.084056176, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_50u72"]
 gradient = SubResource("Gradient_ikn8r")
@@ -27,27 +27,27 @@ render_priority = 0
 shader = ExtResource("3_nnmsm")
 shader_parameter/noise_sampler = SubResource("NoiseTexture2D_qgf2b")
 shader_parameter/gradient_sampler = SubResource("GradientTexture1D_50u72")
-shader_parameter/emission_strength = 0.9
+shader_parameter/emission_strength = 3.0
 shader_parameter/dither_scale = 4.0
-shader_parameter/dither_strength = 0.3
+shader_parameter/dither_strength = 0.4
 
 [sub_resource type="SphereMesh" id="SphereMesh_ln6qn"]
 radius = 0.48
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m2i5o"]
-albedo_color = Color(1, 0.28235295, 0.1254902, 1)
+albedo_color = Color(1, 0.53013366, 0.12315822, 1)
 emission_enabled = true
-emission = Color(0.66660184, 0.1357041, 0, 1)
+emission = Color(1, 0.30588236, 0.12156863, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ikn8r"]
 height = 1.0371094
 
 [node name="EnemyFireball" type="Node3D"]
-transform = Transform3D(0.5, 0, 0, 0, -2.1855694e-08, -0.5, 0, 0.5, -2.1855694e-08, 0, 0, 0)
+transform = Transform3D(0.4, 0, 0, 0, -1.7484556e-08, -0.4, 0, 0.4, -1.7484556e-08, 0, 0, 0)
 script = ExtResource("1_24qo1")
-speed = 7.0
 icon = ExtResource("3_i312e")
 disabled_icon = ExtResource("2_nnmsm")
+speed = 5.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, 0, 0.41727817, -1.8239808e-08)

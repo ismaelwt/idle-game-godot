@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=27 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -8,8 +8,10 @@
 [ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="6_yy84a"]
 [ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_4qhvg"]
 [ext_resource type="PackedScene" uid="uid://0koc8hde0sjn" path="res://Scenes/boss_goblin.tscn" id="7_lue1o"]
+[ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="9_pjppf"]
 [ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_rby12"]
 [ext_resource type="PackedScene" uid="uid://3frkx64fx3r2" path="res://Scenes/archer.tscn" id="10_w8vhy"]
+[ext_resource type="PackedScene" uid="uid://dtcmflopapm0w" path="res://Scenes/goblin_wizard.tscn" id="11_yltlr"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
@@ -20,13 +22,13 @@
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
 
-[sub_resource type="Sky" id="Sky_8i23i"]
+[sub_resource type="Sky" id="Sky_6ssoq"]
 sky_material = SubResource("PhysicalSkyMaterial_5jii6")
 
 [sub_resource type="Environment" id="Environment_d42f2"]
 background_mode = 2
 background_energy_multiplier = 2.0
-sky = SubResource("Sky_8i23i")
+sky = SubResource("Sky_6ssoq")
 ssil_intensity = 4.0
 sdfgi_read_sky_light = false
 
@@ -45,7 +47,7 @@ shader_parameter/lineShadow = 0.1
 
 [sub_resource type="Resource" id="Resource_4qhvg"]
 script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("7_4qhvg")
+enemy_scene = ExtResource("9_pjppf")
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_tohvi"]
@@ -56,8 +58,7 @@ metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [sub_resource type="Resource" id="Resource_npx7t"]
 script = ExtResource("6_yy84a")
-enemy_scene = ExtResource("7_4qhvg")
-amount = 2
+enemy_scene = ExtResource("11_yltlr")
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
 [node name="Level_1" type="Node3D"]
@@ -181,10 +182,10 @@ damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
 attack_range = 7.0
 attack_base_duration = 0.6
-damage_font_size = 90
+damage_font_size = 350
 damage_height = 2.0
 damage_duration = 1.0
-damage_color = Color(0.53871167, 0, 0.038604088, 1)
+damage_color = Color(0.94375485, 0.9420354, 0.9457635, 1)
 
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_d8dne")
