@@ -158,7 +158,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	current_attack_target = null
 
 	# O Archer não possui animação de cura; mantém o idle durante o cast.
-	play_animation("archer_idle")
+	play_animation("archer_heal")
 
 	print("ARCHER -> SKILL HEAL")
 
