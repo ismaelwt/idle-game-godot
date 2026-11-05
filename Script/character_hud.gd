@@ -290,35 +290,47 @@ func _get_archer_skill_cooldown_text(skill_id: String) -> String:
 	if not is_instance_valid(archer_hero):
 		return ""
 
+	var stats := _get_character_stats(archer_hero)
+	if not is_instance_valid(stats):
+		return ""
+
 	var combat_controller := get_tree().current_scene.find_child(
 		"CombatController", true, false
 	) as CombatController
 
-	if not is_instance_valid(combat_controller):
+	var state_dictionary: Dictionary = (
+		combat_controller.hero_skill_states
+		if is_instance_valid(combat_controller)
+		else {}
+	)
+
+	var hero_state: Dictionary = state_dictionary.get(
+		archer_hero.get_instance_id(), {}
+	)
+
+	# Mesmo comportamento visual usado pelo Mage e Knight:
+	# ✓ quando pronta e contagem com uma casa decimal durante o cooldown.
+	if hero_state.is_empty():
+		return "✓" if stats.has_skill(skill_id) else ""
+
+	var skill_ids: Array = hero_state.get("skill_ids", [])
+	var timers: Array = hero_state.get("skill_timers", [])
+	var available: Array = hero_state.get("skill_available", [])
+
+	var timer_index: int = skill_ids.find(skill_id)
+	if timer_index < 0:
 		return ""
 
-	var hero_id: int = archer_hero.get_instance_id()
-
-	# Garante que o estado das skills exista antes de consultar os timers.
-	if not combat_controller.hero_skill_states.has(hero_id):
-		combat_controller.prepare_skills(archer_hero)
-
-	if not combat_controller.hero_skill_states.has(hero_id):
+	if timer_index >= timers.size() or timer_index >= available.size():
 		return ""
 
-	var state: Dictionary = combat_controller.hero_skill_states[hero_id]
-	var skill_ids: Array = state.get("skill_ids", [])
-	var skill_timers: Array = state.get("skill_timers", [])
+	var remaining: float = float(timers[timer_index])
+	var is_available: bool = bool(available[timer_index])
 
-	var skill_index: int = skill_ids.find(skill_id)
-	if skill_index == -1 or skill_index >= skill_timers.size():
-		return ""
+	if not is_available and remaining > 0.0:
+		return str(snapped(remaining, 0.1))
 
-	var remaining: float = float(skill_timers[skill_index])
-	if remaining <= 0.0:
-		return ""
-
-	return str(ceili(remaining))
+	return "✓"
 
 
 func _on_party_changed(_heroes: Array[Node3D]) -> void:
