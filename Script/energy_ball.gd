@@ -16,11 +16,11 @@ func get_description() -> String:
 @export var mana_cost: float = 35.0
 
 @export_category("Projectile")
-@export var speed: float = 5.0
+@export var speed: float = 3.9
 @export var target_height: float = 1.5
 
 @export_category("Damage")
-@export var damage: int = 45
+@export var damage: int = 35
 @export var damage_multiplier: float = 1.0
 
 var magic_bonus: float = 0.0

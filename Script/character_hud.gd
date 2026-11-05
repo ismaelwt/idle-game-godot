@@ -4,10 +4,12 @@ extends Control
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 const MAP_SCENE: PackedScene = preload("res://Scenes/minimap.tscn")
 const SHOP_SCENE: PackedScene = preload("res://Scenes/companion_shop.tscn")
+const SOUND_MANAGER_SCENE: PackedScene = preload("res://Scenes/sound_manager.tscn")
 
 var font = preload("res://Fonts/Pix32.ttf")
 var map_panel: Control
 var shop_panel: Control
+var sound_manager_panel: Control = null
 
 # HERÓIS DA EQUIPE
 var selected_hero: Node3D = null
@@ -48,6 +50,8 @@ var status_player: Control = null
 
 var skill_tree: Control = null
 @onready var shop_button: TextureButton = $CompanionShop
+@onready var sound_manager_button: TextureButton = $SoundManager
+
 
 func _ready() -> void:
 	_create_archer_ui()
@@ -56,7 +60,8 @@ func _ready() -> void:
 	skill_tree_button.pressed.connect(_on_skill_tree_button_pressed)
 	status_button.pressed.connect(_on_status_button_pressed)
 	retry_panel_button.pressed.connect(_on_retry_panel_button_pressed)
-
+	sound_manager_button.pressed.connect(_on_sound_manager_button_pressed)
+	
 	var scene := get_tree().current_scene
 	if scene != null:
 		party_manager = scene.find_child(
@@ -359,3 +364,13 @@ func _on_shop_button_pressed() -> void:
 		return
 
 	shop_panel.visible = not shop_panel.visible
+	
+	
+func _on_sound_manager_button_pressed() -> void:
+	if sound_manager_panel == null:
+		sound_manager_panel = SOUND_MANAGER_SCENE.instantiate()
+		get_parent().add_child(sound_manager_panel)
+		sound_manager_panel.show();
+		return
+
+	sound_manager_panel.visible = not sound_manager_panel.visible

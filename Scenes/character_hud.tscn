@@ -1,5 +1,6 @@
-[gd_scene load_steps=26 format=3]
+[gd_scene load_steps=27 format=3 uid="uid://ccfhkuijvlf6k"]
 
+[ext_resource type="Texture2D" uid="uid://dxyuhtjnfkqpi" path="res://icons/Icon_button_sound.png" id="15_bc265"]
 [ext_resource type="Texture2D" uid="uid://bi60c71gul2v6" path="res://UI/UISprites/characterUI/hp_icon.png" id="15_ghgdn"]
 [ext_resource type="Script" uid="uid://ccsoe75qt5qxb" path="res://Script/character_hud.gd" id="16_npx7t"]
 [ext_resource type="Texture2D" uid="uid://e06xyp7ikun3" path="res://UI/UISprites/characterUI/mp_icon.png" id="16_w6q3x"]
@@ -18,27 +19,22 @@
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4qhvg"]
 bg_color = Color(0, 0, 0, 0)
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tohvi"]
 bg_color = Color(1, 0.105882354, 0, 1)
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t405x"]
 bg_color = Color(0, 0, 0, 0)
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rby12"]
 bg_color = Color(0.23529412, 0.7372549, 0.9882353, 1)
 corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_kjoi8"]
 font = ExtResource("18_x3b7j")
 font_size = 12
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kwf64"]
 bg_color = Color(0.8156863, 0.5411765, 0, 0)
@@ -47,10 +43,8 @@ corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
 
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xo1hl"]
 bg_color = Color(0.7394663, 0.4176499, 0.22714403, 0.6509804)
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bq53a"]
 bg_color = Color(0.41342682, 0.34807652, 0.25594318, 1)
@@ -64,11 +58,9 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_nuasi"]
 font = ExtResource("18_x3b7j")
 font_size = 18
-
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27s1b"]
 bg_color = Color(0.67058825, 0.49803922, 0.23921569, 0.8235294)
@@ -77,10 +69,8 @@ corner_radius_top_right = 25
 corner_radius_bottom_right = 25
 corner_radius_bottom_left = 25
 
-
 [sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
 font = ExtResource("18_x3b7j")
-
 
 [node name="CharacterHUD" type="Control"]
 layout_mode = 3
@@ -91,16 +81,13 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("16_npx7t")
 
-
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_bottom = 4.0
 theme_override_constants/separation = 105
 
-
 [node name="MageUI" type="Control" parent="VBoxContainer"]
 layout_mode = 2
-
 
 [node name="HealthFrame" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
@@ -116,7 +103,6 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("15_ghgdn")
 expand_mode = 1
-
 
 [node name="HealthProgressBar" type="ProgressBar" parent="VBoxContainer/MageUI/HealthFrame"]
 layout_mode = 1
@@ -137,7 +123,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_tohvi")
 value = 75.0
 show_percentage = false
 
-
 [node name="ManaFrame" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -152,7 +137,6 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("16_w6q3x")
 stretch_mode = 5
-
 
 [node name="ManaProgressBar" type="ProgressBar" parent="VBoxContainer/MageUI/ManaFrame"]
 layout_mode = 1
@@ -173,7 +157,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_rby12")
 value = 75.0
 show_percentage = false
 
-
 [node name="LevelContainer" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -187,7 +170,6 @@ grow_vertical = 2
 texture = ExtResource("17_w6q3x")
 expand_mode = 1
 
-
 [node name="LevelLabel" type="Label" parent="VBoxContainer/MageUI/LevelContainer"]
 layout_mode = 0
 offset_left = 14.166666
@@ -195,7 +177,6 @@ offset_top = 7.499996
 offset_right = 55.83333
 offset_bottom = 23.66666
 label_settings = SubResource("LabelSettings_kjoi8")
-
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/MageUI"]
 layout_mode = 1
@@ -211,13 +192,11 @@ grow_vertical = 2
 texture = ExtResource("17_soyxa")
 expand_mode = 1
 
-
 [node name="XpBarControl" type="Control" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/MageUI/XpBarControl"]
 layout_mode = 1
@@ -233,7 +212,6 @@ grow_vertical = 2
 rotation = 3.1415927
 texture = ExtResource("23_u8waq")
 expand_mode = 1
-
 
 [node name="XPBar" type="ProgressBar" parent="VBoxContainer/MageUI/XpBarControl"]
 layout_mode = 1
@@ -255,7 +233,6 @@ theme_override_styles/background = SubResource("StyleBoxFlat_kwf64")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xo1hl")
 show_percentage = false
 
-
 [node name="SkillBar" type="HBoxContainer" parent="VBoxContainer/MageUI"]
 layout_mode = 1
 anchors_preset = -1
@@ -265,12 +242,10 @@ offset_right = 146.0
 offset_bottom = 93.194496
 scale = Vector2(1.2, 1.2)
 
-
 [node name="SkillContainer" type="Panel" parent="VBoxContainer/MageUI/SkillBar"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bq53a")
-
 
 [node name="Skill1" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
@@ -285,7 +260,6 @@ offset_right = -0.0016727448
 offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
@@ -297,7 +271,6 @@ offset_right = 0.006664276
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
@@ -317,7 +290,6 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="Skill2" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
@@ -331,7 +303,6 @@ offset_right = 0.024993896
 offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
@@ -343,7 +314,6 @@ offset_right = 0.006662369
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
@@ -363,7 +333,6 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="Skill3" type="TextureButton" parent="VBoxContainer/MageUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
@@ -377,7 +346,6 @@ offset_right = 24.875004
 offset_bottom = 0.45400047
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
@@ -389,7 +357,6 @@ offset_right = 0.006664276
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/MageUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
@@ -409,10 +376,8 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="KnightUI" type="Control" parent="VBoxContainer"]
 layout_mode = 2
-
 
 [node name="HealthFrame" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
@@ -427,7 +392,6 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("15_ghgdn")
 expand_mode = 1
-
 
 [node name="HealthProgressBar" type="ProgressBar" parent="VBoxContainer/KnightUI/HealthFrame"]
 layout_mode = 1
@@ -448,7 +412,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_tohvi")
 value = 75.0
 show_percentage = false
 
-
 [node name="ManaFrame" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -463,7 +426,6 @@ grow_vertical = 2
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("16_w6q3x")
 stretch_mode = 5
-
 
 [node name="ManaProgressBar" type="ProgressBar" parent="VBoxContainer/KnightUI/ManaFrame"]
 layout_mode = 1
@@ -484,7 +446,6 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_rby12")
 value = 75.0
 show_percentage = false
 
-
 [node name="LevelContainer" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = 15
@@ -498,7 +459,6 @@ grow_vertical = 2
 texture = ExtResource("17_w6q3x")
 expand_mode = 1
 
-
 [node name="LevelLabel" type="Label" parent="VBoxContainer/KnightUI/LevelContainer"]
 layout_mode = 0
 offset_left = 14.166666
@@ -506,7 +466,6 @@ offset_top = 7.499996
 offset_right = 55.83333
 offset_bottom = 23.66666
 label_settings = SubResource("LabelSettings_kjoi8")
-
 
 [node name="Avatar" type="TextureRect" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
@@ -522,12 +481,10 @@ grow_vertical = 2
 texture = ExtResource("23_tohvi")
 expand_mode = 1
 
-
 [node name="XpBarControl" type="Control" parent="VBoxContainer/KnightUI"]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainer/KnightUI/XpBarControl"]
 layout_mode = 1
@@ -543,7 +500,6 @@ grow_vertical = 2
 rotation = 3.1415927
 texture = ExtResource("23_u8waq")
 expand_mode = 1
-
 
 [node name="XPBar" type="ProgressBar" parent="VBoxContainer/KnightUI/XpBarControl"]
 layout_mode = 1
@@ -565,7 +521,6 @@ theme_override_styles/background = SubResource("StyleBoxFlat_kwf64")
 theme_override_styles/fill = SubResource("StyleBoxFlat_xo1hl")
 show_percentage = false
 
-
 [node name="SkillBar" type="HBoxContainer" parent="VBoxContainer/KnightUI"]
 layout_mode = 1
 anchors_preset = -1
@@ -575,12 +530,10 @@ offset_right = 146.0
 offset_bottom = 93.194496
 scale = Vector2(1.2, 1.2)
 
-
 [node name="SkillContainer" type="Panel" parent="VBoxContainer/KnightUI/SkillBar"]
 custom_minimum_size = Vector2(70, 0)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bq53a")
-
 
 [node name="Skill1" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
@@ -595,7 +548,6 @@ offset_right = -0.0016727448
 offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
 anchors_preset = -1
@@ -607,7 +559,6 @@ offset_right = 0.006664276
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill1"]
 layout_mode = 1
@@ -627,7 +578,6 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="Skill2" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
@@ -641,7 +591,6 @@ offset_right = 0.024993896
 offset_bottom = -0.004667282
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
 anchors_preset = -1
@@ -653,7 +602,6 @@ offset_right = 0.006662369
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill2"]
 layout_mode = 1
@@ -673,7 +621,6 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="Skill3" type="TextureButton" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer"]
 layout_mode = 1
 anchors_preset = -1
@@ -687,7 +634,6 @@ offset_right = 24.875004
 offset_bottom = 0.45400047
 script = ExtResource("25_nvvmv")
 
-
 [node name="Icon" type="TextureRect" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
 anchors_preset = -1
@@ -699,7 +645,6 @@ offset_right = 0.006664276
 grow_horizontal = 2
 expand_mode = 1
 stretch_mode = 6
-
 
 [node name="CooldownLabel" type="Label" parent="VBoxContainer/KnightUI/SkillBar/SkillContainer/Skill3"]
 layout_mode = 1
@@ -719,7 +664,6 @@ label_settings = SubResource("LabelSettings_nuasi")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
@@ -734,7 +678,6 @@ grow_horizontal = 0
 grow_vertical = 0
 theme_override_constants/separation = 30
 
-
 [node name="RetryPanelButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(35, 0)
 layout_mode = 2
@@ -742,13 +685,11 @@ texture_normal = ExtResource("26_yy7ss")
 ignore_texture_size = true
 stretch_mode = 5
 
-
 [node name="StatusButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("27_a6lkv")
 stretch_mode = 5
-
 
 [node name="SkillTreeButton" type="TextureButton" parent="HBoxContainer"]
 visible = false
@@ -756,7 +697,6 @@ custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("28_jwru3")
 stretch_mode = 5
-
 
 [node name="PointsLabel" type="Label" parent="HBoxContainer/SkillTreeButton"]
 layout_mode = 1
@@ -775,14 +715,12 @@ label_settings = SubResource("LabelSettings_kwf64")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-
 [node name="MapButton" type="TextureButton" parent="HBoxContainer"]
 custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
 texture_normal = ExtResource("29_vesd6")
 ignore_texture_size = true
 stretch_mode = 5
-
 
 [node name="CompanionShop" type="TextureButton" parent="."]
 layout_mode = 1
@@ -799,3 +737,15 @@ grow_horizontal = 0
 grow_vertical = 2
 texture_normal = ExtResource("30_w6q3x")
 
+[node name="SoundManager" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -72.0
+offset_top = 25.0
+offset_right = -32.0
+offset_bottom = 65.0
+grow_horizontal = 0
+texture_normal = ExtResource("15_bc265")
+stretch_mode = 5
