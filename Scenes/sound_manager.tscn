@@ -73,7 +73,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_wyfeo")
 [node name="MarginContainer" type="MarginContainer" parent="CenterContainer/Control/Panel/Panel"]
 layout_mode = 0
 offset_right = 200.0
-offset_bottom = 46.0
+offset_bottom = 243.0
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
