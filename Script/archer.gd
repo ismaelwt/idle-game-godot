@@ -39,10 +39,12 @@ var is_running: bool = false
 var attack_timer: float = 0.0
 var attack_id: int = 0
 var current_attack_target: Node3D = null
+var initial_rotation_y: float = 0.0
 
 
 func _ready() -> void:
 	set_meta("hero_id", "archer")
+	initial_rotation_y = rotation.y
 	SaveManager.load_character(
 		character_stats,
 		character_stats.inventory,
@@ -92,15 +94,17 @@ func _process(delta: float) -> void:
 			play_animation("archer_idle")
 		return
 
+	if is_instance_valid(world_scroller) and world_scroller.running:
+		# Durante a corrida, mantém o Archer alinhado à direção inicial do eixo Z.
+		rotation.y = initial_rotation_y
+		play_animation("archer_walk")
+		return
+
 	if not is_enemy_alive(target):
 		play_animation("archer_idle")
 		return
 
 	look_at_target(target)
-
-	if is_instance_valid(world_scroller) and world_scroller.running:
-		play_animation("archer_walk")
-		return
 
 	# O CombatController é o único responsável por iniciar ataques.
 	# Aqui o Archer apenas mantém a animação de espera quando está no alcance.
@@ -209,6 +213,7 @@ func start_running() -> void:
 	if dead:
 		return
 
+	rotation.y = initial_rotation_y
 	animation_player.speed_scale = 1.0
 	play_animation("archer_walk")
 
