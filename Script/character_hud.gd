@@ -17,6 +17,7 @@ var mage_hero: Node3D = null
 var knight_hero: Node3D = null
 var archer_hero: Node3D = null
 var party_manager: PartyManager = null
+var skill_icon_cache: Dictionary = {}
 
 # VIDA E MANA
 @onready var mage_health_bar: ProgressBar = $VBoxContainer/MageUI/HealthFrame/HealthProgressBar
@@ -231,6 +232,58 @@ func _update_hero_ui(hero: Node3D, hero_id: String) -> void:
 	var xp := float(stats.get("xp"))
 	xp_bar.max_value = xp_required
 	xp_bar.value = clampf(xp, 0.0, xp_required)
+
+	if hero_id == "archer":
+		_update_archer_skill_bar(stats)
+
+
+func _update_archer_skill_bar(stats: Node) -> void:
+	var skill_bar := archer_ui.get_node_or_null("SkillBar/SkillContainer")
+	if not is_instance_valid(skill_bar):
+		return
+
+	var skill_order: Array = stats.get("skill_order")
+
+	for slot_index in range(3):
+		var slot := skill_bar.get_node_or_null("Skill" + str(slot_index + 1)) as TextureButton
+		if not is_instance_valid(slot):
+			continue
+
+		var icon_rect := slot.get_node_or_null("Icon") as TextureRect
+		var cooldown_label := slot.get_node_or_null("CooldownLabel") as Label
+
+		if slot_index >= skill_order.size():
+			slot.visible = false
+			if is_instance_valid(icon_rect):
+				icon_rect.texture = null
+			if is_instance_valid(cooldown_label):
+				cooldown_label.text = ""
+			continue
+
+		var skill_id := str(skill_order[slot_index])
+		if not stats.has_skill(skill_id) or not SkillTree.has_skill(skill_id):
+			slot.visible = false
+			continue
+
+		var skill_data: Dictionary = SkillTree.get_skill(skill_id)
+		var skill_scene := skill_data.get("scene") as PackedScene
+		if skill_scene == null:
+			slot.visible = false
+			continue
+
+		if not skill_icon_cache.has(skill_id):
+			var skill_instance := skill_scene.instantiate()
+			skill_icon_cache[skill_id] = skill_instance.get("icon") as Texture2D
+			skill_instance.free()
+
+		var skill_icon := skill_icon_cache[skill_id] as Texture2D
+		slot.visible = skill_icon != null
+
+		if is_instance_valid(icon_rect):
+			icon_rect.texture = skill_icon
+
+		if is_instance_valid(cooldown_label):
+			cooldown_label.text = ""
 
 
 func _on_party_changed(_heroes: Array[Node3D]) -> void:
