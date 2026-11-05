@@ -7,7 +7,7 @@ extends Node3D
 
 # Margem maior para o tile aparecer antes de entrar no campo de visão.
 # Com tile_length = 20 e multiplicador 1.5, a distância é 30 unidades.
-@export_range(0.5, 2.5, 0.05) var visibility_distance_multiplier: float = 1.5
+@export_range(0.5, 2.5, 0.05) var visibility_distance_multiplier: float = 2.0
 
 
 var running := true

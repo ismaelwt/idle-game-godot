@@ -354,7 +354,7 @@ func create_inventory_slots(amount: int = 10) -> void:
 	for i in range(amount):
 		var slot := Panel.new()
 		slot.name = "Slot_%02d" % (i + 1)
-		slot.custom_minimum_size = Vector2(45, 45)
+		slot.custom_minimum_size = Vector2(40, 40)
 		items_grid.add_child(slot)
 
 		var icon_rect := TextureRect.new()
