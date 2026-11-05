@@ -19,7 +19,7 @@ const KNIGHT_SKILL_BUTTONS := {
 }
 
 const ARCHER_SKILL_BUTTONS := {
-	"skill1_nv2": "archer_heal"
+	"skill1_nv1": "archer_heal"
 }
 
 @export_enum("Mage", "Knight", "Archer") var tree_class: String = "Mage"
