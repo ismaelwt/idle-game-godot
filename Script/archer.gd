@@ -35,6 +35,7 @@ const HEALING_SCENE: PackedScene = preload("res://Scenes/healing_effect.tscn")
 var health: float = 0.0
 var dead: bool = false
 var attacking: bool = false
+var is_running: bool = false
 var attack_timer: float = 0.0
 var attack_id: int = 0
 var current_attack_target: Node3D = null
@@ -195,6 +196,21 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 
 	if is_instance_valid(healing_instance):
 		healing_instance.queue_free()
+
+
+func start_running() -> void:
+	# Mesmo fluxo de transição usado pelo Mage ao iniciar a corrida.
+	# Invalida awaits de ataque/skill para que não retomem a animação anterior.
+	attack_id += 1
+	attacking = false
+	current_attack_target = null
+	is_running = true
+
+	if dead:
+		return
+
+	animation_player.speed_scale = 1.0
+	play_animation("archer_walk")
 
 
 func basic_attack(target: Node3D) -> void:
