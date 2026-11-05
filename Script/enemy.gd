@@ -64,8 +64,8 @@ var level_label: Label3D
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
 const GOLD_DROP_SOUND: AudioStream = preload("res://Sounds/drop_coin.mp3")
-const ENEMY_PAIN_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
-const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_death.mp3")
+const ENEMY_PAIN_SOUND: AudioStream = preload("res://Sounds/pain_goblin.mp3")
+const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
@@ -216,7 +216,7 @@ func die() -> void:
 	if dying:
 		return
 
-	AudioManager.play_sfx(ENEMY_DEATH_SOUND, randf_range(0.95, 1.05))
+	AudioManager.play_sfx(ENEMY_DEATH_SOUND, randf_range(0.90, 1.05))
 	dying = true
 	in_combat = false
 	attacking = false

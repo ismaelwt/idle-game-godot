@@ -447,6 +447,10 @@ func _finish_attack() -> void:
 
 
 func play_animation(animation_name: StringName) -> void:
+	
+	if dead:
+		return 
+	
 	if current_animation == animation_name and animation_player.is_playing():
 		return
 

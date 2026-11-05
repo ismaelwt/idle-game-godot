@@ -32,7 +32,7 @@ transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
 script = ExtResource("2_np0bx")
 
 [node name="Armature" parent="." index="0"]
-transform = Transform3D(58.32638, 80.30048, -12.242011, -1.2095631, 15.928059, 98.71592, 81.21931, -57.429337, 10.261541, -0.02103812, 1.7471914, -0.071398295)
+transform = Transform3D(58.32638, 80.30048, -12.242011, -1.2095631, 15.928057, 98.71592, 81.21931, -57.429333, 10.261541, -0.02103812, 1.7471914, -0.071398295)
 
 [node name="Skeleton" parent="Armature" index="0"]
 bones/1/rotation = Quaternion(0.025988005, 0.017069854, 0.000950122, 0.99951607)
@@ -75,7 +75,7 @@ bone_name = "Hand.L"
 bone_idx = 9
 
 [node name="Shield_Heater" parent="Armature/Skeleton/ShieldBoneAttachment3D" index="0" instance=ExtResource("4_3ejob")]
-transform = Transform3D(-0.0007060765, -0.00088173826, -0.004956339, -0.007962124, -0.00028786546, 0.00045888487, -0.00032557687, 0.008952079, -0.00047342054, -0.0016965028, -5.8975536e-05, -0.0023224354)
+transform = Transform3D(-0.0007060764, -0.00088173826, -0.004956339, -0.007962124, -0.00028786546, 0.00045888464, -0.00032557675, 0.008952079, -0.00047342054, -0.001579971, -8.841511e-05, -0.0023190267)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {

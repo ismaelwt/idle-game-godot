@@ -17,37 +17,37 @@ _data = {
 [node name="Knight" instance=ExtResource("1_onvos")]
 
 [node name="Armature" parent="." index="0"]
-transform = Transform3D(63.769455, 75.95532, -12.815801, 4.2253947, 13.163299, 99.03975, 76.91296, -63.69862, 5.1847506, -0.043689325, 1.7526317, -0.025827609)
+transform = Transform3D(58.326363, 80.30048, -12.242011, -1.2095628, 15.928057, 98.71592, 81.219284, -57.429333, 10.261541, -0.02103812, 1.7471914, -0.071398295)
 
 [node name="Skeleton" parent="Armature" index="0"]
-bones/1/rotation = Quaternion(0.03165757, 0.045703925, -0.021846306, 0.99821424)
-bones/2/rotation = Quaternion(0.06311552, 0.09253475, -0.042380635, 0.9928029)
-bones/3/rotation = Quaternion(0.0066672103, 0.027245492, -0.00021930951, 0.9996065)
-bones/4/rotation = Quaternion(0.006667125, 0.027245475, -0.00021928932, 0.9996065)
-bones/6/rotation = Quaternion(0.09696281, -0.069407195, -0.83452636, 0.53790957)
-bones/7/rotation = Quaternion(0.059203193, -0.08290196, -0.20735452, 0.9729473)
-bones/8/rotation = Quaternion(0.24321747, -0.16147259, -0.088302314, 0.9523521)
-bones/9/rotation = Quaternion(0.023250258, 0.02021694, 0.059298947, 0.99776477)
-bones/10/rotation = Quaternion(0.050361853, -0.010660507, -0.0012072906, 0.99867344)
-bones/12/rotation = Quaternion(0.13930783, 0.13230897, 0.8144387, 0.54751927)
-bones/13/rotation = Quaternion(-0.24255511, 0.14173901, 0.2790535, 0.9182626)
-bones/14/rotation = Quaternion(0.3984371, 0.10148952, 0.08929241, 0.9071796)
-bones/15/rotation = Quaternion(0.30508402, -0.01904865, 0.062214665, 0.9501001)
-bones/16/rotation = Quaternion(0.04661286, -0.06772707, 0.31810966, 0.94448215)
-bones/18/rotation = Quaternion(0.36520803, 0.4522352, 0.7861795, -0.20982915)
-bones/19/rotation = Quaternion(-0.44003886, 0.1748029, -0.04793519, 0.8794954)
-bones/20/rotation = Quaternion(0.6920749, -0.0795736, -0.0696444, 0.71403784)
+bones/1/rotation = Quaternion(0.025988005, 0.017069854, 0.000950122, 0.99951607)
+bones/2/rotation = Quaternion(0.05192259, 0.03583706, 0.0035538615, 0.9980016)
+bones/3/rotation = Quaternion(-0.0057633854, 0.028393785, -0.0050151297, 0.9995676)
+bones/4/rotation = Quaternion(-0.005763359, 0.028393934, -0.005015128, 0.9995676)
+bones/6/rotation = Quaternion(0.049285363, -0.043115024, -0.8450679, 0.53063375)
+bones/7/rotation = Quaternion(0.15381548, 0.04509721, -0.20754953, 0.9650028)
+bones/8/rotation = Quaternion(0.6990974, -0.20439194, -0.18220094, 0.6605222)
+bones/9/rotation = Quaternion(0.0032461172, 0.00016422638, -0.028466377, 0.99958944)
+bones/10/rotation = Quaternion(0.071300685, 0.020554421, -0.6478183, 0.7581723)
+bones/12/rotation = Quaternion(-0.18783823, -0.057054605, 0.83306116, 0.5171757)
+bones/13/rotation = Quaternion(0.02324958, -0.039646935, 0.25746012, 0.9651953)
+bones/14/rotation = Quaternion(0.6050138, 0.025185224, 0.031791173, 0.7951814)
+bones/15/rotation = Quaternion(0.23993169, 0.0011675936, 0.083696485, 0.9671745)
+bones/16/rotation = Quaternion(-0.023131486, 0.014003108, 0.51052743, 0.8594362)
+bones/18/rotation = Quaternion(0.34914076, 0.48947617, 0.76684165, -0.22465046)
+bones/19/rotation = Quaternion(-0.43804786, 0.13412835, -0.01840543, 0.88869846)
+bones/20/rotation = Quaternion(0.66962767, -0.08001435, -0.07765948, 0.734279)
 bones/20/scale = Vector3(0.99999505, 0.9999555, 0.99999446)
-bones/21/rotation = Quaternion(0.0065580294, 0.013034161, -0.05286174, 0.99849534)
-bones/23/rotation = Quaternion(-0.048715495, 0.3296608, 0.9176178, 0.21662919)
-bones/24/rotation = Quaternion(-0.5034693, -0.042769313, -0.04490326, 0.86178493)
+bones/21/rotation = Quaternion(0.023175303, 0.037298046, -0.030928459, 0.99855655)
+bones/23/rotation = Quaternion(-0.23007451, 0.2581106, 0.89822906, 0.27134734)
+bones/24/rotation = Quaternion(-0.40134388, -0.010688314, -0.045855027, 0.9147165)
 bones/24/scale = Vector3(1.0000001, 1.0000256, 0.999979)
-bones/25/rotation = Quaternion(0.831148, 0.13562517, 0.1824552, 0.50745344)
-bones/26/rotation = Quaternion(-0.004940484, 0.012225263, 0.026214497, 0.9995695)
+bones/25/rotation = Quaternion(0.7486484, 0.2054815, 0.20080458, 0.59747845)
+bones/26/rotation = Quaternion(0.011995334, -0.0088258665, 0.005077557, 0.9998763)
 bones/37/rotation = Quaternion(0, 1, 0, 0)
 
 [node name="SwordBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="1"]
-transform = Transform3D(-0.8799279, 0.042796433, 0.47317505, -0.17965096, -0.95196056, -0.24798283, 0.43983093, -0.3032134, 0.8453455, -0.010890992, -0.009088718, 0.004357089)
+transform = Transform3D(-0.8797779, 0.05960536, 0.47163233, -0.039695572, -0.99785393, 0.052061975, 0.47372335, 0.0270814, 0.88025665, -0.011744187, -0.004781286, 0.0059831217)
 bone_name = "Hand.R"
 bone_idx = 15
 
@@ -55,14 +55,21 @@ bone_idx = 15
 transform = Transform3D(0.00018162327, 0.0010324281, -0.011954133, -0.011819933, 0.0020710384, -7.105991e-07, 0.0020630527, 0.011774763, 0.0010482757, -0.0006130263, 0.0014079844, -0.0014068633)
 
 [node name="ShieldBoneAttachment3D" type="BoneAttachment3D" parent="Armature/Skeleton" index="2"]
-transform = Transform3D(-0.8417018, 0.5380178, 0.04554192, -0.35725328, -0.4916851, -0.79411256, -0.40485466, -0.68467635, 0.6060614, 0.015021915, -0.004406184, 0.0017852522)
+transform = Transform3D(-0.926883, -0.36276782, -0.09636773, 0.35483515, -0.9305694, 0.09017393, -0.122388765, 0.04938616, 0.9912526, 0.009081996, -0.009482388, 0.008767006)
 bone_name = "Hand.L"
 bone_idx = 9
 
 [node name="Shield_Heater" parent="Armature/Skeleton/ShieldBoneAttachment3D" index="0" instance=ExtResource("3_12y01")]
-transform = Transform3D(-0.0007060765, -0.00088173826, -0.004956339, -0.007962124, -0.00028786546, 0.00045888487, -0.00032557687, 0.008952079, -0.00047342054, -0.0016965028, -5.8975536e-05, -0.0023224354)
+transform = Transform3D(-0.00074479275, -6.59193e-05, -0.005979289, -0.008955186, -0.00055192097, 0.0004979578, -0.00049993786, 0.00998454, -1.1950149e-05, -0.00073592644, -0.00030166004, -0.0022943541)
+
+[node name="Shield_Heater" parent="Armature/Skeleton/ShieldBoneAttachment3D/Shield_Heater" index="0"]
+transform = Transform3D(99.68009, 7.4383774, -2.9242663, 1.5728079, 17.616615, 98.42347, 7.8362713, -98.154594, 17.443264, 0, 0, 0)
+cast_shadow = 0
+gi_mode = 0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="1"]
 libraries = {
 &"knight": SubResource("AnimationLibrary_np0bx")
 }
+
+[editable path="Armature/Skeleton/ShieldBoneAttachment3D/Shield_Heater"]

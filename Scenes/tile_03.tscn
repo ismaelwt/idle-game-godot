@@ -52,7 +52,7 @@ uv1_offset = Vector3(0.595, 0, 0)
 [node name="Tile_03" type="Node3D"]
 
 [node name="Ground" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -9.354546, 0.026733398, -0.068359375)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -10.825371, 0.026733398, -0.068359375)
 mesh = SubResource("PlaneMesh_hnrjy")
 surface_material_override/0 = SubResource("StandardMaterial3D_redxg")
 script = ExtResource("5_7y7hr")
@@ -158,16 +158,16 @@ transform = Transform3D(-4.371139e-09, 0, 0.1, 0, 0.1, 0, -0.1, 0, -4.371139e-09
 visible = false
 
 [node name="Ground2" type="MeshInstance3D" parent="."]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 10.632149, 0, 0)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 9.161324, 0, 0)
 mesh = SubResource("PlaneMesh_hnrjy")
 surface_material_override/0 = SubResource("StandardMaterial3D_redxg")
 script = ExtResource("5_7y7hr")
 
 [node name="SM_Large_Rock_Layered_07" parent="." instance=ExtResource("30_gl6a3")]
-transform = Transform3D(0.13924412, 0, 0.4802198, 0, 0.5, 0, -0.4802198, 0, 0.13924412, -9.43499, 0, 5.615967)
+transform = Transform3D(0.13924412, 0, 0.4802198, 0, 0.5, 0, -0.4802198, 0, 0.13924412, -10.905815, 0, 5.615967)
 
 [node name="SM_Large_Rock_Layered_012" parent="." instance=ExtResource("31_w3dc0")]
-transform = Transform3D(0.28582215, 0, -0.9582827, 0, 1, 0, 0.9582827, 0, 0.28582215, -8.813408, 0, -4.612915)
+transform = Transform3D(0.28582215, 0, -0.9582827, 0, 1, 0, 0.9582827, 0, 0.28582215, -10.284233, 0, -4.612915)
 
 [node name="SM_Large_Rock_Layered_013" parent="." instance=ExtResource("31_w3dc0")]
-transform = Transform3D(-0.65162194, 0, -0.7585439, 0, 1, 0, 0.7585439, 0, -0.65162194, 17.78962, 0, 7.906128)
+transform = Transform3D(-0.65162194, 0, -0.7585439, 0, 1, 0, 0.7585439, 0, -0.65162194, 16.318794, 0, 7.906128)

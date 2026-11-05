@@ -138,7 +138,7 @@ transform = Transform3D(1.5320886, 0, -1.2855752, 0, 2.0000002, 0, 1.2855749, 0,
 transform = Transform3D(0.12940955, -0.24148144, 0.4182582, 0, 0.43301266, 0.25000003, -0.48296297, -0.06470476, 0.11207196, 5.965, 4.5, -0.31)
 projection = 1
 current = true
-size = 6.0
+size = 5.55
 far = 250.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
@@ -152,19 +152,19 @@ surface_material_override/0 = SubResource("ShaderMaterial_rr1ac")
 transform = Transform3D(0.69364077, 0, 0.7203211, 0, 1, 0, -0.7203211, 0, 0.69364077, 0.023498535, 0.017150879, -0.032836914)
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" instance=ExtResource("4_ve3h0")]
-transform = Transform3D(0.100403614, 0, 0.28269967, 0, 0.2999999, 0, -0.28269967, 0, 0.100403614, -2.7962825, 2.584383, 0.35544485)
+transform = Transform3D(-0.004408542, 0, 0.2999675, 0, 0.29999983, 0, -0.2999675, 0, -0.004408542, -2.7962825, 2.6097126, 0.35544485)
 script = ExtResource("4_pwu4o")
 
 [node name="Mage" parent="SubViewportContainer/SubViewport" instance=ExtResource("5_pwu4o")]
-transform = Transform3D(0.79387754, 0, 0.09878421, 0, 0.79999995, 0, -0.09878421, 0, 0.79387754, 0.4234798, 2.5809855, -1.2770509)
+transform = Transform3D(0.79387754, 0, 0.09878421, 0, 0.79999995, 0, -0.09878421, 0, 0.79387754, 0.4234798, 2.6260295, -1.2770509)
 script = ExtResource("6_pwu4o")
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" instance=ExtResource("8_a2e1g")]
-transform = Transform3D(-0.015563392, 0, 0.07847153, 0, 0.08, 0, -0.07847153, 0, -0.015563392, -1.6633301, 2.5673828, -1.0001221)
+transform = Transform3D(-0.015563392, 0, 0.07847153, 0, 0.08, 0, -0.07847153, 0, -0.015563392, -1.6633301, 2.573059, -1.0001221)
 script = ExtResource("9_5ow1g")
 
 [node name="Fire" parent="SubViewportContainer/SubViewport" instance=ExtResource("7_yr170")]
-transform = Transform3D(1.6933157, 0, 1.0642753, 0, 2, 0, -1.0642753, 0, 1.6933157, -0.62442386, 2.5502522, 0.9891846)
+transform = Transform3D(1.6933157, 0, 1.0642753, 0, 2, 0, -1.0642753, 0, 1.6933157, -0.36844242, 2.5502522, 1.0291016)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="SubViewportContainer"]
 
@@ -327,4 +327,3 @@ grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("13_l3v1h")
 stretch_mode = 5
-

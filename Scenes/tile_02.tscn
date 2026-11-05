@@ -176,7 +176,7 @@ transform = Transform3D(0.15046221, 0, -1.5929097, 0, 1.6, 0, 1.5929097, 0, 0.15
 transform = Transform3D(1.1331072, 0, -1.1296319, 0, 1.6, 0, 1.1296319, 0, 1.1331072, -3.7365723, 0, 9.176392)
 
 [node name="gobline_estandarte_pixel" parent="." instance=ExtResource("34_ldmt4")]
-transform = Transform3D(-1.6525309, 0, -1.1265619, 0, 2, 0, 1.1265619, 0, -1.6525309, 5.6395264, 0, 8.696045)
+transform = Transform3D(-1.7835478, 0, -0.90496296, 0, 2, 0, 0.90496296, 0, -1.7835478, 5.6395264, 0, 8.696045)
 
 [node name="gobline_estandarte_pixel2" parent="." instance=ExtResource("34_ldmt4")]
 transform = Transform3D(-1.9664208, 0, -0.3649516, 0, 2, 0, 0.3649516, 0, -1.9664208, -5.8289795, 0, 9.799316)
