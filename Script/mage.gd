@@ -383,6 +383,10 @@ func start_running():
 	action_locked = false
 	skill_animation_finished = false
 
+	if dead:
+		return
+
+	rotation.y = initial_rotation_y
 	animation_player.speed_scale = 1.0
 
 	animation_player.play(
