@@ -13,13 +13,16 @@ const MAGE_SKILL_BUTTONS := {
 	"skill2_nv2": "thunderstorm"
 }
 
-# IDs reservados para a árvore do Knight.
-# As habilidades precisam existir no SkillTree global para aparecerem.
+# Habilidades exclusivas de cada classe.
 const KNIGHT_SKILL_BUTTONS := {
 	"skill1_nv1": "frenesi"
 }
 
-@export_enum("Mage", "Knight") var tree_class: String = "Mage"
+const ARCHER_SKILL_BUTTONS := {
+	"skill1_nv2": "archer_heal"
+}
+
+@export_enum("Mage", "Knight", "Archer") var tree_class: String = "Mage"
 
 # =========================================================
 # INTERFACE
@@ -81,9 +84,13 @@ var _remove_buttons_by_key: Dictionary = {}
 
 
 func _get_skill_mapping() -> Dictionary:
-	if tree_class.to_lower() == "knight":
-		return KNIGHT_SKILL_BUTTONS
-	return MAGE_SKILL_BUTTONS
+	match tree_class.to_lower():
+		"knight":
+			return KNIGHT_SKILL_BUTTONS
+		"archer":
+			return ARCHER_SKILL_BUTTONS
+		_:
+			return MAGE_SKILL_BUTTONS
 
 
 func _get_skill_button_nodes() -> Dictionary:
@@ -136,6 +143,8 @@ func _set_hero(hero: Node) -> void:
 
 	if hero_class_value == "knight" or hero_class_value == "1" or hero_id == "knight":
 		tree_class = "Knight"
+	elif hero_class_value == "archer" or hero_class_value == "2" or hero_id == "archer":
+		tree_class = "Archer"
 	else:
 		tree_class = "Mage"
 
