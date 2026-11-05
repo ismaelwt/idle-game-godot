@@ -50,6 +50,10 @@ extends Node3D
 @export var projectile_scene: PackedScene
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
+const GOLD_ICON: Texture2D = preload("res://icons/coins.png")
+const GOLD_DROP_SOUND: AudioStream = preload("res://Sounds/drop_coin.mp3")
+const ENEMY_PAIN_SOUND: AudioStream = preload("res://Sounds/pain_goblin.mp3")
+const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var arrow_spawn: Node3D = $ArrowSpawn
@@ -220,6 +224,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	if dying:
 		return
 
+	AudioManager.play_sfx(ENEMY_PAIN_SOUND, randf_range(0.95, 1.05))
 	health -= damage
 
 	print(
@@ -242,11 +247,13 @@ func die() -> void:
 	if dying:
 		return
 
+	AudioManager.play_sfx(ENEMY_DEATH_SOUND, randf_range(0.90, 1.05))
 	dying = true
 	in_combat = false
 	attacking = false
 	combat_target = null
 
+	show_gold_reward()
 	animation_player.play("enemy_archer/die")
 
 	for child in get_children():
@@ -467,6 +474,103 @@ func show_damage(damage: float, is_critical: bool = false) -> void:
 
 	if is_instance_valid(label):
 		label.queue_free()
+
+func play_gold_drop_sound() -> void:
+	if not is_inside_tree():
+		return
+
+	AudioManager.play_sfx(
+		GOLD_DROP_SOUND,
+		randf_range(0.95, 1.05)
+	)
+
+
+func show_gold_reward() -> void:
+	if not is_inside_tree():
+		return
+
+	var tree := get_tree()
+	if tree == null:
+		return
+
+	play_gold_drop_sound()
+
+	var reward_visual := Node3D.new()
+	reward_visual.name = "GoldRewardVisual"
+	add_child(reward_visual)
+	reward_visual.top_level = true
+
+	var coin_icon := Sprite3D.new()
+	coin_icon.texture = GOLD_ICON
+	coin_icon.pixel_size = 0.01
+	coin_icon.modulate = Color.WHITE
+	coin_icon.no_depth_test = true
+	coin_icon.render_priority = 3
+	coin_icon.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	reward_visual.add_child(coin_icon)
+
+	var amount_label := Label3D.new()
+	amount_label.font = DAMAGE_FONT
+	amount_label.font_size = 100
+	amount_label.outline_size = damage_outline_size
+	amount_label.outline_modulate = damage_outline_color
+	amount_label.text = "(" + str(int(gold_reward)) + ")"
+	amount_label.modulate = Color(1.0, 0.8, 0.0, 1.0)
+	amount_label.no_depth_test = true
+	amount_label.render_priority = 3
+	amount_label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	reward_visual.add_child(amount_label)
+
+	var camera := get_viewport().get_camera_3d()
+	var screen_right := Vector3.RIGHT
+	if is_instance_valid(camera):
+		screen_right = camera.global_basis.x.normalized()
+
+	coin_icon.position = reward_visual.to_local(
+		reward_visual.global_position - screen_right * 0.50
+	)
+	amount_label.position = reward_visual.to_local(
+		reward_visual.global_position + screen_right * 0.50
+	)
+
+	var start_position: Vector3 = global_position + Vector3(
+		0.0,
+		damage_height + 2.0,
+		0.0
+	)
+	reward_visual.global_position = start_position
+
+	var rise_height: float = 1.5
+	var elapsed := 0.0
+
+	while elapsed < damage_duration:
+		if not is_instance_valid(reward_visual):
+			return
+
+		if not is_inside_tree():
+			reward_visual.queue_free()
+			return
+
+		elapsed += get_process_delta_time()
+		var progress: float = clampf(
+			elapsed / damage_duration,
+			0.0,
+			1.0
+		)
+
+		reward_visual.global_position = (
+			start_position + Vector3(0.0, rise_height * progress, 0.0)
+		)
+
+		var alpha: float = 1.0 - progress
+		coin_icon.modulate.a = alpha
+		amount_label.modulate.a = alpha
+
+		await tree.process_frame
+
+	if is_instance_valid(reward_visual):
+		reward_visual.queue_free()
+
 
 func update_health_bar() -> void:
 	if not is_instance_valid(health_bar):
