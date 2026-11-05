@@ -5,9 +5,9 @@ extends Node3D
 @export var tile_length: float = 20.0
 @export var recycle_distance: float = -60.0
 
-# Com tile_length = 20, o valor 0.75 mantém um tile visível
-# na maior parte do percurso e dois durante a transição.
-@export_range(0.5, 1.0, 0.05) var visibility_distance_multiplier: float = 0.75
+# Margem maior para o tile aparecer antes de entrar no campo de visão.
+# Com tile_length = 20 e multiplicador 1.5, a distância é 30 unidades.
+@export_range(0.5, 2.5, 0.05) var visibility_distance_multiplier: float = 1.5
 
 
 var running := true
