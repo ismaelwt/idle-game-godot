@@ -157,12 +157,9 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	attacking = true
 	current_attack_target = null
 
-	# O Archer não possui animação de cura; mantém o idle durante o cast.
-	play_animation("archer_heal")
-
 	print("ARCHER -> SKILL HEAL")
 
-	# Mantém o mesmo tempo de execução e o mesmo efeito de cura do Mage.
+	# Mantém o mesmo efeito de cura utilizado pelo Mage.
 	var healing_instance := HEALING_SCENE.instantiate()
 	get_tree().current_scene.add_child(healing_instance)
 	healing_instance.global_position = global_position
@@ -175,18 +172,29 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	print("Vida recuperada: ", healed_amount)
 	print("Vida atual: ", health, "/", max_health)
 
-	# Libera a rotação de combate; o efeito visual continua durante sua duração.
+	# Mantém attacking ativo para impedir que _process() substitua
+	# a animação de cura pelo idle antes de ela terminar.
+	var heal_animation := "archer/archer_heal"
+	if animation_player.has_animation(heal_animation):
+		animation_player.speed_scale = animation_speed
+		animation_player.play(heal_animation, animation_blend)
+		await animation_player.animation_finished
+	else:
+		push_warning("Archer: animação não encontrada: " + heal_animation)
+
+	if my_attack_id != attack_id or dead:
+		if is_instance_valid(healing_instance):
+			healing_instance.queue_free()
+		return
+
 	attacking = false
 	current_attack_target = null
 
+	# O efeito visual permanece pelo tempo definido na própria cena.
 	await get_tree().create_timer(float(healing_instance.duration)).timeout
 
 	if is_instance_valid(healing_instance):
 		healing_instance.queue_free()
-
-	# Não altera estados de uma ação mais recente ou de um Archer morto.
-	if my_attack_id != attack_id or dead:
-		return
 
 
 func basic_attack(target: Node3D) -> void:
