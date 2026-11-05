@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://l26so3frk3eo"]
+[gd_scene load_steps=10 format=3 uid="uid://l26so3frk3eo"]
 
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="1_25ke0"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="2_1ohty"]
 [ext_resource type="Texture2D" uid="uid://ctqiuorq6wxse" path="res://UI/blanck_button.png" id="3_1ohty"]
 [ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="4_tox07"]
+[ext_resource type="Script" uid="uid://c2wbjcgwgsfmh" path="res://Script/sound_manager.gd" id="5_script"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tox07"]
 texture = ExtResource("1_25ke0")
@@ -26,6 +27,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("5_script")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1
