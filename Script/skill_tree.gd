@@ -95,9 +95,9 @@ const SKILLS := {
 		"hero_class": "archer",
 		"scene": preload("res://Scenes/healing_effect.tscn"),
 		"cost": 1,
-		"stage": 2,
+		"stage": 1,
 		"prerequisites": [],
-		"button": "skill1_nv2"
+		"button": "skill1_nv1"
 	},
 
 	"frenesi": {
