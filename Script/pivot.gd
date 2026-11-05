@@ -5,6 +5,7 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 @onready var camera: Camera3D = $Camera3D
 
 @export var hero_z_offset: float = -6.0
+@export_range(0.1, 3.0, 0.1) var camera_transition_duration: float = 1.0
 
 @onready var sub_viewport: SubViewport = (
 	get_parent()
@@ -17,161 +18,111 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 	.get_node("World/WorldScroller")
 )
 
-
 @export var pixel_snap_enabled: bool = true
 
-
 var followed_hero: Node3D = null
-
-
+var camera_follow_tween: Tween = null
 
 var units_per_pixel: float = 0.0
-
 var high_precision_position: Vector3
 var snapped_world_position: Vector3
 
 
-func _ready():
-
+func _ready() -> void:
 	process_priority = 100
 	followed_hero = _find_selected_hero()
 
 	if not is_instance_valid(camera):
-
 		print("ERRO: Camera3D não encontrada.")
 		return
 
 	if not is_instance_valid(world_scroller):
-
 		print("ERRO: WorldScroller não encontrado.")
 		return
+
+	if is_instance_valid(followed_hero):
+		camera.global_position.z = followed_hero.global_position.z + hero_z_offset
 
 	print("=== PIXEL PERFECT ===")
 	print("Camera: ", camera.name)
 	print("WorldScroller: ", world_scroller.name)
 
 	if camera.projection == Camera3D.PROJECTION_ORTHOGONAL:
-
-		print(
-			"Camera Orthographic Size: ",
-			camera.size
-		)
-
+		print("Camera Orthographic Size: ", camera.size)
 	else:
-
-		print(
-			"AVISO: Camera não está Orthographic."
-		)
+		print("AVISO: Camera não está Orthographic.")
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
+	if not is_instance_valid(camera) or not is_instance_valid(world_scroller):
+		return
+
+	# Detecta a morte do herói acompanhado e troca o foco suavemente.
+	if not _is_hero_alive(followed_hero):
+		var next_hero := _find_selected_hero()
+		if is_instance_valid(next_hero) and next_hero != followed_hero:
+			_change_followed_hero(next_hero)
+
+	if not is_instance_valid(followed_hero):
+		return
+
+	# Durante a transição, o Tween controla a posição Z da câmera.
+	# Depois dela, o acompanhamento volta a ser direto.
+	if camera_follow_tween == null or not camera_follow_tween.is_running():
+		camera.global_position.z = followed_hero.global_position.z + hero_z_offset
 
 	if not pixel_snap_enabled:
 		return
 
-	if not is_instance_valid(camera):
-		return
-
-	if not is_instance_valid(world_scroller):
-		return
-
-	if not _is_hero_alive(followed_hero):
-		followed_hero = _find_selected_hero()
-	if not is_instance_valid(followed_hero):
-		return
-
-	var viewport_size = (
-		sub_viewport
-		.get_visible_rect()
-		.size
-	)
-
+	var viewport_size := sub_viewport.get_visible_rect().size
 	if viewport_size.y <= 0.0:
 		return
 
+	# Unidades de mundo por pixel.
+	units_per_pixel = camera.size / viewport_size.y
 
-	# ==========================================
-	# UNIDADES DE MUNDO POR PIXEL
-	# ==========================================
+	# Posição real do WorldScroller.
+	high_precision_position = world_scroller.high_precision_position
 
-	units_per_pixel = (
-		camera.size
-		/ viewport_size.y
+	# World -> Camera Space.
+	var world_to_camera := camera.global_transform.affine_inverse()
+	var camera_to_world := camera.global_transform
+	var camera_space := world_to_camera * high_precision_position
+
+	# Snap X.
+	camera_space.x = round(camera_space.x / units_per_pixel) * units_per_pixel
+
+	# Snap Y.
+	camera_space.y = round(camera_space.y / units_per_pixel) * units_per_pixel
+
+	# Camera Space -> World.
+	snapped_world_position = camera_to_world * camera_space
+
+	# Aplica ao WorldScroller.
+	world_scroller.global_position = snapped_world_position
+
+
+func _change_followed_hero(next_hero: Node3D) -> void:
+	if not is_instance_valid(next_hero):
+		return
+
+	followed_hero = next_hero
+
+	if camera_follow_tween != null and camera_follow_tween.is_running():
+		camera_follow_tween.kill()
+
+	var target_z := followed_hero.global_position.z + hero_z_offset
+	camera_follow_tween = create_tween()
+	camera_follow_tween.set_trans(Tween.TRANS_SINE)
+	camera_follow_tween.set_ease(Tween.EASE_IN_OUT)
+	camera_follow_tween.tween_property(
+		camera,
+		"global_position:z",
+		target_z,
+		camera_transition_duration
 	)
 
-
-	# ==========================================
-	# POSIÇÃO REAL
-	# ==========================================
-
-	high_precision_position = (
-		world_scroller.high_precision_position
-	)
-
-
-	# ==========================================
-	# WORLD -> CAMERA SPACE
-	# ==========================================
-
-	var world_to_camera = (
-		camera.global_transform.affine_inverse()
-	)
-
-	var camera_to_world = (
-		camera.global_transform
-	)
-
-	var camera_space = (
-		world_to_camera
-		* high_precision_position
-	)
-
-
-	# ==========================================
-	# SNAP X
-	# ==========================================
-
-	camera_space.x = (
-		round(
-			camera_space.x
-			/ units_per_pixel
-		)
-		* units_per_pixel
-	)
-
-
-	# ==========================================
-	# SNAP Y
-	# ==========================================
-
-	camera_space.y = (
-		round(
-			camera_space.y
-			/ units_per_pixel
-		)
-		* units_per_pixel
-	)
-
-
-	# ==========================================
-	# CAMERA SPACE -> WORLD
-	# ==========================================
-
-	snapped_world_position = (
-		camera_to_world
-		* camera_space
-	)
-
-
-	# ==========================================
-	# APLICA AO WORLD SCROLLER
-	# ==========================================
-
-	world_scroller.global_position = (
-		snapped_world_position
-	)
-	
-	camera.global_position.z = followed_hero.global_position.z + hero_z_offset
+	print("=== CÂMERA: NOVO HERÓI EM FOCO: ", followed_hero.name, " ===")
 
 
 func _find_selected_hero() -> Node3D:
