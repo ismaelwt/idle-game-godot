@@ -143,7 +143,7 @@ func get_horizontal_distance_to(target: Node3D) -> float:
 
 
 func use_skill(skill_id: String, target: Node3D) -> void:
-	if skill_id != "heal":
+	if skill_id != "archer_heal":
 		push_warning("Skill desconhecida no Archer: " + skill_id)
 		return
 
