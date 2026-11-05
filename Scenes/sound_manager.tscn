@@ -87,6 +87,10 @@ label_settings = SubResource("LabelSettings_08tfe")
 
 [node name="HSlider" type="HSlider" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 1.0
 
 [node name="HSeparator" type="HSeparator" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -98,6 +102,10 @@ label_settings = SubResource("LabelSettings_08tfe")
 
 [node name="HSlider2" type="HSlider" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.8
 
 [node name="HSeparator2" type="HSeparator" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -109,6 +117,16 @@ label_settings = SubResource("LabelSettings_08tfe")
 
 [node name="HSlider3" type="HSlider" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
 layout_mode = 2
+min_value = 0.0
+max_value = 1.0
+step = 0.01
+value = 0.7
+
+[node name="MuteButton" type="Button" parent="CenterContainer/Control/Panel/Panel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+text = "Mutar tudo"
+
 
 [node name="TextureRect" type="TextureRect" parent="CenterContainer/Control/Panel"]
 layout_mode = 1
