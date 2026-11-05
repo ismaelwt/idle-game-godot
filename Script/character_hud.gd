@@ -162,11 +162,9 @@ func _refresh_heroes() -> void:
 	knight_hero = new_knight
 	archer_hero = new_archer
 
-	$VBoxContainer/MageUI.visible = is_instancethProgressBar") as ProgressBar
-	archer_mana_bar = archer_ui.get_node("ManaFrame/ManaProgressBar") as ProgressBar
-	archer_level_label = archer_ui.get_node("LevelContainer/LevelLabel") as Label
-	archer_xp_bar = archer_ui.get_node("XpBarControl/XPBar") as ProgressBar
-	archer_ui.hide()
+	$VBoxContainer/MageUI.visible = is_instance_valid(mage_hero)
+	$VBoxContainer/KnightUI.visible = is_instance_valid(knight_hero)
+	archer_ui.visible = is_instance_valid(archer_hero)
 
 
 func _get_character_stats(hero: Node) -> Node:
