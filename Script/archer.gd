@@ -275,7 +275,8 @@ func play_animation(animation_name: String) -> void:
 		animation_player.speed_scale = animation_speed
 		if animation_name == "archer_attack2":
 			animation_player.speed_scale = 2.0
-		animation_player.play(full_name, animation_blend)
+		var blend_time := 0.0 if animation_name == "archer_walk" else animation_blend
+		animation_player.play(full_name, blend_time)
 		animation_player_bow.play("Armature|Bow_Fire")
 
 
