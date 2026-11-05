@@ -86,6 +86,20 @@ const SKILLS := {
 	# Adicionaremos aqui as cinco habilidades físicas,
 	# usando IDs exclusivos e cenas próprias.
 	
+	# =====================================================
+	# ARCHER
+	# =====================================================
+
+	"archer_heal": {
+		"name": "Healing",
+		"hero_class": "archer",
+		"scene": preload("res://Scenes/healing_effect.tscn"),
+		"cost": 1,
+		"stage": 2,
+		"prerequisites": [],
+		"button": "skill1_nv2"
+	},
+
 	"frenesi": {
 		"name": "Frenesi",
 		"hero_class": "knight",
