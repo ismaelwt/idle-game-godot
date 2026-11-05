@@ -283,7 +283,42 @@ func _update_archer_skill_bar(stats: Node) -> void:
 			icon_rect.texture = skill_icon
 
 		if is_instance_valid(cooldown_label):
-			cooldown_label.text = ""
+			cooldown_label.text = _get_archer_skill_cooldown_text(skill_id)
+
+
+func _get_archer_skill_cooldown_text(skill_id: String) -> String:
+	if not is_instance_valid(archer_hero):
+		return ""
+
+	var combat_controller := get_tree().current_scene.find_child(
+		"CombatController", true, false
+	) as CombatController
+
+	if not is_instance_valid(combat_controller):
+		return ""
+
+	var hero_id: int = archer_hero.get_instance_id()
+
+	# Garante que o estado das skills exista antes de consultar os timers.
+	if not combat_controller.hero_skill_states.has(hero_id):
+		combat_controller.prepare_skills(archer_hero)
+
+	if not combat_controller.hero_skill_states.has(hero_id):
+		return ""
+
+	var state: Dictionary = combat_controller.hero_skill_states[hero_id]
+	var skill_ids: Array = state.get("skill_ids", [])
+	var skill_timers: Array = state.get("skill_timers", [])
+
+	var skill_index: int = skill_ids.find(skill_id)
+	if skill_index == -1 or skill_index >= skill_timers.size():
+		return ""
+
+	var remaining: float = float(skill_timers[skill_index])
+	if remaining <= 0.0:
+		return ""
+
+	return str(ceili(remaining))
 
 
 func _on_party_changed(_heroes: Array[Node3D]) -> void:
