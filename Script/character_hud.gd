@@ -16,11 +16,6 @@ var selected_hero: Node3D = null
 var mage_hero: Node3D = null
 var knight_hero: Node3D = null
 var archer_hero: Node3D = null
-var archer_ui: Control = null
-var archer_health_bar: ProgressBar = null
-var archer_mana_bar: ProgressBar = null
-var archer_level_label: Label = null
-var archer_xp_bar: ProgressBar = null
 var party_manager: PartyManager = null
 
 # VIDA E MANA
@@ -36,6 +31,13 @@ var party_manager: PartyManager = null
 
 @onready var knight_level_label: Label = $VBoxContainer/KnightUI/LevelContainer/LevelLabel
 @onready var knight_xp_bar: ProgressBar = $VBoxContainer/KnightUI/XpBarControl/XPBar
+
+# HUD do Archer definida diretamente na cena.
+@onready var archer_ui: Control = $VBoxContainer/ArcherUI
+@onready var archer_health_bar: ProgressBar = $VBoxContainer/ArcherUI/HealthFrame/HealthProgressBar
+@onready var archer_mana_bar: ProgressBar = $VBoxContainer/ArcherUI/ManaFrame/ManaProgressBar
+@onready var archer_level_label: Label = $VBoxContainer/ArcherUI/LevelContainer/LevelLabel
+@onready var archer_xp_bar: ProgressBar = $VBoxContainer/ArcherUI/XpBarControl/XPBar
 
 # BOTÕES
 @onready var map_button: TextureButton = $HBoxContainer/MapButton
@@ -54,7 +56,7 @@ var skill_tree: Control = null
 
 
 func _ready() -> void:
-	_create_archer_ui()
+	archer_ui.hide()
 	shop_button.pressed.connect(_on_shop_button_pressed)
 	map_button.pressed.connect(_on_map_button_pressed)
 	skill_tree_button.pressed.connect(_on_skill_tree_button_pressed)
@@ -160,34 +162,7 @@ func _refresh_heroes() -> void:
 	knight_hero = new_knight
 	archer_hero = new_archer
 
-	$VBoxContainer/MageUI.visible = is_instance_valid(mage_hero)
-	$VBoxContainer/KnightUI.visible = is_instance_valid(knight_hero)
-	if is_instance_valid(archer_ui):
-		archer_ui.visible = is_instance_valid(archer_hero)
-
-	# Mantém selected_hero como referência ao herói principal para os botões existentes.
-	_update_selected_hero()
-
-
-func _create_archer_ui() -> void:
-	var template: Control = $VBoxContainer/MageUI
-	archer_ui = template.duplicate() as Control
-	archer_ui.name = "ArcherUI"
-	$VBoxContainer.add_child(archer_ui)
-
-	var skill_bar := archer_ui.get_node_or_null("SkillBar")
-	if is_instance_valid(skill_bar):
-		skill_bar.hide()
-
-	var mana_frame := archer_ui.get_node_or_null("ManaFrame")
-	if is_instance_valid(mana_frame):
-		mana_frame.hide()
-
-	var avatar := archer_ui.get_node_or_null("Avatar") as TextureRect
-	if is_instance_valid(avatar):
-		avatar.texture = load("res://UI/UISprites/Archer_Avatar.png")
-
-	archer_health_bar = archer_ui.get_node("HealthFrame/HealthProgressBar") as ProgressBar
+	$VBoxContainer/MageUI.visible = is_instancethProgressBar") as ProgressBar
 	archer_mana_bar = archer_ui.get_node("ManaFrame/ManaProgressBar") as ProgressBar
 	archer_level_label = archer_ui.get_node("LevelContainer/LevelLabel") as Label
 	archer_xp_bar = archer_ui.get_node("XpBarControl/XPBar") as ProgressBar
