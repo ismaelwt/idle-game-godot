@@ -255,6 +255,7 @@ func basic_attack(target: Node3D) -> void:
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = arrow_spawn.global_position
 	projectile.global_rotation = arrow_spawn.global_rotation
+	projectile.scale = Vector3(.3, .3, .3)
 	projectile.setup(target, self, final_damage, is_critical)
 	# Mantém attacking=true até a animação de disparo terminar,
 	# como no EnemyArcher. O sinal animation_finished libera o próximo ataque.
@@ -275,9 +276,9 @@ func play_animation(animation_name: String) -> void:
 		animation_player.speed_scale = animation_speed
 		if animation_name == "archer_attack2":
 			animation_player.speed_scale = 2.0
+			animation_player_bow.play("Armature|Bow_Fire")
 		var blend_time := 0.0 if animation_name == "archer_walk" else animation_blend
 		animation_player.play(full_name, blend_time)
-		animation_player_bow.play("Armature|Bow_Fire")
 
 
 func look_at_target(target: Node3D) -> void:
