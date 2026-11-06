@@ -87,7 +87,23 @@ func _spawn_arrow_rain() -> void:
 			valid_targets.append(enemy)
 
 	if valid_targets.is_empty():
+		aim_marker.visible = false
 		return
+
+	# Exibe um marcador individual no chão de cada inimigo dentro do raio.
+	# O marcador original da cena é reutilizado no primeiro alvo.
+	aim_marker.visible = false
+	for target_enemy in valid_targets:
+		if not is_instance_valid(target_enemy):
+			continue
+
+		var target_marker := aim_marker.duplicate() as Sprite3D
+		if target_marker == null:
+			continue
+
+		add_child(target_marker)
+		target_marker.visible = true
+		target_marker.global_position = target_enemy.global_position + Vector3.UP * 0.03
 
 	# Garante pelo menos uma flecha para cada inimigo dentro do raio.
 	# arrow_count continua definindo a quantidade extra quando for maior
