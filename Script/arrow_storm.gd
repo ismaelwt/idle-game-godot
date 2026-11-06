@@ -12,9 +12,10 @@ signal finished
 @export var damage: float = 28.0
 @export var radius: float = 5.0
 @export var arrow_count: int = 18
-@export var fall_height: float = 12.0
-@export var fall_speed: float = 8.0
+@export var fall_height: float = 6.0
+@export var fall_speed: float = 4.5
 @export var stagger_interval: float = 0.07
+@export var impact_linger_duration: float = 1.5
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 
@@ -82,15 +83,26 @@ func _process(delta: float) -> void:
 			falling_arrows[i] = entry
 			continue
 
+		if bool(entry.get("landed", false)):
+			entry["linger"] = float(entry["linger"]) - delta
+			if float(entry["linger"]) <= 0.0:
+				arrow.queue_free()
+				falling_arrows.remove_at(i)
+			else:
+				falling_arrows[i] = entry
+			continue
+
 		var target_position: Vector3 = entry["target_position"]
 		arrow.global_position = arrow.global_position.move_toward(
 			target_position,
 			fall_speed * delta
 		)
 
-		if arrow.global_position.distance_to(target_position) <= 0.001:
-			arrow.queue_free()
-			falling_arrows.remove_at(i)
+		if arrow.global_position.distance_to(target_position) <= 0.05:
+			arrow.global_position = target_position
+			entry["landed"] = true
+			entry["linger"] = impact_linger_duration
+			falling_arrows[i] = entry
 
 
 func _apply_area_damage() -> void:
@@ -182,7 +194,9 @@ func _spawn_arrow_rain() -> void:
 		falling_arrows.append({
 			"arrow": arrow,
 			"target_position": impact_position + Vector3.UP * 0.15,
-			"delay": float(i) * stagger_interval
+			"delay": float(i) * stagger_interval,
+			"landed": false,
+			"linger": 0.0
 		})
 
 
