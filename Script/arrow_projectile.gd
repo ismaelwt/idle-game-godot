@@ -19,6 +19,7 @@ var falling_mode: bool = false
 var fall_speed: float = 4.5
 var fall_delay: float = 0.0
 var fall_started: bool = false
+var visual_only: bool = false
 
 @onready var area: Area3D = $Arrow/Area3D
 
@@ -52,6 +53,21 @@ func setup_falling(
 	falling_mode = true
 	fall_speed = maxf(projectile_fall_speed, 0.01)
 	fall_delay = maxf(delay, 0.0)
+
+
+func setup_visual_falling(
+	target_node: Node3D,
+	projectile_fall_speed: float,
+	delay: float
+) -> void:
+	target = target_node
+	falling_mode = true
+	visual_only = true
+	fall_speed = maxf(projectile_fall_speed, 0.01)
+	fall_delay = maxf(delay, 0.0)
+	if is_instance_valid(area):
+		area.monitoring = false
+		area.monitorable = false
 
 
 func _process(delta: float) -> void:
@@ -93,7 +109,10 @@ func _process_falling(delta: float) -> void:
 
 	if absf(global_position.y - target_position.y) <= movement:
 		global_position.y = target_position.y
-		apply_target_damage()
+		if visual_only:
+			finish()
+		else:
+			apply_target_damage()
 	else:
 		global_position.y = move_toward(
 			global_position.y,
@@ -138,7 +157,7 @@ func _process_direct_projectile(delta: float) -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if resolved:
+	if resolved or visual_only:
 		return
 
 	if is_instance_valid(shooter):
