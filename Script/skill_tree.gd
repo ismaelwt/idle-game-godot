@@ -100,6 +100,16 @@ const SKILLS := {
 		"button": "skill1_nv1"
 	},
 
+	"arrow_storm": {
+		"name": "Arrow Storm",
+		"hero_class": "archer",
+		"scene": preload("res://Scenes/arrow_storm.tscn"),
+		"cost": 1,
+		"stage": 2,
+		"prerequisites": ["archer_heal"],
+		"button": "skill2_nv2"
+	},
+
 	"frenesi": {
 		"name": "Frenesi",
 		"hero_class": "knight",
