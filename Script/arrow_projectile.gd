@@ -1,6 +1,7 @@
 extends Node3D
 
 signal finished
+signal visual_impact_reached
 
 @export_category("Movimento")
 @export var speed: float = 18.0
@@ -114,6 +115,7 @@ func _process_falling(delta: float) -> void:
 	if absf(global_position.y - target_position.y) <= movement:
 		global_position.y = target_position.y
 		if visual_only:
+			visual_impact_reached.emit()
 			finish()
 		else:
 			apply_target_damage()
