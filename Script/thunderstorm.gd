@@ -141,6 +141,7 @@ func _resolve_storm() -> void:
 	if is_critical:
 		raw_damage *= critical_damage_multiplier
 	var final_damage: int = int(round(raw_damage))
+	var applied_critical_hit := false
 
 	for enemy in bolt_targets:
 		if is_instance_valid(enemy):
@@ -149,9 +150,16 @@ func _resolve_storm() -> void:
 				if health != null and float(health) > 0.0:
 					var actual_damage := minf(float(final_damage), float(health))
 					enemy.take_damage(final_damage, is_critical)
+					if is_critical:
+						applied_critical_hit = true
 					if is_instance_valid(character_stats):
 						character_stats.apply_on_hit_effects(actual_damage)
 	
+	if applied_critical_hit:
+		var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+		if is_instance_valid(camera_pivot):
+			camera_pivot.shake_camera()
+
 	_finish_after_delay()
 
 
