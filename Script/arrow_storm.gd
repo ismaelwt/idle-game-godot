@@ -12,6 +12,7 @@ signal finished
 @export var damage: float = 28.0
 @export var radius: float = 12.0
 @export var arrow_count: int = 5
+@export_range(0.1, 1.0, 0.05) var arrow_spread_factor: float = 0.65
 @export var fall_height: float = 9.0
 @export var fall_speed: float = 8.0
 @export var stagger_interval: float = 0.2
@@ -118,7 +119,7 @@ func _spawn_arrow_rain() -> void:
 
 		# Distribui os impactos visualmente por toda a área circular.
 		var angle := randf_range(0.0, TAU)
-		var distance := sqrt(randf()) * radius
+		var distance := sqrt(randf()) * radius * arrow_spread_factor
 		var landing_position := center_position + Vector3(
 			cos(angle) * distance,
 			0.0,
