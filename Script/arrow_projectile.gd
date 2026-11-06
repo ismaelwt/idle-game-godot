@@ -130,6 +130,10 @@ func apply_target_damage() -> void:
 			var target_health := maxf(float(target.get("health")), 0.0)
 			shooter_stats.apply_on_hit_effects(minf(damage, target_health))
 			target.call("take_damage", damage, is_critical)
+			if is_critical:
+				var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+				if is_instance_valid(camera_pivot):
+					camera_pivot.shake_camera()
 		else:
 			target.call("take_damage", damage, "physical")
 
