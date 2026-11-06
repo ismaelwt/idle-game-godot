@@ -10,11 +10,11 @@ signal finished
 
 @export_category("Arrow Storm")
 @export var damage: float = 28.0
-@export var radius: float = 5.0
-@export var arrow_count: int = 18
-@export var fall_height: float = 6.0
-@export var fall_speed: float = 4.5
-@export var stagger_interval: float = 0.07
+@export var radius: float = 12.0
+@export var arrow_count: int = 5
+@export var fall_height: float = 9.0
+@export var fall_speed: float = 8.0
+@export var stagger_interval: float = 0.2
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 

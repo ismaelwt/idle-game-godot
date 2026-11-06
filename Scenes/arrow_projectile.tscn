@@ -16,8 +16,13 @@ max_lifetime = 15.0
 [node name="Arrow" parent="." instance=ExtResource("1_l0jjt")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
 
+[node name="Arrow" parent="Arrow" index="0"]
+cast_shadow = 0
+
 [node name="Area3D" type="Area3D" parent="Arrow"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Arrow/Area3D"]
 transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, -1, -4.371139e-08, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 0.5, -2.1855694e-08, -0.042964004)
 shape = SubResource("CapsuleShape3D_l0jjt")
+
+[editable path="Arrow"]
