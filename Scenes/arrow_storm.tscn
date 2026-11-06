@@ -8,8 +8,13 @@
 script = ExtResource("2_script")
 icon = ExtResource("3_icon")
 disabled_icon = ExtResource("3_icon")
+damage = 65.0
+arrow_count = 12
+arrow_spread_factor = 0.25
+stagger_interval = 0.07
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform3D(0.6, 0, 0, 0, -2.6226834e-08, -0.6, 0, 0.6, -2.6226834e-08, 0, 0.025, 0)
+transform = Transform3D(0.8, 0, 0, 0, -3.4969112e-08, -0.8, 0, 0.8, -3.4969112e-08, 0, 0.025, 0)
+pixel_size = 0.009
 alpha_cut = 1
 texture = ExtResource("1_crosshair")
