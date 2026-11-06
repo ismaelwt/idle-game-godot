@@ -13,8 +13,8 @@ signal finished
 @export var radius: float = 5.0
 @export var arrow_count: int = 18
 @export var fall_height: float = 12.0
-@export var fall_duration: float = 1.8
-@export var strike_duration: float = 3.2
+@export var fall_speed: float = 8.0
+@export var stagger_interval: float = 0.07
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 
@@ -24,6 +24,7 @@ var character_stats: Node
 var resolved: bool = false
 var center_position: Vector3
 var created_arrows: Array[Node3D] = []
+var falling_arrows: Array[Dictionary] = []
 
 @onready var aim_marker: Sprite3D = $Sprite3D
 
@@ -55,8 +56,36 @@ func _ready() -> void:
 	_apply_area_damage()
 	_spawn_arrow_rain()
 
-	await get_tree().create_timer(strike_duration).timeout
+	while not falling_arrows.is_empty():
+		await get_tree().process_frame
+
 	_finish()
+
+
+func _process(delta: float) -> void:
+	for i in range(falling_arrows.size() - 1, -1, -1):
+		var entry: Dictionary = falling_arrows[i]
+		var arrow: Node3D = entry["arrow"]
+
+		if not is_instance_valid(arrow):
+			falling_arrows.remove_at(i)
+			continue
+
+		var delay: float = float(entry["delay"])
+		if delay > 0.0:
+			entry["delay"] = maxf(delay - delta, 0.0)
+			falling_arrows[i] = entry
+			continue
+
+		var target_position: Vector3 = entry["target_position"]
+		arrow.global_position = arrow.global_position.move_toward(
+			target_position,
+			fall_speed * delta
+		)
+
+		if arrow.global_position.distance_to(target_position) <= 0.001:
+			arrow.queue_free()
+			falling_arrows.remove_at(i)
 
 
 func _apply_area_damage() -> void:
@@ -145,16 +174,11 @@ func _spawn_arrow_rain() -> void:
 		arrow.visible = true
 		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
-
-		var tween := arrow.create_tween()
-		tween.tween_interval(float(i) * 0.07)
-		tween.tween_property(
-			arrow,
-			"global_position",
-			impact_position + Vector3.UP * 0.15,
-			fall_duration
-		).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
-		tween.tween_callback(arrow.queue_free)
+		falling_arrows.append({
+			"arrow": arrow,
+			"target_position": impact_position + Vector3.UP * 0.15,
+			"delay": float(i) * stagger_interval
+		})
 
 
 func _finish() -> void:
