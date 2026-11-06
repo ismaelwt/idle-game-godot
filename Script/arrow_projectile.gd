@@ -25,6 +25,10 @@ var visual_only: bool = false
 
 
 func _ready() -> void:
+	if visual_only:
+		area.monitoring = false
+		area.monitorable = false
+
 	if not area.body_entered.is_connected(_on_body_entered):
 		area.body_entered.connect(_on_body_entered)
 
