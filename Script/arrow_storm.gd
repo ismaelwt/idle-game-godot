@@ -89,7 +89,10 @@ func _spawn_arrow_rain() -> void:
 	if valid_targets.is_empty():
 		return
 
-	var count := maxi(1, arrow_count)
+	# Garante pelo menos uma flecha para cada inimigo dentro do raio.
+	# arrow_count continua definindo a quantidade extra quando for maior
+	# que o número de inimigos encontrados.
+	var count := maxi(maxi(1, arrow_count), valid_targets.size())
 	var arrow_parent: Node = get_parent()
 
 	for i in range(count):
