@@ -412,6 +412,9 @@ func basic_attack(target: Node3D) -> void:
 
 		if is_critical:
 			final_damage *= character_stats.get_critical_damage_multiplier()
+			var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+			if is_instance_valid(camera_pivot):
+				camera_pivot.shake_camera()
 
 		var health_before_hit := maxf(float(target.get("health")), 0.0)
 		var actual_damage := minf(final_damage, health_before_hit)
