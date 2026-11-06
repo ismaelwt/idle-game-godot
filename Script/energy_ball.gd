@@ -128,6 +128,7 @@ func explode(explosion_position: Vector3) -> void:
 	if is_critical:
 		raw_damage *= critical_damage_multiplier
 	var final_damage := int(round(raw_damage))
+	var applied_critical_hit := false
 
 	for node in enemies:
 		if not is_instance_valid(node):
@@ -154,7 +155,14 @@ func explode(explosion_position: Vector3) -> void:
 			var health_before_hit := maxf(float(node.health), 0.0)
 			var actual_damage := minf(float(final_damage), health_before_hit)
 			node.take_damage(final_damage, is_critical)
+			if is_critical:
+				applied_critical_hit = true
 			if is_instance_valid(character_stats):
 				character_stats.apply_on_hit_effects(actual_damage)
+
+	if applied_critical_hit:
+		var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+		if is_instance_valid(camera_pivot):
+			camera_pivot.shake_camera()
 
 	finish()
