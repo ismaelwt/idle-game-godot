@@ -136,8 +136,14 @@ func _spawn_arrow_rain() -> void:
 
 		var arrow_scroller := get_parent()
 		arrow_scroller.add_child(arrow)
-		arrow.global_position = impact_position + Vector3.UP * fall_height
+
+		# A malha da flecha já recebe uma rotação de 90 graus no eixo Y
+		# dentro da cena do projétil. Girar o root no eixo X deixa a ponta
+		# apontada para baixo durante a queda vertical.
+		arrow.rotation = Vector3(PI * 0.5, randf_range(0.0, TAU), 0.0)
 		arrow.scale = Vector3(0.3, 0.3, 0.3)
+		arrow.visible = true
+		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
 
 		var tween := arrow.create_tween()
