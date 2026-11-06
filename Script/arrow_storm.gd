@@ -114,9 +114,10 @@ func _spawn_arrow_rain() -> void:
 		impact_position.x += randf_range(-0.2, 0.2)
 		impact_position.z += randf_range(-0.2, 0.2)
 
-		arrow.rotation = Vector3(0.0, 0.0, PI * 0.5)
+		# O eixo longitudinal da flecha é Z; rotaciona 90 graus em X
+		# para deixar a ponta apontada para baixo durante a queda.
+		arrow.rotation = Vector3(PI * 0.5, randf_range(0.0, TAU), 0.0)
 		arrow.scale = Vector3(0.3, 0.3, 0.3)
-		arrow.global_position = impact_position + Vector3.UP * fall_height
 		arrow.setup_falling(
 			target_enemy,
 			shooter,
@@ -127,6 +128,7 @@ func _spawn_arrow_rain() -> void:
 		)
 
 		arrow_parent.add_child(arrow)
+		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
 
 
