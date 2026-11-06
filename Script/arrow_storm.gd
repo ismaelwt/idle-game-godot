@@ -116,21 +116,34 @@ func _spawn_arrow_rain() -> void:
 		if arrow == null:
 			continue
 
-		var impact_position := target_enemy.global_position
-		impact_position.x += randf_range(-0.2, 0.2)
-		impact_position.z += randf_range(-0.2, 0.2)
+		# Distribui os impactos visualmente por toda a área circular.
+		var angle := randf_range(0.0, TAU)
+		var distance := sqrt(randf()) * radius
+		var landing_position := center_position + Vector3(
+			cos(angle) * distance,
+			0.0,
+			sin(angle) * distance
+		)
+		var target_height_position := target_enemy.global_position
+		var magic_target := target_enemy.get_node_or_null("MagicTarget")
+		if is_instance_valid(magic_target):
+			target_height_position.y = magic_target.global_position.y
+		else:
+			target_height_position.y += 1.0
+		landing_position.y = target_height_position.y
 
 		arrow.rotation = Vector3(PI * 0.5, randf_range(0.0, TAU), 0.0)
 		arrow.scale = Vector3(0.3, 0.3, 0.3)
-		arrow.setup_visual_falling(
+		arrow.setup_visual_falling_at_position(
 			target_enemy,
+			landing_position,
 			fall_speed,
 			float(i) * stagger_interval
 		)
 		arrow.visual_impact_reached.connect(_on_visual_arrow_impact)
 
 		arrow_parent.add_child(arrow)
-		arrow.global_position = impact_position + Vector3.UP * fall_height
+		arrow.global_position = landing_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
 
 
