@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bge8j7uxrirs"]
+
+[ext_resource type="Texture2D" uid="uid://dapspq6a52hlh" path="res://icons/gold-necklace.png" id="1_ro4ns"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_8s40k"]
+
+[resource]
+script = ExtResource("2_8s40k")
+item_id = &"golden_necklace_01"
+item_name = "Amuleto de ouro"
+description = "Amuleto de ouro"
+icon = ExtResource("1_ro4ns")
+item_type = 9
+item_class = 3
+vitality_max = 3
+magic_damage_max = 1
+life_steal_max = 3.0
+mana_steal_max = 3.0
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

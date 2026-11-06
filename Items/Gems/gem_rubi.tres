@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://c1xo3cun50n32"]
+
+[ext_resource type="Texture2D" uid="uid://b4xi5du84uefi" path="res://icons/gem-rubi.png" id="1_0sys0"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_cobeb"]
+
+[resource]
+script = ExtResource("2_cobeb")
+item_id = &"gem_rubi_01"
+item_name = "Rubi"
+description = "Fragmento da pedra de Rubi"
+icon = ExtResource("1_0sys0")
+item_type = 7
+item_class = 3
+gem_effect = 10
+gem_effect_min = 3.0
+gem_effect_max = 5.0
+gem_color = Color(0.6949012, 0, 0.13203698, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

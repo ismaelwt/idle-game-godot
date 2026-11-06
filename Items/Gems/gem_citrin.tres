@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bh3ubrtd7djm0"]
+
+[ext_resource type="Texture2D" uid="uid://dbuuroyvgx8s1" path="res://icons/gem-citrin.png" id="1_pi2ub"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_ann30"]
+
+[resource]
+script = ExtResource("2_ann30")
+item_id = &"gem_citrin_01"
+item_name = "Citrino"
+description = "Fragmento da pedra de citrino"
+icon = ExtResource("1_pi2ub")
+item_type = 7
+item_class = 3
+gem_effect = 9
+gem_effect_min = 3.0
+gem_effect_max = 5.0
+gem_color = Color(0.88389325, 0.33778718, 1.92523e-07, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

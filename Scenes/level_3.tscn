@@ -178,8 +178,8 @@ spawn_spacing = 2.0
 x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
-max_enemy_level_limit = 18
-boss_level_limit = 18
+max_enemy_level_limit = 25
+boss_level_limit = 25
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_ki8bc")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)

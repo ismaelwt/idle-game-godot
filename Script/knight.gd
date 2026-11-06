@@ -22,6 +22,9 @@ extends Node3D
 @onready var character_stats = $CharacterStats
 @onready var level_up_effect = $LevelUpEffect
 
+@onready var trail = $Armature/Skeleton/SwordBoneAttachment3D/Sword/Trail
+
+
 @onready var level_controller: Node = get_parent().get_node_or_null("LevelController")
 @onready var world_scroller: Node = get_parent().get_node_or_null("World/WorldScroller")
 @onready var enemy_spawner: Node = get_parent().get_node_or_null("EnemySpawner")
@@ -712,7 +715,7 @@ func cancel_attack_on_target(target: Node3D) -> void:
 		return
 
 	print("=== KNIGHT: ATAQUE CANCELADO === | ALVO: ", target.name)
-
+	stop_sword_trail()
 	attack_id += 1
 	attacking = false
 	action_locked = false
@@ -743,3 +746,10 @@ func play_level_up_effect():
 	await get_tree().create_timer(2.0).timeout
 
 	level_up_effect.visible = false
+
+func start_sword_trail() -> void:
+	trail.start_trail()
+
+
+func stop_sword_trail() -> void:
+	trail.stop_trail()

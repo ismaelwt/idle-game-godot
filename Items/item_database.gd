@@ -31,12 +31,21 @@ const ITEMS: Array[ItemBase] = [
 	preload("res://Items/Archer/master_archer_armor.tres"),
 	
 	preload("res://Items/Accessories/golden_ring.tres"),
+	preload("res://Items/Accessories/golden_necklace.tres"),
 	preload("res://Items/Accessories/silver_necklace.tres"),
+	preload("res://Items/Accessories/silver_ring.tres"),
 	preload("res://Items/Accessories/leather_belt.tres"),
 
 	preload("res://Items/Gems/gem_esmeralda.tres"),
 	preload("res://Items/Gems/gem_ametista.tres"),
-	preload("res://Items/Gems/gem_onyx.tres")
+	preload("res://Items/Gems/gem_onyx.tres"),
+	preload("res://Items/Gems/gem_citrin.tres"),
+	preload("res://Items/Gems/gem_earth.tres"),
+	preload("res://Items/Gems/gem_crystal.tres"),
+	preload("res://Items/Gems/gem_topaz.tres"),
+	preload("res://Items/Gems/gem_rubi.tres"),
+	preload("res://Items/Gems/gem_ambar.tres")
+	
 ]
 
 # Chances fixas por raridade.

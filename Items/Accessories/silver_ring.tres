@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://c1218clsf1ua0"]
+
+[ext_resource type="Texture2D" uid="uid://ortqxfpeypgf" path="res://icons/silver-ring.png" id="1_dfj5m"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_rs420"]
+
+[resource]
+script = ExtResource("2_rs420")
+item_id = &"silver_ring_01"
+item_name = "Anel de prata"
+description = "Anel de Prata"
+icon = ExtResource("1_dfj5m")
+item_type = 8
+item_class = 3
+strength_max = 3
+agility_max = 3
+physical_damage_max = 3
+critical_chance_min = 1.0
+critical_chance_max = 2.0
+critical_damage_min = 5.0
+critical_damage_max = 10.0
+max_enchantment_slots = 2
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://dk4ymqv46w3dx"]
+
+[ext_resource type="Texture2D" uid="uid://b51qk3qk6cqiu" path="res://icons/gem-topazio.png" id="1_arg18"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_7rvxc"]
+
+[resource]
+script = ExtResource("2_7rvxc")
+item_id = &"gem_topaz_01"
+item_name = "Topazio"
+description = "Fragmento da pedra de topázio"
+icon = ExtResource("1_arg18")
+item_type = 7
+item_class = 3
+critical_chance_max = 3.5
+gem_effect = 12
+gem_effect_min = 3.0
+gem_effect_max = 5.0
+gem_color = Color(0.62549, 0.7517774, 0.45183706, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

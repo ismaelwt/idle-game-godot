@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://dk26o1txufhfa"]
+
+[ext_resource type="Texture2D" uid="uid://d1mjtdg8vhq3" path="res://icons/gem-crystal.png" id="1_16ts5"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_rgru1"]
+
+[resource]
+script = ExtResource("2_rgru1")
+item_id = &"gem_crystal_01"
+item_name = "Crystal"
+description = "Fragmento da pedra de crystal"
+icon = ExtResource("1_16ts5")
+item_type = 7
+item_class = 3
+gem_effect = 6
+gem_effect_min = 3.0
+gem_effect_max = 5.0
+gem_color = Color(0.28396338, 0.2966288, 0.32095766, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"

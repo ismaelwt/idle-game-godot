@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://b6g8aibfyhji7"]
+
+[ext_resource type="Texture2D" uid="uid://wipt15rijfv" path="res://icons/gem-earth.png" id="1_o0y3c"]
+[ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_5xt3j"]
+
+[resource]
+script = ExtResource("2_5xt3j")
+item_id = &"gem_earth_01"
+item_name = "Terracota"
+description = "Fragmento da pedra de terracota"
+icon = ExtResource("1_o0y3c")
+item_type = 7
+item_class = 3
+gem_effect = 13
+gem_effect_min = 3.0
+gem_effect_max = 5.0
+gem_color = Color(0.61117566, 0.26267728, 0.076922946, 1)
+metadata/_custom_type_script = "uid://o7xxtooqdtlf"
