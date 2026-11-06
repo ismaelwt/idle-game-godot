@@ -65,7 +65,8 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for i in range(falling_arrows.size() - 1, -1, -1):
 		var entry: Dictionary = falling_arrows[i]
-		var arrow: Node3D = entry["arrow"]
+		var arrow_id: int = int(entry["arrow_id"])
+		var arrow := instance_from_id(arrow_id) as Node3D
 
 		if not is_instance_valid(arrow):
 			falling_arrows.remove_at(i)
@@ -175,7 +176,7 @@ func _spawn_arrow_rain() -> void:
 		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
 		falling_arrows.append({
-			"arrow": arrow,
+			"arrow_id": arrow.get_instance_id(),
 			"target_position": impact_position + Vector3.UP * 0.15,
 			"delay": float(i) * stagger_interval
 		})
