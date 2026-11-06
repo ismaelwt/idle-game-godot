@@ -131,8 +131,6 @@ func _spawn_arrow_rain() -> void:
 			area.monitorable = false
 
 		# O projétil é apenas visual nesta skill; o dano em área é aplicado uma vez.
-		if "resolved" in arrow:
-			arrow.set("resolved", true)
 		arrow.set_process(false)
 		arrow.set_physics_process(false)
 
