@@ -85,10 +85,14 @@ func _process_falling(delta: float) -> void:
 
 	fall_started = true
 	var target_position := _get_target_position()
+	# Mantém a flecha alinhada horizontalmente ao alvo enquanto cai,
+	# inclusive quando o WorldScroller desloca o cenário.
+	global_position.x = target_position.x
+	global_position.z = target_position.z
 	var movement := fall_speed * delta
 
-	if global_position.distance_to(target_position) <= movement:
-		global_position = target_position
+	if absf(global_position.y - target_position.y) <= movement:
+		global_position.y = target_position.y
 		apply_target_damage()
 	else:
 		global_position.y = move_toward(
