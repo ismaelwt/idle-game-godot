@@ -54,8 +54,8 @@ func _ready() -> void:
 	global_position = center_position
 	aim_marker.visible = true
 
-	_apply_area_damage()
 	_spawn_arrow_rain()
+	_apply_area_damage()
 
 	while not falling_arrows.is_empty():
 		await get_tree().process_frame
@@ -166,6 +166,38 @@ func _spawn_arrow_rain() -> void:
 			0.0,
 			sin(angle) * distance
 		)
+		var target_position := impact_position + Vector3.UP * 0.15
+
+		# Prioriza posições de inimigos dentro da área para que as flechas
+		# realmente terminem sobre os alvos, em vez de desaparecerem no chão.
+		var valid_targets: Array[Node3D] = []
+		for enemy in get_tree().get_nodes_in_group("enemies"):
+			if not is_instance_valid(enemy) or not enemy is Node3D:
+				continue
+			if enemy.get("dying") == true:
+				continue
+			var enemy_health = enemy.get("health")
+			if enemy_health == null or float(enemy_health) <= 0.0:
+				continue
+			var enemy_distance := Vector2(
+				enemy.global_position.x - center_position.x,
+				enemy.global_position.z - center_position.z
+			).length()
+			if enemy_distance <= radius:
+				valid_targets.append(enemy)
+
+		if not valid_targets.is_empty():
+			var target_enemy := valid_targets[i % valid_targets.size()]
+			var enemy_height_value = target_enemy.get("target_height")
+			var enemy_height := 1.0
+			if enemy_height_value != null:
+				enemy_height = float(enemy_height_value)
+			impact_position = target_enemy.global_position
+			impact_position.x += randf_range(-0.25, 0.25)
+			impact_position.z += randf_range(-0.25, 0.25)
+			target_position = target_enemy.global_position + Vector3.UP * enemy_height
+			target_position.x = impact_position.x
+			target_position.z = impact_position.z
 
 		var arrow := ARROW_SCENE.instantiate() as Node3D
 		if arrow == null:
@@ -193,7 +225,7 @@ func _spawn_arrow_rain() -> void:
 		created_arrows.append(arrow)
 		falling_arrows.append({
 			"arrow": arrow,
-			"target_position": impact_position + Vector3.UP * 0.15,
+			"target_position": target_position,
 			"delay": float(i) * stagger_interval,
 			"landed": false,
 			"linger": 0.0
