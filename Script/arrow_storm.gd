@@ -15,7 +15,6 @@ signal finished
 @export var fall_height: float = 6.0
 @export var fall_speed: float = 4.5
 @export var stagger_interval: float = 0.07
-@export var impact_linger_duration: float = 1.5
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 
@@ -25,7 +24,6 @@ var character_stats: Node
 var resolved: bool = false
 var center_position: Vector3
 var created_arrows: Array[Node3D] = []
-var falling_arrows: Array[Dictionary] = []
 
 @onready var aim_marker: Sprite3D = $Sprite3D
 
@@ -45,7 +43,6 @@ func _ready() -> void:
 		return
 
 	center_position = center_target.global_position
-	center_position.y = center_target.global_position.y
 
 	var world_scroller := get_tree().get_first_node_in_group("world_scroller")
 	if is_instance_valid(world_scroller) and world_scroller is Node3D:
@@ -55,191 +52,92 @@ func _ready() -> void:
 	aim_marker.visible = true
 
 	_spawn_arrow_rain()
-	_apply_area_damage()
 
-	while not falling_arrows.is_empty():
+	while _has_active_arrows():
 		await get_tree().process_frame
 
 	_finish()
 
 
-func _process(delta: float) -> void:
-	for i in range(falling_arrows.size() - 1, -1, -1):
-		var entry: Dictionary = falling_arrows[i]
-		var arrow = entry["arrow"]
-
-		if not is_instance_valid(arrow):
-			falling_arrows.remove_at(i)
-			continue
-
-		arrow = arrow as Node3D
-		if arrow == null:
-			falling_arrows.remove_at(i)
-			continue
-
-		var delay: float = float(entry["delay"])
-		if delay > 0.0:
-			entry["delay"] = maxf(delay - delta, 0.0)
-			falling_arrows[i] = entry
-			continue
-
-		if bool(entry.get("landed", false)):
-			entry["linger"] = float(entry["linger"]) - delta
-			if float(entry["linger"]) <= 0.0:
-				arrow.queue_free()
-				falling_arrows.remove_at(i)
-			else:
-				falling_arrows[i] = entry
-			continue
-
-		var target_position: Vector3 = entry["target_position"]
-		arrow.global_position = arrow.global_position.move_toward(
-			target_position,
-			fall_speed * delta
-		)
-
-		if arrow.global_position.distance_to(target_position) <= 0.05:
-			arrow.global_position = target_position
-			entry["landed"] = true
-			entry["linger"] = impact_linger_duration
-			falling_arrows[i] = entry
-
-
-func _apply_area_damage() -> void:
-	if resolved:
-		return
-
-	var critical_chance := 0.0
-	var critical_multiplier := 1.5
-
-	if is_instance_valid(character_stats):
-		critical_chance = character_stats.get_critical_chance()
-		critical_multiplier = character_stats.get_critical_damage_multiplier()
-
-	var is_critical := randf() * 100.0 < critical_chance
-	var final_damage := damage
-	if is_critical:
-		final_damage *= critical_multiplier
-
-	var enemies := get_tree().get_nodes_in_group("enemies")
-	for enemy in enemies:
-		if not is_instance_valid(enemy) or not enemy is Node3D:
-			continue
-		if not enemy.has_method("take_damage"):
-			continue
-		if enemy.get("dying") == true:
-			continue
-
-		var health_value = enemy.get("health")
-		if health_value == null or float(health_value) <= 0.0:
-			continue
-
-		var enemy_position: Vector3 = enemy.global_position
-		var distance := Vector2(
-			enemy_position.x - center_position.x,
-			enemy_position.z - center_position.z
-		).length()
-
-		if distance > radius:
-			continue
-
-		var actual_damage := minf(final_damage, float(health_value))
-		enemy.call("take_damage", final_damage, is_critical)
-
-		if is_instance_valid(character_stats):
-			character_stats.apply_on_hit_effects(actual_damage)
-
-	if is_critical:
-		var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
-		if is_instance_valid(camera_pivot):
-			camera_pivot.shake_camera()
+func _has_active_arrows() -> bool:
+	for arrow in created_arrows:
+		if is_instance_valid(arrow):
+			return true
+	return false
 
 
 func _spawn_arrow_rain() -> void:
+	var valid_targets: Array[Node3D] = []
+
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		if not is_instance_valid(enemy) or not enemy is Node3D:
+			continue
+		if enemy.get("dying") == true:
+			continue
+		var enemy_health = enemy.get("health")
+		if enemy_health == null or float(enemy_health) <= 0.0:
+			continue
+
+		var enemy_distance := Vector2(
+			enemy.global_position.x - center_position.x,
+			enemy.global_position.z - center_position.z
+		).length()
+
+		if enemy_distance <= radius:
+			valid_targets.append(enemy)
+
+	if valid_targets.is_empty():
+		return
+
 	var count := maxi(1, arrow_count)
+	var arrow_parent: Node = get_parent()
 
 	for i in range(count):
-		var angle := randf_range(0.0, TAU)
-		var distance := sqrt(randf()) * radius
-		var impact_position := center_position + Vector3(
-			cos(angle) * distance,
-			0.0,
-			sin(angle) * distance
-		)
-		var target_position := impact_position + Vector3.UP * 0.15
-
-		# Prioriza posições de inimigos dentro da área para que as flechas
-		# realmente terminem sobre os alvos, em vez de desaparecerem no chão.
-		var valid_targets: Array[Node3D] = []
-		for enemy in get_tree().get_nodes_in_group("enemies"):
-			if not is_instance_valid(enemy) or not enemy is Node3D:
-				continue
-			if enemy.get("dying") == true:
-				continue
-			var enemy_health = enemy.get("health")
-			if enemy_health == null or float(enemy_health) <= 0.0:
-				continue
-			var enemy_distance := Vector2(
-				enemy.global_position.x - center_position.x,
-				enemy.global_position.z - center_position.z
-			).length()
-			if enemy_distance <= radius:
-				valid_targets.append(enemy)
-
-		if not valid_targets.is_empty():
-			var target_enemy := valid_targets[i % valid_targets.size()]
-			var enemy_height_value = target_enemy.get("target_height")
-			var enemy_height := 1.0
-			if enemy_height_value != null:
-				enemy_height = float(enemy_height_value)
-			impact_position = target_enemy.global_position
-			impact_position.x += randf_range(-0.25, 0.25)
-			impact_position.z += randf_range(-0.25, 0.25)
-			target_position = target_enemy.global_position + Vector3.UP * enemy_height
-			target_position.x = impact_position.x
-			target_position.z = impact_position.z
+		var target_enemy := valid_targets[i % valid_targets.size()]
+		if not is_instance_valid(target_enemy):
+			continue
 
 		var arrow := ARROW_SCENE.instantiate() as Node3D
 		if arrow == null:
 			continue
 
-		var area := arrow.get_node_or_null("Arrow/Area3D") as Area3D
-		if is_instance_valid(area):
-			area.monitoring = false
-			area.monitorable = false
+		var stats = character_stats
+		var is_critical := false
+		var final_damage := damage
 
-		# O projétil é apenas visual nesta skill; o dano em área é aplicado uma vez.
-		arrow.set_process(false)
-		arrow.set_physics_process(false)
+		if is_instance_valid(stats):
+			is_critical = stats.is_critical_hit()
+			if is_critical:
+				final_damage *= stats.get_critical_damage_multiplier()
 
-		var arrow_scroller := get_parent()
-		arrow_scroller.add_child(arrow)
+		var impact_position := target_enemy.global_position
+		impact_position.x += randf_range(-0.2, 0.2)
+		impact_position.z += randf_range(-0.2, 0.2)
 
-		# A malha da flecha já recebe uma rotação de 90 graus no eixo Y
-		# dentro da cena do projétil. Girar o root no eixo X deixa a ponta
-		# apontada para baixo durante a queda vertical.
 		arrow.rotation = Vector3(PI * 0.5, randf_range(0.0, TAU), 0.0)
 		arrow.scale = Vector3(0.3, 0.3, 0.3)
-		arrow.visible = true
 		arrow.global_position = impact_position + Vector3.UP * fall_height
+		arrow.setup_falling(
+			target_enemy,
+			shooter,
+			final_damage,
+			is_critical,
+			fall_speed,
+			float(i) * stagger_interval
+		)
+
+		arrow_parent.add_child(arrow)
 		created_arrows.append(arrow)
-		falling_arrows.append({
-			"arrow": arrow,
-			"target_position": target_position,
-			"delay": float(i) * stagger_interval,
-			"landed": false,
-			"linger": 0.0
-		})
 
 
 func _finish() -> void:
 	if resolved:
 		return
-	resolved = true
 
+	resolved = true
 	for arrow in created_arrows:
 		if is_instance_valid(arrow):
-			arrow.queue_free()
+			arrow.finish()
 	created_arrows.clear()
 
 	finished.emit()
