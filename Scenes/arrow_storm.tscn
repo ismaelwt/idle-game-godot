@@ -12,6 +12,4 @@ disabled_icon = ExtResource("3_icon")
 [node name="Sprite3D" type="Sprite3D" parent="."]
 transform = Transform3D(0.6, 0, 0, 0, -2.6226834e-08, -0.6, 0, 0.6, -2.6226834e-08, 0, 0.025, 0)
 alpha_cut = 1
-no_depth_test = true
-render_priority = 1
 texture = ExtResource("1_crosshair")
