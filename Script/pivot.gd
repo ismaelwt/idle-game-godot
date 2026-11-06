@@ -27,8 +27,16 @@ var units_per_pixel: float = 0.0
 var high_precision_position: Vector3
 var snapped_world_position: Vector3
 
+@export_category("Camera Shake")
+@export var critical_shake_strength: float = 0.035
+@export var critical_shake_duration: float = 0.16
+
+var camera_shake_tween: Tween = null
+var camera_base_offset: Vector2 = Vector2.ZERO
+
 
 func _ready() -> void:
+	add_to_group("camera_pivot")
 	process_priority = 100
 	followed_hero = _find_selected_hero()
 
@@ -39,6 +47,8 @@ func _ready() -> void:
 	if not is_instance_valid(world_scroller):
 		print("ERRO: WorldScroller não encontrado.")
 		return
+
+	camera_base_offset = Vector2(camera.h_offset, camera.v_offset)
 
 	if is_instance_valid(followed_hero):
 		camera.global_position.z = followed_hero.global_position.z + hero_z_offset
@@ -188,3 +198,40 @@ func _has_property(object: Object, property_name: String) -> bool:
 			return true
 
 	return false
+
+
+func shake_camera() -> void:
+	if not is_instance_valid(camera):
+		return
+
+	if camera_shake_tween != null and camera_shake_tween.is_running():
+		camera_shake_tween.kill()
+
+	_set_camera_shake_offset(Vector2.ZERO)
+
+	var strength := maxf(critical_shake_strength, 0.0)
+	var step_duration := maxf(critical_shake_duration, 0.04) / 5.0
+	var offsets: Array[Vector2] = [
+		Vector2(strength, -strength * 0.5),
+		Vector2(-strength, strength * 0.5),
+		Vector2(strength * 0.5, strength),
+		Vector2(-strength * 0.5, -strength),
+		Vector2.ZERO
+	]
+
+	camera_shake_tween = create_tween()
+	for offset in offsets:
+		camera_shake_tween.tween_method(
+			_set_camera_shake_offset,
+			Vector2(camera.h_offset, camera.v_offset) - camera_base_offset,
+			offset,
+			step_duration
+		)
+
+
+func _set_camera_shake_offset(offset: Vector2) -> void:
+	if not is_instance_valid(camera):
+		return
+
+	camera.h_offset = camera_base_offset.x + offset.x
+	camera.v_offset = camera_base_offset.y + offset.y
