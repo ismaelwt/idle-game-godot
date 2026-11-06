@@ -220,13 +220,15 @@ func shake_camera() -> void:
 	]
 
 	camera_shake_tween = create_tween()
+	var previous_offset := Vector2.ZERO
 	for offset in offsets:
 		camera_shake_tween.tween_method(
 			_set_camera_shake_offset,
-			Vector2(camera.h_offset, camera.v_offset) - camera_base_offset,
+			previous_offset,
 			offset,
 			step_duration
 		)
+		previous_offset = offset
 
 
 func _set_camera_shake_offset(offset: Vector2) -> void:
