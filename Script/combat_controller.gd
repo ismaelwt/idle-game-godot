@@ -155,9 +155,17 @@ func find_target_for_hero(hero: Node3D) -> Node3D:
 		if not is_enemy_alive(enemy):
 			continue
 
-		var distance: float = hero.global_position.distance_to(
-			enemy.global_position
+		# A distância de combate considera apenas o plano horizontal (X/Z),
+		# igual ao cálculo usado pelo LevelController e pelos próprios heróis.
+		var hero_position := Vector2(
+			hero.global_position.x,
+			hero.global_position.z
 		)
+		var enemy_position := Vector2(
+			enemy.global_position.x,
+			enemy.global_position.z
+		)
+		var distance: float = hero_position.distance_to(enemy_position)
 
 		if distance > attack_range + 0.01:
 			continue
