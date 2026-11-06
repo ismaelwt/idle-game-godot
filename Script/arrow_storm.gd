@@ -114,7 +114,7 @@ func _spawn_arrow_rain() -> void:
 		impact_position.x += randf_range(-0.2, 0.2)
 		impact_position.z += randf_range(-0.2, 0.2)
 
-		arrow.rotation = Vector3(PI * 0.5, randf_range(0.0, TAU), 0.0)
+		arrow.rotation = Vector3(0.0, randf_range(0.0, TAU), -PI * 0.5)
 		arrow.scale = Vector3(0.3, 0.3, 0.3)
 		arrow.global_position = impact_position + Vector3.UP * fall_height
 		arrow.setup_falling(
