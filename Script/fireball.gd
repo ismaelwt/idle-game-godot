@@ -79,6 +79,9 @@ func _on_body_entered(body):
 		var is_critical: bool = randf() * 100.0 < critical_chance
 		if is_critical:
 			raw_damage *= critical_damage_multiplier
+			var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+			if is_instance_valid(camera_pivot):
+				camera_pivot.shake_camera()
 		var final_damage := int(round(raw_damage))
 		var health_before_hit := maxf(float(enemy.health), 0.0)
 		var actual_damage := minf(float(final_damage), health_before_hit)
