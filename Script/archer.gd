@@ -148,11 +148,15 @@ func get_horizontal_distance_to(target: Node3D) -> float:
 
 
 func use_skill(skill_id: String, target: Node3D) -> void:
-	if skill_id != "archer_heal":
-		push_warning("Skill desconhecida no Archer: " + skill_id)
+	if dead or attacking or not is_enemy_alive(target):
 		return
 
-	if dead or attacking or not is_enemy_alive(target):
+	if skill_id == "arrow_storm":
+		_use_arrow_storm(target)
+		return
+
+	if skill_id != "archer_heal":
+		push_warning("Skill desconhecida no Archer: " + skill_id)
 		return
 
 	# Invalida qualquer ataque básico que ainda esteja aguardando o disparo.
@@ -200,6 +204,54 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 
 	if is_instance_valid(healing_instance):
 		healing_instance.queue_free()
+
+
+func _use_arrow_storm(target: Node3D) -> void:
+	attack_id += 1
+	var my_attack_id := attack_id
+
+	attacking = true
+	current_attack_target = null
+	look_at_target(target)
+
+	var skill_animation := "archer/archer_skill_1"
+	if not animation_player.has_animation(skill_animation):
+		push_warning("Archer: animação não encontrada: " + skill_animation)
+		attacking = false
+		return
+
+	animation_player.speed_scale = 1.0
+	animation_player.play(skill_animation, animation_blend)
+
+	# A mira e a chuva de flechas começam durante a animação de disparo para cima.
+	await get_tree().create_timer(0.55).timeout
+
+	if my_attack_id != attack_id or dead or not is_inside_tree():
+		return
+	if not is_enemy_alive(target):
+		attacking = false
+		play_animation("archer_idle")
+		return
+
+	var storm := preload("res://Scenes/arrow_storm.tscn").instantiate()
+	storm.center_target = target
+	storm.shooter = self
+	storm.character_stats = character_stats
+	storm.damage = (
+		float(storm.damage)
+		+ float(character_stats.get_physical_damage_bonus())
+		+ float(character_stats.get_weapon_damage_bonus())
+	)
+
+	get_tree().current_scene.add_child(storm)
+	await storm.finished
+
+	if my_attack_id != attack_id or dead:
+		return
+
+	attacking = false
+	current_attack_target = null
+	play_animation("archer_idle")
 
 
 func start_running() -> void:
