@@ -21,6 +21,8 @@ var fall_speed: float = 4.5
 var fall_delay: float = 0.0
 var fall_started: bool = false
 var visual_only: bool = false
+var has_visual_landing_position: bool = false
+var visual_landing_position: Vector3 = Vector3.ZERO
 
 @onready var area: Area3D = $Arrow/Area3D
 
@@ -99,6 +101,24 @@ func _process(delta: float) -> void:
 	_process_direct_projectile(delta)
 
 
+func setup_visual_falling_at_position(
+	target_node: Node3D,
+	landing_position: Vector3,
+	projectile_fall_speed: float,
+	delay: float
+) -> void:
+	target = target_node
+	falling_mode = true
+	visual_only = true
+	has_visual_landing_position = true
+	visual_landing_position = landing_position
+	fall_speed = maxf(projectile_fall_speed, 0.01)
+	fall_delay = maxf(delay, 0.0)
+	if is_instance_valid(area):
+		area.monitoring = false
+		area.monitorable = false
+
+
 func _process_falling(delta: float) -> void:
 	if fall_delay > 0.0:
 		fall_delay = maxf(fall_delay - delta, 0.0)
@@ -106,6 +126,9 @@ func _process_falling(delta: float) -> void:
 
 	fall_started = true
 	var target_position := _get_target_position()
+	if visual_only and has_visual_landing_position:
+		target_position.x = visual_landing_position.x
+		target_position.z = visual_landing_position.z
 	# Mantém a flecha alinhada horizontalmente ao alvo enquanto cai,
 	# inclusive quando o WorldScroller desloca o cenário.
 	global_position.x = target_position.x
