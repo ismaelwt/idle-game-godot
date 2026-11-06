@@ -368,46 +368,64 @@ func _on_animation_finished(anim_name):
 
 	elif anim_name == "mage/die":
 
-		attacking = false
-		action_locked = false
-
-		print("=== ANIMAÇÃO DE MORTE TERMINOU ===")
-
-		animation_player.speed_scale = 1.0
+		_finish_death()
 
 
 func start_running():
 
-	is_running = true
+	# Mesmo fluxo de transição usado pelos outros heróis.
+	# Invalida ações/awaits anteriores e limpa qualquer alvo antigo.
+	attack_id += 1
 	attacking = false
 	action_locked = false
+	basic_attack_lock = false
+	attack_animation_playing = false
 	skill_animation_finished = false
+	current_attack_target = null
+	basic_attack_target = null
+	basic_attack_hit = false
+
+	if is_instance_valid(current_basic_attack_projectile):
+		current_basic_attack_projectile.queue_free()
+		current_basic_attack_projectile = null
+
+	is_running = true
 
 	if dead:
 		return
 
 	rotation.y = initial_rotation_y
 	animation_player.speed_scale = 1.0
-
 	animation_player.play(
 		"mage/running",
 		animation_blend
 	)
 
+
 func play_animation(_name):
+	if dead:
+		return
 	animation_player.play("mage/" + str(_name))
+
 
 func start_combat():
 
 	is_running = false
 	attacking = false
 	action_locked = false
+	basic_attack_lock = false
+	attack_animation_playing = false
 	skill_animation_finished = false
+	current_attack_target = null
+	basic_attack_target = null
+	basic_attack_hit = false
+
+	if dead:
+		return
 
 	animation_player.speed_scale = 1.0
-
 	animation_player.play(
-		"player/idle2",
+		"mage/idle2",
 		animation_blend
 	)
 
@@ -498,40 +516,50 @@ func die():
 
 	print("=== Mago MORREU ===")
 
-	# Para qualquer estado de combate
+	# Interrompe o combate e invalida qualquer ação pendente.
 	attacking = false
 	action_locked = false
 	is_running = false
+	basic_attack_lock = false
 	skill_animation_finished = false
 	attack_animation_playing = false
-
-	# Invalida qualquer ação pendente
+	current_attack_target = null
+	basic_attack_target = null
+	basic_attack_hit = false
 	attack_id += 1
 
-	# Destrói projétil básico
 	if is_instance_valid(current_basic_attack_projectile):
-
 		current_basic_attack_projectile.queue_free()
 		current_basic_attack_projectile = null
 
-	# Para qualquer buff ativo
+	# Remove o buff ativo sem destruir o herói/CharacterStats.
 	damage_buff_active = false
-
 	if is_instance_valid(damage_buff_instance):
-
 		damage_buff_instance.queue_free()
 		damage_buff_instance = null
 
-	# Para a animação atual
 	animation_player.speed_scale = 1.0
 
-	# Executa a morte
 	if animation_player.has_animation("mage/die"):
+		animation_player.play("mage/die", 0.15)
+	else:
+		_finish_death()
 
-		animation_player.play(
-			"mage/die",
-			0.15
-		)
+
+func _finish_death() -> void:
+	# Mantém o nó e CharacterStats registrados para Status/Inventário,
+	# mas retira o Mago do mundo e desativa suas colisões/processamento.
+	visible = false
+	process_mode = Node.PROCESS_MODE_DISABLED
+	set_process(false)
+	set_physics_process(false)
+
+	for collision_node in find_children("*", "CollisionShape3D", true, false):
+		collision_node.set_deferred("disabled", true)
+
+	for area_node in find_children("*", "Area3D", true, false):
+		area_node.set_deferred("monitoring", false)
+		area_node.set_deferred("monitorable", false)
 
 
 
