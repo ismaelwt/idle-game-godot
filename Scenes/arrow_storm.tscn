@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://3sy3yq3ca58d"]
+[gd_scene load_steps=5 format=3 uid="uid://3sy3yq3ca58d"]
 
 [ext_resource type="Texture2D" uid="uid://c5xoj8ku08mm1" path="res://icons/crosshair.png" id="1_y8mqf"]
-[ext_resource type="PackedScene" uid="uid://cd4r7i0qc3ln4" path="res://Scenes/arrow_projectile.tscn" id="2_dlm27"]
+[ext_resource type="Script" path="res://Script/arrow_storm.gd" id="3_script"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_y8mqf"]
 viewport_path = NodePath("SubViewportContainer/SubViewport")
 
 [node name="ArrowStorm" type="Node3D"]
+script = ExtResource("3_script")
+icon = ExtResource("1_y8mqf")
+disabled_icon = ExtResource("1_y8mqf")
 
 [node name="Marker3D" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3, 0)
@@ -37,5 +40,3 @@ stretch_mode = 5
 transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 0.29101563, 0, 0)
 texture = SubResource("ViewportTexture_y8mqf")
 
-[node name="ArrowProjectile" parent="." instance=ExtResource("2_dlm27")]
-transform = Transform3D(0.25, 0, 0, 0, -1.0927847e-08, -0.25, 0, 0.25, -1.0927847e-08, 0, 2.5980225, 0)
