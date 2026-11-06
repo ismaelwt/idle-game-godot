@@ -65,10 +65,14 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	for i in range(falling_arrows.size() - 1, -1, -1):
 		var entry: Dictionary = falling_arrows[i]
-		var arrow_ref: WeakRef = entry["arrow_ref"]
-		var arrow := arrow_ref.get_ref() as Node3D
+		var arrow = entry["arrow"]
 
 		if not is_instance_valid(arrow):
+			falling_arrows.remove_at(i)
+			continue
+
+		arrow = arrow as Node3D
+		if arrow == null:
 			falling_arrows.remove_at(i)
 			continue
 
@@ -176,7 +180,7 @@ func _spawn_arrow_rain() -> void:
 		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
 		falling_arrows.append({
-			"arrow_ref": weakref(arrow),
+			"arrow": arrow,
 			"target_position": impact_position + Vector3.UP * 0.15,
 			"delay": float(i) * stagger_interval
 		})
