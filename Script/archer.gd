@@ -223,8 +223,10 @@ func _use_arrow_storm(target: Node3D) -> void:
 	animation_player.speed_scale = 1.0
 	animation_player.play(skill_animation, animation_blend)
 
-	# A mira e a chuva de flechas começam durante a animação de disparo para cima.
-	await get_tree().create_timer(0.55).timeout
+	# Aguarda até a metade da animação antes de iniciar a chuva de flechas.
+	var skill_animation_resource: Animation = animation_player.get_animation(skill_animation)
+	var impact_start_time := skill_animation_resource.length * 0.5
+	await get_tree().create_timer(impact_start_time).timeout
 
 	if my_attack_id != attack_id or dead or not is_inside_tree():
 		return
