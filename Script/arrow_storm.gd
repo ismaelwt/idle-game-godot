@@ -24,6 +24,7 @@ var character_stats: Node
 var resolved: bool = false
 var center_position: Vector3
 var created_arrows: Array[Node3D] = []
+var area_damage_applied: bool = false
 
 @onready var aim_marker: Sprite3D = $Sprite3D
 
@@ -56,7 +57,6 @@ func _ready() -> void:
 	while _has_active_arrows():
 		await get_tree().process_frame
 
-	_apply_area_damage()
 	_finish()
 
 
@@ -127,10 +127,19 @@ func _spawn_arrow_rain() -> void:
 			fall_speed,
 			float(i) * stagger_interval
 		)
+		arrow.visual_impact_reached.connect(_on_visual_arrow_impact)
 
 		arrow_parent.add_child(arrow)
 		arrow.global_position = impact_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
+
+
+func _on_visual_arrow_impact() -> void:
+	if area_damage_applied:
+		return
+
+	area_damage_applied = true
+	_apply_area_damage()
 
 
 func _apply_area_damage() -> void:
