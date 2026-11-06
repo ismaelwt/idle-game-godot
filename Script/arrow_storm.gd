@@ -13,8 +13,8 @@ signal finished
 @export var radius: float = 5.0
 @export var arrow_count: int = 18
 @export var fall_height: float = 12.0
-@export var fall_duration: float = 0.45
-@export var strike_duration: float = 1.6
+@export var fall_duration: float = 0.9
+@export var strike_duration: float = 2.0
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
 
@@ -147,7 +147,7 @@ func _spawn_arrow_rain() -> void:
 		created_arrows.append(arrow)
 
 		var tween := arrow.create_tween()
-		tween.tween_interval(float(i) * 0.025)
+		tween.tween_interval(float(i) * 0.04)
 		tween.tween_property(
 			arrow,
 			"global_position",
