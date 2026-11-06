@@ -269,7 +269,7 @@ func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == attack_animation:
 		if not dying:
 			attacking = false
-			animation_player.play(idle_animation)
+			animation_player.play(idle_animation, 0.35)
 
 	elif anim_name == death_animation:
 		queue_free()

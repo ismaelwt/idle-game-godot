@@ -104,7 +104,7 @@ var special_impact_instance: Node3D
 func _ready() -> void:
 	animation_player.animation_finished.connect(_on_animation_finished)
 
-	animation_player.play("enemy/walk")
+	animation_player.play("enemy/walk", 0.25)
 
 	center_position = global_position
 	health = max_health
@@ -166,7 +166,7 @@ func _process(delta: float) -> void:
 	# Ao chegar ao alcance, inicia o combate.
 	if distance <= attack_range:
 		if animation_player.current_animation != "enemy/idle":
-			animation_player.play("enemy/idle")
+			animation_player.play("enemy/idle", 0.25)
 
 		start_combat()
 		return
@@ -174,7 +174,7 @@ func _process(delta: float) -> void:
 	# Enquanto estiver se movimentando, toca a animação de caminhada.
 	if direction.length_squared() > 0.001:
 		if animation_player.current_animation != "enemy/walk":
-			animation_player.play("enemy/walk")
+			animation_player.play("enemy/walk", 0.25)
 
 		# Mantém o movimento horizontal em direção ao alvo.
 		global_position += direction.normalized() * speed * delta
@@ -326,7 +326,7 @@ func attack() -> void:
 	attacking = true
 	attack_timer = attack_cooldown
 
-	animation_player.play("enemy/attack")
+	animation_player.play("enemy/attack", 0.25)
 
 	# Espera o momento do impacto.
 	await get_tree().create_timer(attack_hit_delay).timeout
@@ -365,7 +365,7 @@ func attack() -> void:
 func _on_animation_finished(anim_name: StringName) -> void:
 	if anim_name == "enemy/attack":
 		attacking = false
-		animation_player.play("enemy/idle")
+		animation_player.play("enemy/idle", 0.25)
 
 	elif anim_name == "enemy/boss_especial_attack":
 		special_attack_in_progress = false
@@ -375,7 +375,7 @@ func _on_animation_finished(anim_name: StringName) -> void:
 			special_impact_instance.queue_free()
 			special_impact_instance = null
 
-		animation_player.play("enemy/idle")
+		animation_player.play("enemy/idle", 0.25)
 
 	elif anim_name == "enemy/die":
 		queue_free()
@@ -517,7 +517,7 @@ func start_combat() -> void:
 	attack_timer = 0.0
 
 	animation_player.speed_scale = 1.0
-	animation_player.play("enemy/idle")
+	animation_player.play("enemy/idle", 0.25)
 
 
 func flash_hit() -> void:

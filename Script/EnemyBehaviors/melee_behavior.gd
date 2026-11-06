@@ -110,7 +110,7 @@ func attack() -> void:
 
 	enemy.attacking = true
 	enemy.attack_timer = enemy.attack_cooldown
-	enemy.animation_player.play(enemy.attack_animation)
+	enemy.animation_player.play(enemy.attack_animation, 0.25)
 
 	await enemy.get_tree().create_timer(enemy.attack_hit_delay).timeout
 
@@ -153,4 +153,4 @@ func start_combat() -> void:
 	enemy.attacking = false
 	enemy.attack_timer = 0.0
 	enemy.animation_player.speed_scale = 1.0
-	enemy.animation_player.play(enemy.idle_animation)
+	enemy.animation_player.play(enemy.idle_animation, 0.35)
