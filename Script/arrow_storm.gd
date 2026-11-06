@@ -43,7 +43,7 @@ func _ready() -> void:
 		return
 
 	center_position = center_target.global_position
-	center_position.y = get_ground_height(center_position)
+	center_position.y = center_target.global_position.y
 
 	var world_scroller := get_tree().get_first_node_in_group("world_scroller")
 	if is_instance_valid(world_scroller) and world_scroller is Node3D:
@@ -59,27 +59,12 @@ func _ready() -> void:
 	_finish()
 
 
-func get_ground_height(position: Vector3) -> float:
-	var space_state := get_world_3d().direct_space_state
-	var query := PhysicsRayQueryParameters3D.create(
-		position + Vector3.UP * 8.0,
-		position + Vector3.DOWN * 20.0
-	)
-	if is_instance_valid(shooter):
-		query.exclude = [shooter.get_rid()]
-	var hit := space_state.intersect_ray(query)
-	if not hit.is_empty():
-		return float(hit.position.y)
-	return position.y
-
-
 func _apply_area_damage() -> void:
 	if resolved:
 		return
 
 	var critical_chance := 0.0
 	var critical_multiplier := 1.5
-	var damage_multiplier := 1.0
 
 	if is_instance_valid(character_stats):
 		critical_chance = character_stats.get_critical_chance()
@@ -158,6 +143,7 @@ func _spawn_arrow_rain() -> void:
 		created_arrows.append(arrow)
 
 		var tween := arrow.create_tween()
+		tween.tween_interval(float(i) * 0.025)
 		tween.tween_property(
 			arrow,
 			"global_position",
