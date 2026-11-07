@@ -86,13 +86,16 @@ func _refresh_items() -> void:
 			item.item_level,
 			ItemBase.Rarity.keys()[item.generated_rarity]
 		]
-		var icon := TextureRect.new()
-		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		icon.texture = _get_item_icon(item)
-		slot.add_child(icon)
+		if item.item_base.animated_frames != null:
+			_add_animated_item_sprite(slot, item.item_base.animated_frames)
+		else:
+			var icon := TextureRect.new()
+			icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+			icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+			icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			icon.texture = _get_item_icon(item)
+			slot.add_child(icon)
 
 
 func _on_slot_mouse_entered(index: int) -> void:
@@ -137,3 +140,20 @@ func _on_slot_gui_input(event: InputEvent, index: int) -> void:
 		item_tooltip.hide_tooltip()
 	inventory.set_item_stored(stored_items[index], false)
 	get_viewport().set_input_as_handled()
+
+
+func _add_animated_item_sprite(slot: Control, frames: SpriteFrames) -> void:
+	var animated_sprite := AnimatedSprite2D.new()
+	animated_sprite.sprite_frames = frames
+	animated_sprite.animation = "default"
+	animated_sprite.centered = true
+	animated_sprite.position = SLOT_SIZE / 2.0
+	animated_sprite.z_index = 2
+	var first_frame := frames.get_frame_texture("default", 0)
+	if first_frame != null:
+		var frame_size := first_frame.get_size()
+		if frame_size.x > 0.0 and frame_size.y > 0.0:
+			var fit_scale := minf(34.0 / frame_size.x, 34.0 / frame_size.y)
+			animated_sprite.scale = Vector2.ONE * fit_scale
+	slot.add_child(animated_sprite)
+	animated_sprite.play("default")
