@@ -365,13 +365,6 @@ func serialize_inventory(inventory: Inventory) -> Dictionary:
 			continue
 		data["equipment"].append(serialize_item(item))
 
-	data["shared_stash"] = {"items": []}
-	var shared_stash = inventory.get_node_or_null("SharedStash")
-	if is_instance_valid(shared_stash) and shared_stash.get("items") is Array:
-		for stash_item in shared_stash.items:
-			if stash_item != null and stash_item.item_base != null:
-				data["shared_stash"]["items"].append(serialize_item(stash_item))
-
 	for hero_id in inventory.equipped_by_hero:
 		data["equipped_by_hero"][str(hero_id)] = serialize_hero_equipment(inventory, str(hero_id))
 
@@ -404,20 +397,6 @@ func deserialize_inventory(inventory: Inventory, data: Dictionary) -> void:
 		var item := deserialize_item(item_data, database)
 		if item != null:
 			inventory.equipment.append(item)
-
-	# Restaura o baú compartilhado junto com o inventário, usando o mesmo banco de itens.
-	var shared_stash = inventory.get_node_or_null("SharedStash")
-	if is_instance_valid(shared_stash):
-		shared_stash.items.clear()
-		var stash_data: Dictionary = data.get("shared_stash", {})
-		var database := ItemDatabase.new()
-		for stash_item_data in stash_data.get("items", []):
-			if stash_item_data is Dictionary:
-				var stash_item := deserialize_item(stash_item_data, database)
-				if stash_item != null:
-					shared_stash.items.append(stash_item)
-		if shared_stash.has_signal("stash_changed"):
-			shared_stash.stash_changed.emit()
 
 	# Novo formato: os equipamentos vestidos são indexados pelo ID do herói.
 	var saved_by_hero: Dictionary = data.get("equipped_by_hero", {})
