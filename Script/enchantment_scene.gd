@@ -17,10 +17,18 @@ var selected_gem: ItemInstance
 var item_tooltip: ItemTooltip
 var preview_gem_icon: TextureRect
 var forge_mode: ForgeMode = ForgeMode.ENCHANT
+var pixel_font: Font = preload("res://Fonts/Pix32.ttf")
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+	# Aplica a fonte pixel tanto ao texto selecionado quanto às opções do menu.
+	mode_selector.add_theme_font_override("font", pixel_font)
+	mode_selector.add_theme_font_size_override("font_size", 12)
+	mode_selector.get_popup().add_theme_font_override("font", pixel_font)
+	mode_selector.get_popup().add_theme_font_size_override("font_size", 12)
+
 	mode_selector.add_item("Encantamento", ForgeMode.ENCHANT)
 	mode_selector.add_item("Evolução de Tier", ForgeMode.TIER)
 	mode_selector.item_selected.connect(_on_mode_selected)
