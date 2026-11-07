@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://soosefshdpkq"]
+[gd_scene load_steps=32 format=3 uid="uid://soosefshdpkq"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
 [ext_resource type="PackedScene" uid="uid://mpt1iubn4rnd" path="res://Scenes/tile_03.tscn" id="3_gqssx"]
@@ -19,7 +19,6 @@
 [ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_phxl3"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="15_xqvjd"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="16_rkt0a"]
-[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_nbwsh"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -210,12 +209,8 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.93281716, 0.9340785, 0.937522, 1)
 
-
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_rkt0a")
-
-[node name="SharedStash" type="Node" parent="SubViewportContainer/SubViewport/Inventory"]
-script = ExtResource("shared_stash_script")
 
 [node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
 script = ExtResource("15_xqvjd")
