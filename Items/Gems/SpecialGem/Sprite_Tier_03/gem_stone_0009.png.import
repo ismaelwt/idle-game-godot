@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b4bwv5k3blmul"
-path="res://.godot/imported/gem_stone_0006.png-b1a5f0d2ec3a16fc0faa443e9d30ab69.ctex"
+uid="uid://badllfs27c5dm"
+path="res://.godot/imported/gem_stone_0009.png-bbe54ed8122b3244abd0936241890e0d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Items/Gems/SpecialGem/Sprite/gem_stone_0006.png"
-dest_files=["res://.godot/imported/gem_stone_0006.png-b1a5f0d2ec3a16fc0faa443e9d30ab69.ctex"]
+source_file="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0009.png"
+dest_files=["res://.godot/imported/gem_stone_0009.png-bbe54ed8122b3244abd0936241890e0d.ctex"]
 
 [params]
 

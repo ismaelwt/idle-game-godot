@@ -1,45 +1,45 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=12 format=3 ]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=12 format=3 uid="uid://c13swggtu4x1"]
 
+[ext_resource type="Texture2D" uid="uid://c57ppxcfujvbh" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0001.png" id="1_u75r8"]
 [ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_0vl0k"]
-[ext_resource type="Texture2D" uid="uid://b07l5ac0h7ggv" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0001.png" id="3_frame1"]
-[ext_resource type="Texture2D" uid="uid://btwro5posnwxn" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0002.png" id="3_frame2"]
-[ext_resource type="Texture2D" uid="uid://cgb0eqdyeanux" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0003.png" id="3_frame3"]
-[ext_resource type="Texture2D" uid="uid://b2jyt0h471j0i" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0004.png" id="3_frame4"]
-[ext_resource type="Texture2D" uid="uid://cquwsffwm4vpc" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0005.png" id="3_frame5"]
-[ext_resource type="Texture2D" uid="uid://b4bwv5k3blmul" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0006.png" id="3_frame6"]
-[ext_resource type="Texture2D" uid="uid://kj3dpegw8bfk" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0007.png" id="3_frame7"]
-[ext_resource type="Texture2D" uid="uid://crdyqfar3pmd3" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0008.png" id="3_frame8"]
-[ext_resource type="Texture2D" uid="uid://m5gj5jyty600" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0009.png" id="3_frame9"]
+[ext_resource type="Texture2D" uid="uid://ivmpu2usd251" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0002.png" id="2_cbbk8"]
+[ext_resource type="Texture2D" uid="uid://cmv18jvb3gaeo" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0003.png" id="3_8fk2t"]
+[ext_resource type="Texture2D" uid="uid://dc7xfbkxgtybp" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0004.png" id="4_cks2w"]
+[ext_resource type="Texture2D" uid="uid://858upbqanemv" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0005.png" id="5_wcitb"]
+[ext_resource type="Texture2D" uid="uid://b2ypklspxur5g" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0006.png" id="6_kf657"]
+[ext_resource type="Texture2D" uid="uid://btb53fg0ww3ei" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0007.png" id="7_cuxwp"]
+[ext_resource type="Texture2D" uid="uid://b2yi1awuu2x3d" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0008.png" id="8_cbpsx"]
+[ext_resource type="Texture2D" uid="uid://badllfs27c5dm" path="res://Items/Gems/SpecialGem/Sprite_Tier_03/gem_stone_0009.png" id="9_04dkn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_special_gem"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("3_frame1")
+"texture": ExtResource("1_u75r8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame2")
+"texture": ExtResource("2_cbbk8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame3")
+"texture": ExtResource("3_8fk2t")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame4")
+"texture": ExtResource("4_cks2w")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame5")
+"texture": ExtResource("5_wcitb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame6")
+"texture": ExtResource("6_kf657")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame7")
+"texture": ExtResource("7_cuxwp")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame8")
+"texture": ExtResource("8_cbpsx")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_frame9")
+"texture": ExtResource("9_04dkn")
 }],
 "loop": true,
 "name": &"default",
@@ -50,13 +50,13 @@ animations = [{
 script = ExtResource("2_0vl0k")
 item_id = &"special_gem_tier_3"
 item_name = "Gema Especial - Tier 3"
-description = "Permite evoluir um equipamento para Tier 3."
+description = "Permite evoluir um item para Tier 3.
+Aumentando todo os seus atributos em 30%."
 animated_frames = SubResource("SpriteFrames_special_gem")
 item_type = 7
 item_class = 3
+rarity = 4
+base_value = 500
 tier_gem_level = 3
-gem_effect = 0
-gem_effect_min = 0.0
-gem_effect_max = 0.0
 gem_color = Color(0.48955154, 0.50742584, 0.2528367, 1)
 metadata/_custom_type_script = "uid://o7xxtooqdtlf"

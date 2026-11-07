@@ -76,7 +76,7 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 	value_label.text = "Valor: %d em ouro" % item.item_value
 	value_label.show()
 	# Conteúdo específico das gemas.
-	if base.item_type == ItemBase.ItemType.GEM:
+	if base.item_type == ItemBase.ItemType.GEM and base.tier_gem_level == 0:
 		_add_attribute(
 			"Efeito",
 			_get_gem_effect_name(item.gem_effect),
