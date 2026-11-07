@@ -70,6 +70,14 @@ grow_horizontal = 2
 texture = ExtResource("2_jg0xs")
 stretch_mode = 5
 
+[node name="ModeSelector" type="OptionButton" parent="Panel"]
+layout_mode = 0
+offset_left = 65.0
+offset_top = 48.0
+offset_right = 220.0
+offset_bottom = 72.0
+item_count = 0
+
 [node name="Slot1" type="Panel" parent="Panel"]
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 0
