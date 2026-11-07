@@ -96,6 +96,33 @@ func _refresh_items() -> void:
 			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			icon.texture = _get_item_icon(item)
 			slot.add_child(icon)
+		_set_tier_badge(slot, item)
+
+
+func _set_tier_badge(parent: Control, item: ItemInstance) -> void:
+	var old_badge := parent.get_node_or_null("TierBadge")
+	if is_instance_valid(old_badge):
+		old_badge.queue_free()
+	if item == null or item.tier <= 0:
+		return
+	var badge := Label.new()
+	badge.name = "TierBadge"
+	badge.text = "T%d" % item.tier
+	badge.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	badge.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	badge.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	badge.add_theme_font_override("font", preload("res://Fonts/Pix32.ttf"))
+	badge.add_theme_font_size_override("font_size", 10)
+	badge.add_theme_color_override("font_color", Color("#ffd45c"))
+	badge.add_theme_color_override("font_outline_color", Color("#211800"))
+	badge.add_theme_constant_override("outline_size", 3)
+	badge.set_anchors_and_offsets_preset(Control.PRESET_TOP_RIGHT)
+	badge.offset_left = -22.0
+	badge.offset_top = 1.0
+	badge.offset_right = -1.0
+	badge.offset_bottom = 17.0
+	badge.z_index = 10
+	parent.add_child(badge)
 
 
 func _on_slot_mouse_entered(index: int) -> void:
