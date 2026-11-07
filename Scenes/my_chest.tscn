@@ -33,9 +33,9 @@ grow_vertical = 2
 [node name="ChestPanel" type="Panel" parent="."]
 layout_mode = 0
 offset_left = 274.0
-offset_top = -200.0
+offset_top = -215.0
 offset_right = 519.0
-offset_bottom = 150.0
+offset_bottom = 215.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qcuph")
 
 [node name="Control" type="Control" parent="ChestPanel"]
