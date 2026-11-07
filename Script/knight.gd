@@ -316,23 +316,39 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 
 	animation_player.speed_scale = 1.0
 	animation_player.play("knight/attack2", 0.15)
+	current_animation = &"knight/attack2"
 
 	print("KNIGHT USANDO SKILL: earthquake")
 
-	if earthquake_instance.has_signal("finished"):
-		await earthquake_instance.finished
-	else:
-		await get_tree().create_timer(0.9).timeout
+	# Aguarda o fim real de attack2. Enquanto attacking/action_locked
+	# estiverem ativos, _process() não poderá trocar a animação.
+	while (
+		is_instance_valid(animation_player)
+		and animation_player.is_playing()
+		and animation_player.current_animation == &"knight/attack2"
+	):
+		await animation_player.animation_finished
+
+	if my_attack_id != attack_id or dead:
+		return
+
+	# A animação visual da skill pode durar mais que attack2 (ou vice-versa).
+	# resolved evita aguardar um sinal que já tenha sido emitido.
+	if is_instance_valid(earthquake_instance):
+		var is_resolved = earthquake_instance.get("resolved")
+		if is_resolved == null or not bool(is_resolved):
+			if earthquake_instance.has_signal("finished"):
+				await earthquake_instance.finished
 
 	if my_attack_id != attack_id or dead:
 		return
 
 	attacking = false
 	action_locked = false
+	current_attack_target = null
 	current_animation = &""
 	animation_player.speed_scale = animation_speed
 	print("KNIGHT SKILL FINALIZADA: earthquake")
-
 
 func find_nearest_enemy_in_detection_range() -> Node3D:
 	if not is_instance_valid(enemy_spawner):
