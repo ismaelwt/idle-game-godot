@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=12 format=3 uid="uid://eji0rkm1fqcs"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=13 format=3 uid="uid://eji0rkm1fqcs"]
 
 [ext_resource type="Texture2D" uid="uid://b51qk3qk6cqiu" path="res://icons/gem-topazio.png" id="1_q88dc"]
 [ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_0vl0k"]
