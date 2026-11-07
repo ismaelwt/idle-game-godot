@@ -29,6 +29,8 @@ func get_description() -> String:
 
 
 func _ready() -> void:
+	if not animation_player.animation_finished.is_connected(_on_animation_finished):
+		animation_player.animation_finished.connect(_on_animation_finished)
 	animation_player.play("earthquaker")
 	_apply_area_damage_at_impact()
 
