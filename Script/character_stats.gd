@@ -544,9 +544,16 @@ func get_equipment_bonus(stat_name: String) -> float:
 					if stat_name == "critical_damage":
 						item_total += gem_value
 
-		total += item_total * (1.0 + float(item.tier) * 0.10)
+		total += item_total * get_item_tier_multiplier(item)
 
 	return total
+
+
+func get_item_tier_multiplier(item: ItemInstance) -> float:
+	if not is_instance_valid(item):
+		return 1.0
+	var safe_tier := clampi(item.tier, 0, 3)
+	return 1.0 + float(safe_tier) * 0.10
 
 
 func get_total_strength() -> int:
