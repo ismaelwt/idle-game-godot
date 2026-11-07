@@ -10,7 +10,7 @@ signal finished
 
 @export_category("Earthquake")
 @export var damage: int = 45
-@export var damage_delay: float = 1.85
+@export var damage_delay: float = .9
 
 var character_stats: Node
 var resolved: bool = false
@@ -126,4 +126,3 @@ func _find_enemy_ancestor(body: Node) -> Node3D:
 			return candidate as Node3D
 		candidate = candidate.get_parent()
 	return null
-
