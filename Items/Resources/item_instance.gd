@@ -5,6 +5,7 @@ class_name ItemInstance
 @export_category("Identificação")
 @export var instance_id: String = ""
 @export var item_base: ItemBase
+@export var stored: bool = false
 
 @export_category("Equipamento Gerado")
 @export var item_level: int = 1
