@@ -257,22 +257,21 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	var active_frenzy: Node3D = frenzy_instance
 	await animation_player.animation_finished
 
-	# A skill pode ser interrompida (por exemplo, se o Knight morrer)
-	# enquanto a animação de buff ainda está tocando.
+	# Se a ativação for interrompida, remove somente esta instância
+	# do buff. Isso evita deixar a aura presa no Knight.
 	if (
 		my_attack_id != attack_id
 		or dead
 		or not is_instance_valid(active_frenzy)
 		or frenzy_instance != active_frenzy
 	):
+		_clear_frenzy(active_frenzy)
 		return
 
 	# Duração e multiplicador são lidos da própria cena da skill.
 	var duration_value = active_frenzy.get("duration")
 	if duration_value == null:
-		frenzy_active = false
-		frenzy_instance.queue_free()
-		frenzy_instance = null
+		_clear_frenzy(active_frenzy)
 		attacking = false
 		action_locked = false
 		push_warning("Knight: a cena da skill não define 'duration'.")
@@ -282,14 +281,21 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	action_locked = false
 	await get_tree().create_timer(float(duration_value)).timeout
 
-	if my_attack_id != attack_id:
-		return
-
-	frenzy_active = false
-	if is_instance_valid(frenzy_instance):
-		frenzy_instance.queue_free()
-	frenzy_instance = null
+	# A expiração do buff não depende mais do attack_id.
+	# Assim, correr ou cancelar um ataque não impede a limpeza da aura.
+	_clear_frenzy(active_frenzy)
 	print("KNIGHT SKILL FINALIZADA: ", skill_id)
+
+
+func _clear_frenzy(active_frenzy: Node3D) -> void:
+	# Só altera o estado global se ainda for a instância ativa.
+	# Uma instância antiga não pode desligar um buff mais recente.
+	if frenzy_instance == active_frenzy:
+		frenzy_active = false
+		frenzy_instance = null
+
+	if is_instance_valid(active_frenzy):
+		active_frenzy.queue_free()
 
 
 func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
