@@ -15,7 +15,8 @@ const MAGE_SKILL_BUTTONS := {
 
 # Habilidades exclusivas de cada classe.
 const KNIGHT_SKILL_BUTTONS := {
-	"skill1_nv1": "frenesi"
+	"skill1_nv1": "frenesi",
+	"skill2_nv1": "earthquake"
 }
 
 const ARCHER_SKILL_BUTTONS := {

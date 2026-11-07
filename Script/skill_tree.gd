@@ -119,6 +119,16 @@ const SKILLS := {
 		"prerequisites": [],
 		"button": "skill1_nv1"
 	},
+
+	"earthquake": {
+		"name": "Earthquake",
+		"hero_class": "knight",
+		"scene": preload("res://Scenes/earthquake.tscn"),
+		"cost": 1,
+		"stage": 1,
+		"prerequisites": [],
+		"button": "skill2_nv1"
+	},
 }
 
 

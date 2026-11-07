@@ -212,11 +212,17 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		push_warning("Knight: a skill não possui uma cena configurada: " + skill_id)
 		return
 
+	var skill_scene: PackedScene = skill_data["scene"]
+
+	if skill_id == "earthquake":
+		_use_earthquake(skill_scene, target)
+		return
+
 	if skill_id != "frenesi":
 		push_warning("Knight: skill ainda não implementada: " + skill_id)
 		return
 
-	var skill_scene: PackedScene = skill_data["scene"]
+	
 	if skill_scene == null:
 		push_warning("Knight: cena inválida para a skill: " + skill_id)
 		return
@@ -284,6 +290,48 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		frenzy_instance.queue_free()
 	frenzy_instance = null
 	print("KNIGHT SKILL FINALIZADA: ", skill_id)
+
+
+func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
+	if not is_instance_valid(target):
+		return
+
+	look_at_target(target)
+	attacking = true
+	action_locked = true
+	current_attack_target = null
+	attack_id += 1
+	var my_attack_id := attack_id
+
+	var earthquake_instance := skill_scene.instantiate() as Node3D
+	if not is_instance_valid(earthquake_instance):
+		attacking = false
+		action_locked = false
+		push_warning("Knight: não foi possível instanciar Earthquake.")
+		return
+
+	earthquake_instance.set("character_stats", character_stats)
+	add_child(earthquake_instance)
+	earthquake_instance.position = Vector3.ZERO
+
+	animation_player.speed_scale = 1.0
+	animation_player.play("knight/attack2", 0.15)
+
+	print("KNIGHT USANDO SKILL: earthquake")
+
+	if earthquake_instance.has_signal("finished"):
+		await earthquake_instance.finished
+	else:
+		await get_tree().create_timer(0.9).timeout
+
+	if my_attack_id != attack_id or dead:
+		return
+
+	attacking = false
+	action_locked = false
+	current_animation = &""
+	animation_player.speed_scale = animation_speed
+	print("KNIGHT SKILL FINALIZADA: earthquake")
 
 
 func find_nearest_enemy_in_detection_range() -> Node3D:

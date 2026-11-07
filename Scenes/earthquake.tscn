@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://bo7c48h6eo0i6"]
+[gd_scene load_steps=12 format=3 uid="uid://bo7c48h6eo0i6"]
 
 [ext_resource type="PackedScene" uid="uid://cyklhyy064cik" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_03.prefab.scn" id="1_2v7mq"]
 [ext_resource type="PackedScene" uid="uid://bt58gm0q1iu" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_09.prefab.scn" id="2_ab0ma"]
 [ext_resource type="PackedScene" uid="uid://dvhmlctkv7rcd" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Medium_Hover_Sharp_Stone_010.prefab.scn" id="3_oah6b"]
 [ext_resource type="PackedScene" uid="uid://cg6hfpbe45spl" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_05.prefab.scn" id="4_eywc7"]
 [ext_resource type="PackedScene" uid="uid://d0qs1qe4csd5c" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Small_Marbel_Stone_07.prefab.scn" id="5_7gaer"]
+[ext_resource type="Script" path="res://Script/earthquake.gd" id="6_script"]
+[ext_resource type="Texture2D" path="res://icons/earthquake.png" id="7_icon"]
 
 [sub_resource type="Animation" id="Animation_4inv5"]
 length = 0.001
@@ -144,6 +146,12 @@ _data = {
 size = Vector3(1.2609596, 1, 4.7335205)
 
 [node name="EarthQuake" type="Node3D"]
+script = ExtResource("6_script")
+icon = ExtResource("7_icon")
+disabled_icon = ExtResource("7_icon")
+cooldown = 15.0
+mana_cost = 35.0
+damage = 45
 
 [node name="SM_Sharp_Stone_03" parent="." instance=ExtResource("1_2v7mq")]
 transform = Transform3D(0.056965765, -7.6476603e-10, -0.4967443, 0.39485776, 0.30337584, 0.045281593, 0.30140045, -0.39744574, 0.034564074, -0.0012512207, -1.4464332, 3.3821716)
@@ -166,8 +174,12 @@ libraries = {
 }
 autoplay = "earthquaker"
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2147483647
+monitoring = true
+monitorable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031833649, 0, 1.8667603)
 shape = SubResource("BoxShape3D_2v7mq")
