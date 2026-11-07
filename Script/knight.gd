@@ -303,6 +303,13 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	attack_id += 1
 	var my_attack_id := attack_id
 
+	animation_player.speed_scale = 1.0
+	animation_player.play("knight/attack2", 0.15)
+	current_animation = &"knight/attack2"
+
+	print("KNIGHT USANDO SKILL: earthquake")
+	await get_tree().create_timer(1.85).timeout
+	
 	var earthquake_instance := skill_scene.instantiate() as Node3D
 	if not is_instance_valid(earthquake_instance):
 		attacking = false
@@ -312,13 +319,8 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 
 	earthquake_instance.set("character_stats", character_stats)
 	add_child(earthquake_instance)
-	earthquake_instance.position = Vector3.ZERO
-
-	animation_player.speed_scale = 1.0
-	animation_player.play("knight/attack2", 0.15)
-	current_animation = &"knight/attack2"
-
-	print("KNIGHT USANDO SKILL: earthquake")
+	earthquake_instance.position = Vector3(0.0, 0.0, 3.5)
+	earthquake_instance.scale = Vector3(4.0, 4.0, 4.0)
 
 	# Aguarda o fim real de attack2. Enquanto attacking/action_locked
 	# estiverem ativos, _process() não poderá trocar a animação.

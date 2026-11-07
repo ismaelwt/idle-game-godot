@@ -31,6 +31,7 @@ func get_description() -> String:
 func _ready() -> void:
 	if not animation_player.animation_finished.is_connected(_on_animation_finished):
 		animation_player.animation_finished.connect(_on_animation_finished)
+	animation_player.speed_scale = 2.0
 	animation_player.play("earthquaker")
 	_apply_area_damage_at_impact()
 
@@ -115,4 +116,5 @@ func _finish() -> void:
 		return
 	resolved = true
 	finished.emit()
+	await get_tree().create_timer(0.9).timeout
 	queue_free()
