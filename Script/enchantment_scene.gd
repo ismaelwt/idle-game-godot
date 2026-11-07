@@ -94,6 +94,8 @@ func _refresh_ui() -> void:
 		and selected_equipment.item_base != null
 		and selected_gem.item_base != null
 		and selected_gem.item_base.item_type == ItemBase.ItemType.GEM
+		and not selected_gem.stored
+		and not selected_equipment.stored
 		and selected_gem.gem_effect != ItemBase.GemEffect.NONE
 		and selected_equipment.installed_enchantments.size() < selected_equipment.enchantment_slots
 		and inventory.equipment.has(selected_gem)
