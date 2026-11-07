@@ -127,16 +127,3 @@ func _find_enemy_ancestor(body: Node) -> Node3D:
 		candidate = candidate.get_parent()
 	return null
 
-
-func _on_animation_finished(animation_name: StringName) -> void:
-	if animation_name == &"earthquaker":
-		_finish()
-
-
-func _finish() -> void:
-	if resolved:
-		return
-	resolved = true
-	finished.emit()
-	await get_tree().create_timer(0.9).timeout
-	queue_free()
