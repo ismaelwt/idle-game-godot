@@ -62,13 +62,13 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 	level_label.text = "Nível: %d" % item.item_level
 	_update_level_label_color(item, hero_level)
 	level_label.show()
-	if item.tier > 0 and base.item_type != ItemBase.ItemType.GEM:
-		_add_attribute("Bônus do Tier", "+%d%%" % (item.tier * 10), Color("#ffd45c"))
 	
 	rarity_label.text = ItemBase.Rarity.keys()[item.generated_rarity]
 	_clear_attributes()
 	_clear_enchantment_slots()
 	_add_class_requirement(item, hero_id)
+	if item.tier > 0 and base.item_type != ItemBase.ItemType.GEM:
+		_add_attribute("Bônus do Tier", "+%d%%" % (item.tier * 10), Color("#ffd45c"))
 	rarity_label.add_theme_color_override(
 		"font_color",
 		_get_rarity_color(item.generated_rarity)
