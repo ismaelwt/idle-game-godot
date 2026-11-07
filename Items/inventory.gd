@@ -308,6 +308,75 @@ func get_enchantment_cost(equipment_item: ItemInstance) -> int:
 	return maxi(equipment_item.item_value, 0) * multiplier
 
 
+func get_tier_upgrade_cost(equipment_item: ItemInstance) -> int:
+	if not is_instance_valid(equipment_item) or equipment_item.item_base == null:
+		return 0
+	var next_tier := equipment_item.tier + 1
+	if next_tier < 1 or next_tier > 3:
+		return 0
+	return maxi(equipment_item.item_value, 0) * 5 * next_tier
+
+
+func upgrade_equipment_tier(
+	equipment_item: ItemInstance,
+	tier_gem: ItemInstance,
+	hero_id: String = ""
+) -> bool:
+	if (
+		not is_instance_valid(equipment_item)
+		or equipment_item.item_base == null
+		or equipment_item.item_base.item_type == ItemBase.ItemType.GEM
+		or equipment_item.stored
+		or not is_instance_valid(tier_gem)
+		or tier_gem.item_base == null
+		or tier_gem.item_base.item_type != ItemBase.ItemType.GEM
+		or tier_gem.item_base.tier_gem_level <= 0
+		or tier_gem.stored
+	):
+		return false
+
+	var target_tier := equipment_item.tier + 1
+	if target_tier > 3 or tier_gem.item_base.tier_gem_level != target_tier:
+		return false
+	var gem_index := equipment.find(tier_gem)
+	if gem_index < 0:
+		return false
+
+	var resolved_id := hero_id if not hero_id.is_empty() else active_hero_id
+	var is_equipped := false
+	for equipped in get_equipped_items(resolved_id).values():
+		if equipped == equipment_item:
+			is_equipped = true
+			break
+	if not is_equipped and not equipment.has(equipment_item):
+		return false
+
+	var game_manager = get_node_or_null("/root/GameManager")
+	if not is_instance_valid(game_manager):
+		push_error("Inventory: GameManager não encontrado; evolução cancelada.")
+		return false
+
+	var upgrade_cost := get_tier_upgrade_cost(equipment_item)
+	if upgrade_cost <= 0 or not game_manager.spend_gold(upgrade_cost):
+		print("Ouro insuficiente para evoluir o equipamento. Custo: ", upgrade_cost)
+		return false
+
+	equipment.remove_at(gem_index)
+	equipment_item.tier = target_tier
+	equipment_changed.emit()
+	inventory_changed.emit()
+	_save_inventory()
+	if is_equipped:
+		_save_hero_equipment(resolved_id)
+
+	print("=== TIER DO EQUIPAMENTO EVOLUÍDO ===")
+	print("Equipamento: ", equipment_item.item_base.item_name)
+	print("Novo Tier: ", equipment_item.tier)
+	print("Gema consumida: ", tier_gem.item_base.item_name)
+	print("Gold gasto: ", upgrade_cost)
+	return true
+
+
 func install_gem(
 	equipment_item: ItemInstance,
 	gem_item: ItemInstance,
