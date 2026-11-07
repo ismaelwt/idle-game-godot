@@ -56,10 +56,14 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 	var base: ItemBase = item.item_base
 
 	name_label.text = base.item_name
+	if item.tier > 0 and base.item_type != ItemBase.ItemType.GEM:
+		name_label.text += "  [TIER %d]" % item.tier
 	
 	level_label.text = "Nível: %d" % item.item_level
 	_update_level_label_color(item, hero_level)
 	level_label.show()
+	if item.tier > 0 and base.item_type != ItemBase.ItemType.GEM:
+		_add_attribute("Bônus do Tier", "+%d%%" % (item.tier * 10), Color("#ffd45c"))
 	
 	rarity_label.text = ItemBase.Rarity.keys()[item.generated_rarity]
 	_clear_attributes()
@@ -96,31 +100,31 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 		enchantments_label.show()
 		enchantment_slots.show()
 
-		_add_attribute("Força", item.strength_bonus)
-		_add_attribute("Agilidade", item.agility_bonus)
-		_add_attribute("Inteligência", item.intelligence_bonus)
-		_add_attribute("Vitalidade", item.vitality_bonus)
-		_add_attribute("Mana máxima", item.max_mana_bonus)
-		_add_attribute("Dano físico", item.physical_damage_bonus)
-		_add_attribute("Dano mágico", item.magic_damage_bonus)
-		_add_attribute("Dano base da arma", item.weapon_damage)
+		_add_attribute("Força", _get_tiered_value(item, item.strength_bonus))
+		_add_attribute("Agilidade", _get_tiered_value(item, item.agility_bonus))
+		_add_attribute("Inteligência", _get_tiered_value(item, item.intelligence_bonus))
+		_add_attribute("Vitalidade", _get_tiered_value(item, item.vitality_bonus))
+		_add_attribute("Mana máxima", _get_tiered_value(item, item.max_mana_bonus))
+		_add_attribute("Dano físico", _get_tiered_value(item, item.physical_damage_bonus))
+		_add_attribute("Dano mágico", _get_tiered_value(item, item.magic_damage_bonus))
+		_add_attribute("Dano base da arma", _get_tiered_value(item, item.weapon_damage))
 		if not is_zero_approx(item.critical_chance_bonus):
-			_add_attribute("Chance crítica", "%+.1f%%" % item.critical_chance_bonus)
+			_add_attribute("Chance crítica", "%+.1f%%" % _get_tiered_value(item, item.critical_chance_bonus))
 		if not is_zero_approx(item.critical_damage_bonus):
-			_add_attribute("Dano crítico", "%+.1f%%" % item.critical_damage_bonus)
+			_add_attribute("Dano crítico", "%+.1f%%" % _get_tiered_value(item, item.critical_damage_bonus))
 		if not is_zero_approx(item.magic_power_bonus):
-			_add_attribute("Poder mágico", "%+.1f%%" % item.magic_power_bonus)
-		_add_attribute("Defesa física", item.physical_defense_bonus)
-		_add_attribute("Defesa mágica", item.magic_defense_bonus)
+			_add_attribute("Poder mágico", "%+.1f%%" % _get_tiered_value(item, item.magic_power_bonus))
+		_add_attribute("Defesa física", _get_tiered_value(item, item.physical_defense_bonus))
+		_add_attribute("Defesa mágica", _get_tiered_value(item, item.magic_defense_bonus))
 		if not is_zero_approx(item.life_steal_bonus):
-			_add_attribute("Roubo de vida por hit", "%+.1f%%" % item.life_steal_bonus)
+			_add_attribute("Roubo de vida por hit", "%+.1f%%" % _get_tiered_value(item, item.life_steal_bonus))
 		if not is_zero_approx(item.mana_steal_bonus):
-			_add_attribute("Roubo de mana por hit", "%+.1f%%" % item.mana_steal_bonus)
+			_add_attribute("Roubo de mana por hit", "%+.1f%%" % _get_tiered_value(item, item.mana_steal_bonus))
 		for gem in item.installed_enchantments:
 			if gem is ItemInstance and gem.item_base != null:
 				_add_attribute(
 					"Gema: " + _get_gem_effect_name(gem.gem_effect),
-					_get_gem_effect_value(gem),
+					_get_tiered_gem_effect_value(item, gem),
 					gem.item_base.gem_color
 				)
 
@@ -146,6 +150,23 @@ func show_enchantment_preview(item: ItemInstance, preview_gem: ItemInstance) -> 
 	preview_item.installed_enchantments = item.installed_enchantments.duplicate()
 	preview_item.installed_enchantments.append(preview_gem)
 	show_item(preview_item)
+
+
+func _get_tiered_value(item: ItemInstance, value: float) -> float:
+	return value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
+
+
+func _get_tiered_gem_effect_value(equipment_item: ItemInstance, gem: ItemInstance) -> String:
+	var scaled_value := _get_tiered_value(equipment_item, gem.gem_effect_value)
+	if gem.gem_effect in [
+		ItemBase.GemEffect.MAGIC_POWER,
+		ItemBase.GemEffect.LIFE_STEAL,
+		ItemBase.GemEffect.MANA_STEAL,
+		ItemBase.GemEffect.CRITICAL_CHANCE,
+		ItemBase.GemEffect.CRITICAL_DAMAGE
+	]:
+		return "%+.1f%%" % scaled_value
+	return "%+d" % roundi(scaled_value)
 
 
 func _fit_tooltip_to_content() -> void:
