@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://suaqwjps0xb8"]
+[gd_scene load_steps=7 format=3 uid="uid://suaqwjps0xb8"]
 
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="1_blamr"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="2_qp35t"]
+[ext_resource type="Script" path="res://Script/my_chest.gd" id="3_script"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qcuph"]
 bg_color = Color(0, 0, 0, 0.40784314)
@@ -22,6 +23,7 @@ font = ExtResource("2_qp35t")
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_dx30d"]
 
 [node name="MyChestControl" type="Control"]
+script = ExtResource("3_script")
 layout_mode = 3
 anchors_preset = 4
 anchor_top = 0.5
