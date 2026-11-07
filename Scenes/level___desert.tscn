@@ -66,6 +66,7 @@
 [ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="63_p1gm3"]
 [ext_resource type="Texture2D" uid="uid://djslkugbuk3bw" path="res://UI/UISprites/Icon_button_arrow_turning_off.png" id="63_xo1hl"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="66_p1gm3"]
+[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -429,7 +430,6 @@ damage_duration = 1.0
 damage_rise_speed = 3.0
 damage_color = Color(0.53871167, 0, 0.038604088, 1)
 
-[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
 
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_k8xho")
