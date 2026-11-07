@@ -5,6 +5,7 @@ var font = preload("res://Fonts/Pix32.ttf")
 
 var item_tooltip_scene = preload("res://UI/item_tooltip.tscn")
 var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
+var my_chest_scene = preload("res://Scenes/my_chest.tscn")
 var enchantment_ui: EnchantmentScene
 var item_tooltip: ItemTooltip
 
@@ -51,6 +52,7 @@ var skill_tree: Control = null
 @onready var chest_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/ChestButton
 @onready var chest_count_label: Label = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/Control/ChestCount
 @onready var sell_all_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/SellAllButton
+@onready var my_chest_button: TextureButton = $CenterContainer/PanelContainer/Background/MyChest
 # ==========================================
 # SLOTS DE EQUIPAMENTO
 # ==========================================
@@ -171,6 +173,7 @@ func _ready() -> void:
 	mage_change_button.pressed.connect(_on_mage_change_pressed)
 	archer_change_button.pressed.connect(_on_archer_change_pressed)
 	chest_button.pressed.connect(_on_chest_pressed)
+	my_chest_button.pressed.connect(_on_my_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
 	create_inventory_slots(45)
@@ -396,6 +399,7 @@ func refresh_inventory() -> void:
 	chest_count_label.text = str(inventory.chest_count)
 	chest_button.disabled = inventory.chest_count <= 0
 
+	var backpack_items := inventory.get_backpack_items()
 	var slots := items_grid.get_children()
 
 	for i in range(slots.size()):
@@ -408,8 +412,8 @@ func refresh_inventory() -> void:
 		# Não utilizar tooltips nativos.
 		item_button.tooltip_text = ""
 
-		if i < inventory.equipment.size():
-			var item: ItemInstance = inventory.equipment[i]
+		if i < backpack_items.size():
+			var item: ItemInstance = backpack_items[i]
 
 			if item != null and item.item_base != null:
 				var base = item.item_base
@@ -429,6 +433,21 @@ func refresh_inventory() -> void:
 						)
 					_:
 						icon_rect.texture = base.icon
+
+
+func _on_my_chest_pressed() -> void:
+	if not is_instance_valid(inventory):
+		return
+	var chest_ui := my_chest_scene.instantiate() as Control
+	if chest_ui == null:
+		push_error("Status: não foi possível abrir a cena MyChest.")
+		return
+	var canvas_layer := _find_canvas_layer(self)
+	if is_instance_valid(canvas_layer):
+		canvas_layer.add_child(chest_ui)
+	else:
+		get_tree().current_scene.add_child(chest_ui)
+	chest_ui.setup(inventory)
 
 
 func _on_chest_pressed() -> void:
@@ -540,10 +559,11 @@ func get_item_tooltip(item: ItemInstance) -> String:
 func _on_inventory_slot_pressed(index: int) -> void:
 	if inventory == null:
 		return
-	if index < 0 or index >= inventory.equipment.size():
+	var backpack_items := inventory.get_backpack_items()
+	if index < 0 or index >= backpack_items.size():
 		return
 
-	var item: ItemInstance = inventory.equipment[index]
+	var item: ItemInstance = backpack_items[index]
 	if item == null or item.item_base == null:
 		return
 
@@ -567,13 +587,14 @@ func _on_inventory_slot_pressed(index: int) -> void:
 func _on_inventory_slot_gui_input(event: InputEvent, index: int) -> void:
 	if inventory == null:
 		return
+	var backpack_items := inventory.get_backpack_items()
 
-	if index < 0 or index >= inventory.equipment.size():
+	if index < 0 or index >= backpack_items.size():
 		if item_tooltip != null:
 			item_tooltip.hide_tooltip()
 		return
 
-	var item: ItemInstance = inventory.equipment[index]
+	var item: ItemInstance = backpack_items[index]
 
 	if event is InputEventMouseMotion:
 		if item_tooltip != null and item != null:
@@ -979,7 +1000,7 @@ func _on_sell_all_pressed() -> void:
 	if inventory == null:
 		return
 
-	if inventory.equipment.is_empty():
+	if inventory.get_backpack_items().is_empty():
 		print("A mochila está vazia.")
 		return
 
