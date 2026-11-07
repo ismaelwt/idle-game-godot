@@ -489,6 +489,10 @@ func _on_close_pressed() -> void:
 
 	# Fecha e libera toda a interface do Status; ela será recriada ao abrir novamente.
 	queue_free()
+	
+	if is_instance_valid(my_chest_ui):
+		my_chest_ui.queue_free()
+		my_chest_ui = null
 
 
 # ==========================================

@@ -15,5 +15,5 @@ critical_chance_max = 3.5
 gem_effect = 11
 gem_effect_min = 3.0
 gem_effect_max = 5.0
-gem_color = Color(0.32629123, 0.15318319, 0.4537692, 1)
+gem_color = Color(0.43756902, 0.22033805, 0.6022057, 1)
 metadata/_custom_type_script = "uid://o7xxtooqdtlf"

@@ -9,14 +9,14 @@ var item_tooltip: ItemTooltip
 var hero_level: int = -1
 var hero_id: String = ""
 var items_grid: GridContainer
-var close_button: Button
+@onready var close_button = $ChestPanel/Control/CloseButton
 var item_slots: Array[Button] = []
 
 
 func _ready() -> void:
 	items_grid = $ChestPanel/VBoxContainer/ScrollContainer/ItemsGrid
 	items_grid.columns = 5
-	_build_header_controls()
+	close_button.pressed.connect(queue_free)
 	_build_storage_slots()
 	_refresh_items()
 
@@ -40,14 +40,6 @@ func setup(
 func _exit_tree() -> void:
 	if is_instance_valid(inventory) and inventory.inventory_changed.is_connected(_on_inventory_changed):
 		inventory.inventory_changed.disconnect(_on_inventory_changed)
-
-
-func _build_header_controls() -> void:
-	var header: HBoxContainer = $ChestPanel/VBoxContainer/Header
-	close_button = Button.new()
-	close_button.text = "X"
-	close_button.pressed.connect(queue_free)
-	header.add_child(close_button)
 
 
 func _build_storage_slots() -> void:

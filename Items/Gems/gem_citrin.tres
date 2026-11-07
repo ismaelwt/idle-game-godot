@@ -14,5 +14,5 @@ item_class = 3
 gem_effect = 9
 gem_effect_min = 3.0
 gem_effect_max = 5.0
-gem_color = Color(0.88389325, 0.33778718, 1.92523e-07, 1)
+gem_color = Color(0.9281508, 0.35641992, 0, 1)
 metadata/_custom_type_script = "uid://o7xxtooqdtlf"
