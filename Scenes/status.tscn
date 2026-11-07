@@ -1,5 +1,6 @@
-[gd_scene load_steps=42 format=3 uid="uid://wr8k7inmswj4"]
+[gd_scene load_steps=43 format=3 uid="uid://wr8k7inmswj4"]
 
+[ext_resource type="Texture2D" uid="uid://c1xebf0iui5a5" path="res://UI/UISprites/Icon_my_chest.png" id="11_segtc"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
 [ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
 [ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
@@ -179,10 +180,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -63.0
-offset_top = 392.0
-offset_right = 23.0
-offset_bottom = 432.0
+offset_left = -47.0
+offset_top = 377.0
+offset_right = 40.0
+offset_bottom = 417.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_t405x")
 stretch_mode = 5
@@ -201,10 +202,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 32.0
-offset_top = 392.0
-offset_right = 119.0
-offset_bottom = 432.0
+offset_left = 48.5
+offset_top = 377.0
+offset_right = 135.5
+offset_bottom = 417.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_t405x")
 stretch_mode = 5
@@ -224,10 +225,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -79.0
-offset_top = -34.0
-offset_right = -29.0
-offset_bottom = 16.0
+offset_left = -48.0
+offset_top = 31.0
+offset_right = 2.0
+offset_bottom = 81.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_4qhvg")
 ignore_texture_size = true
@@ -246,10 +247,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -14.0
-offset_top = -35.0
-offset_right = 36.0
-offset_bottom = 15.0
+offset_left = 17.0
+offset_top = 30.0
+offset_right = 67.0
+offset_bottom = 80.0
 grow_horizontal = 2
 texture_normal = ExtResource("55_t405x")
 ignore_texture_size = true
@@ -268,10 +269,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 53.0
-offset_top = -34.0
-offset_right = 103.0
-offset_bottom = 16.0
+offset_left = 84.0
+offset_top = 31.0
+offset_right = 134.0
+offset_bottom = 81.0
 grow_horizontal = 2
 texture_normal = ExtResource("56_tohvi")
 ignore_texture_size = true
@@ -285,11 +286,24 @@ offset_bottom = 33.0
 texture = ExtResource("54_tohvi")
 expand_mode = 1
 
+[node name="MyChest" type="TextureButton" parent="CenterContainer/PanelContainer/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 43.0
+offset_top = -39.0
+offset_right = 123.0
+offset_bottom = 21.0
+grow_horizontal = 2
+texture_normal = ExtResource("11_segtc")
+stretch_mode = 5
+
 [node name="Control" type="Control" parent="CenterContainer/PanelContainer"]
 anchors_preset = 0
 offset_left = 45.0
-offset_top = 46.0
-offset_right = 422.0
+offset_top = 104.0
+offset_right = 456.0
 offset_bottom = 410.0
 
 [node name="PlayerPanel" type="Panel" parent="CenterContainer/PanelContainer/Control"]
@@ -828,6 +842,7 @@ offset_left = -17.0
 offset_top = 15.080004
 offset_right = 2.0
 offset_bottom = 37.08
+theme_override_colors/font_color = Color(0.19215687, 0.18431373, 0.19607843, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_27s1b")
 text = "2"
 label_settings = SubResource("LabelSettings_kwf64")
