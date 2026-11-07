@@ -286,6 +286,7 @@ func serialize_item(item: ItemInstance) -> Dictionary:
 		"item_level": item.item_level,
 		"generated_rarity": item.generated_rarity,
 		"item_value": item.item_value,
+		"stored": item.stored,
 
 		"strength_bonus": item.strength_bonus,
 		"agility_bonus": item.agility_bonus,
@@ -436,6 +437,7 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 	item.item_value = int(
 		item_data.get("item_value", base.get_item_value())
 	)
+	item.stored = bool(item_data.get("stored", false))
 	item.generated_rarity = int(item_data.get("generated_rarity", base.rarity)) as ItemBase.Rarity
 
 	item.strength_bonus = int(item_data.get("strength_bonus", 0))
