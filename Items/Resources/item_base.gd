@@ -60,6 +60,7 @@ enum GemEffect {
 @export var icon: Texture2D
 @export var icon_slot_1: Texture2D
 @export var icon_slot_2: Texture2D
+@export var animated_frames: SpriteFrames
 
 @export_category("Classificação")
 @export var item_type: ItemType = ItemType.WEAPON
