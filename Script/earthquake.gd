@@ -10,10 +10,12 @@ signal finished
 
 @export_category("Earthquake")
 @export var damage: int = 45
-@export_range(0.0, 1.0, 0.05) var damage_animation_ratio: float = 0.45
+@export var damage_delay: float = 1.85
 
 var character_stats: Node
 var resolved: bool = false
+var damage_applied: bool = false
+var animation_finished: bool = false
 var hit_enemies: Dictionary = {}
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -37,9 +39,10 @@ func _ready() -> void:
 
 
 func _apply_area_damage_at_impact() -> void:
-	await get_tree().create_timer(animation_player.current_animation_length * damage_animation_ratio).timeout
+	# Usa o mesmo tempo configurado para a execução do Earthquake no Knight.
+	await get_tree().create_timer(damage_delay).timeout
 
-	if resolved or not is_inside_tree():
+	if not is_inside_tree():
 		return
 
 	# Aguarda a atualização da física para consultar o colisor existente.
@@ -61,40 +64,59 @@ func _apply_area_damage_at_impact() -> void:
 		hit_enemies[enemy.get_instance_id()] = true
 		enemies.append(enemy)
 
-	if enemies.is_empty():
+	if not enemies.is_empty():
+		var raw_damage: float = float(damage)
+		if is_instance_valid(character_stats):
+			raw_damage += float(character_stats.get_weapon_damage_bonus())
+			raw_damage += float(character_stats.get_physical_damage_bonus())
+
+		# Um único resultado crítico para todos os inimigos atingidos.
+		var is_critical := false
+		if is_instance_valid(character_stats):
+			is_critical = character_stats.is_critical_hit()
+		if is_critical and is_instance_valid(character_stats):
+			raw_damage *= character_stats.get_critical_damage_multiplier()
+
+		var applied_critical_hit := false
+		for enemy in enemies:
+			if not is_instance_valid(enemy) or enemy.get("dying") == true:
+				continue
+			var health_value = enemy.get("health")
+			if health_value == null or float(health_value) <= 0.0:
+				continue
+
+			var actual_damage := minf(raw_damage, float(health_value))
+			enemy.take_damage(raw_damage, is_critical)
+			if is_instance_valid(character_stats):
+				character_stats.apply_on_hit_effects(actual_damage)
+			if is_critical:
+				applied_critical_hit = true
+
+		if applied_critical_hit:
+			var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
+			if is_instance_valid(camera_pivot):
+				camera_pivot.shake_camera()
+
+	damage_applied = true
+	_try_finish_skill()
+
+
+func _try_finish_skill() -> void:
+	# Não libera nem remove a cena antes de o timer do dano e a animação terminarem.
+	if resolved or not damage_applied or not animation_finished:
 		return
 
-	var raw_damage: float = float(damage)
-	if is_instance_valid(character_stats):
-		raw_damage += float(character_stats.get_weapon_damage_bonus())
-		raw_damage += float(character_stats.get_physical_damage_bonus())
+	resolved = true
+	finished.emit()
+	await get_tree().create_timer(0.9).timeout
+	if is_instance_valid(self):
+		queue_free()
 
-	# Um único resultado crítico para todos os inimigos atingidos, como Arrow Storm.
-	var is_critical := false
-	if is_instance_valid(character_stats):
-		is_critical = character_stats.is_critical_hit()
-	if is_critical and is_instance_valid(character_stats):
-		raw_damage *= character_stats.get_critical_damage_multiplier()
 
-	var applied_critical_hit := false
-	for enemy in enemies:
-		if not is_instance_valid(enemy) or enemy.get("dying") == true:
-			continue
-		var health_value = enemy.get("health")
-		if health_value == null or float(health_value) <= 0.0:
-			continue
-
-		var actual_damage := minf(raw_damage, float(health_value))
-		enemy.take_damage(raw_damage, is_critical)
-		if is_instance_valid(character_stats):
-			character_stats.apply_on_hit_effects(actual_damage)
-		if is_critical:
-			applied_critical_hit = true
-
-	if applied_critical_hit:
-		var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
-		if is_instance_valid(camera_pivot):
-			camera_pivot.shake_camera()
+func _on_animation_finished(animation_name: StringName) -> void:
+	if animation_name == &"earthquaker":
+		animation_finished = true
+		_try_finish_skill()
 
 
 func _find_enemy_ancestor(body: Node) -> Node3D:
