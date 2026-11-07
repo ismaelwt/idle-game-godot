@@ -2,6 +2,8 @@
 extends Node
 class_name Inventory
 
+const STORAGE_CAPACITY: int = 40
+
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 
 signal equipment_changed
@@ -74,6 +76,9 @@ func set_item_stored(item: ItemInstance, should_store: bool) -> bool:
 		return false
 	if item.stored == should_store:
 		return true
+	if should_store and get_stored_items().size() >= STORAGE_CAPACITY:
+		print("O baú está cheio. Limite: %d itens." % STORAGE_CAPACITY)
+		return false
 	item.stored = should_store
 	inventory_changed.emit()
 	_save_inventory()
