@@ -1,22 +1,29 @@
 extends Control
 class_name EnchantmentScene
 
+enum ForgeMode { ENCHANT, TIER }
+
 @onready var equipment_button: TextureButton = $Panel/Slot1/Equipament
 @onready var gem_button: TextureButton = $Panel/Slot2/Gem
 @onready var preview_button: TextureButton = $Panel/EnchantedItemSlot/EnchantedItem
 @onready var description_label: Label = $Panel/Label3
 @onready var gem_effect_label: Label = $Panel/GemEffectLabel
 @onready var enchant_button: TextureButton = $Panel/EnchantButton
+@onready var mode_selector: OptionButton = $Panel/ModeSelector
 
 var inventory: Inventory
 var selected_equipment: ItemInstance
 var selected_gem: ItemInstance
 var item_tooltip: ItemTooltip
 var preview_gem_icon: TextureRect
+var forge_mode: ForgeMode = ForgeMode.ENCHANT
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	mode_selector.add_item("Encantamento", ForgeMode.ENCHANT)
+	mode_selector.add_item("Evolução de Tier", ForgeMode.TIER)
+	mode_selector.item_selected.connect(_on_mode_selected)
 	enchant_button.pressed.connect(_on_enchant_pressed)
 	equipment_button.mouse_entered.connect(_on_equipment_slot_mouse_entered)
 	gem_button.mouse_entered.connect(_on_gem_slot_mouse_entered)
@@ -34,10 +41,15 @@ func _ready() -> void:
 	preview_button.add_child(preview_gem_icon)
 	if not GameManager.gold_changed.is_connected(_on_gold_changed):
 		GameManager.gold_changed.connect(_on_gold_changed)
-	var scene := get_tree().current_scene
-	if scene != null:
-		item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
+	var current_scene := get_tree().current_scene
+	if current_scene != null:
+		item_tooltip = current_scene.find_child("ItemTooltip", true, false) as ItemTooltip
 	_refresh_ui()
+
+
+func _on_mode_selected(index: int) -> void:
+	forge_mode = ForgeMode.TIER if index == ForgeMode.TIER else ForgeMode.ENCHANT
+	clear_selection()
 
 
 func _on_gold_changed(_new_amount: int) -> void:
@@ -56,37 +68,55 @@ func clear_selection() -> void:
 
 
 func select_item(item: ItemInstance) -> void:
-	if item == null or item.item_base == null:
+	if item == null or item.item_base == null or item.stored:
 		return
 
-	if item.item_base.item_type == ItemBase.ItemType.GEM:
-		if selected_gem == item:
+	if forge_mode == ForgeMode.TIER:
+		if item.item_base.tier_gem_level > 0:
+			selected_gem = item
+		elif item.item_base.item_type != ItemBase.ItemType.GEM:
+			selected_equipment = item
+		else:
+			description_label.text = "Esta gema não é utilizada na evolução de Tier."
 			return
-		selected_gem = item
 	else:
-		if item.enchantment_slots <= item.installed_enchantments.size():
-			description_label.text = "Este equipamento não possui slots livres."
-			return
-		selected_equipment = item
-
+		if item.item_base.item_type == ItemBase.ItemType.GEM:
+			if item.item_base.tier_gem_level > 0:
+				description_label.text = "Esta gema é utilizada na evolução de Tier."
+				return
+			selected_gem = item
+		else:
+			if item.enchantment_slots <= item.installed_enchantments.size():
+				description_label.text = "Este equipamento não possui slots livres."
+				return
+			selected_equipment = item
 	_refresh_ui()
 
 
 func _refresh_ui() -> void:
 	if not is_node_ready():
 		return
-
 	_set_slot_icon(equipment_button, selected_equipment)
 	_set_slot_icon(gem_button, selected_gem)
 	_set_slot_icon(preview_button, selected_equipment)
-	preview_gem_icon.texture = selected_gem.item_base.icon if selected_gem != null and selected_gem.item_base != null and selected_equipment != null else null
+	var gem_texture: Texture2D = null
+	if selected_gem != null and selected_gem.item_base != null:
+		gem_texture = selected_gem.item_base.icon
+		if gem_texture == null and selected_gem.item_base.animated_frames != null:
+			gem_texture = selected_gem.item_base.animated_frames.get_frame_texture("default", 0)
+	preview_gem_icon.texture = gem_texture if selected_equipment != null else null
 	preview_gem_icon.visible = preview_gem_icon.texture != null
-	gem_effect_label.text = _get_gem_effect_description(selected_gem) if selected_gem != null else ""
-	# O efeito já aparece no texto principal; manter este label oculto evita sobrepor o custo.
 	gem_effect_label.visible = false
+	if forge_mode == ForgeMode.TIER:
+		_refresh_tier_ui()
+	else:
+		_refresh_enchantment_ui()
+
+
+func _refresh_enchantment_ui() -> void:
+	gem_effect_label.text = _get_gem_effect_description(selected_gem) if selected_gem != null else ""
 	if selected_gem != null and selected_gem.item_base != null:
 		gem_effect_label.add_theme_color_override("font_color", selected_gem.item_base.gem_color)
-
 	var valid_selection := (
 		is_instance_valid(inventory)
 		and is_instance_valid(selected_equipment)
@@ -94,26 +124,17 @@ func _refresh_ui() -> void:
 		and selected_equipment.item_base != null
 		and selected_gem.item_base != null
 		and selected_gem.item_base.item_type == ItemBase.ItemType.GEM
+		and selected_gem.item_base.tier_gem_level == 0
 		and not selected_gem.stored
 		and not selected_equipment.stored
 		and selected_gem.gem_effect != ItemBase.GemEffect.NONE
 		and selected_equipment.installed_enchantments.size() < selected_equipment.enchantment_slots
 		and inventory.equipment.has(selected_gem)
-		and (
-			inventory.equipment.has(selected_equipment)
-			or _is_equipped(selected_equipment)
-		)
+		and (inventory.equipment.has(selected_equipment) or _is_equipped(selected_equipment))
 	)
-
-	var enchantment_cost := 0
-	if valid_selection:
-		enchantment_cost = inventory.get_enchantment_cost(selected_equipment)
-	var game_manager = get_node_or_null("/root/GameManager")
-	var has_gold: bool = false
-	if is_instance_valid(game_manager):
-		has_gold = bool(game_manager.has_enough_gold(enchantment_cost))
+	var cost := inventory.get_enchantment_cost(selected_equipment) if valid_selection else 0
+	var has_gold := is_instance_valid(GameManager) and GameManager.has_enough_gold(cost)
 	enchant_button.disabled = not valid_selection or not has_gold
-
 	if selected_equipment == null and selected_gem == null:
 		description_label.text = "Selecione um equipamento e uma gema no inventário."
 	elif selected_equipment == null:
@@ -125,28 +146,67 @@ func _refresh_ui() -> void:
 		]
 	else:
 		description_label.text = "%s\nGema: %s\nEfeito: %s\nCusto: %d ouro" % [
-			selected_equipment.item_base.item_name,
-			selected_gem.item_base.item_name,
-			_get_gem_effect_description(selected_gem),
-			enchantment_cost
+			selected_equipment.item_base.item_name, selected_gem.item_base.item_name,
+			_get_gem_effect_description(selected_gem), cost
 		]
 		if not has_gold:
 			description_label.text += "\nOuro insuficiente."
 
 
+func _refresh_tier_ui() -> void:
+	var valid_selection := (
+		is_instance_valid(inventory)
+		and is_instance_valid(selected_equipment)
+		and is_instance_valid(selected_gem)
+		and selected_equipment.item_base != null
+		and selected_gem.item_base != null
+		and selected_equipment.item_base.item_type != ItemBase.ItemType.GEM
+		and selected_gem.item_base.tier_gem_level == selected_equipment.tier + 1
+		and selected_equipment.tier < 3
+		and not selected_equipment.stored
+		and not selected_gem.stored
+		and inventory.equipment.has(selected_gem)
+		and (inventory.equipment.has(selected_equipment) or _is_equipped(selected_equipment))
+	)
+	var cost := inventory.get_tier_upgrade_cost(selected_equipment) if valid_selection else 0
+	var has_gold := is_instance_valid(GameManager) and GameManager.has_enough_gold(cost)
+	enchant_button.disabled = not valid_selection or not has_gold
+	if selected_equipment == null and selected_gem == null:
+		description_label.text = "Selecione um equipamento e uma Special Gem."
+	elif selected_equipment == null:
+		description_label.text = "Gema selecionada: %s\nAgora selecione um equipamento." % selected_gem.item_base.item_name
+	elif selected_gem == null:
+		description_label.text = "%s\nTier atual: %d\nPróximo Tier: %d\nSelecione a Special Gem correspondente." % [
+			selected_equipment.item_base.item_name, selected_equipment.tier, selected_equipment.tier + 1
+		]
+	elif selected_gem.item_base.tier_gem_level != selected_equipment.tier + 1:
+		description_label.text = "Gema incompatível. Este equipamento precisa da Special Gem Tier %d." % (selected_equipment.tier + 1)
+	else:
+		description_label.text = "%s\nTier: %d → %d\nBônus total: +%d%%\nCusto: %d Gold" % [
+			selected_equipment.item_base.item_name, selected_equipment.tier,
+			selected_equipment.tier + 1, (selected_equipment.tier + 1) * 10, cost
+		]
+		if not has_gold:
+			description_label.text += "\nGold insuficiente."
+
+
 func _set_slot_icon(button: TextureButton, item: ItemInstance) -> void:
 	button.visible = item != null and item.item_base != null
-	button.texture_normal = item.item_base.icon if button.visible else null
-	button.texture_disabled = button.texture_normal
+	var texture: Texture2D = null
+	if button.visible:
+		texture = item.item_base.icon
+		if texture == null and item.item_base.animated_frames != null:
+			texture = item.item_base.animated_frames.get_frame_texture("default", 0)
+	button.texture_normal = texture
+	button.texture_disabled = texture
 	button.tooltip_text = item.item_base.item_name if button.visible else ""
-
 
 
 func _show_item_tooltip(item: ItemInstance) -> void:
 	if not is_instance_valid(item_tooltip):
-		var scene := get_tree().current_scene
-		if scene != null:
-			item_tooltip = scene.find_child("ItemTooltip", true, false) as ItemTooltip
+		var current_scene := get_tree().current_scene
+		if current_scene != null:
+			item_tooltip = current_scene.find_child("ItemTooltip", true, false) as ItemTooltip
 	if not is_instance_valid(item_tooltip):
 		return
 	if item == null or item.item_base == null:
@@ -156,7 +216,7 @@ func _show_item_tooltip(item: ItemInstance) -> void:
 
 
 func _on_equipment_slot_mouse_entered() -> void:
-	if selected_equipment != null and selected_gem != null and is_instance_valid(item_tooltip):
+	if selected_equipment != null and selected_gem != null and forge_mode == ForgeMode.ENCHANT and is_instance_valid(item_tooltip):
 		item_tooltip.show_enchantment_preview(selected_equipment, selected_gem)
 	else:
 		_show_item_tooltip(selected_equipment)
@@ -221,10 +281,10 @@ func _on_enchant_pressed() -> void:
 		return
 	if not is_instance_valid(selected_equipment) or not is_instance_valid(selected_gem):
 		return
-
-	if inventory.install_gem(
-		selected_equipment,
-		selected_gem,
-		inventory.active_hero_id
-	):
+	var success := false
+	if forge_mode == ForgeMode.TIER:
+		success = inventory.upgrade_equipment_tier(selected_equipment, selected_gem, inventory.active_hero_id)
+	else:
+		success = inventory.install_gem(selected_equipment, selected_gem, inventory.active_hero_id)
+	if success:
 		clear_selection()
