@@ -18,6 +18,17 @@ func setup(source_inventory: Inventory, source_stash: SharedStash) -> void:
 		_refresh_grids()
 	else:
 		call_deferred("_refresh_grids")
+	if is_instance_valid(inventory) and not inventory.inventory_changed.is_connected(_refresh_grids):
+		inventory.inventory_changed.connect(_refresh_grids)
+	if is_instance_valid(shared_stash) and not shared_stash.stash_changed.is_connected(_refresh_grids):
+		shared_stash.stash_changed.connect(_refresh_grids)
+
+
+func _exit_tree() -> void:
+	if is_instance_valid(inventory) and inventory.inventory_changed.is_connected(_refresh_grids):
+		inventory.inventory_changed.disconnect(_refresh_grids)
+	if is_instance_valid(shared_stash) and shared_stash.stash_changed.is_connected(_refresh_grids):
+		shared_stash.stash_changed.disconnect(_refresh_grids)
 
 
 func _build_interface() -> void:
