@@ -48,14 +48,15 @@ animations = [{
 
 [resource]
 script = ExtResource("2_0vl0k")
-item_id = &"special_gem_01"
-item_name = "Gema Especial"
-description = "Gema Especial"
+item_id = &"special_gem_tier_1"
+item_name = "Gema Especial - Tier 1"
+description = "Permite evoluir um equipamento para Tier 1."
 animated_frames = SubResource("SpriteFrames_special_gem")
 item_type = 7
 item_class = 3
-gem_effect = 2
-gem_effect_min = 3.0
-gem_effect_max = 5.0
+tier_gem_level = 1
+gem_effect = 0
+gem_effect_min = 0.0
+gem_effect_max = 0.0
 gem_color = Color(0.48955154, 0.50742584, 0.2528367, 1)
 metadata/_custom_type_script = "uid://o7xxtooqdtlf"
