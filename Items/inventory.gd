@@ -396,6 +396,8 @@ func install_gem(
 		return false
 	if gem_item.item_base.item_type != ItemBase.ItemType.GEM:
 		return false
+	if gem_item.item_base.tier_gem_level > 0:
+		return false
 	if equipment_item.installed_enchantments.size() >= equipment_item.enchantment_slots:
 		return false
 
