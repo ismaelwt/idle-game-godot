@@ -1,4 +1,5 @@
 extends Control
+class_name MyChest
 
 var inventory: Inventory
 var items_grid: GridContainer
@@ -29,20 +30,28 @@ func _exit_tree() -> void:
 
 func _build_header_controls() -> void:
 	var header: HBoxContainer = $ChestPanel/VBoxContainer/Header
-	backpack_tab = Button.new()
-	backpack_tab.text = "MOCHILA"
-	backpack_tab.pressed.connect(_show_backpack)
-	header.add_child(backpack_tab)
-
-	storage_tab = Button.new()
-	storage_tab.text = "ARMAZENAMENTO"
-	storage_tab.pressed.connect(_show_storage)
-	header.add_child(storage_tab)
-
+	var content: VBoxContainer = $ChestPanel/VBoxContainer
 	close_button = Button.new()
 	close_button.text = "X"
 	close_button.pressed.connect(queue_free)
 	header.add_child(close_button)
+
+	var tabs := HBoxContainer.new()
+	tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	backpack_tab = Button.new()
+	backpack_tab.text = "MOCHILA"
+	backpack_tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	backpack_tab.pressed.connect(_show_backpack)
+	tabs.add_child(backpack_tab)
+
+	storage_tab = Button.new()
+	storage_tab.text = "BAÚ"
+	storage_tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	storage_tab.pressed.connect(_show_storage)
+	tabs.add_child(storage_tab)
+
+	content.add_child(tabs)
+	content.move_child(tabs, header.get_index() + 1)
 
 
 func _show_backpack() -> void:
