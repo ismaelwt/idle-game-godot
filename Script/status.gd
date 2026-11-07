@@ -409,6 +409,8 @@ func refresh_inventory() -> void:
 		var item_button := slot.get_node("ItemButton") as Button
 
 		icon_rect.texture = null
+		icon_rect.show()
+		_remove_animated_item_sprite(slot)
 
 		# Não utilizar tooltips nativos.
 		item_button.tooltip_text = ""
@@ -418,6 +420,10 @@ func refresh_inventory() -> void:
 
 			if item != null and item.item_base != null:
 				var base = item.item_base
+				if base.animated_frames != null:
+					icon_rect.hide()
+					_add_animated_item_sprite(slot, base.animated_frames)
+					continue
 
 				match item.enchantment_slots:
 					1:
@@ -1282,3 +1288,27 @@ func _on_forge_pressed() -> void:
 	enchantment_ui.visible = not enchantment_ui.visible
 	if enchantment_ui.visible:
 		enchantment_ui.setup(inventory)
+
+
+func _remove_animated_item_sprite(slot: Control) -> void:
+	for child in slot.get_children():
+		if child is AnimatedSprite2D:
+			slot.remove_child(child)
+			child.queue_free()
+
+
+func _add_animated_item_sprite(slot: Control, frames: SpriteFrames) -> void:
+	var animated_sprite := AnimatedSprite2D.new()
+	animated_sprite.sprite_frames = frames
+	animated_sprite.animation = "default"
+	animated_sprite.centered = true
+	animated_sprite.position = Vector2(20, 20)
+	animated_sprite.z_index = 2
+	var first_frame := frames.get_frame_texture("default", 0)
+	if first_frame != null:
+		var frame_size := first_frame.get_size()
+		if frame_size.x > 0.0 and frame_size.y > 0.0:
+			var fit_scale := minf(34.0 / frame_size.x, 34.0 / frame_size.y)
+			animated_sprite.scale = Vector2.ONE * fit_scale
+	slot.add_child(animated_sprite)
+	animated_sprite.play("default")
