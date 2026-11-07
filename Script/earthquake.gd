@@ -18,6 +18,8 @@ var damage_applied: bool = false
 var animation_finished: bool = false
 var hit_enemies: Dictionary = {}
 
+const EARTHQUAKE_SOUND: AudioStream = preload("res://Sounds/knight_skill_earthquake.mp3")
+
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var hit_area: Area3D = $Area3D
 @onready var hit_shape: CollisionShape3D = $Area3D/CollisionShape3D
@@ -32,6 +34,7 @@ func get_description() -> String:
 
 
 func _ready() -> void:
+	AudioManager.play_sfx(EARTHQUAKE_SOUND)
 	if not animation_player.animation_finished.is_connected(_on_animation_finished):
 		animation_player.animation_finished.connect(_on_animation_finished)
 	animation_player.speed_scale = 2.0
