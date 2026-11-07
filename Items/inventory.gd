@@ -52,6 +52,33 @@ func set_equipped_items(hero_id: String, items: Dictionary) -> void:
 	equipped_by_hero[hero_id] = normalized
 	equipment_changed.emit()
 
+
+func get_backpack_items() -> Array[ItemInstance]:
+	var backpack: Array[ItemInstance] = []
+	for item in equipment:
+		if item != null and not item.stored:
+			backpack.append(item)
+	return backpack
+
+
+func get_stored_items() -> Array[ItemInstance]:
+	var stored_items: Array[ItemInstance] = []
+	for item in equipment:
+		if item != null and item.stored:
+			stored_items.append(item)
+	return stored_items
+
+
+func set_item_stored(item: ItemInstance, should_store: bool) -> bool:
+	if item == null or not equipment.has(item):
+		return false
+	if item.stored == should_store:
+		return true
+	item.stored = should_store
+	inventory_changed.emit()
+	_save_inventory()
+	return true
+
 # Quantidade de baús disponíveis para abrir.
 var chest_count: int = 0
 
@@ -100,7 +127,8 @@ func add_equipment(item: ItemInstance) -> void:
 
 
 func sell_all_equipment() -> int:
-	if equipment.is_empty():
+	var backpack_items := get_backpack_items()
+	if backpack_items.is_empty():
 		print("Não há itens na mochila para vender.")
 		return 0
 
@@ -112,16 +140,14 @@ func sell_all_equipment() -> int:
 	var total_value: int = 0
 	var sold_count: int = 0
 
-	for item in equipment:
-		if item == null:
-			continue
-
+	for item in backpack_items:
 		total_value += maxi(item.item_value, 0)
 		sold_count += 1
 
-	# Só remove os itens depois de confirmar que o saldo global está disponível.
+	# Só remove os itens da mochila; itens armazenados permanecem intactos.
 	game_manager.add_gold(total_value)
-	equipment.clear()
+	for item in backpack_items:
+		equipment.erase(item)
 	inventory_changed.emit()
 
 	_save_inventory()
@@ -184,7 +210,7 @@ func open_chest() -> ItemInstance:
 
 
 func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
-	if item == null or item.item_base == null:
+	if item == null or item.item_base == null or item.stored:
 		return false
 
 	var resolved_id := hero_id if not hero_id.is_empty() else active_hero_id
@@ -285,8 +311,10 @@ func install_gem(
 	if (
 		equipment_item == null
 		or equipment_item.item_base == null
+		or equipment_item.stored
 		or gem_item == null
 		or gem_item.item_base == null
+		or gem_item.stored
 	):
 		return false
 
