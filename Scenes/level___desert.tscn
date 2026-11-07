@@ -1,4 +1,4 @@
-[gd_scene load_steps=117 format=3 uid="uid://deb2hplpow2b8"]
+[gd_scene load_steps=118 format=3 uid="uid://deb2hplpow2b8"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_7qsfm"]
 [ext_resource type="PackedScene" uid="uid://cpu1g8auqvx74" path="res://Scenes/tile_02.tscn" id="2_bv48q"]
@@ -429,8 +429,13 @@ damage_duration = 1.0
 damage_rise_speed = 3.0
 damage_color = Color(0.53871167, 0, 0.038604088, 1)
 
+[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
+
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_k8xho")
+
+[node name="SharedStash" type="Node" parent="SubViewportContainer/SubViewport/Inventory"]
+script = ExtResource("shared_stash_script")
 
 [node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
 script = ExtResource("13_45kkt")
