@@ -1,29 +1,46 @@
-[gd_resource type="Resource" script_class="ItemBase" load_steps=13 format=3 uid="uid://eji0rkm1fqcs"]
+[gd_resource type="Resource" script_class="ItemBase" load_steps=12 format=3 uid="uid://eji0rkm1fqcs"]
 
-[ext_resource type="Texture2D" uid="uid://b51qk3qk6cqiu" path="res://icons/gem-topazio.png" id="1_q88dc"]
 [ext_resource type="Script" uid="uid://o7xxtooqdtlf" path="res://Items/Resources/item_base.gd" id="2_0vl0k"]
-
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0001.png" id="3_frame1"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0002.png" id="3_frame2"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0003.png" id="3_frame3"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0004.png" id="3_frame4"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0005.png" id="3_frame5"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0006.png" id="3_frame6"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0007.png" id="3_frame7"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0008.png" id="3_frame8"]
-[ext_resource type="Texture2D" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0009.png" id="3_frame9"]
+[ext_resource type="Texture2D" uid="uid://b07l5ac0h7ggv" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0001.png" id="3_frame1"]
+[ext_resource type="Texture2D" uid="uid://btwro5posnwxn" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0002.png" id="3_frame2"]
+[ext_resource type="Texture2D" uid="uid://cgb0eqdyeanux" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0003.png" id="3_frame3"]
+[ext_resource type="Texture2D" uid="uid://b2jyt0h471j0i" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0004.png" id="3_frame4"]
+[ext_resource type="Texture2D" uid="uid://cquwsffwm4vpc" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0005.png" id="3_frame5"]
+[ext_resource type="Texture2D" uid="uid://b4bwv5k3blmul" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0006.png" id="3_frame6"]
+[ext_resource type="Texture2D" uid="uid://kj3dpegw8bfk" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0007.png" id="3_frame7"]
+[ext_resource type="Texture2D" uid="uid://crdyqfar3pmd3" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0008.png" id="3_frame8"]
+[ext_resource type="Texture2D" uid="uid://m5gj5jyty600" path="res://Items/Gems/SpecialGem/Sprite/gem_stone_0009.png" id="3_frame9"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_special_gem"]
 animations = [{
-"frames": [{ "duration": 1.0, "texture": ExtResource("3_frame1") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame2") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame3") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame4") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame5") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame6") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame7") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame8") },
-		{ "duration": 1.0, "texture": ExtResource("3_frame9") }],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_frame1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_frame9")
+}],
 "loop": true,
 "name": &"default",
 "speed": 8.0
@@ -31,14 +48,12 @@ animations = [{
 
 [resource]
 script = ExtResource("2_0vl0k")
-item_id = &"gem_topaz_01"
-item_name = "Topazio"
-description = "Fragmento da pedra de topázio"
-icon = ExtResource("1_q88dc")
+item_id = &"special_gem_01"
+item_name = "Gema Especial"
+description = "Gema Especial"
 animated_frames = SubResource("SpriteFrames_special_gem")
 item_type = 7
 item_class = 3
-rarity = 2
 gem_effect = 2
 gem_effect_min = 3.0
 gem_effect_max = 5.0

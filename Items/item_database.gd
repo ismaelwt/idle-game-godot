@@ -36,6 +36,7 @@ const ITEMS: Array[ItemBase] = [
 	preload("res://Items/Accessories/silver_ring.tres"),
 	preload("res://Items/Accessories/leather_belt.tres"),
 
+	preload("res://Items/Gems/SpecialGem/special_gem.tres"),
 	preload("res://Items/Gems/gem_esmeralda.tres"),
 	preload("res://Items/Gems/gem_ametista.tres"),
 	preload("res://Items/Gems/gem_onyx.tres"),
