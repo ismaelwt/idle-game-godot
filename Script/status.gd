@@ -411,6 +411,7 @@ func refresh_inventory() -> void:
 		icon_rect.texture = null
 		icon_rect.show()
 		_remove_animated_item_sprite(slot)
+		_set_tier_badge(slot, null)
 
 		# Não utilizar tooltips nativos.
 		item_button.tooltip_text = ""
@@ -446,7 +447,8 @@ func refresh_inventory() -> void:
 func _set_tier_badge(parent: Control, item: ItemInstance) -> void:
 	var old_badge := parent.get_node_or_null("TierBadge")
 	if is_instance_valid(old_badge):
-		old_badge.queue_free()
+		parent.remove_child(old_badge)
+		old_badge.free()
 	if item == null or item.tier <= 0:
 		return
 	var badge := Label.new()
