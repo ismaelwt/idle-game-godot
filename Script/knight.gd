@@ -67,6 +67,7 @@ var is_running := false
 var basic_attack_lock := false
 var frenzy_active: bool = false
 var frenzy_instance: Node3D = null
+var earthquake_instance: Node3D = null
 var is_returning_to_initial_position: bool = false
 
 
@@ -315,48 +316,64 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 
 	print("KNIGHT USANDO SKILL: earthquake")
 	await get_tree().create_timer(1.85).timeout
-	
-	var earthquake_instance := skill_scene.instantiate() as Node3D
-	if not is_instance_valid(earthquake_instance):
+
+	# Se a skill foi interrompida durante a preparação, não cria o efeito.
+	if my_attack_id != attack_id or dead:
+		return
+
+	var new_earthquake := skill_scene.instantiate() as Node3D
+	if not is_instance_valid(new_earthquake):
 		attacking = false
 		action_locked = false
 		push_warning("Knight: não foi possível instanciar Earthquake.")
 		return
 
+	earthquake_instance = new_earthquake
 	earthquake_instance.set("character_stats", character_stats)
 	add_child(earthquake_instance)
 	earthquake_instance.position = Vector3(0.0, 0.0, 3.5)
-	#earthquake_instance.scale = Vector3(4.0, 4.0, 4.0)
 
-	# Aguarda o fim real de attack2. Enquanto attacking/action_locked
-	# estiverem ativos, _process() não poderá trocar a animação.
+	# Acompanha a animação sem ficar preso caso outra animação a interrompa.
 	while (
-		is_instance_valid(animation_player)
+		my_attack_id == attack_id
+		and not dead
+		and is_instance_valid(animation_player)
 		and animation_player.is_playing()
 		and animation_player.current_animation == &"knight/attack2"
 	):
-		await animation_player.animation_finished
+		await get_tree().process_frame
 
 	if my_attack_id != attack_id or dead:
 		return
 
-	# A animação visual da skill pode durar mais que attack2 (ou vice-versa).
-	# resolved evita aguardar um sinal que já tenha sido emitido.
-	if is_instance_valid(earthquake_instance):
+	# Aguarda a conclusão natural da cena. Se houver interrupção, o helper
+	# remove a cena e este loop termina sem depender do sinal finished.
+	while my_attack_id == attack_id and not dead and is_instance_valid(earthquake_instance):
 		var is_resolved = earthquake_instance.get("resolved")
-		if is_resolved == null or not bool(is_resolved):
-			if earthquake_instance.has_signal("finished"):
-				await earthquake_instance.finished
+		if is_resolved != null and bool(is_resolved):
+			break
+		await get_tree().process_frame
 
 	if my_attack_id != attack_id or dead:
 		return
 
+	earthquake_instance = null
 	attacking = false
 	action_locked = false
 	current_attack_target = null
 	current_animation = &""
 	animation_player.speed_scale = animation_speed
 	print("KNIGHT SKILL FINALIZADA: earthquake")
+
+
+func _interrupt_earthquake() -> void:
+	if not is_instance_valid(earthquake_instance):
+		earthquake_instance = null
+		return
+
+	print("KNIGHT: EARTHQUAKE INTERROMPIDO")
+	earthquake_instance.queue_free()
+	earthquake_instance = null
 
 func find_nearest_enemy_in_detection_range() -> Node3D:
 	if not is_instance_valid(enemy_spawner):
@@ -601,6 +618,7 @@ func die() -> void:
 		return
 
 	dead = true
+	_interrupt_earthquake()
 
 	print("=== KNIGHT MORREU ===")
 
@@ -764,6 +782,7 @@ func flash_hit() -> void:
 
 func start_running() -> void:
 	attack_id += 1
+	_interrupt_earthquake()
 	attacking = false
 	action_locked = false
 	attack_animation_playing = false
@@ -792,6 +811,7 @@ func cancel_attack_on_target(target: Node3D) -> void:
 	print("=== KNIGHT: ATAQUE CANCELADO === | ALVO: ", target.name)
 	stop_sword_trail()
 	attack_id += 1
+	_interrupt_earthquake()
 	attacking = false
 	action_locked = false
 	attack_animation_playing = false
