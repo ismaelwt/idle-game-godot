@@ -48,7 +48,7 @@ animations = [{
 
 [resource]
 script = ExtResource("2_0vl0k")
-item_id = &"special_gem_tier_1"
+item_id = &"special_gem_01"
 item_name = "Gema Especial - Tier 1"
 description = "Permite evoluir um equipamento para Tier 1."
 animated_frames = SubResource("SpriteFrames_special_gem")
