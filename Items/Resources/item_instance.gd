@@ -11,6 +11,7 @@ class_name ItemInstance
 @export var item_level: int = 1
 @export var generated_rarity: ItemBase.Rarity = ItemBase.Rarity.COMMON
 @export var item_value: int = 10
+@export_range(0, 3, 1) var tier: int = 0
 
 @export_category("Atributos Sorteados")
 @export var strength_bonus: int = 0
