@@ -42,7 +42,6 @@ script = ExtResource("1_f48y6")
 icon = ExtResource("2_u3j71")
 disabled_icon = ExtResource("3_4wfap")
 cooldown = 35.0
-duration = 15.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -0.9999622, -0.008691591, 0, 0.008691591, -0.9999622, 0, 0.24375927, 0)

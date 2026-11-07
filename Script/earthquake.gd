@@ -34,13 +34,21 @@ func get_description() -> String:
 
 
 func _ready() -> void:
-	AudioManager.play_sfx(EARTHQUAKE_SOUND)
 	if not animation_player.animation_finished.is_connected(_on_animation_finished):
 		animation_player.animation_finished.connect(_on_animation_finished)
 	animation_player.speed_scale = 2.0
+	_play_earthquake_sound()
 	animation_player.play("earthquaker")
 	_apply_area_damage_at_impact()
+	
 
+func _play_earthquake_sound() -> void:
+	for i in range(3):
+		var random_pitch := randf_range(0.90, 1.10)
+		AudioManager.play_sfx(EARTHQUAKE_SOUND, random_pitch)
+
+		if i < 2:
+			await get_tree().create_timer(0.15).timeout
 
 func _apply_area_damage_at_impact() -> void:
 	if not is_inside_tree():
