@@ -6,6 +6,7 @@ var font = preload("res://Fonts/Pix32.ttf")
 var item_tooltip_scene = preload("res://UI/item_tooltip.tscn")
 var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
 var my_chest_scene = preload("res://Scenes/my_chest.tscn")
+var my_chest_ui: MyChest = null
 var enchantment_ui: EnchantmentScene
 var item_tooltip: ItemTooltip
 
@@ -438,16 +439,20 @@ func refresh_inventory() -> void:
 func _on_my_chest_pressed() -> void:
 	if not is_instance_valid(inventory):
 		return
-	var chest_ui := my_chest_scene.instantiate() as MyChest
-	if chest_ui == null:
+	if is_instance_valid(my_chest_ui):
+		my_chest_ui.queue_free()
+		my_chest_ui = null
+		return
+	my_chest_ui = my_chest_scene.instantiate() as MyChest
+	if my_chest_ui == null:
 		push_error("Status: não foi possível abrir a cena MyChest.")
 		return
 	var canvas_layer := _find_canvas_layer(self)
 	if is_instance_valid(canvas_layer):
-		canvas_layer.add_child(chest_ui)
+		canvas_layer.add_child(my_chest_ui)
 	else:
-		get_tree().current_scene.add_child(chest_ui)
-	chest_ui.setup(inventory)
+		get_tree().current_scene.add_child(my_chest_ui)
+	my_chest_ui.setup(inventory)
 
 
 func _on_chest_pressed() -> void:
@@ -602,7 +607,10 @@ func _on_inventory_slot_gui_input(event: InputEvent, index: int) -> void:
 
 	elif event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
-			_on_inventory_slot_pressed(index)
+			if is_instance_valid(my_chest_ui):
+				inventory.set_item_stored(item, true)
+			else:
+				_on_inventory_slot_pressed(index)
 
 			if item_tooltip != null:
 				item_tooltip.hide_tooltip()
