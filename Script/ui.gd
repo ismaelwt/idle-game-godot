@@ -47,6 +47,7 @@ const SKILL_SCENES: Dictionary = {
 	"heal": "res://Scenes/healing_effect.tscn",
 	"thunderstorm": "res://Scenes/thunderstorm.tscn",
 	"frenesi": "res://Scenes/damage_buff.tscn",
+	"earthquake": "res://Scenes/earthquake.tscn",
 }
 
 # Os ícones podem ser definidos diretamente nas cenas das habilidades.
