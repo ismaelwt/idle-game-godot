@@ -320,7 +320,7 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	earthquake_instance.set("character_stats", character_stats)
 	add_child(earthquake_instance)
 	earthquake_instance.position = Vector3(0.0, 0.0, 3.5)
-	earthquake_instance.scale = Vector3(4.0, 4.0, 4.0)
+	#earthquake_instance.scale = Vector3(4.0, 4.0, 4.0)
 
 	# Aguarda o fim real de attack2. Enquanto attacking/action_locked
 	# estiverem ativos, _process() não poderá trocar a animação.

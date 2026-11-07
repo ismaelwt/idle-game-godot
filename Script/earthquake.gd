@@ -40,7 +40,6 @@ func _ready() -> void:
 
 
 func _apply_area_damage_at_impact() -> void:
-	await get_tree().create_timer(damage_delay).timeout
 	if not is_inside_tree():
 		return
 
@@ -71,9 +70,9 @@ func _apply_area_damage_at_impact() -> void:
 		var local_position := hit_shape.to_local(enemy.global_position)
 		var half_size := box_shape.size * 0.5
 		var inside_area := (
-			absf(local_position.x) <= half_size.x
+			absf(local_position.x) <= half_size.x + 2.0
 			and absf(local_position.y) <= half_size.y + 2.0
-			and absf(local_position.z) <= half_size.z
+			and absf(local_position.z) <= half_size.z + 2.0
 		)
 		if not inside_area:
 			continue
@@ -122,10 +121,9 @@ func _try_finish_skill() -> void:
 	# Não libera nem remove a cena antes de o timer do dano e a animação terminarem.
 	if resolved or not damage_applied or not animation_finished:
 		return
-
+	await get_tree().create_timer(0.5).timeout
 	resolved = true
 	finished.emit()
-	await get_tree().create_timer(0.9).timeout
 	if is_instance_valid(self):
 		queue_free()
 

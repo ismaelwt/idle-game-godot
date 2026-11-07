@@ -143,13 +143,13 @@ _data = {
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2v7mq"]
-size = Vector3(1.2609596, 1, 4.7335205)
+size = Vector3(4.9081354, 2.6795654, 4.7335205)
 
 [node name="EarthQuake" type="Node3D"]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)
 script = ExtResource("6_script")
 icon = ExtResource("7_icon")
 disabled_icon = ExtResource("7_icon")
-damage_animation_ratio = 0.7
 
 [node name="SM_Sharp_Stone_03" parent="." instance=ExtResource("1_2v7mq")]
 transform = Transform3D(0.056965765, -7.6476603e-10, -0.4967443, 0.39485776, 0.30337584, 0.045281593, 0.30140045, -0.39744574, 0.034564074, -0.0012512207, -1.4464332, 3.3821716)
@@ -178,5 +178,5 @@ collision_mask = 2147483647
 monitorable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031833649, 0, 1.8667603)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.47097158, 0.8397827, 1.8667603)
 shape = SubResource("BoxShape3D_2v7mq")
