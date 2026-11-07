@@ -438,7 +438,7 @@ func refresh_inventory() -> void:
 func _on_my_chest_pressed() -> void:
 	if not is_instance_valid(inventory):
 		return
-	var chest_ui := my_chest_scene.instantiate() as Control
+	var chest_ui := my_chest_scene.instantiate() as MyChest
 	if chest_ui == null:
 		push_error("Status: não foi possível abrir a cena MyChest.")
 		return
