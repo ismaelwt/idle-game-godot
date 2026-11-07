@@ -5,7 +5,6 @@ var font = preload("res://Fonts/Pix32.ttf")
 
 var item_tooltip_scene = preload("res://UI/item_tooltip.tscn")
 var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
-var my_chest_scene = preload("res://Scenes/my_chest.tscn")
 var enchantment_ui: EnchantmentScene
 var item_tooltip: ItemTooltip
 
@@ -38,7 +37,6 @@ var skill_tree: Control = null
 @onready var attributes_control: Control = $CenterContainer/AttributesControl
 
 @onready var close_button = $CenterContainer/PanelContainer/Background/CloseButton
-@onready var my_chest_button: TextureButton = $CenterContainer/PanelContainer/Background/MyChest
 
 @onready var knight_change_button: TextureButton = $CenterContainer/PanelContainer/Background/KnightAvatar
 @onready var mage_change_button: TextureButton = $CenterContainer/PanelContainer/Background/MageAvatar
@@ -163,7 +161,6 @@ func _ready() -> void:
 	attributes_button.pressed.connect(_on_attributes_button_pressed)
 	
 	close_button.pressed.connect(_on_close_pressed)
-	my_chest_button.pressed.connect(_on_my_chest_pressed)
 	var forge_button: TextureButton = $CenterContainer/PanelContainer/Background/Forja
 	forge_button.pressed.connect(_on_forge_pressed)
 	enchantment_ui = enchantment_scene.instantiate() as EnchantmentScene
@@ -432,28 +429,6 @@ func refresh_inventory() -> void:
 						)
 					_:
 						icon_rect.texture = base.icon
-
-
-
-func _on_my_chest_pressed() -> void:
-	if not is_instance_valid(inventory):
-		return
-	var shared_stash := inventory.get_node_or_null("SharedStash") as SharedStash
-	if not is_instance_valid(shared_stash):
-		push_error("Status: nó SharedStash não encontrado.")
-		return
-
-	var chest_ui := my_chest_scene.instantiate() as Control
-	if chest_ui == null:
-		push_error("Status: não foi possível abrir a cena MyChest.")
-		return
-
-	var canvas_layer := _find_canvas_layer(self)
-	if is_instance_valid(canvas_layer):
-		canvas_layer.add_child(chest_ui)
-	else:
-		get_tree().current_scene.add_child(chest_ui)
-	chest_ui.setup(inventory, shared_stash)
 
 
 func _on_chest_pressed() -> void:
