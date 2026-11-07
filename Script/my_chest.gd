@@ -1,17 +1,20 @@
 extends Control
 class_name MyChest
 
+const STORAGE_CAPACITY: int = 40
+const SLOT_SIZE := Vector2(40, 40)
+
 var inventory: Inventory
 var items_grid: GridContainer
-var backpack_tab: Button
-var storage_tab: Button
 var close_button: Button
-var showing_storage: bool = true
+var item_slots: Array[Button] = []
 
 
 func _ready() -> void:
 	items_grid = $ChestPanel/VBoxContainer/ScrollContainer/ItemsGrid
+	items_grid.columns = 5
 	_build_header_controls()
+	_build_storage_slots()
 	_refresh_items()
 
 
@@ -30,37 +33,21 @@ func _exit_tree() -> void:
 
 func _build_header_controls() -> void:
 	var header: HBoxContainer = $ChestPanel/VBoxContainer/Header
-	var content: VBoxContainer = $ChestPanel/VBoxContainer
 	close_button = Button.new()
 	close_button.text = "X"
 	close_button.pressed.connect(queue_free)
 	header.add_child(close_button)
 
-	var tabs := HBoxContainer.new()
-	tabs.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	backpack_tab = Button.new()
-	backpack_tab.text = "MOCHILA"
-	backpack_tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	backpack_tab.pressed.connect(_show_backpack)
-	tabs.add_child(backpack_tab)
 
-	storage_tab = Button.new()
-	storage_tab.text = "BAÚ"
-	storage_tab.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	storage_tab.pressed.connect(_show_storage)
-	tabs.add_child(storage_tab)
+func _build_storage_slots() -> void:
+	for index in range(STORAGE_CAPACITY):
+		var slot := Button.new()
+		slot.custom_minimum_size = SLOT_SIZE
+		slot.tooltip_text = ""
+		slot.gui_input.connect(_on_slot_gui_input.bind(index))
+		items_grid.add_child(slot)
+		item_slots.append(slot)
 
-	content.add_child(tabs)
-	content.move_child(tabs, header.get_index() + 1)
-
-
-func _show_backpack() -> void:
-	showing_storage = false
-	_refresh_items()
-
-
-func _show_storage() -> void:
-	showing_storage = true
 	_refresh_items()
 
 
@@ -69,48 +56,38 @@ func _on_inventory_changed() -> void:
 
 
 func _refresh_items() -> void:
-	if not is_instance_valid(items_grid) or not is_instance_valid(inventory):
+	if not is_instance_valid(items_grid):
 		return
 
-	for child in items_grid.get_children():
-		child.queue_free()
+	var stored_items: Array[ItemInstance] = []
+	if is_instance_valid(inventory):
+		stored_items = inventory.get_stored_items()
 
-	var visible_items: Array[ItemInstance] = (
-		inventory.get_stored_items()
-		if showing_storage
-		else inventory.get_backpack_items()
-	)
+	for index in range(item_slots.size()):
+		var slot := item_slots[index]
+		for child in slot.get_children():
+			child.queue_free()
 
-	for item in visible_items:
-		_add_item_slot(item)
+		if index >= stored_items.size():
+			slot.tooltip_text = ""
+			continue
 
-	if is_instance_valid(backpack_tab):
-		backpack_tab.disabled = not showing_storage
-	if is_instance_valid(storage_tab):
-		storage_tab.disabled = showing_storage
+		var item: ItemInstance = stored_items[index]
+		if item == null or item.item_base == null:
+			continue
 
-
-func _add_item_slot(item: ItemInstance) -> void:
-	if item == null or item.item_base == null:
-		return
-
-	var button := Button.new()
-	button.custom_minimum_size = Vector2(40, 40)
-	button.tooltip_text = "%s | Nível %d | %s" % [
-		item.item_base.item_name,
-		item.item_level,
-		ItemBase.Rarity.keys()[item.generated_rarity]
-	]
-	button.pressed.connect(_toggle_item_storage.bind(item))
-	items_grid.add_child(button)
-
-	var icon := TextureRect.new()
-	icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.texture = _get_item_icon(item)
-	button.add_child(icon)
+		slot.tooltip_text = "%s | Nível %d | %s" % [
+			item.item_base.item_name,
+			item.item_level,
+			ItemBase.Rarity.keys()[item.generated_rarity]
+		]
+		var icon := TextureRect.new()
+		icon.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		icon.texture = _get_item_icon(item)
+		slot.add_child(icon)
 
 
 func _get_item_icon(item: ItemInstance) -> Texture2D:
@@ -124,8 +101,17 @@ func _get_item_icon(item: ItemInstance) -> Texture2D:
 			return base.icon
 
 
-func _toggle_item_storage(item: ItemInstance) -> void:
+func _on_slot_gui_input(event: InputEvent, index: int) -> void:
+	if not event is InputEventMouseButton:
+		return
+	if event.button_index != MOUSE_BUTTON_RIGHT or not event.pressed:
+		return
 	if not is_instance_valid(inventory):
 		return
-	inventory.set_item_stored(item, not item.stored)
-	_refresh_items()
+
+	var stored_items := inventory.get_stored_items()
+	if index < 0 or index >= stored_items.size():
+		return
+
+	inventory.set_item_stored(stored_items[index], false)
+	get_viewport().set_input_as_handled()
