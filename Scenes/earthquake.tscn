@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bo7c48h6eo0i6"]
+[gd_scene load_steps=10 format=3 uid="uid://bo7c48h6eo0i6"]
 
 [ext_resource type="PackedScene" uid="uid://cyklhyy064cik" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_03.prefab.scn" id="1_2v7mq"]
 [ext_resource type="PackedScene" uid="uid://bt58gm0q1iu" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_09.prefab.scn" id="2_ab0ma"]
@@ -140,6 +140,9 @@ _data = {
 &"earthquaker": SubResource("Animation_8ejm6")
 }
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_2v7mq"]
+size = Vector3(1.2609596, 1, 4.7335205)
+
 [node name="EarthQuake" type="Node3D"]
 
 [node name="SM_Sharp_Stone_03" parent="." instance=ExtResource("1_2v7mq")]
@@ -162,3 +165,9 @@ libraries = {
 &"": SubResource("AnimationLibrary_g5fjt")
 }
 autoplay = "earthquaker"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0031833649, 0, 1.8667603)
+shape = SubResource("BoxShape3D_2v7mq")
