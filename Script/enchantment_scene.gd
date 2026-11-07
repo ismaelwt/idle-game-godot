@@ -171,7 +171,9 @@ func _refresh_tier_ui() -> void:
 	var cost := inventory.get_tier_upgrade_cost(selected_equipment) if valid_selection else 0
 	var has_gold := is_instance_valid(GameManager) and GameManager.has_enough_gold(cost)
 	enchant_button.disabled = not valid_selection or not has_gold
-	if selected_equipment == null and selected_gem == null:
+	if selected_equipment != null and selected_equipment.tier >= 3:
+		description_label.text = "Este equipamento já alcançou o Tier máximo."
+	elif selected_equipment == null and selected_gem == null:
 		description_label.text = "Selecione um equipamento e uma Special Gem."
 	elif selected_equipment == null:
 		description_label.text = "Gema selecionada: %s\nAgora selecione um equipamento." % selected_gem.item_base.item_name
