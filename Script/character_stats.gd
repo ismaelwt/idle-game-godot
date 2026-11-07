@@ -456,38 +456,39 @@ func get_equipment_bonus(stat_name: String) -> float:
 		if not item is ItemInstance or item.item_base == null:
 			continue
 
+		var item_total: float = 0.0
 		match stat_name:
 			"strength":
-				total += float(item.strength_bonus)
+				item_total += float(item.strength_bonus)
 			"agility":
-				total += float(item.agility_bonus)
+				item_total += float(item.agility_bonus)
 			"intelligence":
-				total += float(item.intelligence_bonus)
+				item_total += float(item.intelligence_bonus)
 			"vitality":
-				total += float(item.vitality_bonus)
+				item_total += float(item.vitality_bonus)
 			"max_mana":
-				total += float(item.max_mana_bonus)
+				item_total += float(item.max_mana_bonus)
 			"physical_damage":
-				total += float(item.physical_damage_bonus)
+				item_total += float(item.physical_damage_bonus)
 			"magic_damage":
-				total += float(item.magic_damage_bonus)
+				item_total += float(item.magic_damage_bonus)
 			"physical_defense":
-				total += float(item.physical_defense_bonus)
+				item_total += float(item.physical_defense_bonus)
 			"magic_defense":
-				total += float(item.magic_defense_bonus)
+				item_total += float(item.magic_defense_bonus)
 			"magic_power":
-				total += item.magic_power_bonus
+				item_total += item.magic_power_bonus
 			"life_steal":
-				total += item.life_steal_bonus
+				item_total += item.life_steal_bonus
 			"mana_steal":
-				total += item.mana_steal_bonus
+				item_total += item.mana_steal_bonus
 			"critical_chance":
-				total += item.critical_chance_bonus
+				item_total += item.critical_chance_bonus
 			"critical_damage":
-				total += item.critical_damage_bonus
+				item_total += item.critical_damage_bonus
 			"weapon_damage":
 				if item.item_base.item_type == ItemBase.ItemType.WEAPON:
-					total += item.weapon_damage
+					item_total += item.weapon_damage
 
 		# As gemas instaladas no equipamento também concedem atributos.
 		for enchantment in item.installed_enchantments:
@@ -498,50 +499,52 @@ func get_equipment_bonus(stat_name: String) -> float:
 			match enchantment.gem_effect:
 				ItemBase.GemEffect.STRENGTH:
 					if stat_name == "strength":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.AGILITY:
 					if stat_name == "agility":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.INTELLIGENCE:
 					if stat_name == "intelligence":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.VITALITY:
 					if stat_name == "vitality":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.MAX_MANA:
 					if stat_name == "max_mana":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.PHYSICAL_DAMAGE:
 					if stat_name == "physical_damage":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.MAGIC_DAMAGE:
 					if stat_name == "magic_damage":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.DEFENSE:
 					# Compatibilidade para gemas antigas de defesa genérica.
 					if stat_name == "physical_defense" or stat_name == "magic_defense":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.PHYSICAL_DEFENSE:
 					if stat_name == "physical_defense":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.MAGIC_DEFENSE:
 					if stat_name == "magic_defense":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.MAGIC_POWER:
 					if stat_name == "magic_power":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.LIFE_STEAL:
 					if stat_name == "life_steal":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.MANA_STEAL:
 					if stat_name == "mana_steal":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.CRITICAL_CHANCE:
 					if stat_name == "critical_chance":
-						total += gem_value
+						item_total += gem_value
 				ItemBase.GemEffect.CRITICAL_DAMAGE:
 					if stat_name == "critical_damage":
-						total += gem_value
+						item_total += gem_value
+
+		total += item_total * (1.0 + float(item.tier) * 0.10)
 
 	return total
 
