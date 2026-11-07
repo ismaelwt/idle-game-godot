@@ -760,6 +760,17 @@ func refresh_equipment_slots() -> void:
 	)
 	belt_icon.texture = get_equipment_icon(belt, belt_default_icon) if belt != null else belt_default_icon
 
+	# Exibe o tier nos próprios slots de equipamento, usando o mesmo badge do inventário.
+	_set_tier_badge(helmet_icon.get_parent(), helmet)
+	_set_tier_badge(chest_icon.get_parent(), chest)
+	_set_tier_badge(weapon_icon.get_parent(), weapon)
+	_set_tier_badge(gloves_icon.get_parent(), gloves)
+	_set_tier_badge(pants_icon.get_parent(), pants)
+	_set_tier_badge(boots_icon.get_parent(), boots)
+	_set_tier_badge(necklace_icon.get_parent(), necklace)
+	_set_tier_badge(ring_icon.get_parent(), ring)
+	_set_tier_badge(belt_icon.get_parent(), belt)
+
 
 # ==========================================
 # ESCOLHER ÍCONE CONFORME ENCANTAMENTOS
