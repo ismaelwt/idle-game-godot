@@ -415,7 +415,7 @@ func deserialize_inventory(inventory: Inventory, data: Dictionary) -> void:
 	inventory.equipment_changed.emit()
 	print("=== INVENTÁRIO COMPARTILHADO CARREGADO ===")
 	print("Baús: ", inventory.chest_count)
-	print("Itens na mochila: ", inventory.equipment.size())
+	print("Itens na mochila: ", inventory.get_backpack_items().size())
 
 
 func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInstance:
