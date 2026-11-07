@@ -284,6 +284,7 @@ func serialize_item(item: ItemInstance) -> Dictionary:
 		"item_id": str(item.item_base.item_id),
 		"instance_id": item.instance_id,
 		"item_level": item.item_level,
+		"tier": item.tier,
 		"generated_rarity": item.generated_rarity,
 		"item_value": item.item_value,
 		"stored": item.stored,
@@ -460,6 +461,7 @@ func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInst
 		1,
 		int(item_data.get("item_level", base.item_level))
 	)
+	item.tier = clampi(int(item_data.get("tier", 0)), 0, 3)
 
 	# Migra itens salvos antes da inclusão do dano base das armas.
 	if item_data.has("weapon_damage"):
