@@ -151,6 +151,9 @@ func get_item_value() -> int:
 @export var magic_power_min: float = 0.0
 @export var magic_power_max: float = 0.0
 
+@export_category("Gema Especial")
+@export_range(0, 3, 1) var tier_gem_level: int = 0
+
 @export_category("Encantamento de Gema")
 @export var gem_effect: GemEffect = GemEffect.NONE
 @export var gem_effect_min: float = 0.0
