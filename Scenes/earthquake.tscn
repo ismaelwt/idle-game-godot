@@ -6,71 +6,6 @@
 [ext_resource type="PackedScene" uid="uid://cg6hfpbe45spl" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_05.prefab.scn" id="4_eywc7"]
 [ext_resource type="PackedScene" uid="uid://d0qs1qe4csd5c" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Small_Marbel_Stone_07.prefab.scn" id="5_7gaer"]
 
-[sub_resource type="Animation" id="Animation_8ejm6"]
-resource_name = "earthquaker"
-length = 1.5
-step = 0.016666668
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("SM_Small_Marbel_Stone_07:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.23000002, 1.48, 1.4833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.28666687, -2.0483985, -0.3114624), Vector3(-0.28666687, -0.18341446, -0.3114624), Vector3(-0.28666687, -0.37938955, -0.24544847), Vector3(-0.28666687, -0.37596786, -0.3114624)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SM_Sharp_Stone_09:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1.05, 1.48, 1.4833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(0.18886948, -1.7126579, 2.3479538), Vector3(0.18886948, 0.023771763, 2.3479538), Vector3(0.18886948, 0.31378776, 2.3438964), Vector3(0.18886948, -0.040227294, 2.3479538)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SM_Medium_Hover_Sharp_Stone_010:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.78666663, 1.48, 1.4833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.3044014, -1.4650184, 1.3170471), Vector3(-0.3044014, 0.0679481, 1.3170471), Vector3(-0.3044014, 0.41822433, 1.2890913), Vector3(-0.3044014, 0.20741224, 1.3170471)]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("SM_Sharp_Stone_05:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.5966667, 1.48, 1.4833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.12506485, -1.7308781, 0.6598816), Vector3(-0.12506485, -0.0002065897, 0.6598816), Vector3(-0.12506485, 0.0666008, 0.67391795), Vector3(-0.12506485, -0.05844748, 0.6598816)]
-}
-tracks/4/type = "value"
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/path = NodePath("SM_Sharp_Stone_03:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/keys = {
-"times": PackedFloat32Array(0, 0.26666665, 0.6066667, 1.1266667, 1.48, 1.4833333),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector3(-0.0012512207, -1.4464332, 3.3821716), Vector3(-0.0012512207, -1.4948493, 3.3821716), Vector3(-0.0012512207, -1.4469035, 3.3821716), Vector3(-0.0012512207, -1.0339646, 3.3821716), Vector3(-0.0012512207, 0.70561635, 3.3341343), Vector3(-0.0012512207, 0.22599745, 3.3821716)]
-}
-
 [sub_resource type="Animation" id="Animation_4inv5"]
 length = 0.001
 tracks/0/type = "value"
@@ -132,6 +67,71 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector3(-0.28666687, -2.0483985, -0.3114624)]
+}
+
+[sub_resource type="Animation" id="Animation_8ejm6"]
+resource_name = "earthquaker"
+length = 0.9
+step = 0.016666668
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SM_Small_Marbel_Stone_07:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.16333342, 0.88666666),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.28666687, -2.0483985, -0.3114624), Vector3(-0.28666687, -0.18341446, -0.3114624), Vector3(-0.28666687, -0.37938955, -0.24544847)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SM_Sharp_Stone_09:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.65666664, 0.8833333, 0.88666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.18886948, -1.7126579, 2.3479538), Vector3(0.18886948, 0.023771763, 2.3479538), Vector3(0.18886948, 0.31378776, 2.3438964), Vector3(0.18886948, -0.040227294, 2.3479538)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SM_Medium_Hover_Sharp_Stone_010:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.53, 0.8833333, 0.88666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.3044014, -1.4650184, 1.3170471), Vector3(-0.3044014, 0.0679481, 1.3170471), Vector3(-0.3044014, 0.41822433, 1.2890913), Vector3(-0.3044014, 0.20741224, 1.3170471)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("SM_Sharp_Stone_05:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.4333334, 0.8833333, 0.88666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.12506485, -1.7308781, 0.6598816), Vector3(-0.12506485, -0.0002065897, 0.6598816), Vector3(-0.12506485, 0.0666008, 0.67391795), Vector3(-0.12506485, -0.05844748, 0.6598816)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("SM_Sharp_Stone_03:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.20000005, 0.4433334, 0.73333335, 0.8833333, 0.88666666),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(-0.0012512207, -1.4464332, 3.3821716), Vector3(-0.0012512207, -1.4948493, 3.3821716), Vector3(-0.0012512207, -1.4469035, 3.3821716), Vector3(-0.0012512207, -1.0339646, 3.3821716), Vector3(-0.0012512207, 0.70561635, 3.3341343), Vector3(-0.0012512207, 0.22599745, 3.3821716)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_g5fjt"]
