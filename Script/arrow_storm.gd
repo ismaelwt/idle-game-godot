@@ -103,6 +103,7 @@ func _spawn_arrow_rain() -> void:
 		add_child(target_marker)
 		target_marker.visible = true
 		target_marker.global_position = target_enemy.global_position + Vector3.UP * 0.03
+		_animate_target_marker(target_marker)
 
 	# A quantidade de flechas é exclusivamente visual.
 	var count := maxi(1, arrow_count)
@@ -146,6 +147,20 @@ func _spawn_arrow_rain() -> void:
 		arrow_parent.add_child(arrow)
 		arrow.global_position = landing_position + Vector3.UP * fall_height
 		created_arrows.append(arrow)
+
+
+func _animate_target_marker(marker: Sprite3D) -> void:
+	if not is_instance_valid(marker):
+		return
+
+	# Pisca três vezes e depois desaparece suavemente.
+	var tween := marker.create_tween()
+	for i in range(3):
+		tween.tween_property(marker, "modulate:a", 0.0, 0.10)
+		tween.tween_property(marker, "modulate:a", 1.0, 0.10)
+
+	tween.tween_property(marker, "modulate:a", 0.0, 0.35)
+	tween.tween_callback(marker.queue_free)
 
 
 func _on_visual_arrow_impact() -> void:
