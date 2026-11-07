@@ -452,7 +452,7 @@ func _on_my_chest_pressed() -> void:
 		canvas_layer.add_child(my_chest_ui)
 	else:
 		get_tree().current_scene.add_child(my_chest_ui)
-	my_chest_ui.setup(inventory)
+	my_chest_ui.setup(inventory, item_tooltip, int(character_stats.level), str(character_stats.hero_id))
 
 
 func _on_chest_pressed() -> void:
