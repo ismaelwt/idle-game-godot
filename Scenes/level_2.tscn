@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="14_vqvjq"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="15_k14j5"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="66_p1gm3"]
+[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_hj5x7"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -198,7 +199,6 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.9443678, 0.9474271, 0.95328075, 1)
 
-[ext_resource type="Script" path="res://Items/shared_stash.gd" id="shared_stash_script"]
 
 [node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("10_k8xho")
