@@ -24,6 +24,7 @@ var shooter: Node3D
 var character_stats: Node
 var resolved: bool = false
 var center_position: Vector3
+var has_center_position: bool = false
 var created_arrows: Array[Node3D] = []
 var area_damage_applied: bool = false
 
@@ -40,11 +41,11 @@ func get_description() -> String:
 
 
 func _ready() -> void:
-	if not is_instance_valid(center_target):
-		_finish()
-		return
-
-	center_position = center_target.global_position
+	if not has_center_position:
+		if not is_instance_valid(center_target):
+			_finish()
+			return
+		center_position = center_target.global_position
 
 	var world_scroller := get_tree().get_first_node_in_group("world_scroller")
 	if is_instance_valid(world_scroller) and world_scroller is Node3D:
