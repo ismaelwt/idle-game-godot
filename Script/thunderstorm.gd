@@ -27,6 +27,8 @@ var damage_multiplier: float = 1.0
 var character_stats: Node
 
 var center_target: Node3D
+var center_position: Vector3 = Vector3.ZERO
+var has_center_position: bool = false
 var resolved: bool = false
 var storm_ended: bool = false
 var fixed_cloud_position: Vector3
@@ -63,12 +65,13 @@ func _resolve_storm() -> void:
 
 	resolved = true
 
-	if not is_instance_valid(center_target):
-		_finish_after_delay()
-		return
-
-	# Registra a posição inicial da tempestade.
-	var center_position: Vector3 = center_target.global_position
+	# Usa a posição registrada no lançamento, mesmo se o alvo morrer
+	# ou for removido durante a preparação da skill.
+	if not has_center_position:
+		if not is_instance_valid(center_target):
+			_finish_after_delay()
+			return
+		center_position = center_target.global_position
 
 	fixed_cloud_position = (
 		center_position + Vector3.UP * strike_height
