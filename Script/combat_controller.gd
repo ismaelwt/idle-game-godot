@@ -320,7 +320,8 @@ func prepare_skills(hero: Node3D) -> void:
 		"skill_count": skill_ids.size(),
 		"next_skill_index": 0,
 		"last_skill_order": current_order.duplicate(),
-		"active_skill_order": current_order.duplicate()
+		"active_skill_order": current_order.duplicate(),
+		"active_skill_index": -1
 	}
 
 	hero_skill_states[hero_id] = state
@@ -368,6 +369,12 @@ func update_skill_cooldowns(delta: float) -> void:
 					" | HERÓI: ",
 					state.get("hero_name", "Desconhecido")
 				)
+
+		var active_index: int = int(state.get("active_skill_index", -1))
+		if active_index >= 0:
+			var hero := instance_from_id(hero_id) as Node3D
+			if not is_instance_valid(hero) or not bool(hero.get("attacking")):
+				state["active_skill_index"] = -1
 
 		state["skill_timers"] = skill_timers
 		state["skill_available"] = skill_available
@@ -461,8 +468,10 @@ func process_skill_rotation(
 		if float(stats.get("mana")) < mana_cost:
 			continue
 
-		# Reserva o próximo índice e inicia o cooldown individual.
+		# Reserva a habilidade e inicia o cooldown individual.
+		# Se o herói interromper a execução, o callback abaixo o restaura.
 		state["next_skill_index"] = (index + 1) % skill_count
+		state["active_skill_index"] = index
 
 		timers[index] = float(cooldowns[index])
 		available[index] = false
@@ -513,6 +522,35 @@ func process_skill_rotation(
 
 
 
+
+func on_hero_skill_cancelled(hero: Node3D) -> void:
+	if not is_instance_valid(hero):
+		return
+
+	var hero_id: int = hero.get_instance_id()
+	if not hero_skill_states.has(hero_id):
+		return
+
+	var state: Dictionary = hero_skill_states[hero_id]
+	var index: int = int(state.get("active_skill_index", -1))
+	if index < 0:
+		return
+
+	var timers: Array = state.get("skill_timers", [])
+	var available: Array = state.get("skill_available", [])
+	if index >= timers.size() or index >= available.size():
+		state["active_skill_index"] = -1
+		hero_skill_states[hero_id] = state
+		return
+
+	timers[index] = 0.0
+	available[index] = true
+	state["skill_timers"] = timers
+	state["skill_available"] = available
+	state["active_skill_index"] = -1
+	hero_skill_states[hero_id] = state
+
+	print("SKILL CANCELADA - COOLDOWN RESTAURADO | HERÓI: ", hero.name)
 
 func initialize_hero_skill_states() -> void:
 	if not is_instance_valid(party_manager):
