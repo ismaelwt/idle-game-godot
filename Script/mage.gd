@@ -154,10 +154,9 @@ func use_skill(skill_id: String, target: Node3D):
 
 	action_locked = true
 
-	if skill_id == "fireball" or skill_id == "energy_ball":
-		current_attack_target = target
-	else:
-		current_attack_target = null
+	# Skills não devem ser canceladas pelo callback de morte do alvo.
+	# O alvo da skill é tratado pelo próprio efeito/projétil.
+	current_attack_target = null
 
 	look_at_target(target)
 
@@ -177,30 +176,26 @@ func use_skill(skill_id: String, target: Node3D):
 			if my_attack_id != attack_id:
 				return
 
-			if not is_instance_valid(target) or target.dying or target.health <= 0:
-				_notify_skill_cancelled()
-				attacking = false
-				action_locked = false
-				current_attack_target = null
-				return
+			# Se o alvo morreu durante a preparação, não lança o projétil.
+			# A execução da skill termina normalmente, mantendo mana e cooldown.
+			if is_instance_valid(target) and not target.dying and float(target.health) > 0.0:
+				AudioManager.play_sfx(preload("res://Sounds/fireball.mp3"), randf_range(0.95, 1.05))
 
-			AudioManager.play_sfx(preload("res://Sounds/fireball.mp3"), randf_range(0.95, 1.05))
+				var projectile = fireball_scene.instantiate()
+				get_tree().current_scene.add_child(projectile)
+				projectile.global_position = fireball_spawn.global_position
+				projectile.target = target
+				projectile.magic_bonus = character_stats.get_magic_bonus()
+				projectile.character_stats = character_stats
+				projectile.critical_chance = character_stats.get_critical_chance()
+				projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
 
-			var projectile = fireball_scene.instantiate()
-			get_tree().current_scene.add_child(projectile)
-			projectile.global_position = fireball_spawn.global_position
-			projectile.target = target
-			projectile.magic_bonus = character_stats.get_magic_bonus()
-			projectile.character_stats = character_stats
-			projectile.critical_chance = character_stats.get_critical_chance()
-			projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
+				if damage_buff_active and is_instance_valid(damage_buff_instance):
+					projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
+				else:
+					projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
-			if damage_buff_active and is_instance_valid(damage_buff_instance):
-				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
-			else:
-				projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
-
-			await projectile.finished
+				await projectile.finished
 
 			if my_attack_id != attack_id:
 				return
@@ -215,33 +210,29 @@ func use_skill(skill_id: String, target: Node3D):
 			if my_attack_id != attack_id:
 				return
 
-			if not is_instance_valid(target) or target.dying or target.health <= 0:
-				_notify_skill_cancelled()
-				attacking = false
-				action_locked = false
-				current_attack_target = null
-				return
+			# Se o alvo morreu durante a preparação, a skill consome seus recursos,
+			# mas não cria um projétil sem alvo válido.
+			if is_instance_valid(target) and not target.dying and float(target.health) > 0.0:
+				var projectile = energyball_scene.instantiate()
+				get_tree().current_scene.add_child(projectile)
 
-			var projectile = energyball_scene.instantiate()
-			get_tree().current_scene.add_child(projectile)
+				var spawn_position = get_target_position(target)
+				spawn_position.y += 4.5
+				spawn_position.x -= 3.0
 
-			var spawn_position = get_target_position(target)
-			spawn_position.y += 4.5
-			spawn_position.x -= 3.0
+				projectile.global_position = spawn_position
+				projectile.target = target
+				projectile.magic_bonus = character_stats.get_magic_bonus()
+				projectile.character_stats = character_stats
+				projectile.critical_chance = character_stats.get_critical_chance()
+				projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
 
-			projectile.global_position = spawn_position
-			projectile.target = target
-			projectile.magic_bonus = character_stats.get_magic_bonus()
-			projectile.character_stats = character_stats
-			projectile.critical_chance = character_stats.get_critical_chance()
-			projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
+				if damage_buff_active and is_instance_valid(damage_buff_instance):
+					projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
+				else:
+					projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
 
-			if damage_buff_active and is_instance_valid(damage_buff_instance):
-				projectile.damage_multiplier = damage_buff_instance.damage_buff_multiplier * character_stats.get_magic_damage_multiplier()
-			else:
-				projectile.damage_multiplier = character_stats.get_magic_damage_multiplier()
-
-			await projectile.finished
+				await projectile.finished
 
 			if my_attack_id != attack_id:
 				return
@@ -334,6 +325,8 @@ func use_skill(skill_id: String, target: Node3D):
 			var storm = thunderstorm_scene.instantiate()
 
 			storm.center_target = target
+			storm.center_position = target.global_position
+			storm.has_center_position = true
 			storm.magic_bonus = character_stats.get_magic_bonus()
 			storm.character_stats = character_stats
 			storm.critical_chance = character_stats.get_critical_chance()
