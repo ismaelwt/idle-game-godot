@@ -288,6 +288,11 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	print("KNIGHT SKILL FINALIZADA: ", skill_id)
 
 
+func _notify_skill_cancelled() -> void:
+	var controller := get_parent().get_node_or_null("CombatController")
+	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
+		controller.on_hero_skill_cancelled(self)
+
 func _clear_frenzy(active_frenzy: Node3D) -> void:
 	# Só altera o estado global se ainda for a instância ativa.
 	# Uma instância antiga não pode desligar um buff mais recente.
@@ -328,10 +333,10 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 		push_warning("Knight: não foi possível instanciar Earthquake.")
 		return
 
+	new_earthquake.set("character_stats", character_stats)
+	new_earthquake.position = Vector3(0.0, 0.0, 3.5)
 	earthquake_instance = new_earthquake
-	earthquake_instance.set("character_stats", character_stats)
-	add_child(earthquake_instance)
-	earthquake_instance.position = Vector3(0.0, 0.0, 3.5)
+	add_child(new_earthquake)
 
 	# Acompanha a animação sem ficar preso caso outra animação a interrompa.
 	while (
@@ -618,6 +623,7 @@ func die() -> void:
 		return
 
 	dead = true
+	_notify_skill_cancelled()
 	_interrupt_earthquake()
 
 	print("=== KNIGHT MORREU ===")
@@ -781,6 +787,7 @@ func flash_hit() -> void:
 
 
 func start_running() -> void:
+	_notify_skill_cancelled()
 	attack_id += 1
 	_interrupt_earthquake()
 	attacking = false
@@ -808,6 +815,7 @@ func cancel_attack_on_target(target: Node3D) -> void:
 	if not is_instance_valid(target) or current_attack_target != target:
 		return
 
+	_notify_skill_cancelled()
 	print("=== KNIGHT: ATAQUE CANCELADO === | ALVO: ", target.name)
 	stop_sword_trail()
 	attack_id += 1
