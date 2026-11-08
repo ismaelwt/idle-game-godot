@@ -194,14 +194,42 @@ func _process(delta: float) -> void:
 	else:
 		play_animation(idle_animation)
 
-func use_skill(skill_id: String, target: Node3D) -> void:
+func can_use_skill(skill_id: String, target: Node3D) -> bool:
 	if dead or action_locked or attacking:
-		return
+		return false
 
 	if not is_instance_valid(target):
-		return
+		return false
 
-	if target.get("dying") == true or target.get("health") == null or target.get("health") <= 0:
+	var target_health = target.get("health")
+	if target.get("dying") == true or target_health == null or float(target_health) <= 0.0:
+		return false
+
+	if not SkillTree.has_skill(skill_id) or not character_stats.has_skill(skill_id):
+		return false
+
+	if skill_id != "frenesi" and skill_id != "earthquake":
+		return false
+
+	var skill_data: Dictionary = SkillTree.get_skill(skill_id)
+	if not skill_data.has("scene") or not skill_data["scene"] is PackedScene:
+		return false
+
+	var skill_scene: PackedScene = skill_data["scene"]
+	if skill_scene == null:
+		return false
+
+	# Confirma que a cena pode ser instanciada antes de reservar mana/cooldown.
+	var test_instance = skill_scene.instantiate()
+	if not is_instance_valid(test_instance):
+		return false
+	test_instance.free()
+
+	return true
+
+
+func use_skill(skill_id: String, target: Node3D) -> void:
+	if not can_use_skill(skill_id, target):
 		return
 
 	if not SkillTree.has_skill(skill_id):
@@ -275,6 +303,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		_clear_frenzy(active_frenzy)
 		attacking = false
 		action_locked = false
+		_notify_skill_cancelled()
 		push_warning("Knight: a cena da skill não define 'duration'.")
 		return
 
@@ -337,6 +366,7 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	if not is_instance_valid(new_earthquake):
 		attacking = false
 		action_locked = false
+		_notify_skill_cancelled()
 		push_warning("Knight: não foi possível instanciar Earthquake.")
 		return
 
