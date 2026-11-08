@@ -87,6 +87,11 @@ func _ready():
 
 
 
+func _notify_skill_cancelled() -> void:
+	var controller := get_parent().get_node_or_null("CombatController")
+	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
+		controller.on_hero_skill_cancelled(self)
+
 func use_skill(skill_id: String, target: Node3D):
 
 	if not is_instance_valid(target):
@@ -373,6 +378,7 @@ func _on_animation_finished(anim_name):
 
 func start_running():
 
+	_notify_skill_cancelled()
 	# Mesmo fluxo de transição usado pelos outros heróis.
 	# Invalida ações/awaits anteriores e limpa qualquer alvo antigo.
 	attack_id += 1
@@ -513,6 +519,7 @@ func die():
 		return
 
 	dead = true
+	_notify_skill_cancelled()
 
 	print("=== Mago MORREU ===")
 
@@ -931,6 +938,7 @@ func cancel_attack_on_target(target: Node3D):
 	if not is_current_target and not projectile_targets_enemy:
 		return
 
+	_notify_skill_cancelled()
 	print(
 		"=== BASIC ATTACK CANCELADO === | ALVO: ",
 		target.name
