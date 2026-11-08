@@ -511,14 +511,18 @@ func enemy_died(dead_enemy: Node3D):
 		if not hero.has_method("cancel_attack_on_target"):
 			continue
 
-		var basic_attack_targets_dead_enemy := hero.get("current_attack_target") == dead_enemy
+		var basic_attack_targets_dead_enemy: bool = false
+
+		if _has_property(hero, "current_attack_target"):
+			basic_attack_targets_dead_enemy = hero.get("current_attack_target") == dead_enemy
 
 		# Mage pode ter um projétil de ataque básico em voo mesmo depois
 		# de limpar current_attack_target.
-		var basic_projectile = hero.get("current_basic_attack_projectile")
-		if is_instance_valid(basic_projectile):
-			if basic_projectile.get("target") == dead_enemy:
-				basic_attack_targets_dead_enemy = true
+		if _has_property(hero, "current_basic_attack_projectile"):
+			var basic_projectile: Variant = hero.get("current_basic_attack_projectile")
+			if is_instance_valid(basic_projectile):
+				if basic_projectile.get("target") == dead_enemy:
+					basic_attack_targets_dead_enemy = true
 
 		if basic_attack_targets_dead_enemy:
 			hero.call("cancel_attack_on_target", dead_enemy)
