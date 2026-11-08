@@ -1,0 +1,59 @@
+[gd_scene load_steps=11 format=3 uid="uid://dn5r42jmfj23e"]
+
+[ext_resource type="Script" uid="uid://18bwjh1flf1p" path="res://Script/arrow_projectile.gd" id="1_b7xdx"]
+[ext_resource type="PackedScene" uid="uid://bvhgnj0qu8ktb" path="res://Assets/BowModel/Arrow.fbx" id="2_0pbls"]
+[ext_resource type="ArrayMesh" uid="uid://bp0niqir1xie8" path="res://Assets/fireball_v2.obj" id="3_2qpig"]
+[ext_resource type="Shader" uid="uid://dp1amfqmo04tp" path="res://Shaders/fire_arrow_projectile.gdshader" id="4_2qpig"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l0jjt"]
+radius = 0.21044922
+height = 3.0
+
+[sub_resource type="Gradient" id="Gradient_2qpig"]
+offsets = PackedFloat32Array(0.2810219, 0.49270073, 0.7408759)
+colors = PackedColorArray(0.77733374, 0.342422, 0, 1, 1, 0, 0, 1, 1, 1, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_mpmvm"]
+gradient = SubResource("Gradient_2qpig")
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2qpig"]
+noise_type = 0
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0pbls"]
+noise = SubResource("FastNoiseLite_2qpig")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2qpig"]
+render_priority = 0
+shader = ExtResource("4_2qpig")
+shader_parameter/noise_sampler = SubResource("NoiseTexture2D_0pbls")
+shader_parameter/gradient_sampler = SubResource("GradientTexture1D_mpmvm")
+shader_parameter/emission_strength = 2.0
+shader_parameter/dither_scale = 2.0
+shader_parameter/dither_strength = 0.0
+
+[node name="ArrowProjectile" type="Node3D"]
+transform = Transform3D(0.3, 0, 0, 0, 0.3, 0, 0, 0, 0.3, 0, 0, 0)
+script = ExtResource("1_b7xdx")
+speed = 8.0
+max_lifetime = 15.0
+
+[node name="Arrow" parent="." instance=ExtResource("2_0pbls")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Arrow" parent="Arrow" index="0"]
+cast_shadow = 0
+
+[node name="Area3D" type="Area3D" parent="Arrow"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Arrow/Area3D"]
+transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, -1, -4.371139e-08, 4.371139e-08, 4.371139e-08, -4.371139e-08, 1, 0.5, -2.1855694e-08, -0.042964004)
+shape = SubResource("CapsuleShape3D_l0jjt")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.02913155, -0.01009896, -0.25788468, -0.038175907, -0.009271272, -0.19678319, -5.2336673e-05, 1.141478, -0.003879886, -0.054701805, 0.12272248, 0.9969781)
+cast_shadow = 0
+mesh = ExtResource("3_2qpig")
+surface_material_override/0 = SubResource("ShaderMaterial_2qpig")
+
+[editable path="Arrow"]

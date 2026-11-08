@@ -14,8 +14,8 @@ func get_description() -> String:
 		cooldown
 	]
 
-@export var cooldown: float = 3.0
-@export var mana_cost: float = 20.0
+@export var cooldown: float = 5.0
+@export var mana_cost: float = 25.0
 
 @export_category("Projectile")
 @export var speed: float = 4.3

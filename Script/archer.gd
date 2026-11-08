@@ -312,7 +312,7 @@ func basic_attack(target: Node3D) -> void:
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = arrow_spawn.global_position
 	projectile.global_rotation = arrow_spawn.global_rotation
-	projectile.scale = Vector3(.3, .3, .3)
+	projectile.scale = Vector3(.4, .4, .4)
 	projectile.setup(target, self, final_damage, is_critical)
 	# Mantém attacking=true até a animação de disparo terminar,
 	# como no EnemyArcher. O sinal animation_finished libera o próximo ataque.
