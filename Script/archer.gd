@@ -203,18 +203,9 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 
 	print("ARCHER -> SKILL HEAL")
 
-	# Mantém o mesmo efeito de cura utilizado pelo Mage.
-	var healing_instance := HEALING_SCENE.instantiate()
-	get_tree().current_scene.add_child(healing_instance)
-	healing_instance.global_position = global_position
-
-	var old_health: float = health
-	health = minf(health + float(healing_instance.healing_amount), max_health)
-	var healed_amount: float = health - old_health
-
-	print("=== CURA DO ARCHER APLICADA ===")
-	print("Vida recuperada: ", healed_amount)
-	print("Vida atual: ", health, "/", max_health)
+	# A cura só é aplicada depois que a animação termina.
+	# Se a skill for interrompida durante a preparação, não haverá
+	# efeito aplicado e o CombatController poderá devolver mana/cooldown.
 
 	# Mantém attacking ativo para impedir que _process() substitua
 	# a animação de cura pelo idle antes de ela terminar.
@@ -227,9 +218,26 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		push_warning("Archer: animação não encontrada: " + heal_animation)
 
 	if my_attack_id != attack_id or dead:
-		if is_instance_valid(healing_instance):
-			healing_instance.queue_free()
 		return
+
+	# Confirma a execução da cura somente após a preparação ser concluída.
+	var healing_instance := HEALING_SCENE.instantiate()
+	if not is_instance_valid(healing_instance):
+		_notify_skill_cancelled()
+		attacking = false
+		current_attack_target = null
+		return
+
+	get_tree().current_scene.add_child(healing_instance)
+	healing_instance.global_position = global_position
+
+	var old_health: float = health
+	health = minf(health + float(healing_instance.healing_amount), max_health)
+	var healed_amount: float = health - old_health
+
+	print("=== CURA DO ARCHER APLICADA ===")
+	print("Vida recuperada: ", healed_amount)
+	print("Vida atual: ", health, "/", max_health)
 
 	attacking = false
 	current_attack_target = null
