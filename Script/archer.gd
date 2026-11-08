@@ -234,6 +234,7 @@ func _use_arrow_storm(target: Node3D) -> void:
 	if my_attack_id != attack_id or dead or not is_inside_tree():
 		return
 	if not is_enemy_alive(target):
+		_notify_skill_cancelled()
 		attacking = false
 		play_animation("archer_idle")
 		return
