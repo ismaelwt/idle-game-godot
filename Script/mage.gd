@@ -92,6 +92,53 @@ func _notify_skill_cancelled() -> void:
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
+func can_use_skill(skill_id: String, target: Node3D) -> bool:
+	if dead or not is_instance_valid(target):
+		return false
+
+	if target.get("dying") == true:
+		return false
+	var target_health = target.get("health")
+	if target_health == null or float(target_health) <= 0.0:
+		return false
+
+	var required_scene: PackedScene
+	match skill_id:
+		"fireball":
+			required_scene = fireball_scene
+			if not is_instance_valid(fireball_spawn) or not animation_player.has_animation("mage/attack"):
+				return false
+		"energy_ball":
+			required_scene = energyball_scene
+			if not animation_player.has_animation("mage/attack_2"):
+				return false
+		"damage_buff":
+			required_scene = damage_buff_scene
+			if not animation_player.has_animation("mage/buff"):
+				return false
+		"heal":
+			required_scene = healing_scene
+			if not animation_player.has_animation("mage/heal"):
+				return false
+		"thunderstorm":
+			required_scene = thunderstorm_scene
+			if not animation_player.has_animation("mage/attack_2"):
+				return false
+		_:
+			return false
+
+	if required_scene == null:
+		return false
+
+	# Confirma que a cena pode ser instanciada antes de o CombatController
+	# reservar mana e cooldown.
+	var test_instance := required_scene.instantiate()
+	if not is_instance_valid(test_instance):
+		return false
+	test_instance.free()
+	return true
+
+
 func use_skill(skill_id: String, target: Node3D):
 
 	if not is_instance_valid(target):
