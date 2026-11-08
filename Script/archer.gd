@@ -266,19 +266,20 @@ func _use_arrow_storm(target: Node3D) -> void:
 	animation_player.speed_scale = 1.0
 	animation_player.play(skill_animation, animation_blend)
 
+	# Guarda o ponto de impacto no início: se o alvo morrer durante a
+	# preparação, a chuva de flechas ainda acontece nessa posição.
+	var skill_center_position := target.global_position
+
 	# Usa o mesmo tempo de disparo dos ataques do Archer e do EnemyArcher.
 	await get_tree().create_timer(attack_hit_delay).timeout
 
 	if my_attack_id != attack_id or dead or not is_inside_tree():
 		return
-	if not is_enemy_alive(target):
-		_notify_skill_cancelled()
-		attacking = false
-		play_animation("archer_idle")
-		return
 
 	var storm := preload("res://Scenes/arrow_storm.tscn").instantiate()
 	storm.center_target = target
+	storm.center_position = skill_center_position
+	storm.has_center_position = true
 	storm.shooter = self
 	storm.character_stats = character_stats
 	storm.damage = (
