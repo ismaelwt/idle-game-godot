@@ -147,6 +147,11 @@ func get_horizontal_distance_to(target: Node3D) -> float:
 	)
 
 
+func _notify_skill_cancelled() -> void:
+	var controller := get_parent().get_node_or_null("CombatController")
+	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
+		controller.on_hero_skill_cancelled(self)
+
 func use_skill(skill_id: String, target: Node3D) -> void:
 	if dead or attacking or not is_enemy_alive(target):
 		return
@@ -255,6 +260,7 @@ func _use_arrow_storm(target: Node3D) -> void:
 
 
 func start_running() -> void:
+	_notify_skill_cancelled()
 	# Mesmo fluxo de transição usado pelo Mage ao iniciar a corrida.
 	# Invalida awaits de ataque/skill para que não retomem a animação anterior.
 	attack_id += 1
@@ -362,6 +368,7 @@ func die() -> void:
 	if dead:
 		return
 	dead = true
+	_notify_skill_cancelled()
 	attack_id += 1
 	attacking = false
 	current_attack_target = null
