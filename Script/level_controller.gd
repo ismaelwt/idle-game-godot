@@ -496,17 +496,32 @@ func enemy_died(dead_enemy: Node3D):
 
 	print("=== INIMIGO MORREU: ", dead_enemy.name, " ===")
 
-	# Cancela ataques que ainda apontam para o inimigo morto.
+	# A morte do alvo cancela somente ataques básicos direcionados a ele.
+	# Skills já iniciadas continuam sua execução; seus efeitos verificam
+	# individualmente quais inimigos ainda estão vivos no momento do impacto.
+	var heroes_to_check: Array[Node3D] = []
 	if is_instance_valid(party_manager):
 		for hero in party_manager.get_heroes():
-			if not is_instance_valid(hero):
-				continue
+			if is_instance_valid(hero) and hero is Node3D:
+				heroes_to_check.append(hero)
+	elif is_instance_valid(main_hero):
+		heroes_to_check.append(main_hero)
 
-			if hero.has_method("cancel_attack_on_target"):
-				hero.call("cancel_attack_on_target", dead_enemy)
-	else:
-		if is_instance_valid(main_hero) and main_hero.has_method("cancel_attack_on_target"):
-			main_hero.cancel_attack_on_target(dead_enemy)
+	for hero in heroes_to_check:
+		if not hero.has_method("cancel_attack_on_target"):
+			continue
+
+		var basic_attack_targets_dead_enemy := hero.get("current_attack_target") == dead_enemy
+
+		# Mage pode ter um projétil de ataque básico em voo mesmo depois
+		# de limpar current_attack_target.
+		var basic_projectile = hero.get("current_basic_attack_projectile")
+		if is_instance_valid(basic_projectile):
+			if basic_projectile.get("target") == dead_enemy:
+				basic_attack_targets_dead_enemy = true
+
+		if basic_attack_targets_dead_enemy:
+			hero.call("cancel_attack_on_target", dead_enemy)
 
 	# Remove o inimigo da lista de combate.
 	var index := combat_enemies.find(dead_enemy)
