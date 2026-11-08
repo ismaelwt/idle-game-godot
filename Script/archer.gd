@@ -152,8 +152,38 @@ func _notify_skill_cancelled() -> void:
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
+func can_use_skill(skill_id: String, target: Node3D) -> bool:
+	if dead or not is_enemy_alive(target):
+		return false
+
+	match skill_id:
+		"arrow_storm":
+			if not animation_player.has_animation("archer/archer_skill_1"):
+				return false
+			var storm_scene: PackedScene = preload("res://Scenes/arrow_storm.tscn")
+			if storm_scene == null:
+				return false
+			var test_storm := storm_scene.instantiate()
+			if not is_instance_valid(test_storm):
+				return false
+			test_storm.free()
+		"archer_heal":
+			if HEALING_SCENE == null:
+				return false
+			var test_heal := HEALING_SCENE.instantiate()
+			if not is_instance_valid(test_heal):
+				return false
+			test_heal.free()
+			if not animation_player.has_animation("archer/archer_heal"):
+				return false
+		_:
+			return false
+
+	return true
+
+
 func use_skill(skill_id: String, target: Node3D) -> void:
-	if dead or attacking or not is_enemy_alive(target):
+	if not can_use_skill(skill_id, target):
 		return
 
 	if skill_id == "arrow_storm":
