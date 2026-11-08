@@ -321,7 +321,8 @@ func prepare_skills(hero: Node3D) -> void:
 		"next_skill_index": 0,
 		"last_skill_order": current_order.duplicate(),
 		"active_skill_order": current_order.duplicate(),
-		"active_skill_index": -1
+		"active_skill_index": -1,
+		"active_skill_mana_cost": 0.0
 	}
 
 	hero_skill_states[hero_id] = state
@@ -468,10 +469,16 @@ func process_skill_rotation(
 		if float(stats.get("mana")) < mana_cost:
 			continue
 
+		# O Knight valida as condições antes de qualquer custo.
+		# Isso evita cobrar quando use_skill seria recusada imediatamente.
+		if hero.has_method("can_use_skill") and not bool(hero.call("can_use_skill", skill_id, target)):
+			continue
+
 		# Reserva a habilidade e inicia o cooldown individual.
 		# Se o herói interromper a execução, o callback abaixo o restaura.
 		state["next_skill_index"] = (index + 1) % skill_count
 		state["active_skill_index"] = index
+		state["active_skill_mana_cost"] = mana_cost
 
 		timers[index] = float(cooldowns[index])
 		available[index] = false
@@ -545,12 +552,21 @@ func on_hero_skill_cancelled(hero: Node3D) -> void:
 
 	timers[index] = 0.0
 	available[index] = true
+
+	# Devolve a mana reservada: uma skill cancelada não pode cobrar recurso.
+	var mana_cost: float = float(state.get("active_skill_mana_cost", 0.0))
+	var stats = hero.get("character_stats")
+	if mana_cost > 0.0 and is_instance_valid(stats) and stats.has_method("restore_mana"):
+		stats.restore_mana(mana_cost)
+		print("MANA RESTAURADA: ", mana_cost, " | HERÓI: ", hero.name)
+
 	state["skill_timers"] = timers
 	state["skill_available"] = available
 	state["active_skill_index"] = -1
+	state["active_skill_mana_cost"] = 0.0
 	hero_skill_states[hero_id] = state
 
-	print("SKILL CANCELADA - COOLDOWN RESTAURADO | HERÓI: ", hero.name)
+	print("SKILL CANCELADA - MANA E COOLDOWN RESTAURADOS | HERÓI: ", hero.name)
 
 func initialize_hero_skill_states() -> void:
 	if not is_instance_valid(party_manager):
