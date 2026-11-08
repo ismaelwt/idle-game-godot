@@ -131,6 +131,7 @@ func use_skill(skill_id: String, target: Node3D):
 				return
 
 			if not is_instance_valid(target) or target.dying or target.health <= 0:
+				_notify_skill_cancelled()
 				attacking = false
 				action_locked = false
 				current_attack_target = null
@@ -168,6 +169,7 @@ func use_skill(skill_id: String, target: Node3D):
 				return
 
 			if not is_instance_valid(target) or target.dying or target.health <= 0:
+				_notify_skill_cancelled()
 				attacking = false
 				action_locked = false
 				current_attack_target = null
