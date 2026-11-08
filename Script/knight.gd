@@ -355,13 +355,8 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	if my_attack_id != attack_id or dead:
 		return
 
-	if not is_instance_valid(target) or target.get("dying") == true or float(target.get("health")) <= 0.0:
-		_notify_skill_cancelled()
-		attacking = false
-		action_locked = false
-		current_attack_target = null
-		return
-
+	# A morte do alvo não cancela a skill nem devolve seus recursos.
+	# Earthquake continua e atinge apenas inimigos vivos dentro da área.
 	var new_earthquake := skill_scene.instantiate() as Node3D
 	if not is_instance_valid(new_earthquake):
 		attacking = false
