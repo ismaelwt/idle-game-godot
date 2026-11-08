@@ -716,9 +716,17 @@ func continue_running():
 
 	if is_instance_valid(party_manager):
 		for hero in party_manager.get_alive_heroes():
+			if not is_instance_valid(hero):
+				continue
+
+			# Não interrompe uma skill que já está em execução.
+			# O herói pode continuar a animação enquanto o cenário avança.
+			if bool(hero.get("attacking")):
+				continue
+
 			if hero.has_method("start_running"):
 				hero.call("start_running")
-				
+
 	print("=== CONTINUANDO RUN ===")
 
 
