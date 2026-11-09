@@ -19,7 +19,7 @@ func _on_drag_handle_input(event: InputEvent) -> void:
 		if dragging:
 			drag_offset = get_global_mouse_position() - inventory_panel.global_position
 			move_to_front()
-			accept_event()
+			drag_handle.accept_event()
 	elif event is InputEventMouseMotion and dragging:
 		var new_global_position := get_global_mouse_position() - drag_offset
 		var viewport_size := get_viewport_rect().size
@@ -27,4 +27,4 @@ func _on_drag_handle_input(event: InputEvent) -> void:
 		new_global_position.x = clampf(new_global_position.x, 0.0, maxf(max_position.x, 0.0))
 		new_global_position.y = clampf(new_global_position.y, 0.0, maxf(max_position.y, 0.0))
 		inventory_panel.global_position = new_global_position
-		accept_event()
+		drag_handle.accept_event()
