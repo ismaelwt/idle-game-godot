@@ -285,6 +285,7 @@ func _use_arrow_storm(target: Node3D) -> void:
 
 	animation_player.speed_scale = 1.0
 	animation_player.play(skill_animation, animation_blend)
+	animation_player_bow.play("Armature|Bow_Fire")
 
 	# Guarda o ponto de impacto no início: se o alvo morrer durante a
 	# preparação, a chuva de flechas ainda acontece nessa posição.

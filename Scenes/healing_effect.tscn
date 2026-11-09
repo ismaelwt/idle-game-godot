@@ -43,7 +43,7 @@ disabled_icon = ExtResource("3_qxj7q")
 cooldown = 30.0
 mana_cost = 25.0
 healing_amount = 65.0
-duration = 2.0
+duration = 4.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 1.3406937, 0)
