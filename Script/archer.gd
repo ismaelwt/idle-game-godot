@@ -240,24 +240,33 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	print("Vida recuperada: ", healed_amount)
 	print("Vida atual: ", health, "/", max_health)
 
-	# Mantém a ação ativa até o efeito visual da cura terminar.
-	await get_tree().create_timer(float(healing_instance.duration)).timeout
-
-	if is_instance_valid(healing_instance):
-		healing_instance.queue_free()
+	# A cura permanece ativa visualmente durante sua duração, mas não bloqueia
+	# o Archer: depois da animação de ativação ele já pode atacar ou usar outra skill.
+	_remove_healing_effect_after_duration(healing_instance)
 
 	attacking = false
 	current_attack_target = null
 
-	# A cura pode terminar enquanto a equipe já está em deslocamento.
-	# Retoma explicitamente a animação de corrida em vez de deixar o Archer
-	# preso na última pose da animação de cura.
 	if is_instance_valid(world_scroller) and world_scroller.running:
 		rotation.y = initial_rotation_y
 		animation_player.speed_scale = 1.0
 		play_animation("archer_walk")
 	else:
 		play_animation("archer_idle")
+
+
+func _remove_healing_effect_after_duration(healing_instance: Node) -> void:
+	if not is_instance_valid(healing_instance):
+		return
+
+	var duration_value = healing_instance.get("duration")
+	if duration_value == null:
+		healing_instance.queue_free()
+		return
+
+	await get_tree().create_timer(maxf(float(duration_value), 0.0)).timeout
+	if is_instance_valid(healing_instance):
+		healing_instance.queue_free()
 
 
 func _use_arrow_storm(target: Node3D) -> void:
