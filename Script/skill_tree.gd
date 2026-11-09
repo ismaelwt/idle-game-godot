@@ -100,6 +100,17 @@ const SKILLS := {
 		"button": "skill1_nv1"
 	},
 
+	"fire_arrow": {
+		"name": "Fire Arrow",
+		"hero_class": "archer",
+		"scene": preload("res://Scenes/fire_arrow_passive.tscn"),
+		"cost": 1,
+		"stage": 1,
+		"prerequisites": [],
+		"button": "skill2_nv1",
+		"passive": true
+	},
+
 	"arrow_storm": {
 		"name": "Arrow Storm",
 		"hero_class": "archer",
