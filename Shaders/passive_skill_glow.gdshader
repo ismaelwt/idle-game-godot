@@ -1,7 +1,7 @@
 shader_type canvas_item;
 
 uniform vec4 glow_color : source_color = vec4(1.0, 0.78, 0.08, 1.0);
-uniform float border_thickness : hint_range(0.005, 0.08) = 0.035;
+uniform float border_thickness : hint_range(0.005, 0.08) = 0.065;
 uniform float segment_length : hint_range(0.05, 0.5) = 0.22;
 uniform float animation_speed : hint_range(0.05, 1.0) = 0.24;
 

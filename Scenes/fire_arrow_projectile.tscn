@@ -53,7 +53,13 @@ transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, -1, -4.371139e-08, 4.37
 shape = SubResource("CapsuleShape3D_l0jjt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.02913155, -0.01009896, -0.25788468, -0.038175907, -0.009271272, -0.19678319, -5.2336673e-05, 1.141478, -0.003879886, -0.054701805, 0.12272248, 0.9969781)
+transform = Transform3D(-0.03956757, -1.2359575e-15, 0.18382832, 0.02721133, -1.7971875e-15, 0.26730195, 8.755098e-31, 1.1415603, 6.198495e-16, 0.07235303, 0.12272248, 0.9969781)
+cast_shadow = 0
+mesh = ExtResource("3_2qpig")
+surface_material_override/0 = SubResource("ShaderMaterial_2qpig")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.042846534, -9.849322e-16, 0.1464924, 0.021684643, 1.946119e-15, -0.28945318, -8.293002e-24, 1.1415603, 6.1984945e-16, 0.07235302, 0.12272248, 0.9969781)
 cast_shadow = 0
 mesh = ExtResource("3_2qpig")
 surface_material_override/0 = SubResource("ShaderMaterial_2qpig")

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://cepnpqqt24edn"]
 
-[ext_resource type="Script" path="res://Script/fire_arrow_passive.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://b8ng05hh3ulgw" path="res://Script/fire_arrow_passive.gd" id="1_script"]
 
 [node name="FireArrowPassive" type="Node"]
 script = ExtResource("1_script")

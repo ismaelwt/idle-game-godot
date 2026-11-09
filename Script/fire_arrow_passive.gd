@@ -1,7 +1,7 @@
 extends Node
 
-var icon: Texture2D = preload("res://icons/fire-ray.png")
-var disabled_icon: Texture2D = preload("res://icons/disabled-fire-ray.png")
+var icon: Texture2D = preload("res://icons/fire-arrow-skill.png")
+var disabled_icon: Texture2D = preload("res://icons/fire-arrow-skill.png")
 
 
 func get_description() -> String:
