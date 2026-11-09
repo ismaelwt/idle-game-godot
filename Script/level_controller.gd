@@ -17,6 +17,9 @@ enum State {
 
 var state: State = State.PREPARING
 var paused: bool = false
+var pending_run: bool = false
+var pending_run_heroes: Array[Node3D] = []
+var run_request_id: int = 0
 
 var current_enemy: Node3D
 var combat_enemies: Array[Node3D] = []
@@ -290,6 +293,10 @@ func process_skills() -> void:
 			continue_running(heroes_that_need_to_move)
 		return
 
+	# Uma solicitação de avanço antiga não deve iniciar corrida após entrar em alcance.
+	if pending_run:
+		_clear_pending_run()
+
 	# Todos os heróis estão em alcance: para o cenário.
 	if world_scroller.running:
 		world_scroller.running = false
@@ -297,7 +304,7 @@ func process_skills() -> void:
 	# Processa as habilidades individualmente, sem alterar a rotação
 	# de skills ou os cooldowns de cada personagem.
 	for hero in heroes:
-		if not is_instance_valid(hero) or bool(hero.get("dead")):
+		if not is_instance_valid(hero) or bool(hero.get("dead")) or bool(hero.get("pending_run")):
 			continue
 
 		var hero_id := hero.get_instance_id()
@@ -364,28 +371,68 @@ func has_alive_enemies() -> bool:
 	return false
 
 
-func start_running():
+func _clear_pending_run() -> void:
+	run_request_id += 1
+	pending_run = false
+	for hero in pending_run_heroes:
+		if is_instance_valid(hero):
+			hero.set("pending_run", false)
+	pending_run_heroes.clear()
+
+
+func _hero_action_active(hero: Node3D) -> bool:
+	if not is_instance_valid(hero) or bool(hero.get("dead")):
+		return false
+	return bool(hero.get("attacking")) or bool(hero.get("action_locked")) or bool(hero.get("basic_attack_lock"))
+
+
+func _request_running(heroes: Array[Node3D], next_state: State) -> void:
 	if is_party_defeated():
 		return
+	if pending_run:
+		for hero in heroes:
+			if is_instance_valid(hero) and not pending_run_heroes.has(hero):
+				pending_run_heroes.append(hero)
+				hero.set("pending_run", true)
+		return
+	pending_run = true
+	pending_run_heroes = heroes.duplicate()
+	for hero in pending_run_heroes:
+		if is_instance_valid(hero):
+			hero.set("pending_run", true)
+	run_request_id += 1
+	var request_id: int = run_request_id
+	_wait_and_run(request_id, next_state)
 
-	if is_instance_valid(party_manager):
-		main_hero = _get_alive_reference_hero()
 
-	state = State.RUNNING
-
-	print("### RUN LIBERADO PELA FUNÇÃO start_running() ###")
-
-	if is_instance_valid(party_manager):
-		for hero in party_manager.get_alive_heroes():
-			if hero.has_method("start_running"):
-				hero.call("start_running")
-	else:
-		main_hero.start_running()
-
-	print("=== RUNNING | ONDA ", current_wave, " ===")
-
+func _wait_and_run(request_id: int, next_state: State) -> void:
+	while request_id == run_request_id and pending_run and not is_party_defeated():
+		var all_ready: bool = true
+		for hero in pending_run_heroes:
+			if _hero_action_active(hero):
+				all_ready = false
+				break
+		if all_ready:
+			break
+		await get_tree().process_frame
+	if request_id != run_request_id or not pending_run or is_party_defeated():
+		return
+	var heroes_to_run: Array[Node3D] = pending_run_heroes.duplicate()
+	_clear_pending_run()
+	for hero in heroes_to_run:
+		if is_instance_valid(hero) and not bool(hero.get("dead")) and hero.has_method("start_running"):
+			hero.call("start_running")
+	state = next_state
 	world_scroller.running = true
 
+
+func start_running() -> void:
+	var heroes: Array[Node3D] = []
+	if is_instance_valid(party_manager):
+		heroes = party_manager.get_alive_heroes()
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		heroes.append(main_hero)
+	_request_running(heroes, State.RUNNING)
 
 func start_combat(enemy: Node3D):
 	if not is_instance_valid(enemy):
@@ -693,24 +740,7 @@ func start_reward():
 
 
 func continue_running(heroes_that_need_to_move: Array[Node3D] = []) -> void:
-	if is_party_defeated():
-		return
-
-	state = State.COMBAT
-	print("### RUN LIBERADO PELA FUNÇÃO continue_running() ###")
-
-	world_scroller.running = true
-
-	# Somente os heróis fora do alcance precisam interromper a ação atual
-	# para se deslocar. Os demais continuam suas animações/ataques.
-	for hero in heroes_that_need_to_move:
-		if not is_instance_valid(hero) or bool(hero.get("dead")):
-			continue
-		if hero.has_method("start_running"):
-			hero.call("start_running")
-
-	print("=== CONTINUANDO RUN ===")
-
+	_request_running(heroes_that_need_to_move, State.COMBAT)
 
 func toggle_pause():
 	if get_tree().paused:
