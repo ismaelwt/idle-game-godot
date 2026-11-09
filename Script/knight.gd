@@ -544,7 +544,7 @@ func basic_attack(target: Node3D) -> void:
 		print("=== KNIGHT CAUSOU DANO ===")
 		print("Dano: ", final_damage)
 		print("Alvo: ", target.name)
-	else:
+	elif target_can_receive_damage and is_instance_valid(target):
 		push_warning(
 			"Knight: o alvo não possui o método take_damage()."
 		)
