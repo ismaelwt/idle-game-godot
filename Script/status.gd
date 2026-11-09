@@ -313,10 +313,6 @@ func _on_attributes_changed() -> void:
 	update_status()
 
 
-# ==========================================
-# CRIAR SLOTS DO INVENTÁRIO
-# ==========================================
-
 func _on_close_pressed() -> void:
 	if is_instance_valid(inventory_control):
 		inventory_control.cleanup()
@@ -325,16 +321,7 @@ func _on_close_pressed() -> void:
 	# Fecha e libera toda a interface do Status; ela será recriada ao abrir novamente.
 	queue_free()
 	
-	if is_instance_valid(my_chest_ui):
-		my_chest_ui.queue_free()
-		my_chest_ui = null
 
-
-# ==========================================
-# DESCRIÇÃO LEGADA DOS ITENS
-# Mantida para compatibilidade com o projeto.
-# Não é utilizada pelos tooltips visuais.
-# ==========================================
 
 func refresh_equipment_slots() -> void:
 	if not is_instance_valid(inventory):
@@ -426,14 +413,14 @@ func refresh_equipment_slots() -> void:
 
 	# Exibe o tier nos próprios slots de equipamento, usando o mesmo badge do inventário.
 	inventory_control.set_tier_badge(helmet_icon.get_parent(), helmet)
-	_set_tier_badge(chest_icon.get_parent(), chest)
-	_set_tier_badge(weapon_icon.get_parent(), weapon)
-	_set_tier_badge(gloves_icon.get_parent(), gloves)
-	_set_tier_badge(pants_icon.get_parent(), pants)
-	_set_tier_badge(boots_icon.get_parent(), boots)
-	_set_tier_badge(necklace_icon.get_parent(), necklace)
-	_set_tier_badge(ring_icon.get_parent(), ring)
-	_set_tier_badge(belt_icon.get_parent(), belt)
+	inventory_control.set_tier_badge(chest_icon.get_parent(), chest)
+	inventory_control.set_tier_badge(weapon_icon.get_parent(), weapon)
+	inventory_control.set_tier_badge(gloves_icon.get_parent(), gloves)
+	inventory_control.set_tier_badge(pants_icon.get_parent(), pants)
+	inventory_control.set_tier_badge(boots_icon.get_parent(), boots)
+	inventory_control.set_tier_badge(necklace_icon.get_parent(), necklace)
+	inventory_control.set_tier_badge(ring_icon.get_parent(), ring)
+	inventory_control.set_tier_badge(belt_icon.get_parent(), belt)
 
 
 # ==========================================
