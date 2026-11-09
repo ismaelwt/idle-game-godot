@@ -11,6 +11,8 @@ signal visual_impact_reached
 @export var damage: float = 10.0
 
 var target: Node3D = null
+var target_position_snapshot: Vector3 = Vector3.ZERO
+var has_target_position_snapshot: bool = false
 var shooter: Node3D = null
 var lifetime: float = 0.0
 var resolved: bool = false
@@ -43,6 +45,9 @@ func setup(
 	critical_hit: bool = false
 ) -> void:
 	target = target_node
+	if is_instance_valid(target_node):
+		target_position_snapshot = target_node.global_position
+		has_target_position_snapshot = true
 	shooter = shooter_node
 	damage = projectile_damage
 	is_critical = critical_hit
@@ -68,6 +73,9 @@ func setup_visual_falling(
 	delay: float
 ) -> void:
 	target = target_node
+	if is_instance_valid(target_node):
+		target_position_snapshot = target_node.global_position
+		has_target_position_snapshot = true
 	falling_mode = true
 	visual_only = true
 	fall_speed = maxf(projectile_fall_speed, 0.01)
@@ -86,14 +94,12 @@ func _process(delta: float) -> void:
 		finish()
 		return
 
-	if not is_instance_valid(target):
+	if not is_instance_valid(target) and not has_target_position_snapshot:
 		finish()
 		return
 
-	if target.get("dead") == true or target.get("dying") == true:
-		finish()
-		return
-
+	# Se o alvo morreu, o projétil ainda completa seu percurso visual
+	# até a última posição conhecida, mas apply_target_damage não causa dano.
 	if falling_mode:
 		_process_falling(delta)
 		return
@@ -108,6 +114,9 @@ func setup_visual_falling_at_position(
 	delay: float
 ) -> void:
 	target = target_node
+	if is_instance_valid(target_node):
+		target_position_snapshot = target_node.global_position
+		has_target_position_snapshot = true
 	falling_mode = true
 	visual_only = true
 	has_visual_landing_position = true
@@ -151,6 +160,14 @@ func _process_falling(delta: float) -> void:
 
 
 func _get_target_position() -> Vector3:
+	var target_is_alive := (
+		is_instance_valid(target)
+		and target.get("dead") != true
+		and target.get("dying") != true
+	)
+	if not target_is_alive:
+		return target_position_snapshot
+
 	var target_position: Vector3 = target.global_position
 	var magic_target: Node3D = target.get_node_or_null("MagicTarget")
 
