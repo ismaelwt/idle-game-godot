@@ -305,7 +305,7 @@ func _on_inventory_slot_pressed(index: int) -> void:
 			selected_equipment_for_gem = null
 			if is_instance_valid(item_tooltip):
 				item_tooltip.hide_tooltip()
-		return
+			return
 
 	inventory.equip_item(item, str(character_stats.hero_id))
 
