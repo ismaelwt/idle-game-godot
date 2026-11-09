@@ -1,7 +1,6 @@
 extends Control
 
 @onready var inventory_panel: Panel = $InventoryPanel
-@onready var drag_handle: Label = $InventoryPanel/VBoxContainer/Header/Title
 @onready var attributes_panel: Control = get_parent().get_node("AttributesControl/PanelContainer")
 
 var dragging: bool = false
@@ -9,13 +8,10 @@ var drag_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+	# O Control raiz é a área de arraste. O Panel interno mantém seus próprios botões.
 	top_level = true
-	size = Vector2(519.0, 350.0)
+	mouse_filter = Control.MOUSE_FILTER_STOP
 	call_deferred("_place_at_attributes_position")
-
-	if is_instance_valid(drag_handle):
-		drag_handle.mouse_filter = Control.MOUSE_FILTER_STOP
-		drag_handle.gui_input.connect(_on_drag_handle_input)
 
 
 func _place_at_attributes_position() -> void:
@@ -37,12 +33,13 @@ func _place_at_attributes_position() -> void:
 	z_index = 10
 
 
-func _on_drag_handle_input(event: InputEvent) -> void:
+# O clique é recebido pelo Control maior, nas áreas que não são cobertas pelo Panel.
+func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 		dragging = true
 		drag_offset = get_global_mouse_position() - global_position
 		move_to_front()
-		drag_handle.accept_event()
+		accept_event()
 
 
 func _input(event: InputEvent) -> void:
