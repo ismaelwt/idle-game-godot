@@ -277,6 +277,11 @@ func process_skills() -> void:
 			all_heroes_in_attack_range = false
 			heroes_that_need_to_move.append(hero)
 
+	# Se não restam inimigos, não inicia deslocamento apenas porque
+	# os alvos antigos foram removidos. A transição da onda cuida do avanço.
+	if not has_valid_target and not has_combat_enemies():
+		return
+
 	# Mantém o cenário avançando até todos os heróis vivos
 	# terem um alvo válido e estarem dentro do próprio alcance.
 	if not has_valid_target or not all_heroes_in_attack_range:
