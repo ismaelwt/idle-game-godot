@@ -20,9 +20,12 @@ func _place_at_attributes_position() -> void:
 
 	var attributes_rect := attributes_panel.get_global_rect()
 	var panel_offset := inventory_panel.position
-	# Abre alinhado ao canto superior esquerdo do painel de atributos,
-	# com 15 px de margem interna em cada lado.
-	var target_panel_position := attributes_rect.position + Vector2(15.0, 15.0)
+	# Abre alinhado ao canto superior direito do painel de atributos,
+	# com 15 px de margem em relação às bordas superior e direita.
+	var target_panel_position := Vector2(
+		attributes_rect.end.x - inventory_panel.size.x - 15.0,
+		attributes_rect.position.y + 15.0
+	)
 	var target_root_position := target_panel_position - panel_offset
 
 	var viewport_size := get_viewport_rect().size
