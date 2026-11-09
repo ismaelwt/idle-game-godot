@@ -39,8 +39,9 @@ func setup(inventory_ref: Inventory, stats_ref, enchantment_ref: EnchantmentScen
 		push_error("InventoryWindow: nó Inventory não foi informado.")
 		return
 
-	if not inventory.inventory_changed.is_connected(_on_inventory_changed):
-		inventory.inventory_changed.connect(_on_inventory_changed)
+	if inventory.has_signal("inventory_changed"):
+		if not inventory.inventory_changed.is_connected(_on_inventory_changed):
+			inventory.inventory_changed.connect(_on_inventory_changed)
 
 	chest_button.pressed.connect(_on_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
