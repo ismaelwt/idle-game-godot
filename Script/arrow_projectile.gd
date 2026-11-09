@@ -94,7 +94,7 @@ func _process(delta: float) -> void:
 		finish()
 		return
 
-	if not is_instance_valid(target) and not has_target_position_snapshot:
+	if not is_instance_valid(target) and not has_target_position_snapshot and not has_visual_landing_position:
 		finish()
 		return
 
@@ -164,6 +164,7 @@ func _get_target_position() -> Vector3:
 		is_instance_valid(target)
 		and target.get("dead") != true
 		and target.get("dying") != true
+		and (target.get("health") == null or float(target.get("health")) > 0.0)
 	)
 	if not target_is_alive:
 		return target_position_snapshot
@@ -233,7 +234,11 @@ func apply_target_damage() -> void:
 		finish()
 		return
 
-	if target.get("dead") == true or target.get("dying") == true:
+	if (
+		target.get("dead") == true
+		or target.get("dying") == true
+		or (target.get("health") != null and float(target.get("health")) <= 0.0)
+	):
 		finish()
 		return
 
