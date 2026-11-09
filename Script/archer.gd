@@ -249,6 +249,16 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	attacking = false
 	current_attack_target = null
 
+	# A cura pode terminar enquanto a equipe já está em deslocamento.
+	# Retoma explicitamente a animação de corrida em vez de deixar o Archer
+	# preso na última pose da animação de cura.
+	if is_instance_valid(world_scroller) and world_scroller.running:
+		rotation.y = initial_rotation_y
+		animation_player.speed_scale = 1.0
+		play_animation("archer_walk")
+	else:
+		play_animation("archer_idle")
+
 
 func _use_arrow_storm(target: Node3D) -> void:
 	attack_id += 1
