@@ -209,6 +209,7 @@ func process_skills() -> void:
 
 	# Guarda o alvo de cada herói e verifica se todos podem iniciar o combate.
 	var hero_targets: Dictionary = {}
+	var heroes_that_need_to_move: Array[Node3D] = []
 	var has_valid_target := false
 	var all_heroes_in_attack_range := true
 
@@ -236,10 +237,12 @@ func process_skills() -> void:
 		# Um herói vivo sem alvo não deve ser ignorado na decisão de parada.
 		if not is_instance_valid(target):
 			all_heroes_in_attack_range = false
+			heroes_that_need_to_move.append(hero)
 			continue
 
 		if target.dying or target.health <= 0:
 			all_heroes_in_attack_range = false
+			heroes_that_need_to_move.append(hero)
 			continue
 
 		has_valid_target = true
@@ -254,6 +257,7 @@ func process_skills() -> void:
 
 		if range_value == null:
 			all_heroes_in_attack_range = false
+			heroes_that_need_to_move.append(hero)
 			continue
 
 		# Calcula a distância horizontal entre o herói e o alvo.
@@ -271,12 +275,13 @@ func process_skills() -> void:
 
 		if distance > float(range_value) + 0.01:
 			all_heroes_in_attack_range = false
+			heroes_that_need_to_move.append(hero)
 
 	# Mantém o cenário avançando até todos os heróis vivos
 	# terem um alvo válido e estarem dentro do próprio alcance.
 	if not has_valid_target or not all_heroes_in_attack_range:
 		if not world_scroller.running:
-			continue_running()
+			continue_running(heroes_that_need_to_move)
 		return
 
 	# Todos os heróis estão em alcance: para o cenário.
@@ -496,36 +501,8 @@ func enemy_died(dead_enemy: Node3D):
 
 	print("=== INIMIGO MORREU: ", dead_enemy.name, " ===")
 
-	# A morte do alvo cancela somente ataques básicos direcionados a ele.
-	# Skills já iniciadas continuam sua execução; seus efeitos verificam
-	# individualmente quais inimigos ainda estão vivos no momento do impacto.
-	var heroes_to_check: Array[Node3D] = []
-	if is_instance_valid(party_manager):
-		for hero in party_manager.get_heroes():
-			if is_instance_valid(hero) and hero is Node3D:
-				heroes_to_check.append(hero)
-	elif is_instance_valid(main_hero):
-		heroes_to_check.append(main_hero)
-
-	for hero in heroes_to_check:
-		if not hero.has_method("cancel_attack_on_target"):
-			continue
-
-		var basic_attack_targets_dead_enemy: bool = false
-
-		if _has_property(hero, "current_attack_target"):
-			basic_attack_targets_dead_enemy = hero.get("current_attack_target") == dead_enemy
-
-		# Mage pode ter um projétil de ataque básico em voo mesmo depois
-		# de limpar current_attack_target.
-		if _has_property(hero, "current_basic_attack_projectile"):
-			var basic_projectile: Variant = hero.get("current_basic_attack_projectile")
-			if is_instance_valid(basic_projectile):
-				if basic_projectile.get("target") == dead_enemy:
-					basic_attack_targets_dead_enemy = true
-
-		if basic_attack_targets_dead_enemy:
-			hero.call("cancel_attack_on_target", dead_enemy)
+	# A morte do inimigo não cancela ataques ou skills em execução.
+	# Cada ataque valida o alvo no momento do impacto e não aplica dano se ele morreu.
 
 	# Remove o inimigo da lista de combate.
 	var index := combat_enemies.find(dead_enemy)
@@ -704,28 +681,22 @@ func start_reward():
 	print("=== REWARD ===")
 
 
-func continue_running():
+func continue_running(heroes_that_need_to_move: Array[Node3D] = []) -> void:
 	if is_party_defeated():
 		return
 
 	state = State.COMBAT
-
 	print("### RUN LIBERADO PELA FUNÇÃO continue_running() ###")
 
 	world_scroller.running = true
 
-	if is_instance_valid(party_manager):
-		for hero in party_manager.get_alive_heroes():
-			if not is_instance_valid(hero):
-				continue
-
-			# Não interrompe uma skill que já está em execução.
-			# O herói pode continuar a animação enquanto o cenário avança.
-			if bool(hero.get("attacking")):
-				continue
-
-			if hero.has_method("start_running"):
-				hero.call("start_running")
+	# Somente os heróis fora do alcance precisam interromper a ação atual
+	# para se deslocar. Os demais continuam suas animações/ataques.
+	for hero in heroes_that_need_to_move:
+		if not is_instance_valid(hero) or bool(hero.get("dead")):
+			continue
+		if hero.has_method("start_running"):
+			hero.call("start_running")
 
 	print("=== CONTINUANDO RUN ===")
 
