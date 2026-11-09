@@ -48,6 +48,8 @@ var skill_tree: Control = null
 @onready var mage_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/MageAvatar/SelectedPlayer
 @onready var archer_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/ArcherAvatar/SelectedPlayer
 
+@onready var inventory_control: Control = $CenterContainer/InventoryControl
+@onready var inventory_button: TextureButton = $CenterContainer/PanelContainer/InvetoryButton
 @onready var inventory_panel = $CenterContainer/InventoryControl/InventoryPanel
 @onready var items_grid: GridContainer = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/ScrollContainer/ItemsGrid
 @onready var chest_button: TextureButton = $CenterContainer/InventoryControl/InventoryPanel/VBoxContainer/Header/ChestButton
@@ -176,6 +178,7 @@ func _ready() -> void:
 	chest_button.pressed.connect(_on_chest_pressed)
 	my_chest_button.pressed.connect(_on_my_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
+	inventory_button.pressed.connect(_on_inventory_button_pressed)
 
 	create_inventory_slots(45)
 
@@ -1308,6 +1311,17 @@ func _on_skill_tree_button_pressed() -> void:
 	get_parent().add_child(skill_tree)
 	skill_tree.visible = true
 	skill_tree.set_selected_hero(active_hero)
+
+func _on_inventory_button_pressed() -> void:
+	if not is_instance_valid(inventory_control):
+		return
+
+	attributes_control.hide()
+	if is_instance_valid(enchantment_ui):
+		enchantment_ui.hide()
+
+	inventory_control.visible = not inventory_control.visible
+
 
 func _on_attributes_button_pressed() -> void:
 	if not is_instance_valid(attributes_control):
