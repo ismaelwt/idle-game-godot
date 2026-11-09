@@ -871,17 +871,26 @@ func resume_after_wave_transition() -> void:
 	if is_party_defeated():
 		return
 
+	var heroes_to_move: Array[Node3D] = []
 	if is_instance_valid(party_manager):
 		main_hero = _get_alive_reference_hero()
-		for hero in party_manager.get_alive_heroes():
-			if is_instance_valid(hero) and hero.has_method("start_running"):
-				hero.call("start_running")
-	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")) and main_hero.has_method("start_running"):
-		main_hero.start_running()
+		heroes_to_move = party_manager.get_alive_heroes()
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		heroes_to_move.append(main_hero)
 
-	world_scroller.running = true
-	state = State.RUNNING
-	print("=== RUNNING | FORMAÇÃO SINCRONIZADA ===")
+	if heroes_to_move.is_empty():
+		return
+
+	# A transição entre ondas também precisa respeitar skills em execução.
+	# Buffs liberam este bloqueio ao terminar a animação de ativação;
+	# skills ofensivas liberam somente quando o efeito/projétil termina.
+	_request_running(heroes_to_move, State.RUNNING)
+
+	while pending_run and not is_party_defeated():
+		await get_tree().process_frame
+
+	if not is_party_defeated() and world_scroller.running:
+		print("=== RUNNING | FORMAÇÃO SINCRONIZADA ===")
 
 
 func move_hero_to_z(hero: Node3D, target_z: float, speed: float = 3.5) -> void:
