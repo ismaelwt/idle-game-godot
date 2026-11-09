@@ -48,6 +48,7 @@ var current_attack_target: Node3D = null
 
 @onready var world_scroller = get_parent().get_node("World/WorldScroller")
 
+var pending_run: bool = false
 var attacking := false
 var action_locked := false
 var skill_animation_finished = false
@@ -422,37 +423,13 @@ func _on_animation_finished(anim_name):
 		_finish_death()
 
 
-func start_running():
-
-	_notify_skill_cancelled()
-	# Mesmo fluxo de transição usado pelos outros heróis.
-	# Invalida ações/awaits anteriores e limpa qualquer alvo antigo.
-	attack_id += 1
-	attacking = false
-	action_locked = false
-	basic_attack_lock = false
-	attack_animation_playing = false
-	skill_animation_finished = false
-	current_attack_target = null
-	basic_attack_target = null
-	basic_attack_hit = false
-
-	if is_instance_valid(current_basic_attack_projectile):
-		current_basic_attack_projectile.queue_free()
-		current_basic_attack_projectile = null
-
-	is_running = true
-
-	if dead:
+func start_running() -> void:
+	if dead or attacking or action_locked or basic_attack_lock:
 		return
-
+	is_running = true
 	rotation.y = initial_rotation_y
 	animation_player.speed_scale = 1.0
-	animation_player.play(
-		"mage/running",
-		animation_blend
-	)
-
+	animation_player.play("mage/running", animation_blend)
 
 func play_animation(_name):
 	if dead:
@@ -810,7 +787,7 @@ func basic_attack(target: Node3D):
 	if dead:
 		return
 
-	if action_locked:
+	if pending_run or action_locked:
 		return
 
 	if attacking:
