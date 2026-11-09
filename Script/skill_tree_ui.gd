@@ -2,6 +2,7 @@
 extends Panel
 
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
+const PASSIVE_SKILL_GLOW_SHADER = preload("res://Shaders/passive_skill_glow.gdshader")
 # ID da skill exibida em cada botão.
 # Para reorganizar a árvore, basta alterar estes valores.
 
@@ -84,6 +85,8 @@ var character_stats
 var _skill_buttons_by_key: Dictionary = {}
 var _add_buttons_by_key: Dictionary = {}
 var _remove_buttons_by_key: Dictionary = {}
+var _passive_glow_original_materials: Dictionary = {}
+var _passive_glow_materials: Dictionary = {}
 
 
 func _get_skill_mapping() -> Dictionary:
@@ -342,6 +345,10 @@ func update_skill_button(
 	var skill_learned: bool = (
 		character_stats.has_skill(skill_id)
 	)
+	var skill_data: Dictionary = SkillTree.get_skill(skill_id)
+	var is_passive: bool = bool(skill_data.get("passive", false))
+
+	_set_passive_skill_glow(button, is_passive and skill_learned)
 
 	# Define a textura conforme o estado da habilidade.
 	if skill_learned:
@@ -360,6 +367,25 @@ func update_skill_button(
 
 	# Mantém o botão clicável para permitir a compra.
 	button.disabled = false
+
+
+
+func _set_passive_skill_glow(button: TextureButton, enabled: bool) -> void:
+	var button_id: int = button.get_instance_id()
+
+	if not _passive_glow_original_materials.has(button_id):
+		_passive_glow_original_materials[button_id] = button.material
+
+	if enabled:
+		if not _passive_glow_materials.has(button_id):
+			var glow_material := ShaderMaterial.new()
+			glow_material.shader = PASSIVE_SKILL_GLOW_SHADER
+			_passive_glow_materials[button_id] = glow_material
+
+		button.material = _passive_glow_materials[button_id]
+	else:
+		button.material = _passive_glow_original_materials[button_id]
+
 
 
 
