@@ -298,14 +298,17 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		push_warning("Knight: a cena da skill não define 'duration'.")
 		return
 
-	# A ação permanece bloqueada durante toda a duração do buff.
-	# O LevelController só pode iniciar o running após o efeito terminar.
-	await get_tree().create_timer(float(duration_value)).timeout
-
-	# A expiração do buff não depende mais do attack_id.
-	_clear_frenzy(active_frenzy)
+	# A animação de ativação terminou: libera a rotação de skills.
+	# frenzy_active continua sinalizando ao LevelController que a equipe
+	# não deve iniciar o running enquanto o buff estiver ativo.
 	attacking = false
 	action_locked = false
+
+	await get_tree().create_timer(float(duration_value)).timeout
+
+	# A expiração do buff não altera o estado de outra skill que possa
+	# estar sendo executada neste momento.
+	_clear_frenzy(active_frenzy)
 	print("KNIGHT SKILL FINALIZADA: ", skill_id)
 
 
