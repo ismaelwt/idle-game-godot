@@ -395,6 +395,8 @@ func _hero_action_active(hero: Node3D) -> bool:
 		hero.get("attacking") == true
 		or hero.get("action_locked") == true
 		or hero.get("basic_attack_lock") == true
+		or hero.get("frenzy_active") == true
+		or hero.get("damage_buff_active") == true
 	)
 
 
