@@ -884,7 +884,7 @@ func basic_attack(target: Node3D):
 	current_basic_attack_projectile = projectile
 
 	projectile.global_position = fireball_spawn.global_position
-	projectile.target = target
+	projectile.target = target if is_instance_valid(target) else null
 	projectile.target_position_snapshot = target_position_snapshot
 	projectile.has_target_position_snapshot = true
 	projectile.basic_attack_level = character_stats.basic_attack_level
