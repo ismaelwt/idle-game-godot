@@ -1,6 +1,8 @@
 extends Control
 class_name InventoryWindow
 
+const ItemRarityVisualsScript = preload("res://Script/item_rarity_visuals.gd")
+
 var font: Font = preload("res://Fonts/Pix32.ttf")
 var item_tooltip_scene: PackedScene = preload("res://UI/item_tooltip.tscn")
 var my_chest_scene: PackedScene = preload("res://Scenes/my_chest.tscn")
@@ -175,6 +177,7 @@ func refresh_inventory() -> void:
 		var item_button := slot.get_node("ItemButton") as Button
 
 		icon_rect.texture = null
+		icon_rect.material = null
 		icon_rect.show()
 		_remove_animated_item_sprite(slot)
 		set_tier_badge(slot, null)
@@ -186,7 +189,7 @@ func refresh_inventory() -> void:
 				var base = item.item_base
 				if base.animated_frames != null:
 					icon_rect.hide()
-					_add_animated_item_sprite(slot, base.animated_frames)
+					_add_animated_item_sprite(slot, base.animated_frames, item)
 				else:
 					match item.enchantment_slots:
 						1:
@@ -196,6 +199,7 @@ func refresh_inventory() -> void:
 						_:
 							icon_rect.texture = base.icon
 
+				icon_rect.material = ItemRarityVisualsScript.create_material(item)
 				set_tier_badge(slot, item)
 
 
@@ -416,13 +420,14 @@ func _remove_animated_item_sprite(slot: Control) -> void:
 			child.queue_free()
 
 
-func _add_animated_item_sprite(slot: Control, frames: SpriteFrames) -> void:
+func _add_animated_item_sprite(slot: Control, frames: SpriteFrames, item: ItemInstance) -> void:
 	var animated_sprite := AnimatedSprite2D.new()
 	animated_sprite.sprite_frames = frames
 	animated_sprite.animation = "default"
 	animated_sprite.centered = true
 	animated_sprite.position = Vector2(20, 20)
 	animated_sprite.z_index = 2
+	animated_sprite.material = ItemRarityVisualsScript.create_material(item)
 
 	var first_frame := frames.get_frame_texture("default", 0)
 	if first_frame != null:
