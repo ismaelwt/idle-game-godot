@@ -93,6 +93,7 @@ layout_mode = 2
 
 [node name="Title" type="Label" parent="InventoryPanel/VBoxContainer/Header"]
 layout_mode = 2
+size_flags_horizontal = 3
 text = "Inventario"
 label_settings = SubResource("LabelSettings_w3147")
 
