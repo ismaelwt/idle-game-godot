@@ -1,6 +1,8 @@
 
 extends Panel
 
+const ItemRarityVisualsScript = preload("res://Script/item_rarity_visuals.gd")
+
 const font: Font = preload("res://Fonts/Pix32.ttf")
 var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
 var enchantment_ui: EnchantmentScene
@@ -411,6 +413,17 @@ func refresh_equipment_slots() -> void:
 	)
 	belt_icon.texture = get_equipment_icon(belt, belt_default_icon) if belt != null else belt_default_icon
 
+	# Brilho de raridade aplicado somente aos ícones dos equipamentos.
+	_apply_equipment_rarity_glow(helmet_icon, helmet)
+	_apply_equipment_rarity_glow(chest_icon, chest)
+	_apply_equipment_rarity_glow(weapon_icon, weapon)
+	_apply_equipment_rarity_glow(gloves_icon, gloves)
+	_apply_equipment_rarity_glow(pants_icon, pants)
+	_apply_equipment_rarity_glow(boots_icon, boots)
+	_apply_equipment_rarity_glow(necklace_icon, necklace)
+	_apply_equipment_rarity_glow(ring_icon, ring)
+	_apply_equipment_rarity_glow(belt_icon, belt)
+
 	# Exibe o tier nos próprios slots de equipamento, usando o mesmo badge do inventário.
 	inventory_control.set_tier_badge(helmet_icon.get_parent(), helmet)
 	inventory_control.set_tier_badge(chest_icon.get_parent(), chest)
@@ -421,6 +434,15 @@ func refresh_equipment_slots() -> void:
 	inventory_control.set_tier_badge(necklace_icon.get_parent(), necklace)
 	inventory_control.set_tier_badge(ring_icon.get_parent(), ring)
 	inventory_control.set_tier_badge(belt_icon.get_parent(), belt)
+
+
+
+func _apply_equipment_rarity_glow(icon: TextureRect, item: ItemInstance) -> void:
+	if not is_instance_valid(icon):
+		return
+	icon.material = ItemRarityVisualsScript.create_material(item)
+
+
 
 
 # ==========================================
