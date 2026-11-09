@@ -117,9 +117,9 @@ func _spawn_arrow_rain() -> void:
 		if not is_instance_valid(target_enemy):
 			continue
 
-		var use_fire_arrow := (
+		var use_fire_arrow: bool = (
 			is_instance_valid(character_stats)
-			and character_stats.has_skill("fire_arrow")
+			and bool(character_stats.call("has_skill", "fire_arrow"))
 		)
 		var arrow_scene: PackedScene = FIRE_ARROW_SCENE if use_fire_arrow else ARROW_SCENE
 		var arrow := arrow_scene.instantiate() as Node3D
