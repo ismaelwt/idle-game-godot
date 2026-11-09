@@ -167,6 +167,8 @@ func _get_target_position() -> Vector3:
 		and (target.get("health") == null or float(target.get("health")) > 0.0)
 	)
 	if not target_is_alive:
+		if visual_only and has_visual_landing_position:
+			return visual_landing_position
 		return target_position_snapshot
 
 	var target_position: Vector3 = target.global_position
