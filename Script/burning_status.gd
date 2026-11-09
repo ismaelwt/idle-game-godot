@@ -38,7 +38,7 @@ func _process(delta: float) -> void:
 func _is_target_alive() -> bool:
 	if not is_instance_valid(target) or not target.is_inside_tree():
 		return false
-	if target.get("dying") == true or target.get("dead") == true:
+	if target.get("dying") == true:
 		return false
 
 	var target_health = target.get("health")
