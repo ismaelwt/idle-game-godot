@@ -240,14 +240,14 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	print("Vida recuperada: ", healed_amount)
 	print("Vida atual: ", health, "/", max_health)
 
-	attacking = false
-	current_attack_target = null
-
-	# O efeito visual permanece pelo tempo definido na própria cena.
+	# Mantém a ação ativa até o efeito visual da cura terminar.
 	await get_tree().create_timer(float(healing_instance.duration)).timeout
 
 	if is_instance_valid(healing_instance):
 		healing_instance.queue_free()
+
+	attacking = false
+	current_attack_target = null
 
 
 func _use_arrow_storm(target: Node3D) -> void:
