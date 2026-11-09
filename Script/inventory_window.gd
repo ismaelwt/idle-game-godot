@@ -1,7 +1,6 @@
 extends Control
 
 @onready var inventory_panel: Panel = $InventoryPanel
-@onready var attributes_panel: Control = get_parent().get_node("AttributesControl/PanelContainer")
 
 var dragging: bool = false
 var drag_offset: Vector2 = Vector2.ZERO
@@ -11,30 +10,6 @@ func _ready() -> void:
 	# O Control raiz define toda a área que pode iniciar o arraste.
 	top_level = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
-	call_deferred("_place_at_attributes_position")
-
-
-func _place_at_attributes_position() -> void:
-	if not is_instance_valid(attributes_panel):
-		return
-
-	var attributes_rect := attributes_panel.get_global_rect()
-	var panel_offset := inventory_panel.position
-	# Abre alinhado ao canto superior direito do painel de atributos,
-	# com 15 px de margem em relação às bordas superior e direita.
-	var target_panel_position := Vector2(
-		attributes_rect.end.x - inventory_panel.size.x - 15.0,
-		attributes_rect.position.y + 15.0
-	)
-	var target_root_position := target_panel_position - panel_offset
-
-	var viewport_size := get_viewport_rect().size
-	var min_position := -panel_offset
-	var max_position := viewport_size - inventory_panel.size - panel_offset
-	target_root_position.x = clampf(target_root_position.x, min_position.x, maxf(max_position.x, min_position.x))
-	target_root_position.y = clampf(target_root_position.y, min_position.y, maxf(max_position.y, min_position.y))
-
-	global_position = target_root_position
 	z_index = 10
 
 
