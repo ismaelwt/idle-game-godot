@@ -500,7 +500,7 @@ func basic_attack(target: Node3D) -> void:
 
 	# A animação do ataque termina normalmente mesmo se o alvo morrer.
 	# Nesse caso, apenas pulamos a aplicação de dano.
-	var target_can_receive_damage := (
+	var target_can_receive_damage: bool = (
 		is_instance_valid(target)
 		and target.get("dying") != true
 		and target.get("health") != null
