@@ -1,6 +1,7 @@
 
 extends Panel
 
+var font: Font = preload("res://Fonts/Pix32.ttf")
 var enchantment_scene = preload("res://Scenes/enchantment_scene.tscn")
 var enchantment_ui: EnchantmentScene
 var item_tooltip: ItemTooltip
