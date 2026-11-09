@@ -20,6 +20,7 @@ extends Node3D
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 const ARROW_PROJECTILE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
+const FIRE_ARROW_PROJECTILE: PackedScene = preload("res://Scenes/fire_arrow_projectile.tscn")
 const HEALING_SCENE: PackedScene = preload("res://Scenes/healing_effect.tscn")
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -390,7 +391,12 @@ func basic_attack(target: Node3D) -> void:
 
 	AudioManager.play_sfx(preload("res://Sounds/arrow_shot.mp3"), randf_range(0.95, 1.05))
 
-	var projectile := ARROW_PROJECTILE.instantiate()
+	var projectile_scene: PackedScene = (
+		FIRE_ARROW_PROJECTILE
+		if character_stats.has_skill("fire_arrow")
+		else ARROW_PROJECTILE
+	)
+	var projectile := projectile_scene.instantiate()
 	get_tree().current_scene.add_child(projectile)
 	projectile.global_position = arrow_spawn.global_position
 	projectile.global_rotation = arrow_spawn.global_rotation
