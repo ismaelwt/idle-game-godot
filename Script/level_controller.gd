@@ -385,9 +385,13 @@ func _clear_pending_run() -> void:
 
 
 func _hero_action_active(hero: Node3D) -> bool:
-	if not is_instance_valid(hero) or bool(hero.get("dead")):
+	if not is_instance_valid(hero) or hero.get("dead") == true:
 		return false
-	return bool(hero.get("attacking")) or bool(hero.get("action_locked")) or bool(hero.get("basic_attack_lock"))
+	return (
+		hero.get("attacking") == true
+		or hero.get("action_locked") == true
+		or hero.get("basic_attack_lock") == true
+	)
 
 
 func _request_running(heroes: Array[Node3D], next_state: State) -> void:
