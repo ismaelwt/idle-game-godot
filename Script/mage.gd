@@ -821,6 +821,9 @@ func basic_attack(target: Node3D):
 	if target.dying or target.health <= 0:
 		return
 
+	# Guarda a posição do alvo para o projétil completar o disparo
+	# mesmo que o inimigo morra durante a animação.
+	var target_position_snapshot: Vector3 = get_target_position(target)
 
 	print(
 		"⚔️ BASE ATTACK INICIADO: ",
@@ -885,9 +888,8 @@ func basic_attack(target: Node3D):
 		return
 
 
-	if target.dying or target.health <= 0:
-		return
-
+	# O disparo acontece mesmo se o alvo morreu durante a preparação.
+	# O projétil seguirá até a última posição conhecida, sem causar dano.
 
 	# ==========================================
 	# CRIA PROJÉTIL
@@ -903,6 +905,8 @@ func basic_attack(target: Node3D):
 
 	projectile.global_position = fireball_spawn.global_position
 	projectile.target = target
+	projectile.target_position_snapshot = target_position_snapshot
+	projectile.has_target_position_snapshot = true
 	projectile.basic_attack_level = character_stats.basic_attack_level
 	projectile.character_stats = character_stats
 	print("base_attack TARGET ", target.name)
