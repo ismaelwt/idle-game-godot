@@ -399,7 +399,7 @@ func process_skill_rotation(
 	if not is_instance_valid(target) or not is_enemy_alive(target):
 		return
 
-	if bool(hero.get("attacking")):
+	if bool(hero.get("attacking")) or bool(hero.get("pending_run")):
 		return
 
 	var stats = hero.get("character_stats")
@@ -588,10 +588,10 @@ func can_attempt_basic_attack(hero: Node3D, target: Node3D) -> bool:
 	if not is_instance_valid(target):
 		return false
 
-	if bool(hero.get("dead")):
+	if bool(hero.get("dead")) or bool(hero.get("pending_run")):
 		return false
 
-	if bool(hero.get("attacking")):
+	if bool(hero.get("attacking")) or bool(hero.get("pending_run")):
 		return false
 
 	var action_locked_value = hero.get("action_locked")
