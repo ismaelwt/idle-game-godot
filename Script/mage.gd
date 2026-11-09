@@ -263,13 +263,12 @@ func use_skill(skill_id: String, target: Node3D):
 
 			print("BUFF CASTADO!")
 
-			attacking = false
-			action_locked = false
-
 			var buff_duration = damage_buff_instance.duration
 			await get_tree().create_timer(buff_duration).timeout
 
 			damage_buff_active = false
+			attacking = false
+			action_locked = false
 
 			if is_instance_valid(damage_buff_instance):
 				damage_buff_instance.queue_free()
@@ -306,15 +305,14 @@ func use_skill(skill_id: String, target: Node3D):
 			print("Vida recuperada: ", healed_amount)
 			print("Vida atual: ", health, "/", max_health)
 
-			attacking = false
-			action_locked = false
-			current_attack_target = null
-
 			await get_tree().create_timer(healing_instance.duration).timeout
 
 			if is_instance_valid(healing_instance):
 				healing_instance.queue_free()
 
+			attacking = false
+			action_locked = false
+			current_attack_target = null
 			print("EFEITO DE CURA TERMINOU")
 			return
 			
