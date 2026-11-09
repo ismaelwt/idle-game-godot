@@ -160,7 +160,7 @@ func _process_falling(delta: float) -> void:
 
 
 func _get_target_position() -> Vector3:
-	var target_is_alive := (
+	var target_is_alive: bool = (
 		is_instance_valid(target)
 		and target.get("dead") != true
 		and target.get("dying") != true
