@@ -76,7 +76,8 @@ func _on_body_entered(body):
 		return
 
 	if not is_instance_valid(target):
-		finish()
+		# Sem referência ao alvo original, não há outro inimigo que possa
+		# receber este ataque básico. O projétil segue visualmente até a posição salva.
 		return
 
 	# O projétil só pode acertar o alvo para o qual foi lançado.
