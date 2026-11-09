@@ -303,7 +303,6 @@ func _has_property(object: Object, property_name: String) -> bool:
 
 func _on_equipment_changed() -> void:
 	refresh_equipment_slots()
-	inventory_control.refresh_inventory()
 	update_attributes()
 	update_status()
 
