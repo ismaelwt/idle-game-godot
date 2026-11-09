@@ -38,6 +38,7 @@ script = ExtResource("1_b7xdx")
 speed = 8.0
 max_lifetime = 15.0
 damage = 15.0
+applies_burning = true
 
 [node name="Arrow" parent="." instance=ExtResource("2_0pbls")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
