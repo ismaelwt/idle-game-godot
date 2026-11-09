@@ -1,0 +1,45 @@
+[gd_scene load_steps=6 format=3 uid="uid://b2bmpa6wn780m"]
+
+[ext_resource type="Texture2D" uid="uid://cqda81y5bcya0" path="res://icons/fire_frame_0_delay-0.08s.png" id="1_x5yvb"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l83m3"]
+transparency = 2
+alpha_scissor_threshold = 0.5
+alpha_antialiasing_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_x5yvb")
+texture_filter = 0
+texture_repeat = false
+billboard_mode = 1
+billboard_keep_scale = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_x5yvb"]
+material = SubResource("StandardMaterial3D_l83m3")
+
+[sub_resource type="Curve" id="Curve_l83m3"]
+_data = [Vector2(0, 0.84204125), 0.0, 0.0, 0, 0, Vector2(1, 0.5024301), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_l83m3"]
+offsets = PackedFloat32Array(0, 0.34768212)
+colors = PackedColorArray(0, 0, 0, 0.061000004, 1, 1, 1, 1)
+
+[node name="IncediaryEffect" type="Node3D"]
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0188947, 0)
+amount = 15
+lifetime = 1.2
+speed_scale = 2.0
+local_coords = true
+mesh = SubResource("QuadMesh_x5yvb")
+emission_shape = 1
+emission_sphere_radius = 0.6
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_max = 1.0
+scale_amount_min = 0.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_l83m3")
+color_ramp = SubResource("Gradient_l83m3")
