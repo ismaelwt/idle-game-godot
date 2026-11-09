@@ -391,12 +391,12 @@ func _clear_pending_run() -> void:
 func _hero_action_active(hero: Node3D) -> bool:
 	if not is_instance_valid(hero) or hero.get("dead") == true:
 		return false
+	# Buffs podem continuar ativos depois da animação de ativação.
+	# A corrida deve aguardar a animação/ação, não a duração do efeito.
 	return (
 		hero.get("attacking") == true
 		or hero.get("action_locked") == true
 		or hero.get("basic_attack_lock") == true
-		or hero.get("frenzy_active") == true
-		or hero.get("damage_buff_active") == true
 	)
 
 
