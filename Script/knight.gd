@@ -498,24 +498,17 @@ func basic_attack(target: Node3D) -> void:
 	if my_attack_id != attack_id:
 		return
 
-	if dead or not is_instance_valid(target):
-		_finish_attack()
-		return
+	# A animação do ataque termina normalmente mesmo se o alvo morrer.
+	# Nesse caso, apenas pulamos a aplicação de dano.
+	var target_can_receive_damage := (
+		is_instance_valid(target)
+		and target.get("dying") != true
+		and target.get("health") != null
+		and float(target.get("health")) > 0.0
+		and get_horizontal_distance_to(target) <= melee_range + 0.01
+	)
 
-	if target.get("dying") == true:
-		_finish_attack()
-		return
-
-	target_health = target.get("health")
-	if target_health == null or float(target_health) <= 0.0:
-		_finish_attack()
-		return
-
-	if get_horizontal_distance_to(target) > melee_range + 0.01:
-		_finish_attack()
-		return
-
-	if target.has_method("take_damage"):
+	if target_can_receive_damage and target.has_method("take_damage"):
 		var physical_bonus: float = (
 			character_stats.get_physical_damage_bonus()
 		)
