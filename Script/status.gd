@@ -42,7 +42,7 @@ var skill_tree: Control = null
 @onready var mage_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/MageAvatar/SelectedPlayer
 @onready var archer_selected_icon: TextureRect = $CenterContainer/PanelContainer/Background/ArcherAvatar/SelectedPlayer
 
-@onready var inventory_control: InventoryWindow = $CenterContainer/InventoryControl
+@onready var inventory_control = $CenterContainer/InventoryControl
 @onready var inventory_button: TextureButton = $CenterContainer/PanelContainer/InvetoryButton
 @onready var my_chest_button: TextureButton = $CenterContainer/PanelContainer/Background/MyChest
 # ==========================================
