@@ -188,7 +188,7 @@ func use_skill(skill_id: String, target: Node3D):
 			var projectile = fireball_scene.instantiate()
 			get_tree().current_scene.add_child(projectile)
 			projectile.global_position = fireball_spawn.global_position
-			projectile.target = target if is_instance_valid(target) else null
+			projectile.target = target if is_instance_valid(target) else null if is_instance_valid(target) else null
 			projectile.target_position_snapshot = skill_target_position
 			projectile.has_target_position_snapshot = true
 			projectile.magic_bonus = character_stats.get_magic_bonus()
@@ -867,11 +867,8 @@ func basic_attack(target: Node3D):
 		return
 
 
-	if not is_instance_valid(target):
-		return
-
-
 	# O disparo acontece mesmo se o alvo morreu durante a preparação.
+	# Usa a posição salva e permite que o projétil termine sem alvo válido.
 	# O projétil seguirá até a última posição conhecida, sem causar dano.
 
 	# ==========================================
@@ -892,7 +889,7 @@ func basic_attack(target: Node3D):
 	projectile.has_target_position_snapshot = true
 	projectile.basic_attack_level = character_stats.basic_attack_level
 	projectile.character_stats = character_stats
-	print("base_attack TARGET ", target.name)
+	print("base_attack TARGET ", target.name if is_instance_valid(target) else "posição salva (alvo removido)")
 	projectile.magic_bonus = character_stats.get_magic_bonus()
 	projectile.critical_chance = character_stats.get_critical_chance()
 	projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
