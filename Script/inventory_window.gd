@@ -177,7 +177,7 @@ func refresh_inventory() -> void:
 		var item_button := slot.get_node("ItemButton") as Button
 
 		icon_rect.texture = null
-		icon_rect.material = null
+		ItemRarityVisualsScript.apply_to_slot(slot, null)
 		icon_rect.show()
 		_remove_animated_item_sprite(slot)
 		set_tier_badge(slot, null)
@@ -199,7 +199,7 @@ func refresh_inventory() -> void:
 						_:
 							icon_rect.texture = base.icon
 
-				icon_rect.material = ItemRarityVisualsScript.create_material(item)
+				ItemRarityVisualsScript.apply_to_slot(slot, item)
 				set_tier_badge(slot, item)
 
 
@@ -427,7 +427,6 @@ func _add_animated_item_sprite(slot: Control, frames: SpriteFrames, item: ItemIn
 	animated_sprite.centered = true
 	animated_sprite.position = Vector2(20, 20)
 	animated_sprite.z_index = 2
-	animated_sprite.material = ItemRarityVisualsScript.create_material(item)
 
 	var first_frame := frames.get_frame_texture("default", 0)
 	if first_frame != null:
