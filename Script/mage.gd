@@ -417,10 +417,13 @@ func _on_animation_finished(anim_name):
 
 		animation_player.speed_scale = 1.0
 
-		animation_player.play(
-			"mage/idle2",
-			animation_blend
-		)
+		# Se o deslocamento coletivo já estiver ativo, não deixa o Mage
+		# voltar para idle ao concluir a animação de ativação do buff.
+		if is_instance_valid(world_scroller) and world_scroller.running:
+			rotation.y = initial_rotation_y
+			animation_player.play("mage/running", animation_blend)
+		else:
+			animation_player.play("mage/idle2", animation_blend)
 
 	elif anim_name == "mage/die":
 
