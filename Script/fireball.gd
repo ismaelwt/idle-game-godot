@@ -41,7 +41,7 @@ func _process(delta):
 	if resolved:
 		return
 
-	var target_is_alive := (
+	var target_is_alive: bool = (
 		is_instance_valid(target)
 		and target.is_inside_tree()
 		and not target.dying
