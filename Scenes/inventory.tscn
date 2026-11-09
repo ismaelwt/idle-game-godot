@@ -39,7 +39,6 @@ font_size = 12
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ibdrw"]
 
 [node name="InventoryControl" type="Control"]
-custom_minimum_size = Vector2(245, 350)
 layout_mode = 2
 mouse_filter = 2
 visible = false
@@ -47,8 +46,10 @@ script = ExtResource("1_script")
 
 [node name="InventoryPanel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 245.0
-offset_bottom = 350.0
+offset_left = 274.0
+offset_top = -200.0
+offset_right = 519.0
+offset_bottom = 150.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_k8xho")
 
 [node name="Control" type="Control" parent="InventoryPanel"]
