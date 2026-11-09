@@ -18,6 +18,8 @@ signal finished
 @export var stagger_interval: float = 0.2
 
 const ARROW_SCENE: PackedScene = preload("res://Scenes/arrow_projectile.tscn")
+const FIRE_ARROW_SCENE: PackedScene = preload("res://Scenes/fire_arrow_projectile.tscn")
+const BURNING_STATUS_SCENE: PackedScene = preload("res://Scenes/burning_status.tscn")
 
 var center_target: Node3D
 var shooter: Node3D
@@ -115,7 +117,12 @@ func _spawn_arrow_rain() -> void:
 		if not is_instance_valid(target_enemy):
 			continue
 
-		var arrow := ARROW_SCENE.instantiate() as Node3D
+		var use_fire_arrow := (
+			is_instance_valid(character_stats)
+			and character_stats.has_skill("fire_arrow")
+		)
+		var arrow_scene: PackedScene = FIRE_ARROW_SCENE if use_fire_arrow else ARROW_SCENE
+		var arrow := arrow_scene.instantiate() as Node3D
 		if arrow == null:
 			continue
 
@@ -206,11 +213,30 @@ func _apply_area_damage() -> void:
 		enemy.call("take_damage", final_damage, is_critical)
 		if is_instance_valid(character_stats):
 			character_stats.apply_on_hit_effects(actual_damage)
+			if (
+				character_stats.has_skill("fire_arrow")
+				and enemy.get("dying") != true
+				and float(enemy.get("health")) > 0.0
+				and randf() < 0.20
+			):
+				_apply_burning(enemy)
 
 	if is_critical:
 		var camera_pivot := get_tree().get_first_node_in_group("camera_pivot")
 		if is_instance_valid(camera_pivot):
 			camera_pivot.shake_camera()
+
+func _apply_burning(target: Node) -> void:
+	var existing_status := target.get_node_or_null("BurningStatus")
+	if is_instance_valid(existing_status):
+		if existing_status.has_method("refresh"):
+			existing_status.call("refresh")
+		return
+
+	var burning_status := BURNING_STATUS_SCENE.instantiate()
+	burning_status.name = "BurningStatus"
+	target.add_child(burning_status)
+
 
 func _finish() -> void:
 	if resolved:
