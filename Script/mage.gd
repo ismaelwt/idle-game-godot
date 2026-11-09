@@ -178,14 +178,16 @@ func use_skill(skill_id: String, target: Node3D):
 			if my_attack_id != attack_id:
 				return
 
-			# Se o alvo morreu durante a preparação, não lança o projétil.
-			# A execução da skill termina normalmente, mantendo mana e cooldown.
+			# O projétil completa o percurso até a última posição do alvo.
+			# Se ele já morreu, o impacto não aplica dano.
 			AudioManager.play_sfx(preload("res://Sounds/fireball.mp3"), randf_range(0.95, 1.05))
 
 			var projectile = fireball_scene.instantiate()
 			get_tree().current_scene.add_child(projectile)
 			projectile.global_position = fireball_spawn.global_position
-			projectile.target = target
+			projectile.target = target if is_instance_valid(target) else null
+			projectile.target_position_snapshot = skill_target_position
+			projectile.has_target_position_snapshot = true
 			projectile.magic_bonus = character_stats.get_magic_bonus()
 			projectile.character_stats = character_stats
 			projectile.critical_chance = character_stats.get_critical_chance()
@@ -211,12 +213,12 @@ func use_skill(skill_id: String, target: Node3D):
 			if my_attack_id != attack_id:
 				return
 
-			# Se o alvo morreu durante a preparação, a skill consome seus recursos,
-			# mas não cria um projétil sem alvo válido.
+			# A esfera segue até a última posição do alvo e explode ali;
+			# inimigos vivos próximos ainda podem receber dano.
 			var projectile = energyball_scene.instantiate()
 			get_tree().current_scene.add_child(projectile)
 
-			var spawn_position = get_target_position(target)
+			var spawn_position = skill_target_position
 			spawn_position.y += 4.5
 			spawn_position.x -= 3.0
 
