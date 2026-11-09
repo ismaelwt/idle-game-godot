@@ -28,6 +28,8 @@ var critical_damage_multiplier: float = 1.5
 var character_stats: Node
 
 var target: Node3D
+var target_position_snapshot: Vector3 = Vector3.ZERO
+var has_target_position_snapshot: bool = false
 var resolved := false
 
 
@@ -39,25 +41,31 @@ func _process(delta):
 	if resolved:
 		return
 
-	if not is_instance_valid(target):
+	var target_is_alive := (
+		is_instance_valid(target)
+		and target.is_inside_tree()
+		and not target.dying
+		and target.health > 0
+	)
+
+	if not target_is_alive and not has_target_position_snapshot:
 		finish()
 		return
 
-	if target.dying or target.health <= 0:
+	var target_position: Vector3 = target_position_snapshot
+	if target_is_alive:
+		var magic_target = target.get_node_or_null("MagicTarget")
+		if is_instance_valid(magic_target):
+			target_position = magic_target.global_position
+		else:
+			target_position = target.global_position
+
+	var distance_to_target := global_position.distance_to(target_position)
+	if not target_is_alive and distance_to_target <= speed * delta:
 		finish()
 		return
-
-	var target_position: Vector3
-
-	var magic_target = target.get_node_or_null("MagicTarget")
-
-	if magic_target:
-		target_position = magic_target.global_position
-	else:
-		target_position = target.global_position
 
 	var direction = global_position.direction_to(target_position)
-
 	global_position += direction * speed * delta
 
 	if direction.length() > 0.01:
