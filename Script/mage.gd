@@ -223,7 +223,9 @@ func use_skill(skill_id: String, target: Node3D):
 			spawn_position.x -= 3.0
 
 			projectile.global_position = spawn_position
-			projectile.target = target
+			projectile.target = target if is_instance_valid(target) else null
+			projectile.target_position_snapshot = skill_target_position
+			projectile.has_target_position_snapshot = true
 			projectile.magic_bonus = character_stats.get_magic_bonus()
 			projectile.character_stats = character_stats
 			projectile.critical_chance = character_stats.get_critical_chance()
