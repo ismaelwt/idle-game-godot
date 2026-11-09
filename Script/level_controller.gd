@@ -495,21 +495,9 @@ func select_next_enemy():
 			var nearest_hero := get_nearest_alive_hero_to(current_enemy)
 
 			if is_instance_valid(nearest_hero):
-				var current_distance := Vector2(
-					nearest_hero.global_position.x,
-					nearest_hero.global_position.z
-				).distance_to(Vector2(
-					current_enemy.global_position.x,
-					current_enemy.global_position.z
-				))
-
-				var hero_range = nearest_hero.get("attack_range")
-
-				if hero_range == null:
-					hero_range = 0.0
-
-				if current_distance <= float(hero_range):
-					return
+				# Mantém o alvo atual mesmo fora do alcance; os heróis avançam
+				# até a distância necessária antes de iniciar os ataques.
+				return
 
 	current_enemy = null
 	var nearest_distance := INF
@@ -537,13 +525,6 @@ func select_next_enemy():
 		)
 
 		var distance := hero_pos.distance_to(enemy_pos)
-		var hero_range = nearest_hero.get("attack_range")
-
-		if hero_range == null:
-			hero_range = 0.0
-
-		if distance > float(hero_range) + 0.01:
-			continue
 
 		if distance < nearest_distance:
 			nearest_distance = distance
