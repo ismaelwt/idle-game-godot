@@ -329,6 +329,7 @@ func basic_attack(target: Node3D) -> void:
 
 	var interval_multiplier: float = character_stats.get_basic_attack_interval_multiplier()
 	attack_timer = attack_cooldown * interval_multiplier
+	var target_position_snapshot: Vector3 = target.global_position
 
 	look_at_target(target)
 	play_animation("archer_attack2")
@@ -338,9 +339,8 @@ func basic_attack(target: Node3D) -> void:
 
 	if current_id != attack_id or dead or not is_inside_tree():
 		return
-	if not is_enemy_alive(target) or get_horizontal_distance_to(target) > attack_range + 0.01:
-		_finish_attack()
-		return
+	# Dispara mesmo se o alvo morreu durante a preparação.
+	# A flecha termina o percurso visual sem aplicar dano ao alvo morto.
 
 	var raw_damage: float = (
 		attack_damage
@@ -359,7 +359,9 @@ func basic_attack(target: Node3D) -> void:
 	projectile.global_position = arrow_spawn.global_position
 	projectile.global_rotation = arrow_spawn.global_rotation
 	projectile.scale = Vector3(.4, .4, .4)
-	projectile.setup(target, self, final_damage, is_critical)
+	projectile.setup(target if is_instance_valid(target) else null, self, final_damage, is_critical)
+	projectile.target_position_snapshot = target_position_snapshot
+	projectile.has_target_position_snapshot = true
 	# Mantém attacking=true até a animação de disparo terminar,
 	# como no EnemyArcher. O sinal animation_finished libera o próximo ataque.
 
