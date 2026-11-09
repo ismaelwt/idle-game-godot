@@ -258,7 +258,9 @@ func process_skills() -> void:
 
 		# Para heróis corpo a corpo, a parada do mundo deve respeitar
 		# o alcance real de ataque, não apenas o alcance de detecção.
-		var range_value = hero.get("attack_range")
+		var range_value = hero.get("melee_range")
+		if range_value == null:
+			range_value = hero.get("attack_range")
 
 		if range_value == null:
 			all_heroes_in_attack_range = false
@@ -324,7 +326,9 @@ func process_skills() -> void:
 		if target.dying or target.health <= 0:
 			continue
 
-		var range_value = hero.get("attack_range")
+		var range_value = hero.get("melee_range")
+		if range_value == null:
+			range_value = hero.get("attack_range")
 
 		if range_value == null:
 			continue
