@@ -112,6 +112,13 @@ func _process(delta: float) -> void:
 	if attacking or is_returning_to_initial_position:
 		return
 
+	# O cenário pode continuar avançando mesmo quando o alvo anterior morreu.
+	# A animação de corrida tem prioridade sobre qualquer estado de alvo inválido.
+	if is_instance_valid(world_scroller) and world_scroller.running:
+		rotation.y = initial_rotation_y
+		play_animation(running_animation)
+		return
+
 	attack_timer = maxf(attack_timer - delta, 0.0)
 
 	var combat_controller = get_parent().get_node_or_null("CombatController")
@@ -145,11 +152,6 @@ func _process(delta: float) -> void:
 
 	if target.get("dying") == true or target.get("health") <= 0:
 		play_animation(idle_animation)
-		return
-
-	# Enquanto o mundo avança, mantém a animação de corrida.
-	if is_instance_valid(world_scroller) and world_scroller.running:
-		play_animation(running_animation)
 		return
 
 	# Calcula a distância horizontal atual.
