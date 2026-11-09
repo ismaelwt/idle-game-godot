@@ -9,7 +9,7 @@ var drag_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
-	# O inventário fica livre do layout do CenterContainer para permitir arraste.
+	# O Control raiz fica independente do CenterContainer para permitir arraste.
 	top_level = true
 	size = Vector2(519.0, 350.0)
 	call_deferred("_place_at_attributes_position")
@@ -23,8 +23,21 @@ func _place_at_attributes_position() -> void:
 	if not is_instance_valid(attributes_panel):
 		return
 
-	# Alinha o painel do inventário à mesma posição ocupada pelo painel de atributos.
-	global_position = attributes_panel.global_position - inventory_panel.position
+	# Centraliza o painel do inventário sobre a mesma área do painel de atributos.
+	var attributes_rect := attributes_panel.get_global_rect()
+	var panel_offset := inventory_panel.position
+	var target_panel_position := attributes_rect.position + (attributes_rect.size - inventory_panel.size) * 0.5
+	var target_root_position := target_panel_position - panel_offset
+
+	# Mantém a janela inteira visível ao abrir.
+	var viewport_size := get_viewport_rect().size
+	var min_position := -panel_offset
+	var max_position := viewport_size - inventory_panel.size - panel_offset
+	target_root_position.x = clampf(target_root_position.x, min_position.x, maxf(max_position.x, min_position.x))
+	target_root_position.y = clampf(target_root_position.y, min_position.y, maxf(max_position.y, min_position.y))
+
+	global_position = target_root_position
+	z_index = 10
 
 
 func _on_drag_handle_input(event: InputEvent) -> void:
