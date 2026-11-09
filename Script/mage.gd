@@ -142,6 +142,8 @@ func can_use_skill(skill_id: String, target: Node3D) -> bool:
 
 func use_skill(skill_id: String, target: Node3D):
 
+	if pending_run:
+		return
 	if not is_instance_valid(target):
 		return
 
