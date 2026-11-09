@@ -205,9 +205,10 @@ func advance_wave() -> void:
 	if current_wave >= 4:
 		print("=== BOSS INCOMING ===")
 
-		# Retoma a corrida antes de exibir o aviso.
+		# Aguarda as skills em execução antes de retomar o cenário
+		# e exibir o aviso enquanto os heróis avançam.
 		if level_controller.has_method("resume_after_wave_transition"):
-			level_controller.resume_after_wave_transition()
+			await level_controller.resume_after_wave_transition()
 
 		# O aviso acontece enquanto os heróis correm.
 		level_controller.show_warning("WARNING!!!")
@@ -230,9 +231,10 @@ func advance_wave() -> void:
 		level_controller.state = 1
 		print("=== RUNNING | ONDA ", current_wave, " ===")
 
-	# A retomada do cenário é responsabilidade exclusiva do LevelController.
-	if level_controller.has_method("resume_after_wave_transition"):
-		level_controller.resume_after_wave_transition()
+	# Nas ondas normais, retoma o cenário somente depois que todos
+	# os heróis terminarem suas ações/skills ativas.
+	if current_wave < 4 and level_controller.has_method("resume_after_wave_transition"):
+		await level_controller.resume_after_wave_transition()
 
 	wave_transition_in_progress = false
 
