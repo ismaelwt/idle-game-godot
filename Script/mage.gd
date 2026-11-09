@@ -264,11 +264,15 @@ func use_skill(skill_id: String, target: Node3D):
 			print("BUFF CASTADO!")
 
 			var buff_duration = damage_buff_instance.duration
+
+			# A animação de ativação terminou. Libera a rotação para outras
+			# skills, mantendo o buff ativo e impedindo apenas o running.
+			attacking = false
+			action_locked = false
+
 			await get_tree().create_timer(buff_duration).timeout
 
 			damage_buff_active = false
-			attacking = false
-			action_locked = false
 
 			if is_instance_valid(damage_buff_instance):
 				damage_buff_instance.queue_free()
