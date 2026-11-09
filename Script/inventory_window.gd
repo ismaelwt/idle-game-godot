@@ -43,6 +43,10 @@ func setup(inventory_ref: Inventory, stats_ref, enchantment_ref: EnchantmentScen
 		if not inventory.inventory_changed.is_connected(_on_inventory_changed):
 			inventory.inventory_changed.connect(_on_inventory_changed)
 
+	if inventory.has_signal("equipment_changed"):
+		if not inventory.equipment_changed.is_connected(_on_inventory_changed):
+			inventory.equipment_changed.connect(_on_inventory_changed)
+
 	chest_button.pressed.connect(_on_chest_pressed)
 	sell_all_button.pressed.connect(_on_sell_all_pressed)
 
