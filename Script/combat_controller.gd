@@ -167,9 +167,8 @@ func find_target_for_hero(hero: Node3D) -> Node3D:
 		)
 		var distance: float = hero_position.distance_to(enemy_position)
 
-		if distance > attack_range + 0.01:
-			continue
-
+		# O alvo pode estar fora do alcance: o LevelController mantém
+		# o running até o herói se aproximar para atacar.
 		if distance < closest_distance:
 			closest_distance = distance
 			closest_enemy = enemy
