@@ -9,6 +9,9 @@ signal visual_impact_reached
 
 @export_category("Dano")
 @export var damage: float = 10.0
+@export var applies_burning: bool = false
+
+const BURNING_STATUS_SCENE: PackedScene = preload("res://Scenes/burning_status.tscn")
 
 var target: Node3D = null
 var target_position_snapshot: Vector3 = Vector3.ZERO
@@ -257,7 +260,31 @@ func apply_target_damage() -> void:
 		else:
 			target.call("take_damage", damage, "physical")
 
+		if applies_burning and _is_target_alive(target) and randf() < 0.20:
+			_apply_burning(target)
+
 	finish()
+
+
+func _is_target_alive(target_node: Node) -> bool:
+	if not is_instance_valid(target_node):
+		return false
+	if target_node.get("dying") == true or target_node.get("dead") == true:
+		return false
+	var target_health = target_node.get("health")
+	return target_health == null or float(target_health) > 0.0
+
+
+func _apply_burning(target_node: Node) -> void:
+	var existing_status := target_node.get_node_or_null("BurningStatus")
+	if is_instance_valid(existing_status):
+		if existing_status.has_method("refresh"):
+			existing_status.call("refresh")
+		return
+
+	var burning_status := BURNING_STATUS_SCENE.instantiate()
+	burning_status.name = "BurningStatus"
+	target_node.add_child(burning_status)
 
 
 func finish() -> void:
