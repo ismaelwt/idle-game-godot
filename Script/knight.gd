@@ -55,6 +55,7 @@ var initial_rotation_y: float
 var current_animation: StringName = &""
 var warned_animations: Dictionary = {}
 
+var pending_run: bool = false
 var attacking: bool = false
 var attack_timer: float = 0.0
 var current_attack_target: Node3D = null
@@ -195,7 +196,7 @@ func _process(delta: float) -> void:
 		play_animation(idle_animation)
 
 func can_use_skill(skill_id: String, target: Node3D) -> bool:
-	if dead or action_locked or attacking:
+	if dead or pending_run or action_locked or attacking:
 		return false
 
 	if not is_instance_valid(target):
@@ -451,7 +452,7 @@ func get_movement_speed() -> float:
 
 
 func basic_attack(target: Node3D) -> void:
-	if dead or attacking or action_locked:
+	if dead or pending_run or attacking or action_locked:
 		return
 
 	# Respeita o intervalo entre ataques.
@@ -813,26 +814,14 @@ func flash_hit() -> void:
 
 
 func start_running() -> void:
-	_notify_skill_cancelled()
-	attack_id += 1
-	_interrupt_earthquake()
-	attacking = false
-	action_locked = false
-	attack_animation_playing = false
-	skill_animation_finished = false
-	basic_attack_lock = false
-	current_attack_target = null
-	current_animation = &""
-
-	if dead:
+	if dead or attacking or action_locked:
 		return
-
+	is_running = true
 	is_returning_to_initial_position = false
 	attack_timer = 0.0
 	rotation.y = initial_rotation_y
 	animation_player.speed_scale = animation_speed
 	play_animation(running_animation)
-
 
 func cancel_attack_on_target(target: Node3D) -> void:
 	if dead:
