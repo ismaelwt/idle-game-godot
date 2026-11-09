@@ -728,8 +728,19 @@ func start_reward():
 	print("=== REWARD ===")
 
 
-func continue_running(heroes_that_need_to_move: Array[Node3D] = []) -> void:
-	_request_running(heroes_that_need_to_move, State.COMBAT)
+func continue_running(_heroes_that_need_to_move: Array[Node3D] = []) -> void:
+	# O deslocamento é coletivo: se um herói precisa avançar, toda a equipe
+	# aguarda terminar suas ações e corre junto, preservando a formação.
+	var heroes_to_move: Array[Node3D] = []
+	if is_instance_valid(party_manager):
+		heroes_to_move = party_manager.get_alive_heroes()
+	elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+		heroes_to_move.append(main_hero)
+
+	if heroes_to_move.is_empty():
+		return
+
+	_request_running(heroes_to_move, State.COMBAT)
 
 func toggle_pause():
 	if get_tree().paused:
