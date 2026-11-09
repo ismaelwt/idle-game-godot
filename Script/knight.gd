@@ -319,7 +319,7 @@ func _notify_skill_cancelled() -> void:
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
-func _clear_frenzy(active_frenzy: Node3D) -> void:
+func _clear_frenzy(active_frenzy: Variant) -> void:
 	# Só altera o estado global se ainda for a instância ativa.
 	# Uma instância antiga não pode desligar um buff mais recente.
 	if frenzy_instance == active_frenzy:
