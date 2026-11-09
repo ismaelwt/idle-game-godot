@@ -8,7 +8,7 @@ var drag_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
-	# O Control raiz é a área de arraste. O Panel interno mantém seus próprios botões.
+	# O Control raiz define toda a área que pode iniciar o arraste.
 	top_level = true
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	call_deferred("_place_at_attributes_position")
@@ -33,20 +33,19 @@ func _place_at_attributes_position() -> void:
 	z_index = 10
 
 
-# O clique é recebido pelo Control maior, nas áreas que não são cobertas pelo Panel.
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
-		dragging = true
-		drag_offset = get_global_mouse_position() - global_position
-		move_to_front()
-		accept_event()
-
-
 func _input(event: InputEvent) -> void:
-	if not dragging:
-		return
+	# _input é executado antes dos eventos GUI dos filhos. Assim, o clique
+	# pode iniciar o arraste mesmo quando foi feito sobre o Panel ou outro filho.
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			if get_global_rect().has_point(event.position):
+				dragging = true
+				drag_offset = get_global_mouse_position() - global_position
+				move_to_front()
+		else:
+			dragging = false
 
-	if event is InputEventMouseMotion:
+	elif event is InputEventMouseMotion and dragging:
 		var new_global_position := get_global_mouse_position() - drag_offset
 		var viewport_size := get_viewport_rect().size
 		var panel_offset := inventory_panel.position
@@ -56,8 +55,3 @@ func _input(event: InputEvent) -> void:
 		new_global_position.x = clampf(new_global_position.x, min_position.x, maxf(max_position.x, min_position.x))
 		new_global_position.y = clampf(new_global_position.y, min_position.y, maxf(max_position.y, min_position.y))
 		global_position = new_global_position
-		get_viewport().set_input_as_handled()
-
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
-		dragging = false
-		get_viewport().set_input_as_handled()
