@@ -2,21 +2,29 @@ extends Control
 
 @onready var inventory_panel: Panel = $InventoryPanel
 @onready var drag_handle: Label = $InventoryPanel/VBoxContainer/Header/Title
+@onready var attributes_panel: Control = get_parent().get_node("AttributesControl/PanelContainer")
 
 var dragging: bool = false
 var drag_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
-	# O CenterContainer organiza seus filhos automaticamente. O Control precisa
-	# sair desse gerenciamento para poder ser movido livremente.
+	# O inventário fica livre do layout do CenterContainer para permitir arraste.
 	top_level = true
 	size = Vector2(519.0, 350.0)
-	global_position = get_parent().global_position
+	call_deferred("_place_at_attributes_position")
 
 	if is_instance_valid(drag_handle):
 		drag_handle.mouse_filter = Control.MOUSE_FILTER_STOP
 		drag_handle.gui_input.connect(_on_drag_handle_input)
+
+
+func _place_at_attributes_position() -> void:
+	if not is_instance_valid(attributes_panel):
+		return
+
+	# Alinha o painel do inventário à mesma posição ocupada pelo painel de atributos.
+	global_position = attributes_panel.global_position - inventory_panel.position
 
 
 func _on_drag_handle_input(event: InputEvent) -> void:
