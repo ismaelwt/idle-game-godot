@@ -34,6 +34,7 @@ const HEALING_SCENE: PackedScene = preload("res://Scenes/healing_effect.tscn")
 
 var health: float = 0.0
 var dead: bool = false
+var pending_run: bool = false
 var attacking: bool = false
 var is_running: bool = false
 var attack_timer: float = 0.0
@@ -183,7 +184,7 @@ func can_use_skill(skill_id: String, target: Node3D) -> bool:
 
 
 func use_skill(skill_id: String, target: Node3D) -> void:
-	if not can_use_skill(skill_id, target):
+	if pending_run or not can_use_skill(skill_id, target):
 		return
 
 	if skill_id == "arrow_storm":
@@ -300,11 +301,10 @@ func _use_arrow_storm(target: Node3D) -> void:
 
 
 func start_running() -> void:
-	_notify_skill_cancelled()
+	if dead or attacking:
+		return
 	# Mesmo fluxo de transição usado pelo Mage ao iniciar a corrida.
 	# Invalida awaits de ataque/skill para que não retomem a animação anterior.
-	attack_id += 1
-	attacking = false
 	current_attack_target = null
 	is_running = true
 
@@ -317,7 +317,7 @@ func start_running() -> void:
 
 
 func basic_attack(target: Node3D) -> void:
-	if dead or attacking or not is_enemy_alive(target):
+	if dead or pending_run or attacking or not is_enemy_alive(target):
 		return
 	if get_horizontal_distance_to(target) > attack_range + 0.01:
 		return
