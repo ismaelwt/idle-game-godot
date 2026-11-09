@@ -54,7 +54,6 @@ func setup(inventory_ref: Inventory, stats_ref, enchantment_ref: EnchantmentScen
 	create_inventory_slots(45)
 	setup_complete = true
 	set_character_stats(character_stats)
-	refresh_inventory()
 
 
 func _create_item_tooltip() -> void:
