@@ -269,7 +269,7 @@ func apply_target_damage() -> void:
 func _is_target_alive(target_node: Node) -> bool:
 	if not is_instance_valid(target_node):
 		return false
-	if target_node.get("dying") == true or target_node.get("dead") == true:
+	if target_node.get("dying") == true:
 		return false
 	var target_health = target_node.get("health")
 	return target_health == null or float(target_health) > 0.0
