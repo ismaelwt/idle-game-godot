@@ -8,6 +8,12 @@ var drag_offset: Vector2 = Vector2.ZERO
 
 
 func _ready() -> void:
+	# O CenterContainer organiza seus filhos automaticamente. O Control precisa
+	# sair desse gerenciamento para poder ser movido livremente.
+	top_level = true
+	size = Vector2(519.0, 350.0)
+	global_position = get_parent().global_position
+
 	if is_instance_valid(drag_handle):
 		drag_handle.mouse_filter = Control.MOUSE_FILTER_STOP
 		drag_handle.gui_input.connect(_on_drag_handle_input)
@@ -23,7 +29,7 @@ func _on_drag_handle_input(event: InputEvent) -> void:
 	elif event is InputEventMouseMotion and dragging:
 		var new_global_position := get_global_mouse_position() - drag_offset
 		var viewport_size := get_viewport_rect().size
-		var panel_offset := inventory_panel.global_position - global_position
+		var panel_offset := inventory_panel.position
 		var min_position := -panel_offset
 		var max_position := viewport_size - inventory_panel.size - panel_offset
 
