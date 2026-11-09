@@ -21,6 +21,7 @@ const KNIGHT_SKILL_BUTTONS := {
 
 const ARCHER_SKILL_BUTTONS := {
 	"skill1_nv1": "archer_heal",
+	"skill2_nv1": "fire_arrow",
 	"skill2_nv2": "arrow_storm"
 }
 
@@ -501,6 +502,12 @@ func update_skill_slot_buttons(
 	add_button: TextureButton,
 	remove_button: TextureButton
 ) -> void:
+
+	var skill_data: Dictionary = SkillTree.get_skill(skill_id)
+	if bool(skill_data.get("passive", false)):
+		add_button.visible = false
+		remove_button.visible = false
+		return
 
 	var learned: bool = character_stats.has_skill(skill_id)
 	var equipped: bool = skill_id in character_stats.skill_order
