@@ -110,6 +110,8 @@ func _process(_delta):
 		return
 
 	if is_party_defeated():
+		if pending_run:
+			_clear_pending_run()
 		if state != State.DEFEAT:
 			state = State.DEFEAT
 			world_scroller.running = false
@@ -283,6 +285,8 @@ func process_skills() -> void:
 	# Se não restam inimigos, não inicia deslocamento apenas porque
 	# os alvos antigos foram removidos. A transição da onda cuida do avanço.
 	if not has_valid_target and not has_combat_enemies():
+		if pending_run:
+			_clear_pending_run()
 		world_scroller.running = false
 		return
 
