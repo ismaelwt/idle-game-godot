@@ -280,6 +280,7 @@ func process_skills() -> void:
 	# Se não restam inimigos, não inicia deslocamento apenas porque
 	# os alvos antigos foram removidos. A transição da onda cuida do avanço.
 	if not has_valid_target and not has_combat_enemies():
+		world_scroller.running = false
 		return
 
 	# Mantém o cenário avançando até todos os heróis vivos
