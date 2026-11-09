@@ -33,7 +33,6 @@ font_size = 12
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_ibdrw"]
 
 [node name="InventoryControl" type="Control"]
-mouse_filter = 0
 layout_mode = 3
 anchors_preset = 6
 anchor_left = 1.0
@@ -42,7 +41,8 @@ anchor_right = 1.0
 anchor_bottom = 0.5
 offset_left = -500.0
 offset_top = -250.0
-offset_bottom = 250.0
+offset_right = -200.0
+offset_bottom = 200.0
 grow_horizontal = 0
 grow_vertical = 2
 script = ExtResource("1_script")

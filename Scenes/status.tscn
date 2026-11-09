@@ -1,9 +1,8 @@
-[gd_scene load_steps=45 format=3 uid="uid://wr8k7inmswj4"]
+[gd_scene load_steps=36 format=3 uid="uid://wr8k7inmswj4"]
 
 [ext_resource type="Texture2D" uid="uid://cmjs0pkjwm65x" path="res://icons/Icon_button_inventory.png" id="2_c6o1p"]
 [ext_resource type="Texture2D" uid="uid://c1xebf0iui5a5" path="res://UI/UISprites/Icon_my_chest.png" id="11_segtc"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
-[ext_resource type="Texture2D" uid="uid://drmxod0krghvl" path="res://UI/UISprites/elements/element_3.png" id="31_1qp6s"]
 [ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
 [ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
 [ext_resource type="Texture2D" uid="uid://mimvw1ydfp56" path="res://icons/belt.png" id="46_w8vhy"]
@@ -11,7 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://dkatijkofi61l" path="res://UI/UISprites/elements/close-button.png" id="48_73j5b"]
 [ext_resource type="Texture2D" uid="uid://bltsrlhfgr6lj" path="res://icons/power-ring.png" id="48_w8vhy"]
 [ext_resource type="Script" uid="uid://cxp2tv7l0i81c" path="res://Script/status.gd" id="49_62cx3"]
-[ext_resource type="Texture2D" uid="uid://ky7ellurff3k" path="res://icons/mage-bg.png" id="50_ho6uo"]
 [ext_resource type="Texture2D" uid="uid://cosmu0j2l8ojb" path="res://icons/barbute (1).png" id="51_0yaw2"]
 [ext_resource type="Texture2D" uid="uid://b13qg8ugmd3cw" path="res://UI/Forja.png" id="51_ghgdn"]
 [ext_resource type="Texture2D" uid="uid://enm03es8ronf" path="res://icons/chest-armor.png" id="52_rgvj4"]
@@ -25,12 +23,17 @@
 [ext_resource type="Texture2D" uid="uid://cv7g8frp1rykp" path="res://UI/UISprites/Archer_Avatar.png" id="56_tohvi"]
 [ext_resource type="Texture2D" uid="uid://uc7tof6wpa0h" path="res://icons/leg-armor.png" id="56_v7pp5"]
 [ext_resource type="Texture2D" uid="uid://8oqn78ik7o73" path="res://UI/UISprites/Inventory.png" id="57_g0njp"]
-[ext_resource type="Texture2D" uid="uid://cprnmkg6ju63b" path="res://UI/UISprites/Icon_button_Chest.png" id="58_ye3n6"]
-[ext_resource type="Texture2D" uid="uid://nigh4conaguo" path="res://UI/UISprites/Icon_button_Sell_All_Itens.png" id="59_honab"]
+[ext_resource type="PackedScene" uid="uid://bacgvutvg58u7" path="res://Scenes/inventory.tscn" id="60_inventory"]
 
-[ext_resource type="PackedScene" path="res://Scenes/inventory.tscn" id="60_inventory"]
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vib74"]
 bg_color = Color(0.728822, 0.728822, 0.7288219, 0.61960787)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4nxlw"]
+texture = ExtResource("57_g0njp")
+expand_margin_left = 100.0
+expand_margin_top = 100.0
+expand_margin_right = 100.0
+expand_margin_bottom = 100.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_rby12"]
 font = ExtResource("18_x3b7j")
@@ -61,38 +64,6 @@ load_path = "res://.godot/imported/Window-slot.png-f0eb6b9bac7f4e956e2781cf01cec
 font = ExtResource("18_x3b7j")
 font_size = 12
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k8xho"]
-bg_color = Color(0, 0, 0, 0.40784314)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.230315, 0.23031494, 0.23031479, 1)
-expand_margin_left = 15.0
-expand_margin_top = 15.0
-expand_margin_right = 15.0
-expand_margin_bottom = 15.0
-shadow_color = Color(0, 0, 0, 0.7058824)
-
-[sub_resource type="LabelSettings" id="LabelSettings_w3147"]
-font = ExtResource("18_x3b7j")
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_27s1b"]
-bg_color = Color(0.67058825, 0.49803922, 0.23921569, 0.8235294)
-corner_radius_top_left = 25
-corner_radius_top_right = 25
-corner_radius_bottom_right = 25
-corner_radius_bottom_left = 25
-
-[sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
-font = ExtResource("18_x3b7j")
-
-[sub_resource type="LabelSettings" id="LabelSettings_4qhvg"]
-font = ExtResource("18_x3b7j")
-font_size = 12
-
-[sub_resource type="StyleBoxLine" id="StyleBoxLine_ibdrw"]
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ibdrw"]
 texture = ExtResource("57_g0njp")
 
@@ -120,88 +91,64 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PanelContainer" type="Control" parent="CenterContainer"]
-custom_minimum_size = Vector2(350, 545)
+[node name="PanelContainer" type="Panel" parent="CenterContainer"]
+z_index = 1
+custom_minimum_size = Vector2(380, 500)
 layout_mode = 2
 mouse_filter = 2
-
-[node name="InvetoryButton" type="TextureButton" parent="CenterContainer/PanelContainer"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = 39.0
-offset_top = -156.5
-offset_right = 120.0
-offset_bottom = -102.5
-grow_horizontal = 0
-grow_vertical = 2
-scale = Vector2(1.3, 1.3)
-texture_normal = ExtResource("2_c6o1p")
+theme_override_styles/panel = SubResource("StyleBoxTexture_4nxlw")
 
 [node name="Background" type="Control" parent="CenterContainer/PanelContainer"]
-anchors_preset = 0
-offset_left = 30.0
-offset_top = 25.0
-offset_right = 420.0
-offset_bottom = 519.0
-
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -122.000015
-offset_top = -136.0
-offset_right = 165.49988
-offset_bottom = 281.24994
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -195.0
+offset_top = -247.0
+offset_right = 195.0
+offset_bottom = 247.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(0.8, 0.8)
-texture = ExtResource("31_1qp6s")
 
 [node name="CloseButton" type="TextureButton" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -68.0
-offset_top = 31.0
-offset_right = -8.0
-offset_bottom = 90.0
+anchors_preset = -1
+anchor_left = 0.43076923
+anchor_top = 1.0526316
+anchor_right = 0.5846154
+anchor_bottom = 1.1720648
+offset_right = -1.5258789e-05
 grow_horizontal = 2
 grow_vertical = 0
 size_flags_vertical = 8
 texture_normal = ExtResource("48_73j5b")
 ignore_texture_size = true
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="Forja" type="TextureButton" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -199.0
-offset_top = -37.0
-offset_right = -113.0
-offset_bottom = 3.0
+anchors_preset = -1
+anchor_left = 0.115384616
+anchor_top = -0.04048583
+anchor_right = 0.33589745
+anchor_bottom = 0.04048583
 grow_horizontal = 2
 texture_normal = ExtResource("51_ghgdn")
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="AtributtesButton" type="TextureButton" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -47.0
-offset_top = 377.0
-offset_right = 40.0
-offset_bottom = 417.0
+offset_left = -21.0
+offset_top = 403.0
+offset_right = 66.0
+offset_bottom = 443.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_t405x")
 stretch_mode = 5
@@ -220,10 +167,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 48.5
-offset_top = 377.0
-offset_right = 135.5
-offset_bottom = 417.0
+offset_left = 84.0
+offset_top = 403.0
+offset_right = 171.0
+offset_bottom = 443.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_t405x")
 stretch_mode = 5
@@ -243,10 +190,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -48.0
-offset_top = 31.0
-offset_right = 2.0
-offset_bottom = 81.0
+offset_left = -9.0
+offset_top = 32.0
+offset_right = 41.0
+offset_bottom = 82.0
 grow_horizontal = 2
 texture_normal = ExtResource("53_4qhvg")
 ignore_texture_size = true
@@ -265,10 +212,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 17.0
-offset_top = 30.0
-offset_right = 67.0
-offset_bottom = 80.0
+offset_left = 56.0
+offset_top = 31.0
+offset_right = 106.0
+offset_bottom = 81.0
 grow_horizontal = 2
 texture_normal = ExtResource("55_t405x")
 ignore_texture_size = true
@@ -287,10 +234,10 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = 84.0
-offset_top = 31.0
-offset_right = 134.0
-offset_bottom = 81.0
+offset_left = 123.0
+offset_top = 32.0
+offset_right = 173.0
+offset_bottom = 82.0
 grow_horizontal = 2
 texture_normal = ExtResource("56_tohvi")
 ignore_texture_size = true
@@ -306,49 +253,37 @@ expand_mode = 1
 
 [node name="MyChest" type="TextureButton" parent="CenterContainer/PanelContainer/Background"]
 layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 43.0
-offset_top = -39.0
-offset_right = 123.0
-offset_bottom = 21.0
+anchors_preset = -1
+anchor_left = 0.72307694
+anchor_top = -0.058704454
+anchor_right = 0.92820513
+anchor_bottom = 0.06275304
 grow_horizontal = 2
 texture_normal = ExtResource("11_segtc")
 stretch_mode = 5
+metadata/_edit_use_anchors_ = true
 
 [node name="Control" type="Control" parent="CenterContainer/PanelContainer"]
 anchors_preset = 0
-offset_left = 45.0
-offset_top = 104.0
-offset_right = 456.0
-offset_bottom = 410.0
+offset_left = 162.0
+offset_top = 100.0
+offset_right = 363.0
+offset_bottom = 406.0
 
 [node name="PlayerPanel" type="Panel" parent="CenterContainer/PanelContainer/Control"]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -282.0
-offset_right = -90.0
-offset_bottom = 289.0
-grow_horizontal = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
-
-[node name="PlayerBackground" type="TextureRect" parent="CenterContainer/PanelContainer/Control/PlayerPanel"]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -156.0
-offset_top = -81.0
-offset_right = 156.0
-offset_bottom = 81.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -144.5
+offset_right = 96.0
+offset_bottom = 144.5
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("50_ho6uo")
-stretch_mode = 5
+theme_override_styles/panel = SubResource("StyleBoxFlat_j13t8")
 
 [node name="Helmet" type="Panel" parent="CenterContainer/PanelContainer/Control/PlayerPanel"]
 layout_mode = 0
@@ -784,7 +719,27 @@ layout_mode = 2
 text = "Critical Damage"
 label_settings = SubResource("LabelSettings_sfey3")
 
+[node name="InvetoryButton" type="TextureButton" parent="CenterContainer/PanelContainer"]
+z_as_relative = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.1114286
+anchor_top = 0.21284404
+anchor_right = 1.4122857
+anchor_bottom = 0.34165138
+offset_left = -3.0517578e-05
+offset_top = -2.8981705
+offset_right = -24.299988
+offset_bottom = -12.528992
+grow_horizontal = 0
+grow_vertical = 2
+scale = Vector2(1.3, 1.3)
+texture_normal = ExtResource("2_c6o1p")
+metadata/_edit_use_anchors_ = true
+
 [node name="InventoryControl" parent="CenterContainer" instance=ExtResource("60_inventory")]
+visible = false
+layout_mode = 2
 
 [node name="AttributesControl" type="Control" parent="CenterContainer"]
 layout_mode = 2
