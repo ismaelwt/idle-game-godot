@@ -414,15 +414,15 @@ func refresh_equipment_slots() -> void:
 	belt_icon.texture = get_equipment_icon(belt, belt_default_icon) if belt != null else belt_default_icon
 
 	# Brilho de raridade aplicado somente aos ícones dos equipamentos.
-	_apply_equipment_rarity_glow(helmet_icon, helmet)
-	_apply_equipment_rarity_glow(chest_icon, chest)
-	_apply_equipment_rarity_glow(weapon_icon, weapon)
-	_apply_equipment_rarity_glow(gloves_icon, gloves)
-	_apply_equipment_rarity_glow(pants_icon, pants)
-	_apply_equipment_rarity_glow(boots_icon, boots)
-	_apply_equipment_rarity_glow(necklace_icon, necklace)
-	_apply_equipment_rarity_glow(ring_icon, ring)
-	_apply_equipment_rarity_glow(belt_icon, belt)
+	_apply_equipment_rarity_glow(helmet_icon.get_parent(), helmet)
+	_apply_equipment_rarity_glow(chest_icon.get_parent(), chest)
+	_apply_equipment_rarity_glow(weapon_icon.get_parent(), weapon)
+	_apply_equipment_rarity_glow(gloves_icon.get_parent(), gloves)
+	_apply_equipment_rarity_glow(pants_icon.get_parent(), pants)
+	_apply_equipment_rarity_glow(boots_icon.get_parent(), boots)
+	_apply_equipment_rarity_glow(necklace_icon.get_parent(), necklace)
+	_apply_equipment_rarity_glow(ring_icon.get_parent(), ring)
+	_apply_equipment_rarity_glow(belt_icon.get_parent(), belt)
 
 	# Exibe o tier nos próprios slots de equipamento, usando o mesmo badge do inventário.
 	inventory_control.set_tier_badge(helmet_icon.get_parent(), helmet)
@@ -437,10 +437,8 @@ func refresh_equipment_slots() -> void:
 
 
 
-func _apply_equipment_rarity_glow(icon: TextureRect, item: ItemInstance) -> void:
-	if not is_instance_valid(icon):
-		return
-	icon.material = ItemRarityVisualsScript.create_material(item)
+func _apply_equipment_rarity_glow(slot: Control, item: ItemInstance) -> void:
+	ItemRarityVisualsScript.apply_to_slot(slot, item)
 
 
 
