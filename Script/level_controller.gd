@@ -624,7 +624,12 @@ func enemy_died(dead_enemy: Node3D):
 	# Ainda existem inimigos vivos na onda?
 	if has_alive_enemies():
 		print("=== AINDA HÁ INIMIGOS VIVOS: CONTINUANDO AVANÇO ===")
-		continue_running()
+		var heroes_to_move: Array[Node3D] = []
+		if is_instance_valid(party_manager):
+			heroes_to_move = party_manager.get_alive_heroes()
+		elif is_instance_valid(main_hero) and not bool(main_hero.get("dead")):
+			heroes_to_move.append(main_hero)
+		continue_running(heroes_to_move)
 		return
 
 	# Só inicia a próxima onda quando todos morrerem.
