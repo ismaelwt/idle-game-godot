@@ -105,6 +105,10 @@ func _process(delta: float) -> void:
 	if dead or not is_instance_valid(level_controller):
 		return
 
+	# Durante a espera coletiva, o Knight não pode perseguir o alvo sozinho.
+	if pending_run:
+		return
+
 	if attacking or is_returning_to_initial_position:
 		return
 
@@ -160,27 +164,13 @@ func _process(delta: float) -> void:
 
 	var distance: float = direction.length()
 
-	# Fora do alcance: o Knight precisa avançar fisicamente.
+	# O Knight não persegue inimigos com movimento próprio.
+	# O avanço é feito exclusivamente pelo deslocamento coletivo do mundo.
 	if distance > melee_range + 0.01:
-		play_animation(running_animation)
-		look_at_target(target)
-
-		if distance > 0.001:
-			var remaining_distance: float = distance - melee_range
-			var step_distance: float = minf(
-				get_movement_speed() * delta,
-				remaining_distance
-			)
-
-			var movement: Vector3 = direction.normalized() * step_distance
-
-			# Move apenas nos eixos horizontais, preservando a altura.
-			global_position = Vector3(
-				global_position.x + movement.x,
-				global_position.y,
-				global_position.z + movement.z
-			)
-
+		if is_instance_valid(world_scroller) and world_scroller.running:
+			play_animation(running_animation)
+		else:
+			play_animation(idle_animation)
 		return
 
 	# Dentro do alcance: para de avançar.
@@ -308,13 +298,14 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 		push_warning("Knight: a cena da skill não define 'duration'.")
 		return
 
-	attacking = false
-	action_locked = false
+	# A ação permanece bloqueada durante toda a duração do buff.
+	# O LevelController só pode iniciar o running após o efeito terminar.
 	await get_tree().create_timer(float(duration_value)).timeout
 
 	# A expiração do buff não depende mais do attack_id.
-	# Assim, correr ou cancelar um ataque não impede a limpeza da aura.
 	_clear_frenzy(active_frenzy)
+	attacking = false
+	action_locked = false
 	print("KNIGHT SKILL FINALIZADA: ", skill_id)
 
 
