@@ -35,3 +35,28 @@ static func _get_rarity_color(rarity_name: String) -> Color:
 	if rarity_name.contains("mythic") or rarity_name.contains("mítico") or rarity_name.contains("mitico"):
 		return Color("#ff493d")
 	return Color(0.0, 0.0, 0.0, 0.0)
+
+
+static func apply_to_slot(slot: Control, item: ItemInstance) -> void:
+	if not is_instance_valid(slot):
+		return
+
+	var overlay := slot.get_node_or_null("RarityGlowBorder") as ColorRect
+	var material := create_material(item)
+
+	if material == null:
+		if is_instance_valid(overlay):
+			overlay.visible = false
+		return
+
+	if not is_instance_valid(overlay):
+		overlay = ColorRect.new()
+		overlay.name = "RarityGlowBorder"
+		overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+		overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		overlay.color = Color.WHITE
+		overlay.z_index = 50
+		slot.add_child(overlay)
+
+	overlay.material = material
+	overlay.visible = true
