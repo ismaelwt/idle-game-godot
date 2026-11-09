@@ -289,27 +289,43 @@ func _use_arrow_storm(target: Node3D) -> void:
 		+ float(character_stats.get_weapon_damage_bonus())
 	)
 
+	# Conecta antes de adicionar à árvore: _ready() da ArrowStorm pode
+	# finalizar imediatamente (por exemplo, sem inimigos na área).
+	# Se aguardarmos o sinal somente depois de add_child(), podemos perdê-lo
+	# e deixar attacking=true, impedindo o início do running.
+	storm.finished.connect(
+		_on_arrow_storm_finished.bind(my_attack_id),
+		CONNECT_ONE_SHOT
+	)
 	get_tree().current_scene.add_child(storm)
-	await storm.finished
 
-	if my_attack_id != attack_id or dead:
+
+func _on_arrow_storm_finished(skill_attack_id: int) -> void:
+	if skill_attack_id != attack_id or dead:
 		return
 
 	attacking = false
 	current_attack_target = null
-	play_animation("archer_idle")
+
+	if is_instance_valid(world_scroller) and world_scroller.running:
+		rotation.y = initial_rotation_y
+		play_animation("archer_walk")
+	else:
+		play_animation("archer_idle")
 
 
 func start_running() -> void:
-	if dead or attacking:
-		return
-	# Mesmo fluxo de transição usado pelo Mage ao iniciar a corrida.
-	# Invalida awaits de ataque/skill para que não retomem a animação anterior.
-	current_attack_target = null
-	is_running = true
-
 	if dead:
 		return
+	if attacking:
+		# A corrida será retomada pelo callback da skill assim que o efeito
+		# terminar; não interrompe a animação/execução da habilidade.
+		is_running = true
+		return
+
+	# Mesmo fluxo de transição usado pelo Mage ao iniciar a corrida.
+	current_attack_target = null
+	is_running = true
 
 	rotation.y = initial_rotation_y
 	animation_player.speed_scale = 1.0
