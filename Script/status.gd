@@ -886,6 +886,8 @@ func set_selected_hero(hero: Node) -> void:
 	character_stats = new_stats
 
 	var hero_id := str(character_stats.get("hero_id")).strip_edges().to_lower()
+	if get_parent().get("selected_hero_id") != null:
+		get_parent().set("selected_hero_id", hero_id)
 	_set_label_text(title_label, "STATUS: ( " + hero_id.to_upper() + " )")
 
 	if is_instance_valid(inventory):
