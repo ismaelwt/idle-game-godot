@@ -2,6 +2,8 @@ extends Node
 
 signal level_loaded(level: Node)
 
+const LOADING_SCENE_PATH := "res://Scenes/loading.tscn"
+
 @onready var level_container: Node3D = $LevelContainer
 @onready var persistent_ui: Control = $PersistentUI
 
@@ -19,6 +21,35 @@ func _load_initial_level() -> void:
 	if path.is_empty():
 		path = "res://Scenes/level_1.tscn"
 	await load_level(path)
+
+
+func load_level_with_loading(path: String) -> void:
+	if is_loading_level:
+		return
+	if not path.begins_with("res://Scenes/level_"):
+		push_warning("GameSession: caminho de fase inválido: " + path)
+		return
+
+	var loading_packed := ResourceLoader.load(LOADING_SCENE_PATH) as PackedScene
+	if loading_packed == null:
+		push_error("GameSession: não foi possível carregar a tela de loading.")
+		await load_level(path)
+		return
+
+	var loading_overlay := loading_packed.instantiate()
+	loading_overlay.set("overlay_mode", true)
+	add_child(loading_overlay)
+	loading_overlay.set("progress_value", 0.0)
+
+	# Garante que a tela apareça antes de começar a troca.
+	await get_tree().process_frame
+
+	await load_level(path)
+
+	if is_instance_valid(loading_overlay):
+		loading_overlay.set("progress_value", 100.0)
+		await get_tree().process_frame
+		loading_overlay.queue_free()
 
 
 func load_level(path: String) -> void:
