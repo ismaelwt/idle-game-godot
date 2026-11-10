@@ -14,6 +14,7 @@ var font = preload("res://Fonts/Pix32.ttf")
 @onready var value_label: Label = $MarginContainer/VBoxContainer/ValueLabel
 @onready var level_label: Label = $MarginContainer/VBoxContainer/LevelLabel
 @onready var compare_label: Label = $MarginContainer/VBoxContainer/CompareLabel
+@onready var equipped_label: Label = $MarginContainer/VBoxContainer/EquippedLabel
 
 var current_item: ItemInstance
 var comparison_inventory: Inventory
@@ -47,6 +48,10 @@ func _ready() -> void:
 	compare_label.add_theme_font_override("font", font)
 	compare_label.add_theme_color_override("font_color", Color("#ffd45c"))
 	compare_label.hide()
+	equipped_label.text = "EQUIPADO"
+	equipped_label.add_theme_font_override("font", font)
+	equipped_label.add_theme_color_override("font_color", Color("#ff4040"))
+	equipped_label.visible = comparison_instance
 
 	if not comparison_instance:
 		var tooltip_scene := load("res://UI/item_tooltip.tscn") as PackedScene
