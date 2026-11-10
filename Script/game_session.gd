@@ -11,7 +11,6 @@ var is_loading_level: bool = false
 
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS
 	call_deferred("_load_initial_level")
 
 
