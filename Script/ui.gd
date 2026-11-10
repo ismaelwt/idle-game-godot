@@ -85,8 +85,11 @@ func _process(_delta: float) -> void:
 	# Detecta personagens adicionados/removidos durante a partida.
 	_refresh_heroes()
 
-	_update_cooldowns(mage_hero, mage_cooldown_labels)
-	_update_cooldowns(knight_hero, knight_cooldown_labels)
+	# Evita passar referências liberadas para parâmetros tipados.
+	var active_mage: Node3D = mage_hero if is_instance_valid(mage_hero) else null
+	var active_knight: Node3D = knight_hero if is_instance_valid(knight_hero) else null
+	_update_cooldowns(active_mage, mage_cooldown_labels)
+	_update_cooldowns(active_knight, knight_cooldown_labels)
 
 
 # =========================================================
@@ -94,23 +97,34 @@ func _process(_delta: float) -> void:
 # =========================================================
 
 func before_level_unload() -> void:
-	if not selected_hero_id.is_empty():
-		return
-	for child in get_children():
-		if not child.has_method("set_selected_hero"):
-			continue
-		var stats = child.get("character_stats")
-		if is_instance_valid(stats):
-			selected_hero_id = str(stats.get("hero_id"))
-			return
-
-	var hud := get_node_or_null("CharacterHUD")
-	if is_instance_valid(hud):
-		var selected = hud.get("selected_hero")
-		if is_instance_valid(selected):
-			var stats = selected.get("character_stats")
+	# Guarda o herói selecionado antes de destruir a fase atual.
+	if selected_hero_id.is_empty():
+		for child in get_children():
+			if not child.has_method("set_selected_hero"):
+				continue
+			var stats = child.get("character_stats")
 			if is_instance_valid(stats):
 				selected_hero_id = str(stats.get("hero_id"))
+				break
+
+		if selected_hero_id.is_empty():
+			var hud := get_node_or_null("CharacterHUD")
+			if is_instance_valid(hud):
+				var selected = hud.get("selected_hero")
+				if is_instance_valid(selected):
+					var stats = selected.get("character_stats")
+					if is_instance_valid(stats):
+						selected_hero_id = str(stats.get("hero_id"))
+
+	# Desconecta e limpa referências da fase que será removida.
+	if is_instance_valid(party_manager):
+		if party_manager.party_changed.is_connected(_on_party_changed):
+			party_manager.party_changed.disconnect(_on_party_changed)
+
+	party_manager = null
+	combat_controller = null
+	mage_hero = null
+	knight_hero = null
 
 
 func on_level_loaded() -> void:
