@@ -95,6 +95,8 @@ func _process(_delta: float) -> void:
 
 func before_level_unload() -> void:
 	for child in get_children():
+		if not child.has_method("set_selected_hero"):
+			continue
 		var stats = child.get("character_stats")
 		if is_instance_valid(stats):
 			selected_hero_id = str(stats.get("hero_id"))
