@@ -90,7 +90,7 @@ corner_radius_bottom_left = 10
 bg_color = Color(0.74509805, 0.45490196, 0.16078432, 0.4117647)
 
 [node name="SkillTree" type="Panel"]
-z_index = 1
+z_index = 12
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
