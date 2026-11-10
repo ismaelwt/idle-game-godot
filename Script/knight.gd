@@ -30,7 +30,7 @@ extends Node3D
 @onready var enemy_spawner: Node = get_parent().get_node_or_null("EnemySpawner")
 
 @export_category("Vida")
-@export var max_health: float = 150.0
+@export var max_health: float = 200.0
 
 @export_category("Dano Visual")
 @export var damage_font_size: int = 48

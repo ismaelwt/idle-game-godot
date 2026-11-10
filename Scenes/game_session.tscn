@@ -1,10 +1,10 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=6 format=3 uid="uid://bmiu7rembjfo1"]
 
-[ext_resource type="Script" path="res://Script/game_session.gd" id="1_session"]
-[ext_resource type="Script" path="res://Items/inventory.gd" id="2_inventory"]
-[ext_resource type="Script" path="res://Script/ui.gd" id="3_ui"]
-[ext_resource type="PackedScene" path="res://Scenes/retry_panel.tscn" id="4_retry"]
-[ext_resource type="PackedScene" path="res://Scenes/character_hud.tscn" id="5_hud"]
+[ext_resource type="Script" uid="uid://f0ijvmciodbn" path="res://Script/game_session.gd" id="1_session"]
+[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="2_inventory"]
+[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="3_ui"]
+[ext_resource type="PackedScene" uid="uid://bb75iltxfdh65" path="res://Scenes/retry_panel.tscn" id="4_retry"]
+[ext_resource type="PackedScene" uid="uid://ccfhkuijvlf6k" path="res://Scenes/character_hud.tscn" id="5_hud"]
 
 [node name="GameSession" type="Node"]
 script = ExtResource("1_session")
@@ -25,6 +25,9 @@ mouse_filter = 2
 script = ExtResource("3_ui")
 
 [node name="RetryPanel" parent="PersistentUI" instance=ExtResource("4_retry")]
+layout_mode = 1
+offset_bottom = 0.0
 
 [node name="CharacterHUD" parent="PersistentUI" instance=ExtResource("5_hud")]
+layout_mode = 1
 mouse_filter = 2

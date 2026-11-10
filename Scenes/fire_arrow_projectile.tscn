@@ -2,12 +2,16 @@
 
 [ext_resource type="Script" uid="uid://18bwjh1flf1p" path="res://Script/arrow_projectile.gd" id="1_b7xdx"]
 [ext_resource type="PackedScene" uid="uid://bvhgnj0qu8ktb" path="res://Assets/BowModel/Arrow.fbx" id="2_0pbls"]
-[ext_resource type="ArrayMesh" uid="uid://bp0niqir1xie8" path="res://Assets/fireball_v2.obj" id="3_2qpig"]
 [ext_resource type="Shader" uid="uid://dp1amfqmo04tp" path="res://Shaders/fire_arrow_projectile.gdshader" id="4_2qpig"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l0jjt"]
 radius = 0.21044922
 height = 3.0
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0pbls"]
+radius = 0.3
+radial_segments = 6
+rings = 2
 
 [sub_resource type="Gradient" id="Gradient_2qpig"]
 offsets = PackedFloat32Array(0.2810219, 0.49270073, 0.7408759)
@@ -53,15 +57,9 @@ transform = Transform3D(-4.3711385e-08, 1, 4.371139e-08, -1, -4.371139e-08, 4.37
 shape = SubResource("CapsuleShape3D_l0jjt")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.03956757, -1.2359575e-15, 0.18382832, 0.02721133, -1.7971875e-15, 0.26730195, 8.755098e-31, 1.1415603, 6.198495e-16, 0.07235303, 0.12272248, 0.9969781)
+transform = Transform3D(1.9106853e-15, 4.371138e-08, 0.99999976, 0.99999976, -4.371138e-08, 0, 4.371138e-08, 0.99999976, -4.371138e-08, -0.02859062, 0.0015899533, 1.3396903)
 cast_shadow = 0
-mesh = ExtResource("3_2qpig")
-surface_material_override/0 = SubResource("ShaderMaterial_2qpig")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(0.042846534, -9.849322e-16, 0.1464924, 0.021684643, 1.946119e-15, -0.28945318, -8.293002e-24, 1.1415603, 6.1984945e-16, 0.07235302, 0.12272248, 0.9969781)
-cast_shadow = 0
-mesh = ExtResource("3_2qpig")
+mesh = SubResource("CapsuleMesh_0pbls")
 surface_material_override/0 = SubResource("ShaderMaterial_2qpig")
 
 [editable path="Arrow"]
