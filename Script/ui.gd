@@ -94,6 +94,8 @@ func _process(_delta: float) -> void:
 # =========================================================
 
 func before_level_unload() -> void:
+	if not selected_hero_id.is_empty():
+		return
 	for child in get_children():
 		if not child.has_method("set_selected_hero"):
 			continue
