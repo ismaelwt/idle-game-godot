@@ -61,6 +61,9 @@ func load_level(path: String) -> void:
 	is_loading_level = true
 	get_tree().paused = false
 
+	_clear_level_projectiles()
+	await get_tree().process_frame
+
 	if is_instance_valid(current_level):
 		if is_instance_valid(persistent_ui) and persistent_ui.has_method("before_level_unload"):
 			persistent_ui.call("before_level_unload")
@@ -112,3 +115,11 @@ func get_level_number() -> int:
 	if basename.begins_with("level_"):
 		return maxi(1, int(basename.trim_prefix("level_")))
 	return 1
+
+
+
+func _clear_level_projectiles() -> void:
+	var projectiles := get_tree().get_nodes_in_group("level_projectiles")
+	for projectile in projectiles:
+		if is_instance_valid(projectile):
+			projectile.queue_free()
