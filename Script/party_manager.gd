@@ -29,7 +29,25 @@ func _ready() -> void:
 	call_deferred("_initialize_party")
 
 
+func _exit_tree() -> void:
+	# A GameSession pode remover uma fase inteira antes de liberar seus nós.
+	# Desconecta o sinal global para o PartyManager antigo não receber
+	# atualizações enquanto estiver fora da SceneTree.
+	if is_instance_valid(_game_manager):
+		if (
+			_game_manager.has_signal("companion_state_changed")
+			and _game_manager.companion_state_changed.is_connected(
+				_on_companion_state_changed
+			)
+		):
+			_game_manager.companion_state_changed.disconnect(
+				_on_companion_state_changed
+			)
+
+
 func _initialize_party() -> void:
+	if not is_inside_tree():
+		return
 	var selected_id := "mage"
 	if is_instance_valid(CharacterSelectionData):
 		selected_id = CharacterSelectionData.get_selected_character_id()
@@ -70,6 +88,10 @@ func _initialize_party() -> void:
 func _discover_heroes() -> Array[Node3D]:
 	var discovered: Array[Node3D] = []
 	var candidates: Array[Node] = []
+
+	# Pode ser chamado durante a saída de uma fase antiga.
+	if not is_inside_tree():
+		return discovered
 
 	for candidate in get_tree().get_nodes_in_group("party_heroes"):
 		if candidate is Node3D and not candidates.has(candidate):
@@ -138,6 +160,8 @@ func _get_hero_id(hero: Node3D) -> String:
 
 
 func _on_companion_state_changed() -> void:
+	if not is_inside_tree():
+		return
 	_refresh_companion()
 
 
