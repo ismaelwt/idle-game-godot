@@ -507,7 +507,7 @@ func _handle_equipment_tooltip(
 	var item: ItemInstance = equipped_items.get(item_type)
 
 	if item != null and is_instance_valid(item) and item.item_base != null:
-		item_tooltip.show_item(item, int(character_stats.level), str(character_stats.hero_id))
+		item_tooltip.show_item(item, int(character_stats.level), str(character_stats.hero_id), false)
 	else:
 		var slot_name := ""
 
