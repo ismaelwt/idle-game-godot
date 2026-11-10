@@ -123,6 +123,14 @@ func _process(_delta: float) -> void:
 			skill_tree_button_points_label.text = str(stats.get("skill_points"))
 
 
+func on_level_loaded(manager: PartyManager) -> void:
+	party_manager = manager
+	if is_instance_valid(party_manager) and not party_manager.party_changed.is_connected(_on_party_changed):
+		party_manager.party_changed.connect(_on_party_changed)
+	_refresh_heroes()
+	_update_selected_hero()
+
+
 func _refresh_heroes() -> void:
 	var manager := party_manager
 
