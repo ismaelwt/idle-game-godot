@@ -57,8 +57,8 @@ static func apply_to_slot(slot: Control, item: ItemInstance) -> void:
 		overlay.color = Color.WHITE
 		slot.add_child(overlay)
 
-	# Fica acima do inventário, mas abaixo das janelas que o sobrepõem.
-	overlay.z_as_relative = false
-	overlay.z_index = 11
+	# Mantém o brilho dentro da hierarquia do slot/inventário.
+	overlay.z_as_relative = true
+	overlay.z_index = 1
 	overlay.material = material
 	overlay.visible = true
