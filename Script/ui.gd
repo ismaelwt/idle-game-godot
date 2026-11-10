@@ -1,5 +1,5 @@
 
-extends CanvasLayer
+extends Control
 
 const CHARACTER_HUD_SCENE: PackedScene = preload("res://Scenes/character_hud.tscn")
 const RETRY_PANEL_SCENE: PackedScene = preload("res://Scenes/retry_panel.tscn")
