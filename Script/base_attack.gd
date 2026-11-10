@@ -20,6 +20,7 @@ var resolved := false
 
 
 func _ready():
+	add_to_group("level_projectiles")
 
 	$Area3D.body_entered.connect(_on_body_entered)
 
