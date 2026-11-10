@@ -118,11 +118,13 @@ func on_level_loaded() -> void:
 
 	party_manager = scene.find_child("PartyManager", true, false) as PartyManager
 	combat_controller = scene.find_child("CombatController", true, false) as CombatController
+	if is_instance_valid(party_manager) and not party_manager.party_changed.is_connected(_on_party_changed):
+		party_manager.party_changed.connect(_on_party_changed)
 	_refresh_heroes()
 
 	var hud := get_node_or_null("CharacterHUD")
-	if is_instance_valid(hud) and hud.has_method("_refresh_heroes"):
-		hud.call("_refresh_heroes")
+	if is_instance_valid(hud) and hud.has_method("on_level_loaded"):
+		hud.call("on_level_loaded", party_manager)
 
 	var selected_hero: Node = null
 	if is_instance_valid(party_manager):
