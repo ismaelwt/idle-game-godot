@@ -5,7 +5,6 @@
 [ext_resource type="Script" path="res://Script/ui.gd" id="3_ui"]
 
 [node name="GameSession" type="Node"]
-process_mode = 3
 script = ExtResource("1_session")
 
 [node name="LevelContainer" type="Node3D" parent="."]
@@ -14,4 +13,5 @@ script = ExtResource("1_session")
 script = ExtResource("2_inventory")
 
 [node name="PersistentUI" type="CanvasLayer" parent="."]
+process_mode = 3
 script = ExtResource("3_ui")
