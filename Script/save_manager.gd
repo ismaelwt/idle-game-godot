@@ -218,7 +218,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 		return
 
 	_apply_character_stats(character_stats, hero_data)
-	if inventory != null:
+	if inventory != null and not inventory.has_meta("persistent_save_loaded"):
 		var inventory_data = data.get("inventory", {})
 		if inventory_data is Dictionary:
 			deserialize_inventory(inventory, inventory_data)
@@ -227,6 +227,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 		if saved_hero_equipment.is_empty() and hero_id == "mage":
 			saved_hero_equipment = data.get("inventory", {}).get("equipped_items", {})
 		deserialize_hero_equipment(inventory, hero_id, saved_hero_equipment)
+		inventory.set_meta("persistent_save_loaded", true)
 
 	automatic_retry = bool(data.get("automatic_retry", false))
 	if is_instance_valid(game_manager):
