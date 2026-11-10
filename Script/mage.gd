@@ -258,8 +258,10 @@ func use_skill(skill_id: String, target: Node3D):
 
 			damage_buff_active = true
 			damage_buff_instance = damage_buff_scene.instantiate()
-			get_tree().current_scene.add_child(damage_buff_instance)
-			damage_buff_instance.global_position = global_position
+			# Assim como o Frenesi do Knight, a aura pertence ao próprio herói.
+			# Ao remover a fase, o Mage e o buff são destruídos juntos.
+			add_child(damage_buff_instance)
+			damage_buff_instance.position = Vector3.ZERO
 
 			print("BUFF CASTADO!")
 
