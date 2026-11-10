@@ -135,23 +135,38 @@ func _on_close_pressed() -> void:
 
 
 func detect_current_stage() -> int:
-	var scene := get_tree().current_scene
-	if scene == null:
-		push_warning("Não foi possível identificar a cena atual.")
-		return current_stage
+	# Na arquitetura persistente, current_scene é GameSession.
+	# A fase ativa fica dentro dela e seu caminho é mantido pela sessão.
+	var session := get_tree().current_scene
+	if is_instance_valid(session):
+		if session.has_method("get_level_number"):
+			var session_stage := int(session.call("get_level_number"))
+			if session_stage > 0:
+				print("MAPA | Fase ativa pela GameSession: ", session_stage)
+				return session_stage
 
-	var scene_path: String = scene.scene_file_path
-	var scene_name: String = scene_path.get_file().get_basename()
-	print("MAPA | Cena atual: ", scene_name)
+		var active_path := str(session.get("current_level_path"))
+		if active_path.is_empty():
+			var active_level = session.get("current_level")
+			if is_instance_valid(active_level):
+				active_path = active_level.scene_file_path
 
-	if scene_name.begins_with("level_"):
-		var stage_text := scene_name.trim_prefix("level_")
-		if stage_text.is_valid_int():
-			return stage_text.to_int()
+		if not active_path.is_empty():
+			var active_name := active_path.get_file().get_basename()
+			if active_name.begins_with("level_"):
+				var stage_text := active_name.trim_prefix("level_")
+				if stage_text.is_valid_int():
+					return stage_text.to_int()
 
-	push_warning("Cena não corresponde ao padrão level_N: " + scene_name)
+		# Compatibilidade com execução direta de uma fase no editor.
+		var scene_name := session.scene_file_path.get_file().get_basename()
+		if scene_name.begins_with("level_"):
+			var direct_stage := scene_name.trim_prefix("level_")
+			if direct_stage.is_valid_int():
+				return direct_stage.to_int()
+
+	push_warning("MAPA | Não foi possível identificar a fase ativa; mantendo fase %d." % current_stage)
 	return current_stage
-
 
 func _find_selected_hero() -> Node:
 	var selected_id := CharacterSelectionData.get_selected_character_id()
