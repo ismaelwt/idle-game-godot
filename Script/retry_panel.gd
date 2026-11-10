@@ -1,6 +1,6 @@
 extends Panel
 
-@onready var level_controller = get_tree().get_first_node_in_group("level_controller")
+var level_controller: Node = null
 
 @onready var restart_button = $CenterContainer/PanelContainer/VBoxContainer/Retry
 @onready var map_button = $CenterContainer/PanelContainer/VBoxContainer/Map
@@ -23,15 +23,17 @@ func _ready():
 	close_button.pressed.connect(_on_close_pressed)
 
 	var auto_retry_enabled = SaveManager.load_auto_retry()
-
-	if level_controller != null:
+	level_controller = _find_level_controller()
+	if is_instance_valid(level_controller):
 		level_controller.automatic_retry = auto_retry_enabled
-
+	map_button.hide()
 	update_auto_retry_buttons()
 
 
 func _process(_delta):
-	if level_controller == null:
+	if not is_instance_valid(level_controller):
+		level_controller = _find_level_controller()
+	if not is_instance_valid(level_controller):
 		return
 
 	if SaveManager.automatic_retry:
@@ -53,33 +55,37 @@ func update_auto_retry_buttons():
 
 func _on_enable_auto_retry_pressed():
 	SaveManager.save_auto_retry(false)
-	level_controller.automatic_retry = false
+	if is_instance_valid(level_controller):
+		level_controller.automatic_retry = false
 	update_auto_retry_buttons()
 
 
 func _on_disable_auto_retry_pressed():
 	SaveManager.save_auto_retry(true)
-	level_controller.automatic_retry = true
+	if is_instance_valid(level_controller):
+		level_controller.automatic_retry = true
 	update_auto_retry_buttons()
 
 
 func _on_restart_pressed():
-	var current_scene = get_tree().current_scene
-
-	if not current_scene:
-		return
-
-	var current_scene_path = current_scene.scene_file_path
-
-	print("=== REINICIANDO FASE ===")
-	print("CENA ATUAL: ", current_scene_path)
-
-	SceneLoader.change_scene(current_scene_path)
+	print("=== REINICIANDO SOMENTE A FASE ===")
+	SceneLoader.reload_current_level()
+	hide()
 
 
 func _on_map_pressed():
-	print("=== MAP LOADED ===")
-	SceneLoader.change_scene("res://Scenes/mapa.tscn")
+	hide()
+
+
+func _find_level_controller() -> Node:
+	return get_tree().get_first_node_in_group("level_controller")
+
+
+func on_level_loaded(controller: Node) -> void:
+	level_controller = controller
+	visible = false
+	if is_instance_valid(level_controller):
+		level_controller.automatic_retry = SaveManager.automatic_retry
 
 
 func _on_close_pressed():
