@@ -14,11 +14,17 @@ script = ExtResource("1_session")
 [node name="Inventory" type="Node" parent="."]
 script = ExtResource("2_inventory")
 
-[node name="PersistentUI" type="CanvasLayer" parent="."]
-layer = 10
-process_mode = 3
+[node name="PersistentUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("3_ui")
 
 [node name="RetryPanel" parent="PersistentUI" instance=ExtResource("4_retry")]
 
 [node name="CharacterHUD" parent="PersistentUI" instance=ExtResource("5_hud")]
+mouse_filter = 2
