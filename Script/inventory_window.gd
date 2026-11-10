@@ -75,11 +75,14 @@ func _create_item_tooltip() -> void:
 		get_tree().current_scene.add_child.call_deferred(item_tooltip)
 
 	item_tooltip.hide()
+	item_tooltip.set_comparison_source(inventory, character_stats)
 
 
 func set_character_stats(stats_ref) -> void:
 	character_stats = stats_ref
 	selected_equipment_for_gem = null
+	if is_instance_valid(item_tooltip):
+		item_tooltip.set_comparison_source(inventory, character_stats)
 
 	if is_instance_valid(inventory) and is_instance_valid(character_stats):
 		inventory.active_hero_id = str(character_stats.hero_id)
