@@ -43,6 +43,7 @@ func get_description() -> String:
 
 
 func _ready() -> void:
+	add_to_group("level_projectiles")
 	if not has_center_position:
 		if not is_instance_valid(center_target):
 			_finish()
