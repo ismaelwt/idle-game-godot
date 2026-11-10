@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://soosefshdpkq"]
+[gd_scene load_steps=28 format=3 uid="uid://soosefshdpkq"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
 [ext_resource type="PackedScene" uid="uid://mpt1iubn4rnd" path="res://Scenes/tile_03.tscn" id="3_gqssx"]
@@ -14,8 +14,6 @@
 [ext_resource type="PackedScene" uid="uid://dtcmflopapm0w" path="res://Scenes/goblin_wizard.tscn" id="11_nbwsh"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_f7ucr"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_xqvjd"]
-[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_rkt0a"]
-[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_phxl3"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="15_xqvjd"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="16_rkt0a"]
 
@@ -204,14 +202,8 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.93281716, 0.9340785, 0.937522, 1)
 
-[node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("14_rkt0a")
-
 [node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
 script = ExtResource("15_xqvjd")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("16_rkt0a")
-
-[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
-script = ExtResource("15_phxl3")
