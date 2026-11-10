@@ -52,6 +52,12 @@ func load_level(path: String) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 
+	var party_manager := current_level.find_child("PartyManager", true, false) as PartyManager
+	for _attempt in range(10):
+		if is_instance_valid(party_manager) and not party_manager.get_heroes().is_empty():
+			break
+		await get_tree().process_frame
+
 	var controller := current_level.find_child("LevelController", true, false)
 	var retry_panel := persistent_ui.get_node_or_null("RetryPanel")
 	if is_instance_valid(retry_panel) and retry_panel.has_method("on_level_loaded"):
