@@ -3,7 +3,7 @@ extends Node
 signal level_loaded(level: Node)
 
 @onready var level_container: Node3D = $LevelContainer
-@onready var persistent_ui: CanvasLayer = $PersistentUI
+@onready var persistent_ui: Control = $PersistentUI
 
 var current_level_path: String = ""
 var current_level: Node = null
@@ -11,35 +11,14 @@ var is_loading_level: bool = false
 
 
 func _ready() -> void:
-	call_deferred("_initialize_session")
+	call_deferred("_load_initial_level")
 
 
-func _initialize_session() -> void:
-	_attach_persistent_ui_to_root()
+func _load_initial_level() -> void:
 	var path := SceneLoader.initial_level_path
 	if path.is_empty():
 		path = "res://Scenes/level_1.tscn"
 	await load_level(path)
-
-
-func _attach_persistent_ui_to_root() -> void:
-	if not is_instance_valid(persistent_ui):
-		return
-
-	var scene_root := get_tree().root
-	if persistent_ui.get_parent() != scene_root:
-		persistent_ui.get_parent().remove_child(persistent_ui)
-		scene_root.add_child(persistent_ui)
-
-	# A interface fica no Viewport principal, acima do SubViewport da fase.
-	persistent_ui.layer = 10
-
-
-func _exit_tree() -> void:
-	# A UI foi movida para o root para não ficar presa ao viewport da fase.
-	# Ela deve acompanhar a sessão, e não permanecer ao sair dela.
-	if is_instance_valid(persistent_ui):
-		persistent_ui.queue_free()
 
 
 func load_level(path: String) -> void:
