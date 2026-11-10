@@ -3,6 +3,7 @@ class_name MyChest
 
 const STORAGE_CAPACITY: int = 40
 const SLOT_SIZE := Vector2(40, 40)
+const ItemRarityVisualsScript = preload("res://Script/item_rarity_visuals.gd")
 
 var inventory: Inventory
 var item_tooltip: ItemTooltip
@@ -71,14 +72,18 @@ func _refresh_items() -> void:
 	for index in range(item_slots.size()):
 		var slot := item_slots[index]
 		for child in slot.get_children():
+			if child.name == "RarityGlowBorder":
+				continue
 			child.queue_free()
 
 		if index >= stored_items.size():
 			slot.tooltip_text = ""
+			ItemRarityVisualsScript.apply_to_slot(slot, null)
 			continue
 
 		var item: ItemInstance = stored_items[index]
 		if item == null or item.item_base == null:
+			ItemRarityVisualsScript.apply_to_slot(slot, null)
 			continue
 
 		slot.tooltip_text = "%s | Nível %d | %s" % [
@@ -96,6 +101,7 @@ func _refresh_items() -> void:
 			icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
 			icon.texture = _get_item_icon(item)
 			slot.add_child(icon)
+		ItemRarityVisualsScript.apply_to_slot(slot, item)
 		_set_tier_badge(slot, item)
 
 
