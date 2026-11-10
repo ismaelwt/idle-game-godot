@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://dg0kr8avhqlm5"]
+[gd_scene load_steps=26 format=3 uid="uid://dg0kr8avhqlm5"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_7qsfm"]
 [ext_resource type="PackedScene" uid="uid://cpu1g8auqvx74" path="res://Scenes/tile_02.tscn" id="2_g8xra"]
@@ -9,11 +9,9 @@
 [ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_2l5ju"]
 [ext_resource type="PackedScene" uid="uid://0koc8hde0sjn" path="res://Scenes/boss_goblin.tscn" id="7_r0jh1"]
 [ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="7_wjjdy"]
-[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="10_k8xho"]
 [ext_resource type="PackedScene" uid="uid://3frkx64fx3r2" path="res://Scenes/archer.tscn" id="10_kh3vg"]
 [ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="10_yvrk7"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="11_bgibu"]
-[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="13_45kkt"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="14_vqvjq"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="15_k14j5"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="66_p1gm3"]
@@ -198,14 +196,8 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.9443678, 0.9474271, 0.95328075, 1)
 
-[node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("10_k8xho")
-
 [node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
 script = ExtResource("14_vqvjq")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("15_k14j5")
-
-[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
-script = ExtResource("13_45kkt")
