@@ -101,7 +101,7 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "", a
 	_clear_enchantment_slots()
 	_add_class_requirement(item, hero_id)
 	if item.tier > 0 and base.item_type != ItemBase.ItemType.GEM:
-		_add_attribute("Bônus do Tier", "+%d%%" % (item.tier * 10), Color("#ffd45c"))
+		_add_attribute("Bônus do Tier", "+%d atributo(s) / +%d%% demais" % [item.tier, item.tier * 10], Color("#ffd45c"))
 	rarity_label.add_theme_color_override(
 		"font_color",
 		_get_rarity_color(item.generated_rarity)
@@ -188,14 +188,15 @@ func show_enchantment_preview(item: ItemInstance, preview_gem: ItemInstance) -> 
 
 
 func _get_tiered_value(item: ItemInstance, value: float, is_primary_attribute: bool = false) -> float:
-	var tiered_value := value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
 	if is_primary_attribute:
-		return float(roundi(tiered_value))
-	return tiered_value
+		var tier_bonus := clampi(item.tier, 0, 3) if value > 0.0 else 0
+		return float(roundi(value)) + float(tier_bonus)
+	return value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
 
 
 func _get_tiered_gem_effect_value(equipment_item: ItemInstance, gem: ItemInstance) -> String:
-	var scaled_value := _get_tiered_value(equipment_item, gem.gem_effect_value)
+	var primary_gem_effects := [ItemBase.GemEffect.STRENGTH, ItemBase.GemEffect.AGILITY, ItemBase.GemEffect.INTELLIGENCE, ItemBase.GemEffect.VITALITY]
+	var scaled_value := gem.gem_effect_value if gem.gem_effect in primary_gem_effects else _get_tiered_value(equipment_item, gem.gem_effect_value)
 	if gem.gem_effect in [
 		ItemBase.GemEffect.MAGIC_POWER,
 		ItemBase.GemEffect.LIFE_STEAL,
