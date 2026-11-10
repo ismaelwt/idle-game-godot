@@ -133,10 +133,10 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "", a
 		enchantments_label.show()
 		enchantment_slots.show()
 
-		_add_attribute("Força", _get_tiered_value(item, item.strength_bonus))
-		_add_attribute("Agilidade", _get_tiered_value(item, item.agility_bonus))
-		_add_attribute("Inteligência", _get_tiered_value(item, item.intelligence_bonus))
-		_add_attribute("Vitalidade", _get_tiered_value(item, item.vitality_bonus))
+		_add_attribute("Força", _get_tiered_value(item, item.strength_bonus, true))
+		_add_attribute("Agilidade", _get_tiered_value(item, item.agility_bonus, true))
+		_add_attribute("Inteligência", _get_tiered_value(item, item.intelligence_bonus, true))
+		_add_attribute("Vitalidade", _get_tiered_value(item, item.vitality_bonus, true))
 		_add_attribute("Mana máxima", _get_tiered_value(item, item.max_mana_bonus))
 		_add_attribute("Dano físico", _get_tiered_value(item, item.physical_damage_bonus))
 		_add_attribute("Dano mágico", _get_tiered_value(item, item.magic_damage_bonus))
@@ -187,9 +187,9 @@ func show_enchantment_preview(item: ItemInstance, preview_gem: ItemInstance) -> 
 	show_item(preview_item)
 
 
-func _get_tiered_value(item: ItemInstance, value: float) -> float:
+func _get_tiered_value(item: ItemInstance, value: float, is_primary_attribute: bool = false) -> float:
 	var tiered_value := value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
-	if value == float(item.strength_bonus) or value == float(item.agility_bonus) or value == float(item.intelligence_bonus) or value == float(item.vitality_bonus):
+	if is_primary_attribute:
 		return float(roundi(tiered_value))
 	return tiered_value
 
