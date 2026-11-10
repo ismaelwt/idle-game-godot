@@ -33,6 +33,7 @@ var visual_landing_position: Vector3 = Vector3.ZERO
 
 
 func _ready() -> void:
+	add_to_group("level_projectiles")
 	if visual_only:
 		area.monitoring = false
 		area.monitorable = false
