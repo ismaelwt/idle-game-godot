@@ -19,6 +19,7 @@ func setup(target_node: Node3D, shooter_node: Node3D, projectile_damage: float) 
 	damage = projectile_damage
 
 func _ready() -> void:
+	add_to_group("level_projectiles")
 	var area := get_node_or_null("Area3D") as Area3D
 	if is_instance_valid(area):
 		area.monitoring = false
