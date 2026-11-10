@@ -13,8 +13,14 @@ var font = preload("res://Fonts/Pix32.ttf")
 @onready var description_label: Label = $MarginContainer/VBoxContainer/DescriptionLabel
 @onready var value_label: Label = $MarginContainer/VBoxContainer/ValueLabel
 @onready var level_label: Label = $MarginContainer/VBoxContainer/LevelLabel
+@onready var compare_label: Label = $MarginContainer/VBoxContainer/CompareLabel
 
 var current_item: ItemInstance
+var comparison_inventory: Inventory
+var comparison_stats
+var comparison_tooltip: ItemTooltip
+var comparison_instance: bool = false
+var last_comparison_item: ItemInstance = null
 
 
 func _ready() -> void:
@@ -36,7 +42,28 @@ func _ready() -> void:
 	description_label.custom_minimum_size = Vector2(180, 0)
 	description_label.size_flags_horizontal = Control.SIZE_SHRINK_BEGIN
 
+	compare_label.text = "Compare: CTRL"
+	compare_label.add_theme_font_override("font", font)
+	compare_label.add_theme_color_override("font_color", Color("#ffd45c"))
+	compare_label.hide()
+
+	if not comparison_instance:
+		var tooltip_scene := load("res://UI/item_tooltip.tscn") as PackedScene
+		if tooltip_scene != null:
+			comparison_tooltip = tooltip_scene.instantiate() as ItemTooltip
+			comparison_tooltip.comparison_instance = true
+			comparison_tooltip.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			comparison_tooltip.z_index = z_index + 1
+			add_child(comparison_tooltip)
+			comparison_tooltip.hide()
+
 	hide()
+
+
+func set_comparison_source(source_inventory: Inventory, source_stats) -> void:
+	comparison_inventory = source_inventory
+	comparison_stats = source_stats
+	last_comparison_item = null
 
 
 func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -> void:
@@ -130,6 +157,8 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 
 		_create_enchantment_slots(item)
 
+	var can_compare := _is_equipment_item(item)
+	compare_label.visible = can_compare and not comparison_instance
 	show()
 
 	# Espera os controles recalcularem o tamanho do conteúdo.
@@ -193,12 +222,57 @@ func _fit_tooltip_to_content() -> void:
 
 func hide_tooltip() -> void:
 	current_item = null
+	last_comparison_item = null
 	hide()
+	if is_instance_valid(comparison_tooltip):
+		comparison_tooltip.hide_tooltip()
 
 
 func _process(_delta: float) -> void:
-	if visible:
-		_update_position()
+	if comparison_instance:
+		return
+	if not visible:
+		return
+	_update_position()
+	_update_comparison_tooltip()
+
+
+func _is_equipment_item(item: ItemInstance) -> bool:
+	if item == null or item.item_base == null:
+		return false
+	return item.item_base.item_type != ItemBase.ItemType.GEM
+
+
+func _update_comparison_tooltip() -> void:
+	if not is_instance_valid(comparison_tooltip) or not is_instance_valid(current_item):
+		return
+	if not _is_equipment_item(current_item) or not Input.is_key_pressed(KEY_CTRL):
+		if comparison_tooltip.visible:
+			comparison_tooltip.hide_tooltip()
+		last_comparison_item = null
+		return
+	if not is_instance_valid(comparison_inventory) or not is_instance_valid(comparison_stats):
+		comparison_tooltip.hide_tooltip()
+		return
+
+	var equipped_items: Dictionary = comparison_inventory.get_equipped_items(str(comparison_stats.hero_id))
+	var equipped_item: ItemInstance = equipped_items.get(current_item.item_base.item_type) as ItemInstance
+	if not is_instance_valid(equipped_item) or equipped_item.item_base == null:
+		comparison_tooltip.hide_tooltip()
+		last_comparison_item = null
+		return
+
+	if equipped_item != last_comparison_item or not comparison_tooltip.visible:
+		last_comparison_item = equipped_item
+		comparison_tooltip.show_item(equipped_item, int(comparison_stats.level), str(comparison_stats.hero_id))
+
+	var gap := 8.0
+	var right_position := position + Vector2(size.x + gap, 0.0)
+	var viewport_size := get_viewport_rect().size
+	if right_position.x + comparison_tooltip.size.x > viewport_size.x:
+		right_position.x = position.x - comparison_tooltip.size.x - gap
+	right_position.y = clampf(position.y, 0.0, maxf(0.0, viewport_size.y - comparison_tooltip.size.y))
+	comparison_tooltip.position = right_position
 
 
 func _update_position() -> void:
