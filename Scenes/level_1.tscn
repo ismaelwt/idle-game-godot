@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=23 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -13,9 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="12_w8vhy"]
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
-[ext_resource type="Script" uid="uid://dffhfwb0iwnnc" path="res://Items/inventory.gd" id="14_d8dne"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="14_yy84a"]
-[ext_resource type="Script" uid="uid://cq7ngaacotcn7" path="res://Script/ui.gd" id="15_0jgxx"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -186,14 +184,8 @@ damage_height = 2.0
 damage_duration = 1.0
 damage_color = Color(0.94375485, 0.9420354, 0.9457635, 1)
 
-[node name="Inventory" type="Node" parent="SubViewportContainer/SubViewport"]
-script = ExtResource("14_d8dne")
-
 [node name="PartyManager" type="Node" parent="SubViewportContainer/SubViewport" groups=["party_manager"]]
 script = ExtResource("13_soyxa")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_yy84a")
-
-[node name="UI" type="CanvasLayer" parent="SubViewportContainer"]
-script = ExtResource("15_0jgxx")
