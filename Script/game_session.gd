@@ -39,7 +39,7 @@ func load_level_with_loading(path: String) -> void:
 	var loading_overlay := loading_packed.instantiate()
 	loading_overlay.set("overlay_mode", true)
 	add_child(loading_overlay)
-	loading_overlay.set("progress_value", 0.0)
+	loading_overlay.call("set_progress", 0.0)
 
 	# Garante que a tela apareça antes de começar a troca.
 	await get_tree().process_frame
@@ -47,7 +47,7 @@ func load_level_with_loading(path: String) -> void:
 	await load_level(path)
 
 	if is_instance_valid(loading_overlay):
-		loading_overlay.set("progress_value", 100.0)
+		loading_overlay.call("set_progress", 100.0)
 		await get_tree().process_frame
 		loading_overlay.queue_free()
 
