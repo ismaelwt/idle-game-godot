@@ -420,6 +420,10 @@ func _get_gem_effect_value(item: ItemInstance) -> String:
 
 func show_empty_equipment_slot(_slot_name: String) -> void:
 	current_item = null
+	compare_label.hide()
+	last_comparison_item = null
+	if is_instance_valid(comparison_tooltip):
+		comparison_tooltip.hide_tooltip()
 
 	name_label.hide()
 	rarity_label.hide()
