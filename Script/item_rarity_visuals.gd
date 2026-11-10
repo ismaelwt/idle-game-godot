@@ -57,8 +57,8 @@ static func apply_to_slot(slot: Control, item: ItemInstance) -> void:
 		overlay.color = Color.WHITE
 		slot.add_child(overlay)
 
-	# Usa z-index absoluto: não herda o z_index elevado do InventoryControl.
+	# Fica acima do inventário, mas abaixo das janelas que o sobrepõem.
 	overlay.z_as_relative = false
-	overlay.z_index = 0
+	overlay.z_index = 11
 	overlay.material = material
 	overlay.visible = true
