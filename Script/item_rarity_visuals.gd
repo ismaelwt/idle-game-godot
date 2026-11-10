@@ -55,7 +55,7 @@ static func apply_to_slot(slot: Control, item: ItemInstance) -> void:
 		overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 		overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		overlay.color = Color.WHITE
-		overlay.z_index = 50
+		overlay.z_index = 1
 		slot.add_child(overlay)
 
 	overlay.material = material
