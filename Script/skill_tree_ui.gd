@@ -419,6 +419,9 @@ func set_selected_hero(hero: Node) -> void:
 		return
 
 	_set_hero(hero)
+	var stats = _get_hero_stats(hero)
+	if is_instance_valid(stats) and get_parent().get("selected_hero_id") != null:
+		get_parent().set("selected_hero_id", str(stats.get("hero_id")))
 
 
 func _on_skill_pressed(skill_id: String) -> void:
