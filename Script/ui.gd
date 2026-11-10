@@ -92,6 +92,32 @@ func _process(_delta: float) -> void:
 # LOCALIZAÇÃO DOS HERÓIS
 # =========================================================
 
+func on_level_loaded() -> void:
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+
+	party_manager = scene.find_child("PartyManager", true, false) as PartyManager
+	combat_controller = scene.find_child("CombatController", true, false) as CombatController
+	_refresh_heroes()
+
+	var hud := get_node_or_null("CharacterHUD")
+	if is_instance_valid(hud) and hud.has_method("_refresh_heroes"):
+		hud.call("_refresh_heroes")
+
+	var selected_hero: Node = null
+	if is_instance_valid(party_manager):
+		selected_hero = party_manager.get_main_hero()
+		if not is_instance_valid(selected_hero):
+			var heroes: Array[Node3D] = party_manager.get_heroes()
+			if not heroes.is_empty():
+				selected_hero = heroes[0]
+
+	for child in get_children():
+		if child.has_method("set_selected_hero") and is_instance_valid(selected_hero):
+			child.call("set_selected_hero", selected_hero)
+
+
 func _refresh_heroes() -> void:
 	var active_party_manager := party_manager
 
