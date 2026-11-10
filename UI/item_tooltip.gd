@@ -188,7 +188,10 @@ func show_enchantment_preview(item: ItemInstance, preview_gem: ItemInstance) -> 
 
 
 func _get_tiered_value(item: ItemInstance, value: float) -> float:
-	return value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
+	var tiered_value := value * (1.0 + float(clampi(item.tier, 0, 3)) * 0.10)
+	if value == float(item.strength_bonus) or value == float(item.agility_bonus) or value == float(item.intelligence_bonus) or value == float(item.vitality_bonus):
+		return float(roundi(tiered_value))
+	return tiered_value
 
 
 func _get_tiered_gem_effect_value(equipment_item: ItemInstance, gem: ItemInstance) -> String:
