@@ -10,6 +10,7 @@ const LOADING_SCENE_PATH := "res://Scenes/loading.tscn"
 var current_level_path: String = ""
 var current_level: Node = null
 var is_loading_level: bool = false
+var loading_overlay: Control = null
 
 
 func _ready() -> void:
@@ -36,7 +37,7 @@ func load_level_with_loading(path: String) -> void:
 		await load_level(path)
 		return
 
-	var loading_overlay := loading_packed.instantiate()
+	loading_overlay = loading_packed.instantiate() as Control
 	loading_overlay.set("overlay_mode", true)
 	add_child(loading_overlay)
 	loading_overlay.call("set_progress", 0.0)
@@ -50,6 +51,7 @@ func load_level_with_loading(path: String) -> void:
 		loading_overlay.call("set_progress", 100.0)
 		await get_tree().process_frame
 		loading_overlay.queue_free()
+	loading_overlay = null
 
 
 func load_level(path: String) -> void:
@@ -72,12 +74,35 @@ func load_level(path: String) -> void:
 		current_level = null
 
 	await get_tree().process_frame
-	var packed_scene := ResourceLoader.load(path) as PackedScene
-	if packed_scene == null:
-		push_error("GameSession: não foi possível carregar " + path)
+	# Carrega os recursos da fase em uma thread separada para evitar bloquear
+	# a thread principal enquanto cenas, texturas e dependências são lidas.
+	var request_error := ResourceLoader.load_threaded_request(path)
+	if request_error != OK and request_error != ERR_BUSY:
+		push_error("GameSession: não foi possível iniciar o carregamento de " + path)
 		is_loading_level = false
 		return
 
+	var load_status := ResourceLoader.load_threaded_get_status(path)
+	while load_status == ResourceLoader.THREAD_LOAD_IN_PROGRESS:
+		var progress: Array = []
+		load_status = ResourceLoader.load_threaded_get_status(path, progress)
+		if not progress.is_empty() and is_instance_valid(loading_overlay):
+			loading_overlay.call("set_progress", float(progress[0]) * 90.0)
+		await get_tree().process_frame
+
+	if load_status != ResourceLoader.THREAD_LOAD_LOADED:
+		push_error("GameSession: falha no carregamento em thread de " + path)
+		is_loading_level = false
+		return
+
+	var packed_scene := ResourceLoader.load_threaded_get(path) as PackedScene
+	if packed_scene == null:
+		push_error("GameSession: não foi possível obter a fase carregada: " + path)
+		is_loading_level = false
+		return
+
+	if is_instance_valid(loading_overlay):
+		loading_overlay.call("set_progress", 95.0)
 	current_level = packed_scene.instantiate()
 	current_level.name = "ActiveLevel"
 	current_level_path = path
