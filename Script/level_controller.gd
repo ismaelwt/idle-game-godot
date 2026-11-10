@@ -78,7 +78,7 @@ func _get_selected_hero() -> Node3D:
 	return null
 @onready var world_scroller = get_parent().get_node("World/WorldScroller")
 @onready var enemy_spawner = get_parent().get_node("EnemySpawner")
-@onready var inventory = get_parent().get_node("Inventory")
+@onready var inventory = get_tree().current_scene.find_child("Inventory", true, false)
 
 
 func _ready():
@@ -122,12 +122,7 @@ func _process(_delta):
 			if SaveManager.automatic_retry:
 				await get_tree().create_timer(3.0).timeout
 
-				var current_scene = get_tree().current_scene
-
-				if is_instance_valid(current_scene):
-					SceneLoader.change_scene(
-						current_scene.scene_file_path
-					)
+				SceneLoader.reload_current_level()
 
 				return
 
@@ -632,12 +627,7 @@ func enemy_died(dead_enemy: Node3D):
 
 			await get_tree().create_timer(3.0).timeout
 
-			var current_scene = get_tree().current_scene
-
-			if is_instance_valid(current_scene):
-				SceneLoader.change_scene(
-					current_scene.scene_file_path
-				)
+			SceneLoader.reload_current_level()
 
 			return
 
@@ -794,7 +784,10 @@ func get_current_level_number() -> int:
 	if scene == null:
 		return 1
 
-	var scene_name := scene.scene_file_path.get_file().get_basename()
+	var level_path := str(scene.get("current_level_path"))
+	if level_path.is_empty():
+		level_path = scene.scene_file_path
+	var scene_name := level_path.get_file().get_basename()
 
 	if scene_name.begins_with("level_"):
 		var level_text := scene_name.trim_prefix("level_")
