@@ -716,7 +716,7 @@ func show_warning(text):
 	label.position = Vector2(-300, -40)
 	label.size = Vector2(600, 80)
 
-	get_tree().current_scene.add_child(label)
+	add_child(label)
 
 	var elapsed := 0.0
 	var blink_time := 0.2
