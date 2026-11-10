@@ -457,15 +457,20 @@ func get_equipment_bonus(stat_name: String) -> float:
 			continue
 
 		var item_total: float = 0.0
+		var primary_attribute_base: float = 0.0
 		match stat_name:
 			"strength":
-				item_total += float(item.strength_bonus)
+				primary_attribute_base = float(item.strength_bonus)
+				item_total += primary_attribute_base
 			"agility":
-				item_total += float(item.agility_bonus)
+				primary_attribute_base = float(item.agility_bonus)
+				item_total += primary_attribute_base
 			"intelligence":
-				item_total += float(item.intelligence_bonus)
+				primary_attribute_base = float(item.intelligence_bonus)
+				item_total += primary_attribute_base
 			"vitality":
-				item_total += float(item.vitality_bonus)
+				primary_attribute_base = float(item.vitality_bonus)
+				item_total += primary_attribute_base
 			"max_mana":
 				item_total += float(item.max_mana_bonus)
 			"physical_damage":
@@ -544,14 +549,13 @@ func get_equipment_bonus(stat_name: String) -> float:
 					if stat_name == "critical_damage":
 						item_total += gem_value
 
-		var tiered_item_total := item_total * get_item_tier_multiplier(item)
 		if stat_name in ["strength", "agility", "intelligence", "vitality"]:
-			# Atributos principais são sempre inteiros por equipamento; frações de itens
-			# diferentes não podem se acumular para formar um ponto extra.
-			total += float(roundi(tiered_item_total))
+			# Tier concede pontos fixos somente se o item já possuir esse atributo.
+			var tier_bonus := clampi(item.tier, 0, 3) if primary_attribute_base > 0.0 else 0
+			total += float(roundi(primary_attribute_base + float(tier_bonus) + (item_total - primary_attribute_base)))
 		else:
-			# Demais propriedades continuam aceitando valores fracionados.
-			total += tiered_item_total
+			# Demais propriedades mantêm o escalonamento percentual atual do Tier.
+			total += item_total * get_item_tier_multiplier(item)
 
 	return total
 
