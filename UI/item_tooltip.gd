@@ -21,6 +21,7 @@ var comparison_stats
 var comparison_tooltip: ItemTooltip
 var comparison_instance: bool = false
 var last_comparison_item: ItemInstance = null
+var comparison_enabled: bool = true
 
 
 func _ready() -> void:
@@ -66,7 +67,7 @@ func set_comparison_source(source_inventory: Inventory, source_stats) -> void:
 	last_comparison_item = null
 
 
-func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -> void:
+func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "", allow_comparison: bool = true) -> void:
 	if item == null or item.item_base == null:
 		hide()
 		return
@@ -157,8 +158,8 @@ func show_item(item: ItemInstance, hero_level: int = -1, hero_id: String = "") -
 
 		_create_enchantment_slots(item)
 
-	var can_compare := _is_equipment_item(item)
-	compare_label.visible = can_compare and not comparison_instance
+	comparison_enabled = allow_comparison and not comparison_instance
+	compare_label.visible = comparison_enabled and _is_equipment_item(item)
 	show()
 
 	# Espera os controles recalcularem o tamanho do conteúdo.
@@ -246,7 +247,7 @@ func _is_equipment_item(item: ItemInstance) -> bool:
 func _update_comparison_tooltip() -> void:
 	if not is_instance_valid(comparison_tooltip) or not is_instance_valid(current_item):
 		return
-	if not _is_equipment_item(current_item) or not Input.is_key_pressed(KEY_CTRL):
+	if not comparison_enabled or not _is_equipment_item(current_item) or not Input.is_key_pressed(KEY_CTRL):
 		if comparison_tooltip.visible:
 			comparison_tooltip.hide_tooltip()
 		last_comparison_item = null
