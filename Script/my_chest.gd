@@ -86,11 +86,8 @@ func _refresh_items() -> void:
 			ItemRarityVisualsScript.apply_to_slot(slot, null)
 			continue
 
-		slot.tooltip_text = "%s | Nível %d | %s" % [
-			item.item_base.item_name,
-			item.item_level,
-			ItemBase.Rarity.keys()[item.generated_rarity]
-		]
+		# O tooltip personalizado já exibe os dados; evita o tooltip nativo duplicado.
+		slot.tooltip_text = ""
 		if item.item_base.animated_frames != null:
 			_add_animated_item_sprite(slot, item.item_base.animated_frames)
 		else:
