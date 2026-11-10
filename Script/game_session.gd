@@ -57,7 +57,7 @@ func load_level(path: String) -> void:
 	if is_instance_valid(retry_panel) and retry_panel.has_method("on_level_loaded"):
 		retry_panel.on_level_loaded(controller)
 	if persistent_ui.has_method("on_level_loaded"):
-		await persistent_ui.call("on_level_loaded")
+		persistent_ui.call("on_level_loaded")
 
 	level_loaded.emit(current_level)
 	is_loading_level = false
