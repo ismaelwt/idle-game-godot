@@ -31,6 +31,8 @@ func load_level(path: String) -> void:
 	get_tree().paused = false
 
 	if is_instance_valid(current_level):
+		if persistent_ui.has_method("before_level_unload"):
+			persistent_ui.before_level_unload()
 		level_container.remove_child(current_level)
 		current_level.queue_free()
 		current_level = null
