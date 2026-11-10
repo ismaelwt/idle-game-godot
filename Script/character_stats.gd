@@ -544,7 +544,14 @@ func get_equipment_bonus(stat_name: String) -> float:
 					if stat_name == "critical_damage":
 						item_total += gem_value
 
-		total += item_total * get_item_tier_multiplier(item)
+		var tiered_item_total := item_total * get_item_tier_multiplier(item)
+		if stat_name in ["strength", "agility", "intelligence", "vitality"]:
+			# Atributos principais são sempre inteiros por equipamento; frações de itens
+			# diferentes não podem se acumular para formar um ponto extra.
+			total += float(roundi(tiered_item_total))
+		else:
+			# Demais propriedades continuam aceitando valores fracionados.
+			total += tiered_item_total
 
 	return total
 
