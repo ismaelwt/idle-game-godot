@@ -127,6 +127,11 @@ func _on_stage_pressed(stage: int) -> void:
 	if stage > unlocked_level:
 		return
 
+	# A GameSession mantém o minimapa vivo entre as fases.
+	# Atualiza o estado e o ponteiro antes de solicitar a troca.
+	current_stage = stage
+	update_phase_pointer(current_stage)
+
 	SceneLoader.change_scene("res://Scenes/level_%d.tscn" % stage)
 
 
