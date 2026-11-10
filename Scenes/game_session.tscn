@@ -13,5 +13,6 @@ script = ExtResource("1_session")
 script = ExtResource("2_inventory")
 
 [node name="PersistentUI" type="CanvasLayer" parent="."]
+layer = 10
 process_mode = 3
 script = ExtResource("3_ui")
