@@ -55,6 +55,7 @@ const SKILL_SCENES: Dictionary = {
 
 var mage_hero: Node3D = null
 var knight_hero: Node3D = null
+var selected_hero_id: String = ""
 
 var mage_skill_icons: Array[TextureRect] = []
 var knight_skill_icons: Array[TextureRect] = []
@@ -92,6 +93,22 @@ func _process(_delta: float) -> void:
 # LOCALIZAÇÃO DOS HERÓIS
 # =========================================================
 
+func before_level_unload() -> void:
+	for child in get_children():
+		var stats = child.get("character_stats")
+		if is_instance_valid(stats):
+			selected_hero_id = str(stats.get("hero_id"))
+			return
+
+	var hud := get_node_or_null("CharacterHUD")
+	if is_instance_valid(hud):
+		var selected = hud.get("selected_hero")
+		if is_instance_valid(selected):
+			var stats = selected.get("character_stats")
+			if is_instance_valid(stats):
+				selected_hero_id = str(stats.get("hero_id"))
+
+
 func on_level_loaded() -> void:
 	var scene := get_tree().current_scene
 	if scene == null:
@@ -107,11 +124,23 @@ func on_level_loaded() -> void:
 
 	var selected_hero: Node = null
 	if is_instance_valid(party_manager):
-		selected_hero = party_manager.get_main_hero()
+		if not selected_hero_id.is_empty():
+			for hero in party_manager.get_heroes():
+				if not is_instance_valid(hero):
+					continue
+				var stats = hero.get("character_stats")
+				if is_instance_valid(stats) and str(stats.get("hero_id")) == selected_hero_id:
+					selected_hero = hero
+					break
+		if not is_instance_valid(selected_hero):
+			selected_hero = party_manager.get_main_hero()
 		if not is_instance_valid(selected_hero):
 			var heroes: Array[Node3D] = party_manager.get_heroes()
 			if not heroes.is_empty():
 				selected_hero = heroes[0]
+
+	if is_instance_valid(selected_hero):
+		selected_hero_id = str(selected_hero.get("character_stats").get("hero_id"))
 
 	for child in get_children():
 		if child.has_method("set_selected_hero") and is_instance_valid(selected_hero):
