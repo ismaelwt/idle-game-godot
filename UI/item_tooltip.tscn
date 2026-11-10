@@ -62,3 +62,7 @@ layout_mode = 2
 
 [node name="ValueLabel" type="Label" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="CompareLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Compare: CTRL"
