@@ -78,7 +78,23 @@ func _get_selected_hero() -> Node3D:
 	return null
 @onready var world_scroller = get_parent().get_node("World/WorldScroller")
 @onready var enemy_spawner = get_parent().get_node("EnemySpawner")
-@onready var inventory = get_tree().current_scene.find_child("Inventory", true, false)
+var inventory: Inventory = null
+
+
+func _resolve_inventory() -> Inventory:
+	if is_instance_valid(inventory):
+		return inventory
+
+	# O inventário agora pertence à GameSession persistente, não à fase.
+	var session := get_node_or_null("/root/GameSession")
+	if is_instance_valid(session):
+		inventory = session.get_node_or_null("Inventory") as Inventory
+
+	# Fallback para sessões ou cenas iniciadas por caminhos alternativos.
+	if not is_instance_valid(inventory):
+		inventory = get_tree().root.find_child("Inventory", true, false) as Inventory
+
+	return inventory
 
 
 func _ready():
@@ -587,7 +603,11 @@ func enemy_died(dead_enemy: Node3D):
 		if _has_property(dead_enemy, "boss_level"):
 			defeated_boss_level = maxi(1, int(dead_enemy.get("boss_level")))
 
-		inventory.add_chest(1, defeated_boss_level)
+		var active_inventory := _resolve_inventory()
+		if is_instance_valid(active_inventory):
+			active_inventory.add_chest(1, defeated_boss_level)
+		else:
+			push_error("LevelController: Inventory não encontrado; recompensa do boss não foi adicionada.")
 		print(
 			"=== BAÚ ADICIONADO | NÍVEL DO BOSS: ",
 			defeated_boss_level,
@@ -606,7 +626,7 @@ func enemy_died(dead_enemy: Node3D):
 			if is_instance_valid(reward_stats):
 				SaveManager.save_character(
 					reward_stats,
-					inventory,
+					_resolve_inventory(),
 					str(reward_stats.get("hero_id"))
 				)
 			else:
