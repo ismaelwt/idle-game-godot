@@ -134,10 +134,6 @@ func select_combat_target() -> Node3D:
 		"party_manager"
 	) as PartyManager
 
-	Log.d(
-		"PartyManager encontrado: ",
-		is_instance_valid(party_manager)
-	)
 
 	var nearest_hero: Node3D = null
 	var nearest_distance: float = INF
@@ -159,19 +155,11 @@ func select_combat_target() -> Node3D:
 
 			var distance := enemy_pos.distance_to(hero_pos)
 
-			Log.d(
-				"Inimigo: ", name,
-				" | Herói: ", hero.name,
-				" | Distância: ", snappedf(distance, 0.01),
-				" | Alcance: ", attack_range
-			)
 
 			if distance <= attack_range and distance < nearest_distance:
 				nearest_distance = distance
 				nearest_hero = hero
 
-		if is_instance_valid(nearest_hero):
-			Log.d("Alvo selecionado: ", nearest_hero.name)
 
 	if is_instance_valid(nearest_hero):
 		return nearest_hero
