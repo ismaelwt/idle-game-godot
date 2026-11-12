@@ -133,8 +133,8 @@ func _process(_delta):
 			SaveManager.flush_save()
 			world_scroller.running = false
 
-			print("=== DEFEAT ===")
-			print("=== JOGO PARADO: TODOS OS HERÓIS FORAM DERROTADOS ===")
+			Log.d("=== DEFEAT ===")
+			Log.d("=== JOGO PARADO: TODOS OS HERÓIS FORAM DERROTADOS ===")
 
 			if SaveManager.automatic_retry:
 				await get_tree().create_timer(3.0).timeout
@@ -504,7 +504,7 @@ func start_combat(enemy: Node3D):
 				hero_target = enemy
 			combat_controller.set_target(hero, hero_target)
 
-	print("=== COMBAT ===")
+	Log.d("=== COMBAT ===")
 
 
 func select_next_enemy():
@@ -549,7 +549,7 @@ func select_next_enemy():
 			current_enemy = enemy
 
 	if is_instance_valid(current_enemy):
-		print("=== PRÓXIMO ALVO: ", current_enemy.name, " ===")
+		Log.d("=== PRÓXIMO ALVO: ", current_enemy.name, " ===")
 
 
 func enemy_died(dead_enemy: Node3D):
@@ -559,7 +559,7 @@ func enemy_died(dead_enemy: Node3D):
 	if state != State.COMBAT:
 		return
 
-	print("=== INIMIGO MORREU: ", dead_enemy.name, " ===")
+	Log.d("=== INIMIGO MORREU: ", dead_enemy.name, " ===")
 
 	# A morte do inimigo não cancela ataques ou skills em execução.
 	# Cada ataque valida o alvo no momento do impacto e não aplica dano se ele morreu.
@@ -569,7 +569,7 @@ func enemy_died(dead_enemy: Node3D):
 
 	if index >= 0:
 		combat_enemies.remove_at(index)
-		print("INIMIGO REMOVIDO DO COMBATE: ", dead_enemy.name)
+		Log.d("INIMIGO REMOVIDO DO COMBATE: ", dead_enemy.name)
 
 	if current_enemy == dead_enemy:
 		current_enemy = null
@@ -579,7 +579,7 @@ func enemy_died(dead_enemy: Node3D):
 
 	# Boss: mantém o fluxo de vitória existente.
 	if current_wave >= 4:
-		print("=== BOSS DERROTADO ===")
+		Log.d("=== BOSS DERROTADO ===")
 
 		var current_level := get_current_level_number()
 		var next_level := current_level + 1
@@ -590,15 +590,15 @@ func enemy_died(dead_enemy: Node3D):
 
 		if is_instance_valid(game_manager):
 			game_manager.unlock_level(next_level)
-			print("Próxima fase desbloqueada: ", game_manager.get_unlocked_level())
+			Log.d("Próxima fase desbloqueada: ", game_manager.get_unlocked_level())
 		else:
 			push_warning(
 				"LevelController: GameManager não encontrado; "
 				+ "não foi possível salvar o desbloqueio da próxima fase."
 			)
 
-		print("=== PROGRESSO DA CAMPANHA ===")
-		print("Fase concluída: ", current_level)
+		Log.d("=== PROGRESSO DA CAMPANHA ===")
+		Log.d("Fase concluída: ", current_level)
 
 		var defeated_boss_level := 1
 		if _has_property(dead_enemy, "boss_level"):
@@ -609,7 +609,7 @@ func enemy_died(dead_enemy: Node3D):
 			active_inventory.add_chest(1, defeated_boss_level)
 		else:
 			push_error("LevelController: Inventory não encontrado; recompensa do boss não foi adicionada.")
-		print(
+		Log.d(
 			"=== BAÚ ADICIONADO | NÍVEL DO BOSS: ",
 			defeated_boss_level,
 			" ==="
@@ -637,15 +637,15 @@ func enemy_died(dead_enemy: Node3D):
 					+ "CharacterStats do herói vivo não foi encontrado."
 				)
 		else:
-			print(
+			Log.d(
 				"LevelController: nenhum herói vivo para salvar após a vitória."
 			)
 
-		print("=== VICTORY ===")
+		Log.d("=== VICTORY ===")
 
 		if SaveManager.automatic_retry:
-			print("=== AUTORETRY ATIVADO ===")
-			print("=== REINICIANDO EM 3 SEGUNDOS ===")
+			Log.d("=== AUTORETRY ATIVADO ===")
+			Log.d("=== REINICIANDO EM 3 SEGUNDOS ===")
 
 			await get_tree().create_timer(3.0).timeout
 
@@ -653,8 +653,8 @@ func enemy_died(dead_enemy: Node3D):
 
 			return
 
-		print("=== AUTORETRY DESATIVADO ===")
-		print("=== EXIBINDO PAINEL DE VITÓRIA ===")
+		Log.d("=== AUTORETRY DESATIVADO ===")
+		Log.d("=== EXIBINDO PAINEL DE VITÓRIA ===")
 		return
 
 	# Procura o próximo alvo sem iniciar o retorno à posição inicial.
@@ -667,18 +667,18 @@ func enemy_died(dead_enemy: Node3D):
 				continue
 			if is_instance_valid(current_enemy):
 				combat_controller.set_target(hero, current_enemy)
-				print("=== NOVO ALVO | ", hero.name, ": ", current_enemy.name, " ===")
+				Log.d("=== NOVO ALVO | ", hero.name, ": ", current_enemy.name, " ===")
 			else:
 				combat_controller.set_target(hero, null)
 
 	# Encontrou um próximo alvo: continua o combate.
 	if is_instance_valid(current_enemy):
-		print("=== PRÓXIMO ALVO IMEDIATO: ", current_enemy.name, " ===")
+		Log.d("=== PRÓXIMO ALVO IMEDIATO: ", current_enemy.name, " ===")
 		return
 
 	# Ainda existem inimigos vivos na onda?
 	if has_alive_enemies():
-		print("=== AINDA HÁ INIMIGOS VIVOS: CONTINUANDO AVANÇO ===")
+		Log.d("=== AINDA HÁ INIMIGOS VIVOS: CONTINUANDO AVANÇO ===")
 		var heroes_to_move: Array[Node3D] = []
 		if is_instance_valid(party_manager):
 			heroes_to_move = party_manager.get_alive_heroes()
@@ -688,7 +688,7 @@ func enemy_died(dead_enemy: Node3D):
 		return
 
 	# Só inicia a próxima onda quando todos morrerem.
-	print("=== TODOS OS INIMIGOS DA ONDA FORAM DERROTADOS ===")
+	Log.d("=== TODOS OS INIMIGOS DA ONDA FORAM DERROTADOS ===")
 
 	if is_instance_valid(enemy_spawner):
 		await enemy_spawner.advance_wave()
@@ -743,7 +743,7 @@ func show_warning(text):
 func start_reward():
 	state = State.REWARD
 
-	print("=== REWARD ===")
+	Log.d("=== REWARD ===")
 
 
 func continue_running(_heroes_that_need_to_move: Array[Node3D] = []) -> void:
@@ -773,8 +773,8 @@ func pause_game():
 
 	paused = true
 
-	print("=== JOGO PAUSADO ===")
-	print("STATE: ", State.keys()[state])
+	Log.d("=== JOGO PAUSADO ===")
+	Log.d("STATE: ", State.keys()[state])
 
 	get_tree().paused = true
 
@@ -783,12 +783,12 @@ func resume_game():
 	if not get_tree().paused:
 		return
 
-	print("=== DESPAUSANDO JOGO ===")
+	Log.d("=== DESPAUSANDO JOGO ===")
 
 	get_tree().paused = false
 	paused = false
 
-	print("=== JOGO DESPAUSADO ===")
+	Log.d("=== JOGO DESPAUSADO ===")
 
 
 func _has_property(object: Object, property_name: String) -> bool:
@@ -835,7 +835,7 @@ func mark_wave_start_positions() -> void:
 
 	wave_start_position_recorded = not wave_start_positions.is_empty()
 	if wave_start_position_recorded:
-		print("=== POSIÇÕES INICIAIS DA EQUIPE REGISTRADAS ===")
+		Log.d("=== POSIÇÕES INICIAIS DA EQUIPE REGISTRADAS ===")
 
 
 func prepare_next_wave_transition() -> void:
@@ -878,8 +878,8 @@ func prepare_next_wave_transition() -> void:
 		var target_z: float = hero.global_position.z + displacement.z
 		await move_hero_to_z(hero, target_z)
 
-	print("=== FORMAÇÃO SINCRONIZADA ===")
-	print("Deslocamento da formação: ", displacement)
+	Log.d("=== FORMAÇÃO SINCRONIZADA ===")
+	Log.d("Deslocamento da formação: ", displacement)
 
 
 func resume_after_wave_transition() -> void:
@@ -905,7 +905,7 @@ func resume_after_wave_transition() -> void:
 		await get_tree().process_frame
 
 	if not is_party_defeated() and world_scroller.running:
-		print("=== RUNNING | FORMAÇÃO SINCRONIZADA ===")
+		Log.d("=== RUNNING | FORMAÇÃO SINCRONIZADA ===")
 
 
 func move_hero_to_z(hero: Node3D, target_z: float, speed: float = 3.5) -> void:
