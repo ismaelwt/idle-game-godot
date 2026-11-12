@@ -70,6 +70,9 @@ const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
 @onready var health_bar_display: Sprite3D = $HealthBarDisplay
+@onready var enemy_behavior: Node = get_node_or_null("EnemyBehavior")
+@onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
+@onready var level_controller: Node = get_tree().get_first_node_in_group("level_controller")
 
 var fallback_hero_target: Node3D
 var combat_target: Node3D = null
@@ -100,7 +103,7 @@ func _ready() -> void:
 	health = max_health
 
 func _process(delta: float) -> void:
-	var melee_behavior := get_node_or_null("EnemyBehavior")
+	var melee_behavior := enemy_behavior
 	if is_instance_valid(melee_behavior):
 		melee_behavior.call("update_behavior", delta)
 
@@ -130,16 +133,14 @@ func is_valid_combat_target(target: Variant) -> bool:
 
 
 func select_combat_target() -> Node3D:
-	var party_manager := get_tree().get_first_node_in_group(
-		"party_manager"
-	) as PartyManager
+	var manager := party_manager
 
 
 	var nearest_hero: Node3D = null
 	var nearest_distance: float = INF
 
-	if is_instance_valid(party_manager):
-		for hero in party_manager.get_alive_heroes():
+	if is_instance_valid(manager):
+		for hero in manager.get_alive_heroes():
 			if not is_valid_combat_target(hero):
 				continue
 
@@ -185,7 +186,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	update_health_bar()
 	show_damage(damage, is_critical)
 
-	var behavior := get_node_or_null("EnemyBehavior")
+	var behavior := enemy_behavior
 	if is_instance_valid(behavior) and behavior.has_method("on_enemy_damaged"):
 		behavior.call("on_enemy_damaged")
 
@@ -218,22 +219,18 @@ func die() -> void:
 		if child is StaticBody3D:
 			child.visible = false
 
-	var level_controller = get_tree().get_first_node_in_group(
-		"level_controller"
-	)
+	var controller := level_controller
 
-	if is_instance_valid(level_controller):
-		level_controller.enemy_died(self)
+	if is_instance_valid(controller):
+		controller.enemy_died(self)
 
 	health_bar_display.visible = false
 
 	# Distribui as recompensas através do PartyManager.
-	var party_manager := get_tree().get_first_node_in_group(
-		"party_manager"
-	) as PartyManager
+	var manager := party_manager
 
-	if is_instance_valid(party_manager):
-		party_manager.grant_enemy_rewards(
+	if is_instance_valid(manager):
+		manager.grant_enemy_rewards(
 			xp_reward,
 			gold_reward
 		)
