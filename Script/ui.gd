@@ -40,14 +40,14 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 # HABILIDADES
 # =========================================================
 
-const SKILL_SCENES: Dictionary = {
-	"fireball": "res://Scenes/fireball_v1.tscn",
-	"energy_ball": "res://Scenes/energy_ball.tscn",
-	"damage_buff": "res://Scenes/damage_buff.tscn",
-	"heal": "res://Scenes/healing_effect.tscn",
-	"thunderstorm": "res://Scenes/thunderstorm.tscn",
-	"frenesi": "res://Scenes/damage_buff.tscn",
-	"earthquake": "res://Scenes/earthquake.tscn",
+const SKILL_ICONS: Dictionary = {
+	"fireball": preload("res://icons/fire-ray-2.png"),
+	"energy_ball": preload("res://icons/energyball-icon-2.png"),
+	"damage_buff": preload("res://icons/frenesi.png"),
+	"frenesi": preload("res://icons/frenesi.png"),
+	"heal": preload("res://icons/heart-plus-2.png"),
+	"thunderstorm": preload("res://icons/thuderstorm-icon.png"),
+	"earthquake": preload("res://icons/earthquake.png"),
 }
 
 # Os ícones podem ser definidos diretamente nas cenas das habilidades.
@@ -62,6 +62,7 @@ var knight_skill_icons: Array[TextureRect] = []
 
 var mage_cooldown_labels: Array[Label] = []
 var knight_cooldown_labels: Array[Label] = []
+var connected_skill_stats: Array[Node] = []
 
 # =========================================================
 # INICIALIZAÇÃO
@@ -82,8 +83,7 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
-	# Detecta personagens adicionados/removidos durante a partida.
-	_refresh_heroes()
+	# Party e ícones são atualizados por sinais; aqui ficam apenas os cooldowns.
 
 	# Evita passar referências liberadas para parâmetros tipados.
 	var active_mage: Node3D = mage_hero if is_instance_valid(mage_hero) else null
@@ -217,6 +217,8 @@ func _refresh_heroes() -> void:
 	mage_hero = new_mage
 	knight_hero = new_knight
 
+	_connect_skill_order_signals()
+
 	mage_ui.visible = is_instance_valid(mage_hero)
 	knight_ui.visible = is_instance_valid(knight_hero)
 
@@ -280,6 +282,34 @@ func _is_mage(hero: Node) -> bool:
 
 func _on_party_changed(_heroes: Array[Node3D]) -> void:
 	_refresh_heroes()
+
+
+func _connect_skill_order_signals() -> void:
+	# Remove conexões dos heróis anteriores para não manter referências obsoletas.
+	for stats in connected_skill_stats:
+		if is_instance_valid(stats) and stats.skill_order_changed.is_connected(_on_skill_order_changed):
+			stats.skill_order_changed.disconnect(_on_skill_order_changed)
+
+	connected_skill_stats.clear()
+
+	for hero in [mage_hero, knight_hero]:
+		if not is_instance_valid(hero):
+			continue
+
+		var stats = hero.get("character_stats")
+		if not is_instance_valid(stats) or not stats.has_signal("skill_order_changed"):
+			continue
+
+		if not stats.skill_order_changed.is_connected(_on_skill_order_changed):
+			stats.skill_order_changed.connect(_on_skill_order_changed)
+		connected_skill_stats.append(stats)
+
+
+func _on_skill_order_changed() -> void:
+	if is_instance_valid(mage_hero):
+		_update_skill_icons(mage_hero, mage_skill_icons)
+	if is_instance_valid(knight_hero):
+		_update_skill_icons(knight_hero, knight_skill_icons)
 
 
 # =========================================================
@@ -365,30 +395,7 @@ func _update_skill_icons(
 		if not stats.has_skill(skill_id):
 			continue
 
-		if not SKILL_SCENES.has(skill_id):
-			continue
-
-		var scene_path: String = SKILL_SCENES[skill_id]
-		var skill_scene := load(scene_path) as PackedScene
-
-		if skill_scene == null:
-			push_warning(
-				"UI: cena não encontrada para a skill " + skill_id
-			)
-			continue
-
-		var skill_instance := skill_scene.instantiate()
-		var texture: Texture2D = null
-
-		for property_info in skill_instance.get_property_list():
-			if str(property_info.get("name")) == "icon":
-				var value = skill_instance.get("icon")
-				if value is Texture2D:
-					texture = value
-				break
-
-		skill_instance.free()
-
+		var texture: Texture2D = SKILL_ICONS.get(skill_id) as Texture2D
 		icon.texture = texture
 		icon.visible = texture != null
 
