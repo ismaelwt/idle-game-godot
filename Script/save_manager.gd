@@ -3,37 +3,122 @@ extends Node
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 
 const SAVE_PATH := "user://savegame.json"
+const TEMP_SAVE_PATH := "user://savegame.json.tmp"
+const BACKUP_SAVE_PATH := "user://savegame.json.bak"
+const SAVE_DEBOUNCE_SECONDS := 1.5
 
 var automatic_retry: bool = false
 
+var _save_cache: Dictionary = {}
+var _cache_initialized: bool = false
+var _save_dirty: bool = false
+var _save_timer: Timer
 
-func _read_save_data() -> Dictionary:
+
+func _ready() -> void:
+	_load_cache_from_disk()
+
+	_save_timer = Timer.new()
+	_save_timer.name = "SaveDebounceTimer"
+	_save_timer.one_shot = true
+	_save_timer.wait_time = SAVE_DEBOUNCE_SECONDS
+	_save_timer.timeout.connect(flush_save)
+	add_child(_save_timer)
+
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_WM_CLOSE_REQUEST or what == NOTIFICATION_PREDELETE:
+		flush_save()
+
+
+func _load_cache_from_disk() -> void:
+	if _cache_initialized:
+		return
+
+	_cache_initialized = true
+	_save_cache = {}
+
 	if not FileAccess.file_exists(SAVE_PATH):
-		return {}
+		return
 
 	var file := FileAccess.open(SAVE_PATH, FileAccess.READ)
 	if file == null:
 		push_error("SaveManager: não foi possível abrir o save para leitura.")
-		return {}
+		return
 
 	var parsed = JSON.parse_string(file.get_as_text())
 	file.close()
 
 	if parsed is Dictionary:
-		return parsed
+		_save_cache = parsed
+	else:
+		push_warning("SaveManager: save inválido; usando dados vazios.")
 
-	push_warning("SaveManager: save inválido; usando dados vazios.")
-	return {}
+
+func _read_save_data() -> Dictionary:
+	_load_cache_from_disk()
+	return _save_cache.duplicate(true)
 
 
 func _write_save_data(data: Dictionary) -> bool:
-	var file := FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file == null:
-		push_error("SaveManager: não foi possível gravar o save.")
+	_load_cache_from_disk()
+
+	_save_cache = data.duplicate(true)
+	_save_dirty = true
+
+	if is_instance_valid(_save_timer):
+		_save_timer.start(SAVE_DEBOUNCE_SECONDS)
+	else:
+		# Protege chamadas feitas antes da inicialização completa do Autoload.
+		return flush_save()
+
+	return true
+
+
+func flush_save() -> bool:
+	if not _save_dirty:
+		return true
+
+	if is_instance_valid(_save_timer):
+		_save_timer.stop()
+
+	var temp_file := FileAccess.open(TEMP_SAVE_PATH, FileAccess.WRITE)
+	if temp_file == null:
+		push_error("SaveManager: não foi possível abrir o arquivo temporário para gravação.")
 		return false
 
-	file.store_string(JSON.stringify(data, "\t"))
-	file.close()
+	# O JSON compacto reduz o tamanho e o custo de serialização.
+	temp_file.store_string(JSON.stringify(_save_cache))
+	temp_file.flush()
+	temp_file.close()
+
+	var target_absolute := ProjectSettings.globalize_path(SAVE_PATH)
+	var temp_absolute := ProjectSettings.globalize_path(TEMP_SAVE_PATH)
+	var backup_absolute := ProjectSettings.globalize_path(BACKUP_SAVE_PATH)
+
+	var had_previous_save := FileAccess.file_exists(SAVE_PATH)
+
+	if had_previous_save:
+		var backup_error := DirAccess.rename_absolute(target_absolute, backup_absolute)
+		if backup_error != OK:
+			push_error("SaveManager: não foi possível preservar o save anterior. Erro: " + str(backup_error))
+			return false
+
+	var replace_error := DirAccess.rename_absolute(temp_absolute, target_absolute)
+	if replace_error != OK:
+		push_error("SaveManager: não foi possível substituir o save. Erro: " + str(replace_error))
+
+		if had_previous_save:
+			var restore_error := DirAccess.rename_absolute(backup_absolute, target_absolute)
+			if restore_error != OK:
+				push_error("SaveManager: falha ao restaurar o backup. Erro: " + str(restore_error))
+
+		return false
+
+	if had_previous_save and FileAccess.file_exists(BACKUP_SAVE_PATH):
+		DirAccess.remove_absolute(backup_absolute)
+
+	_save_dirty = false
 	return true
 
 
