@@ -32,6 +32,8 @@ const HEALING_SCENE: PackedScene = preload("res://Scenes/healing_effect.tscn")
 @onready var level_controller: Node = get_parent().get_node_or_null("LevelController")
 @onready var enemy_spawner: Node = get_parent().get_node_or_null("EnemySpawner")
 @onready var world_scroller: Node = get_parent().get_node_or_null("World/WorldScroller")
+@onready var combat_controller: Node = get_parent().get_node_or_null("CombatController")
+@onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 
 var health: float = 0.0
 var dead: bool = false
@@ -82,9 +84,9 @@ func _process(delta: float) -> void:
 		return
 
 	var target: Node3D = null
-	var combat_controller := get_parent().get_node_or_null("CombatController")
-	if is_instance_valid(combat_controller):
-		target = combat_controller.get_valid_target_for_hero(self)
+	var controller := combat_controller
+	if is_instance_valid(controller):
+		target = controller.get_valid_target_for_hero(self)
 
 	if not is_instance_valid(target):
 		target = find_nearest_enemy_in_detection_range()
@@ -150,7 +152,7 @@ func get_horizontal_distance_to(target: Node3D) -> float:
 
 
 func _notify_skill_cancelled() -> void:
-	var controller := get_parent().get_node_or_null("CombatController")
+	var controller := combat_controller
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
@@ -452,6 +454,8 @@ func die() -> void:
 	if dead:
 		return
 	dead = true
+	if is_instance_valid(party_manager):
+		party_manager.notify_hero_died(self)
 	_notify_skill_cancelled()
 	attack_id += 1
 	attacking = false
