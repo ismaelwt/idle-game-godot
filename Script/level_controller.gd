@@ -130,6 +130,7 @@ func _process(_delta):
 			_clear_pending_run()
 		if state != State.DEFEAT:
 			state = State.DEFEAT
+			SaveManager.flush_save()
 			world_scroller.running = false
 
 			print("=== DEFEAT ===")
@@ -629,6 +630,7 @@ func enemy_died(dead_enemy: Node3D):
 					_resolve_inventory(),
 					str(reward_stats.get("hero_id"))
 				)
+				SaveManager.flush_save()
 			else:
 				push_warning(
 					"LevelController: não foi possível salvar a vitória; "
