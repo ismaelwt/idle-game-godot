@@ -271,7 +271,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	frenzy_instance.position = Vector3.ZERO
 	frenzy_instance.scale = Vector3(2.5, 2.5, 2.5)
 	frenzy_active = true
-	print("KNIGHT USANDO SKILL: ", skill_id)
+	Log.d("KNIGHT USANDO SKILL: ", skill_id)
 	
 	animation_player.speed_scale = 1.0
 	animation_player.play("knight/buff", 0.2)
@@ -311,7 +311,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	# A expiração do buff não altera o estado de outra skill que possa
 	# estar sendo executada neste momento.
 	_clear_frenzy(active_frenzy)
-	print("KNIGHT SKILL FINALIZADA: ", skill_id)
+	Log.d("KNIGHT SKILL FINALIZADA: ", skill_id)
 
 
 func _notify_skill_cancelled() -> void:
@@ -345,7 +345,7 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	animation_player.play("knight/attack2", 0.15)
 	current_animation = &"knight/attack2"
 
-	print("KNIGHT USANDO SKILL: earthquake")
+	Log.d("KNIGHT USANDO SKILL: earthquake")
 	await get_tree().create_timer(1.85).timeout
 
 	# Se a skill foi interrompida durante a preparação, não cria o efeito.
@@ -397,7 +397,7 @@ func _use_earthquake(skill_scene: PackedScene, target: Node3D) -> void:
 	current_attack_target = null
 	current_animation = &""
 	animation_player.speed_scale = animation_speed
-	print("KNIGHT SKILL FINALIZADA: earthquake")
+	Log.d("KNIGHT SKILL FINALIZADA: earthquake")
 
 
 func _interrupt_earthquake() -> void:
@@ -406,7 +406,7 @@ func _interrupt_earthquake() -> void:
 		return
 
 	_notify_skill_cancelled()
-	print("KNIGHT: EARTHQUAKE INTERROMPIDO")
+	Log.d("KNIGHT: EARTHQUAKE INTERROMPIDO")
 	earthquake_instance.queue_free()
 	earthquake_instance = null
 
@@ -485,8 +485,8 @@ func basic_attack(target: Node3D) -> void:
 	animation_player.speed_scale = animation_speed
 	play_animation(attack_animation)
 
-	print("=== KNIGHT ATAQUE INICIADO ===")
-	print("Alvo: ", target.name)
+	Log.d("=== KNIGHT ATAQUE INICIADO ===")
+	Log.d("Alvo: ", target.name)
 
 	await get_tree().create_timer(attack_hit_delay).timeout
 	
@@ -538,9 +538,9 @@ func basic_attack(target: Node3D) -> void:
 		target.take_damage(final_damage, is_critical)
 		character_stats.apply_on_hit_effects(actual_damage)
 
-		print("=== KNIGHT CAUSOU DANO ===")
-		print("Dano: ", final_damage)
-		print("Alvo: ", target.name)
+		Log.d("=== KNIGHT CAUSOU DANO ===")
+		Log.d("Dano: ", final_damage)
+		Log.d("Alvo: ", target.name)
 	elif target_can_receive_damage and is_instance_valid(target):
 		push_warning(
 			"Knight: o alvo não possui o método take_damage()."
@@ -625,7 +625,7 @@ func take_damage(damage: float, damage_type: String = "physical") -> void:
 
 	flash_hit()
 
-	print(
+	Log.d(
 		"Knight recebeu ",
 		damage,
 		" de dano. Vida: ",
@@ -649,7 +649,7 @@ func die() -> void:
 	_notify_skill_cancelled()
 	_interrupt_earthquake()
 
-	print("=== KNIGHT MORREU ===")
+	Log.d("=== KNIGHT MORREU ===")
 
 	attacking = false
 	action_locked = false
@@ -827,7 +827,7 @@ func cancel_attack_on_target(target: Node3D) -> void:
 		return
 
 	_notify_skill_cancelled()
-	print("=== KNIGHT: ATAQUE CANCELADO === | ALVO: ", target.name)
+	Log.d("=== KNIGHT: ATAQUE CANCELADO === | ALVO: ", target.name)
 	stop_sword_trail()
 	attack_id += 1
 	_interrupt_earthquake()
