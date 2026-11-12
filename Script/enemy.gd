@@ -134,7 +134,7 @@ func select_combat_target() -> Node3D:
 		"party_manager"
 	) as PartyManager
 
-	print(
+	Log.d(
 		"PartyManager encontrado: ",
 		is_instance_valid(party_manager)
 	)
@@ -159,7 +159,7 @@ func select_combat_target() -> Node3D:
 
 			var distance := enemy_pos.distance_to(hero_pos)
 
-			print(
+			Log.d(
 				"Inimigo: ", name,
 				" | Herói: ", hero.name,
 				" | Distância: ", snappedf(distance, 0.01),
@@ -171,7 +171,7 @@ func select_combat_target() -> Node3D:
 				nearest_hero = hero
 
 		if is_instance_valid(nearest_hero):
-			print("Alvo selecionado: ", nearest_hero.name)
+			Log.d("Alvo selecionado: ", nearest_hero.name)
 
 	if is_instance_valid(nearest_hero):
 		return nearest_hero
@@ -185,7 +185,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	AudioManager.play_sfx(ENEMY_PAIN_SOUND, randf_range(0.95, 1.05))
 	health -= damage
 
-	print(
+	Log.d(
 		"INIMIGO: ", name,
 		" | DAMAGE: ", damage,
 		" | CRÍTICO: ", is_critical,
@@ -206,7 +206,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 		return
 
 func die() -> void:
-	print(
+	Log.d(
 		"☠️ DIE INICIOU: ",
 		name,
 		" | HEALTH: ", health,
@@ -550,7 +550,7 @@ func setup_level(level: int) -> void:
 	update_health_bar()
 	create_level_label()
 
-	print(
+	Log.d(
 		"=== INIMIGO CONFIGURADO ===",
 		" | Nome: ", name,
 		" | Nível: ", enemy_level,
