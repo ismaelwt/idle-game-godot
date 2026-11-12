@@ -28,11 +28,11 @@ sky = SubResource("Sky_6ssoq")
 ssil_intensity = 4.0
 sdfgi_read_sky_light = false
 
-[sub_resource type="QuadMesh" id="QuadMesh_nx14l"]
+[sub_resource type="QuadMesh" id="QuadMesh_6ioyp"]
 flip_faces = true
 size = Vector2(2, 2)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjoi8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oovug"]
 render_priority = 0
 shader = ExtResource("4_w6q3x")
 shader_parameter/lightIntensity = 1.25
@@ -82,7 +82,7 @@ render_target_update_mode = 4
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
-transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
+transform = Transform3D(0.24229285, -0.693663, 0.6783258, -0.09842584, 0.6779773, 0.7284636, -0.9651977, -0.24326628, 0.09599465, -16.030119, 21.797924, -21.269085)
 light_color = Color(0.10499778, 0.73127425, 0.77004266, 1)
 light_energy = 0.5
 light_indirect_energy = 0.5
@@ -137,8 +137,8 @@ far = 250.0
 [node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewportContainer/SubViewport/Pivot/Camera3D"]
 cast_shadow = 0
 extra_cull_margin = 16384.0
-mesh = SubResource("QuadMesh_nx14l")
-surface_material_override/0 = SubResource("ShaderMaterial_kjoi8")
+mesh = SubResource("QuadMesh_6ioyp")
+surface_material_override/0 = SubResource("ShaderMaterial_oovug")
 
 [node name="LevelController" type="Node3D" parent="SubViewportContainer/SubViewport" groups=["level_controller"]]
 script = ExtResource("5_soyxa")

@@ -2,21 +2,21 @@
 
 [ext_resource type="Shader" uid="uid://m0mhk6kvavkj" path="res://Shaders/ground.gdshader" id="1_w6vem"]
 [ext_resource type="Texture2D" uid="uid://c3xqcck72iutf" path="res://Assets/Polygon-Mega Survival Forest/Textures/TerrainTextures/Cracked_ground.png" id="2_hf8kp"]
-[ext_resource type="Texture2D" uid="uid://ddlwfl7gpy178" path="res://UI/pixellab---Fantasy-RPG-Grass-Texture----1793528640711.png" id="3_mayyo"]
+[ext_resource type="Texture2D" uid="uid://cl8mmta7nvi7f" path="res://Assets/Polygon-Mega Survival Forest/Textures/Textures/Grass/Grass_Albedo_Flower_02.png" id="3_mayyo"]
 [ext_resource type="PackedScene" uid="uid://kghudq6nt608" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Agave.prefab.scn" id="6_nn6or"]
 [ext_resource type="PackedScene" uid="uid://dkqrx6a2vqlkn" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Blackberry.prefab.scn" id="9_wea6i"]
 [ext_resource type="PackedScene" uid="uid://d1p0gqg5v81vc" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_01.prefab.scn" id="10_522d0"]
 [ext_resource type="PackedScene" uid="uid://bohp4bia0n2qr" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_02.prefab.scn" id="11_bch54"]
 [ext_resource type="PackedScene" uid="uid://brq5k6flq7quh" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Bushes_03.prefab.scn" id="12_o52ub"]
 [ext_resource type="PackedScene" uid="uid://cqwfhtu27ayam" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/SM_Grass_With_Flowers.prefab.scn" id="15_fds6o"]
-[ext_resource type="PackedScene" uid="uid://bundd01jjpp2g" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Aspen_Green_Yellow.prefab.scn" id="16_wea6i"]
-[ext_resource type="PackedScene" uid="uid://ckggfoa5m7pfr" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trees/SM_Small_Tree_01_Red.prefab.scn" id="19_o52ub"]
 [ext_resource type="PackedScene" uid="uid://3gvmd38bqord" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Log_02.prefab.scn" id="21_fhbe7"]
 [ext_resource type="PackedScene" uid="uid://8fsd83wxk0rg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Large_Rock_Layered_02.prefab.scn" id="22_bch54"]
 [ext_resource type="PackedScene" uid="uid://c5cykd4np3i6f" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Trunks/SM_Stump_Oak.prefab.scn" id="22_fds6o"]
 [ext_resource type="PackedScene" uid="uid://yog8bwxlykgg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_08.prefab.scn" id="23_hw0e1"]
 [ext_resource type="PackedScene" uid="uid://cg6hfpbe45spl" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_01/SM_Sharp_Stone_05.prefab.scn" id="24_icm4e"]
+[ext_resource type="PackedScene" uid="uid://cqo0ybt3v3tn5" path="res://Scenes/aspen_tree.tscn" id="24_mayyo"]
 [ext_resource type="PackedScene" uid="uid://dgs87l37iu86h" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Large_Marble_Stone_Cracked_03.prefab.scn" id="25_a3wej"]
+[ext_resource type="PackedScene" uid="uid://dxfmojxdkuo8m" path="res://Scenes/aspen_tree_sm_yellow.tscn" id="25_dh1fw"]
 [ext_resource type="PackedScene" uid="uid://dqyt4l0nhq0t6" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Large_Marble_Stone_Cracked_01.prefab.scn" id="26_ut02n"]
 [ext_resource type="PackedScene" uid="uid://dhwjkygc8b2jv" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Large_Marble_Stone_08.prefab.scn" id="27_fmsok"]
 [ext_resource type="PackedScene" uid="uid://b74hr7rbmnvsg" path="res://Assets/Polygon-Mega Survival Forest/Prefabs/Rock_Part_02/SM_Medium_Marble_Stone_04.prefab.scn" id="28_a4k4v"]
@@ -34,8 +34,8 @@ shader = ExtResource("1_w6vem")
 shader_parameter/grass_texture = ExtResource("3_mayyo")
 shader_parameter/dirt_texture = ExtResource("2_hf8kp")
 shader_parameter/path_width = 0.126000005985
-shader_parameter/path_softness = 0.134000006365
-shader_parameter/pixel_size = 64.0
+shader_parameter/path_softness = 0.162000007695
+shader_parameter/pixel_size = 128.00000603249998
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gc0gb"]
 next_pass = SubResource("ShaderMaterial_bch54")
@@ -66,15 +66,6 @@ transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.34574643, 0, -0.08848
 
 [node name="SM_Grass_With_Flowers" parent="Ground" instance=ExtResource("15_fds6o")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.36125365, 0, 0.5856611)
-
-[node name="Aspen_Green_Yellow" parent="Ground" instance=ExtResource("16_wea6i")]
-transform = Transform3D(0.05, 0, 0, 0, 0.05, 0, 0, 0, 0.05, 0.47140366, 0, 0.49682966)
-
-[node name="SM_Small_Tree_01_Red" parent="Ground" instance=ExtResource("19_o52ub")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -0.5361859, 0, 0.7140833)
-
-[node name="SM_Small_Tree_01_Red2" parent="Ground" instance=ExtResource("19_o52ub")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0.6361945, 0, -0.72449744)
 
 [node name="SM_Log_02" parent="Ground" instance=ExtResource("21_fhbe7")]
 transform = Transform3D(0.06443239, 0, -0.07647528, 0, 0.1, 0, 0.07647528, 0, 0.06443239, -0.64988714, 0, -0.81746495)
@@ -117,3 +108,12 @@ transform = Transform3D(0.020466695, 0, 0.097883165, 0, 0.1, 0, -0.097883165, 0,
 
 [node name="SM_Medium_Marble_Stone_Cracked_06" parent="Ground" instance=ExtResource("32_1jily")]
 transform = Transform3D(0.09866064, 0, -0.016311934, 0, 0.1, 0, 0.016311934, 0, 0.09866064, 0.86144525, -0.0026733398, 0.91902125)
+
+[node name="AaspenTreeYellow" parent="Ground" instance=ExtResource("25_dh1fw")]
+transform = Transform3D(0.06, 0, -0.103923045, 0, 0.12, 0, 0.103923045, 0, 0.06, -0.51655275, -0.0026733398, 0.6040039)
+
+[node name="AaspenTreeYellow2" parent="Ground" instance=ExtResource("25_dh1fw")]
+transform = Transform3D(0.06, 0, -0.103923045, 0, 0.12, 0, 0.103923045, 0, 0.06, 0.7039429, -0.0026733398, -0.7815186)
+
+[node name="Aspen_Tree" parent="Ground" instance=ExtResource("24_mayyo")]
+transform = Transform3D(0.027858276, 0, -0.04152007, 0, 0.049999997, 0, 0.04152007, 0, 0.027858276, 0.47140366, -0.02994995, 0.49682966)

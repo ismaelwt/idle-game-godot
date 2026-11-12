@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://soosefshdpkq"]
+[gd_scene load_steps=29 format=3 uid="uid://soosefshdpkq"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
 [ext_resource type="PackedScene" uid="uid://mpt1iubn4rnd" path="res://Scenes/tile_03.tscn" id="3_gqssx"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://p802c5ldrgy" path="res://Script/enemy_spawn_slot.gd" id="6_wpmth"]
 [ext_resource type="PackedScene" uid="uid://dh3j0rbvgmnpo" path="res://Scenes/goblin_enemy.tscn" id="7_e5i8k"]
 [ext_resource type="PackedScene" uid="uid://0koc8hde0sjn" path="res://Scenes/boss_goblin.tscn" id="7_j77fg"]
+[ext_resource type="PackedScene" uid="uid://bkuig6f8rdj7b" path="res://Scenes/skeleton.tscn" id="9_ki8bc"]
 [ext_resource type="Script" uid="uid://c75gpphrrbntd" path="res://Script/enemy_spawner.gd" id="10_cvu23"]
 [ext_resource type="PackedScene" uid="uid://3frkx64fx3r2" path="res://Scenes/archer.tscn" id="10_ki8bc"]
 [ext_resource type="PackedScene" uid="uid://dpd5ncpm2mo38" path="res://Scenes/goblin_archer_enemy.tscn" id="11_f7ucr"]
@@ -45,7 +46,7 @@ shader_parameter/lineShadow = 0.1
 
 [sub_resource type="Resource" id="Resource_4qhvg"]
 script = ExtResource("6_wpmth")
-enemy_scene = ExtResource("7_e5i8k")
+enemy_scene = ExtResource("9_ki8bc")
 amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 

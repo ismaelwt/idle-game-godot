@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqo0ybt3v3tn5"]
+
+[ext_resource type="PackedScene" uid="uid://dgagy62x4cho6" path="res://Assets/Polygon-Mega Survival Forest/Models/Trees/Aspen/SM_Aspen_LOD.gltf" id="1_0wrtw"]
+
+[node name="Aspen_Tree" type="Node3D"]
+
+[node name="Root Scene" parent="." instance=ExtResource("1_0wrtw")]
+transform = Transform3D(0.855536, 0, -0.5177433, 0, 1, 0, 0.5177433, 0, 0.855536, 0.17156982, 0, 0.29211426)
+
+[node name="SM_Aspen_LOD0" parent="Root Scene" index="0"]
+cast_shadow = 0
+
+[node name="Aspen_LOD0" parent="Root Scene" index="1"]
+visible = false
+
+[node name="SM_Aspen_LOD1" parent="Root Scene" index="2"]
+visible = false
+
+[node name="SM_Aspen_LOD2" parent="Root Scene" index="3"]
+visible = false
+
+[node name="Aspen_LOD1" parent="Root Scene" index="4"]
+visible = false
+
+[editable path="Root Scene"]

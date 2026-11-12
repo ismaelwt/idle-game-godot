@@ -74,6 +74,7 @@ font = ExtResource("18_x3b7j")
 font = ExtResource("18_x3b7j")
 
 [node name="Status" type="Panel"]
+z_index = 5
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -90,6 +91,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="PanelContainer" type="Panel" parent="CenterContainer"]
 z_index = 1
@@ -720,6 +722,7 @@ text = "Critical Damage"
 label_settings = SubResource("LabelSettings_sfey3")
 
 [node name="InvetoryButton" type="TextureButton" parent="CenterContainer/PanelContainer"]
+z_index = 5
 z_as_relative = false
 layout_mode = 1
 anchors_preset = -1

@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxfmojxdkuo8m"]
+
+[ext_resource type="ArrayMesh" uid="uid://ba7fcigddekbr" path="res://Assets/Polygon-Mega Survival Forest/Models/Trees/extracted/SM_Small_Tree_01_LOD.SM_Small_Tree_01_LOD0.mesh" id="1_6oudy"]
+[ext_resource type="ArrayMesh" uid="uid://dvo66jubo5xyg" path="res://Assets/Polygon-Mega Survival Forest/Models/Trees/extracted/SM_Small_Tree_01_LOD.Small_Tree_01_LOD0.mesh" id="2_3n2jp"]
+
+[node name="AaspenTreeYellow" type="Node3D"]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0, 0)
+
+[node name="SmSmallTree01Lod_smSmallTree01Lod0" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04663086, 0, 0.635376)
+cast_shadow = 0
+mesh = ExtResource("1_6oudy")
+
+[node name="SmSmallTree01Lod_smallTree01Lod0" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.21697998, 0, 0.57943726)
+mesh = ExtResource("2_3n2jp")
