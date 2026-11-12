@@ -277,7 +277,7 @@ func _on_sell_all_pressed() -> void:
 		return
 
 	if inventory.get_backpack_items().is_empty():
-		print("A mochila está vazia.")
+		Log.d("A mochila está vazia.")
 		return
 
 	var total_value: int = inventory.sell_all_equipment()
@@ -287,7 +287,7 @@ func _on_sell_all_pressed() -> void:
 	if is_instance_valid(item_tooltip):
 		item_tooltip.hide_tooltip()
 
-	print("Venda concluída: ", total_value, " ouro.")
+	Log.d("Venda concluída: ", total_value, " ouro.")
 
 
 func _on_inventory_slot_pressed(index: int) -> void:
@@ -308,7 +308,7 @@ func _on_inventory_slot_pressed(index: int) -> void:
 
 	if item.item_base.item_type == ItemBase.ItemType.GEM:
 		if not is_instance_valid(selected_equipment_for_gem):
-			print("Selecione primeiro um equipamento com slot de gema.")
+			Log.d("Selecione primeiro um equipamento com slot de gema.")
 			return
 
 		if inventory.install_gem(selected_equipment_for_gem, item, str(character_stats.hero_id)):
