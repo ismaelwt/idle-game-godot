@@ -43,6 +43,8 @@ var current_attack_target: Node3D = null
 
 @onready var fireball_spawn = $FireballSpawn
 @onready var animation_player = $AnimationPlayer
+@onready var combat_controller: Node = get_parent().get_node_or_null("CombatController")
+@onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 @onready var character_stats = $CharacterStats
 @onready var level_up_effect = $LevelUpEffect
 
@@ -89,7 +91,7 @@ func _ready():
 
 
 func _notify_skill_cancelled() -> void:
-	var controller := get_parent().get_node_or_null("CombatController")
+	var controller := combat_controller
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
@@ -551,6 +553,8 @@ func die():
 		return
 
 	dead = true
+	if is_instance_valid(party_manager):
+		party_manager.notify_hero_died(self)
 	_notify_skill_cancelled()
 
 	Log.d("=== Mago MORREU ===")
