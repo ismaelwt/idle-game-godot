@@ -41,8 +41,8 @@ func _ready() -> void:
 		push_warning("CombatController: EnemySpawner não encontrado.")
 		return
 
-	print("=== COMBAT CONTROLLER CONECTADO ===")
-	print("Heróis recebidos: ", get_heroes().map(func(hero): return hero.name))
+	Log.d("=== COMBAT CONTROLLER CONECTADO ===")
+	Log.d("Heróis recebidos: ", get_heroes().map(func(hero): return hero.name))
 	initialize_hero_skill_states()
 
 
@@ -73,8 +73,8 @@ func start_combat() -> void:
 	target_refresh_timer = 0.0
 	combat_cycle_started.emit()
 
-	print("CombatController: combate iniciado.")
-	print("Heróis ativos: ", party_manager.get_alive_heroes().size())
+	Log.d("CombatController: combate iniciado.")
+	Log.d("Heróis ativos: ", party_manager.get_alive_heroes().size())
 
 	refresh_hero_targets()
 
@@ -86,7 +86,7 @@ func stop_combat() -> void:
 	combat_active = false
 	combat_cycle_finished.emit()
 
-	print("CombatController: combate encerrado.")
+	Log.d("CombatController: combate encerrado.")
 
 
 # =========================================================
@@ -192,7 +192,7 @@ func refresh_hero_targets() -> void:
 		if is_instance_valid(new_target):
 			set_target(hero, new_target)
 
-			print(
+			Log.d(
 				"[ALVO ATUALIZADO] ",
 				hero.name,
 				" -> ",
@@ -326,13 +326,13 @@ func prepare_skills(hero: Node3D) -> void:
 
 	hero_skill_states[hero_id] = state
 
-	print(
+	Log.d(
 		"=== ROTAÇÃO PREPARADA: ",
 		hero.name,
 		" ==="
 	)
-	print("Ordem: ", current_order)
-	print("Skills válidas: ", skill_ids)
+	Log.d("Ordem: ", current_order)
+	Log.d("Skills válidas: ", skill_ids)
 
 
 func update_skill_cooldowns(delta: float) -> void:
@@ -363,7 +363,7 @@ func update_skill_cooldowns(delta: float) -> void:
 			if skill_timers[i] <= 0.0:
 				skill_available[i] = true
 
-				print(
+				Log.d(
 					"SKILL DISPONÍVEL: ",
 					skill_ids[i],
 					" | HERÓI: ",
@@ -489,7 +489,7 @@ func process_skill_rotation(
 
 		stats.use_mana(mana_cost)
 
-		print(
+		Log.d(
 			"USANDO SKILL: ", skill_id,
 			" | HERÓI: ", hero.name,
 			" | MANA: ", mana_cost,
@@ -518,7 +518,7 @@ func process_skill_rotation(
 			return
 
 	if hero.has_method("basic_attack"):
-		print(
+		Log.d(
 			"=== COMBAT CONTROLLER -> BASIC ATTACK ===",
 			" | HERÓI: ", hero.name,
 			" | ALVO: ", target.name
@@ -557,7 +557,7 @@ func on_hero_skill_cancelled(hero: Node3D) -> void:
 	var stats = hero.get("character_stats")
 	if mana_cost > 0.0 and is_instance_valid(stats) and stats.has_method("restore_mana"):
 		stats.restore_mana(mana_cost)
-		print("MANA RESTAURADA: ", mana_cost, " | HERÓI: ", hero.name)
+		Log.d("MANA RESTAURADA: ", mana_cost, " | HERÓI: ", hero.name)
 
 	state["skill_timers"] = timers
 	state["skill_available"] = available
@@ -565,7 +565,7 @@ func on_hero_skill_cancelled(hero: Node3D) -> void:
 	state["active_skill_mana_cost"] = 0.0
 	hero_skill_states[hero_id] = state
 
-	print("SKILL CANCELADA - MANA E COOLDOWN RESTAURADOS | HERÓI: ", hero.name)
+	Log.d("SKILL CANCELADA - MANA E COOLDOWN RESTAURADOS | HERÓI: ", hero.name)
 
 func initialize_hero_skill_states() -> void:
 	if not is_instance_valid(party_manager):
