@@ -40,7 +40,7 @@ var wave_transition_in_progress: bool = false
 
 func _ready() -> void:
 	await get_tree().process_frame
-	print("=== ENEMY SPAWNER READY === | Onda: ", current_wave)
+	Log.d("=== ENEMY SPAWNER READY === | Onda: ", current_wave)
 	spawn_enemies()
 
 
@@ -151,7 +151,7 @@ func spawn_enemies() -> void:
 			enemy.global_position = spawn_position
 			enemies.append(enemy)
 
-	print(
+	Log.d(
 		"=== INIMIGOS SPAWNADOS === | Onda: ", current_wave,
 		" | Total configurado: ", total_enemies,
 		" | Slots ativos: ", spawn_list.size(),
@@ -168,7 +168,7 @@ func advance_wave() -> void:
 		return
 	wave_transition_in_progress = true
 
-	print("=== ONDA ", current_wave, " CONCLUÍDA ===")
+	Log.d("=== ONDA ", current_wave, " CONCLUÍDA ===")
 
 	# O LevelController coordena a pausa do cenário e o avanço da formação.
 	if is_instance_valid(level_controller):
@@ -200,10 +200,10 @@ func advance_wave() -> void:
 	level_controller.combat_enemies.clear()
 	level_controller.current_enemy = null
 
-	print("=== PRÓXIMA ONDA: ", current_wave, " ===")
+	Log.d("=== PRÓXIMA ONDA: ", current_wave, " ===")
 
 	if current_wave >= 4:
-		print("=== BOSS INCOMING ===")
+		Log.d("=== BOSS INCOMING ===")
 
 		# Aguarda as skills em execução antes de retomar o cenário
 		# e exibir o aviso enquanto os heróis avançam.
@@ -219,7 +219,7 @@ func advance_wave() -> void:
 
 		spawn_boss()
 		level_controller.state = 1
-		print("=== RUNNING | BOSS SPAWN SOLICITADO ===")
+		Log.d("=== RUNNING | BOSS SPAWN SOLICITADO ===")
 	else:
 		match current_wave:
 			2:
@@ -229,7 +229,7 @@ func advance_wave() -> void:
 
 		spawn_enemies()
 		level_controller.state = 1
-		print("=== RUNNING | ONDA ", current_wave, " ===")
+		Log.d("=== RUNNING | ONDA ", current_wave, " ===")
 
 	# Nas ondas normais, retoma o cenário somente depois que todos
 	# os heróis terminarem suas ações/skills ativas.
@@ -291,7 +291,7 @@ func spawn_boss() -> void:
 	if not enemies.has(boss):
 		enemies.append(boss)
 
-	print(
+	Log.d(
 		"=== BOSS SPAWNADO === | Nível do jogador: ",
 		hero_level,
 		" | Nível do boss: ",
