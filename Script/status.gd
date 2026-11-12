@@ -487,7 +487,7 @@ func _handle_equipment_tooltip(
 					get_viewport().set_input_as_handled()
 					return
 				inventory_control.select_equipment_for_gem(selected_item)
-				print("Equipamento selecionado para gema: ", selected_item.item_base.item_name)
+				Log.d("Equipamento selecionado para gema: ", selected_item.item_base.item_name)
 				get_viewport().set_input_as_handled()
 			return
 
