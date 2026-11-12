@@ -51,7 +51,7 @@ func on_started_pressed() -> void:
 	else:
 		CharacterSelectionData.set_selected_character("knight")
 
-	print(
+	Log.d(
 		"Classe escolhida: ",
 		CharacterSelectionData.selected_character
 	)
@@ -69,4 +69,4 @@ func update_selection() -> void:
 	else: 
 		spotlight.global_position = spotlight_position1.global_position
 
-	print("Personagem selecionado: ", selected_character.name)
+	Log.d("Personagem selecionado: ", selected_character.name)
