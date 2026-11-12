@@ -4,10 +4,15 @@ class_name PartyManager
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 
 signal party_changed(heroes: Array[Node3D])
+signal hero_died(hero: Node3D)
 
 @export_range(1, 3, 1) var max_party_size: int = 3
 
 var heroes: Array[Node3D] = []
+var _heroes_cache: Array[Node3D] = []
+var _alive_heroes_cache: Array[Node3D] = []
+var _heroes_cache_dirty: bool = true
+var _alive_cache_dirty: bool = true
 var main_hero: Node3D = null
 var companion_hero: Node3D = null
 
@@ -268,6 +273,18 @@ func _set_hero_active(hero: Node3D, active: bool) -> void:
 	hero.set_physics_process(active)
 
 
+func _invalidate_hero_caches() -> void:
+	_heroes_cache_dirty = true
+	_alive_cache_dirty = true
+
+
+func notify_hero_died(hero: Node3D) -> void:
+	if not is_instance_valid(hero) or not heroes.has(hero):
+		return
+	_alive_cache_dirty = true
+	hero_died.emit(hero)
+
+
 func register_hero(hero: Node3D) -> bool:
 	if not is_instance_valid(hero):
 		return false
@@ -280,6 +297,7 @@ func register_hero(hero: Node3D) -> bool:
 		return false
 
 	heroes.append(hero)
+	_invalidate_hero_caches()
 	party_changed.emit(get_heroes())
 	Log.d("PartyManager: herói registrado: ", hero.name)
 	return true
@@ -288,24 +306,29 @@ func register_hero(hero: Node3D) -> bool:
 func unregister_hero(hero: Node3D) -> void:
 	if heroes.has(hero):
 		heroes.erase(hero)
+		_invalidate_hero_caches()
 		party_changed.emit(get_heroes())
 
 
 func get_heroes() -> Array[Node3D]:
-	var valid_heroes: Array[Node3D] = []
-	for hero in heroes:
-		if is_instance_valid(hero):
-			valid_heroes.append(hero)
-	return valid_heroes
+	if _heroes_cache_dirty:
+		_heroes_cache.clear()
+		for hero in heroes:
+			if is_instance_valid(hero):
+				_heroes_cache.append(hero)
+		_heroes_cache_dirty = false
+	return _heroes_cache
 
 
 func get_alive_heroes() -> Array[Node3D]:
-	var alive_heroes: Array[Node3D] = []
-	for hero in get_heroes():
-		var dead_value = hero.get("dead")
-		if dead_value == null or not bool(dead_value):
-			alive_heroes.append(hero)
-	return alive_heroes
+	if _alive_cache_dirty:
+		_alive_heroes_cache.clear()
+		for hero in get_heroes():
+			var dead_value = hero.get("dead")
+			if dead_value == null or not bool(dead_value):
+				_alive_heroes_cache.append(hero)
+		_alive_cache_dirty = false
+	return _alive_heroes_cache
 
 
 func set_hero_target(hero: Node3D, target: Node3D) -> bool:
