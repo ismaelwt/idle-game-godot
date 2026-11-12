@@ -28,6 +28,8 @@ extends Node3D
 @onready var level_controller: Node = get_parent().get_node_or_null("LevelController")
 @onready var world_scroller: Node = get_parent().get_node_or_null("World/WorldScroller")
 @onready var enemy_spawner: Node = get_parent().get_node_or_null("EnemySpawner")
+@onready var combat_controller: Node = get_parent().get_node_or_null("CombatController")
+@onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 
 @export_category("Vida")
 @export var max_health: float = 200.0
@@ -121,7 +123,6 @@ func _process(delta: float) -> void:
 
 	attack_timer = maxf(attack_timer - delta, 0.0)
 
-	var combat_controller = get_parent().get_node_or_null("CombatController")
 	var target: Node3D = null
 
 	if is_instance_valid(combat_controller):
@@ -315,7 +316,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 
 
 func _notify_skill_cancelled() -> void:
-	var controller := get_parent().get_node_or_null("CombatController")
+	var controller := combat_controller
 	if is_instance_valid(controller) and controller.has_method("on_hero_skill_cancelled"):
 		controller.on_hero_skill_cancelled(self)
 
@@ -646,6 +647,8 @@ func die() -> void:
 		return
 
 	dead = true
+	if is_instance_valid(party_manager):
+		party_manager.notify_hero_died(self)
 	_notify_skill_cancelled()
 	_interrupt_earthquake()
 
