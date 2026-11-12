@@ -77,7 +77,7 @@ func set_item_stored(item: ItemInstance, should_store: bool) -> bool:
 	if item.stored == should_store:
 		return true
 	if should_store and get_stored_items().size() >= STORAGE_CAPACITY:
-		print("O baú está cheio. Limite: %d itens." % STORAGE_CAPACITY)
+		Log.d("O baú está cheio. Limite: %d itens." % STORAGE_CAPACITY)
 		return false
 	item.stored = should_store
 	inventory_changed.emit()
@@ -106,9 +106,9 @@ func add_chest(amount: int = 1, boss_level: int = 1) -> void:
 	chest_count += amount
 	inventory_changed.emit()
 
-	print("=== BAÚ ADICIONADO ===")
-	print("Total de baús: ", chest_count)
-	print("Nível da recompensa: ", reward_level)
+	Log.d("=== BAÚ ADICIONADO ===")
+	Log.d("Total de baús: ", chest_count)
+	Log.d("Nível da recompensa: ", reward_level)
 
 	_save_inventory()
 
@@ -120,13 +120,13 @@ func add_equipment(item: ItemInstance) -> void:
 	equipment.append(item)
 	inventory_changed.emit()
 
-	print("=== EQUIPAMENTO ADICIONADO ===")
+	Log.d("=== EQUIPAMENTO ADICIONADO ===")
 
 	if item.item_base != null:
-		print("Item: ", item.item_base.item_name)
-		print("Raridade: ", ItemBase.Rarity.keys()[item.generated_rarity])
+		Log.d("Item: ", item.item_base.item_name)
+		Log.d("Raridade: ", ItemBase.Rarity.keys()[item.generated_rarity])
 
-	print("Total de equipamentos: ", equipment.size())
+	Log.d("Total de equipamentos: ", equipment.size())
 
 	_save_inventory()
 
@@ -134,7 +134,7 @@ func add_equipment(item: ItemInstance) -> void:
 func sell_all_equipment() -> int:
 	var backpack_items := get_backpack_items()
 	if backpack_items.is_empty():
-		print("Não há itens na mochila para vender.")
+		Log.d("Não há itens na mochila para vender.")
 		return 0
 
 	var game_manager = get_node_or_null("/root/GameManager")
@@ -157,10 +157,10 @@ func sell_all_equipment() -> int:
 
 	_save_inventory()
 
-	print("=== VENDA DO INVENTÁRIO ===")
-	print("Itens vendidos: ", sold_count)
-	print("Ouro recebido: ", total_value)
-	print("Ouro global total: ", game_manager.gold)
+	Log.d("=== VENDA DO INVENTÁRIO ===")
+	Log.d("Itens vendidos: ", sold_count)
+	Log.d("Ouro recebido: ", total_value)
+	Log.d("Ouro global total: ", game_manager.gold)
 
 	return total_value
 
@@ -175,7 +175,7 @@ func _save_inventory() -> void:
 
 func open_chest() -> ItemInstance:
 	if chest_count <= 0:
-		print("Não há baús disponíveis.")
+		Log.d("Não há baús disponíveis.")
 		return null
 
 	# Gera o equipamento antes de consumir o baú.
@@ -208,8 +208,8 @@ func open_chest() -> ItemInstance:
 	add_equipment(item)
 	inventory_changed.emit()
 
-	print("=== BAÚ ABERTO ===")
-	print("Baús restantes: ", chest_count)
+	Log.d("=== BAÚ ABERTO ===")
+	Log.d("Baús restantes: ", chest_count)
 
 	return item
 
@@ -224,12 +224,12 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 
 	# Cada acessório possui seu próprio espaço de equipamento.
 	if not hero_equipment.has(item_type):
-		print("Esse tipo de item não possui espaço para equipar.")
+		Log.d("Esse tipo de item não possui espaço para equipar.")
 		return false
 
 	var inventory_index: int = equipment.find(item)
 	if inventory_index == -1:
-		print("Esse item não está na mochila.")
+		Log.d("Esse item não está na mochila.")
 		return false
 
 	var normalized_hero_id := CharacterSelectionDataScript.normalize_hero_id(resolved_id)
@@ -247,7 +247,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 			return false
 
 	if required_class != ItemBase.ItemClass.ALL and required_class != hero_class:
-		print(
+		Log.d(
 			"Não foi possível equipar %s. Classe exigida: %s | Classe do herói: %s"
 			% [
 				item.item_base.item_name,
@@ -274,7 +274,7 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 			hero_level = int(hero.character_stats.level)
 
 	if item.item_level > hero_level:
-		print(
+		Log.d(
 			"Não foi possível equipar %s. Nível do item: %d | Nível do herói: %d"
 			% [item.item_base.item_name, item.item_level, hero_level]
 		)
@@ -289,10 +289,10 @@ func equip_item(item: ItemInstance, hero_id: String = "") -> bool:
 	equipment_changed.emit()
 	inventory_changed.emit()
 
-	print("=== EQUIPAMENTO ALTERADO | HERÓI: ", resolved_id, " ===")
-	print("Item equipado: ", item.item_base.item_name)
+	Log.d("=== EQUIPAMENTO ALTERADO | HERÓI: ", resolved_id, " ===")
+	Log.d("Item equipado: ", item.item_base.item_name)
 	if previous_item != null:
-		print("Item devolvido à mochila: ", previous_item.item_base.item_name)
+		Log.d("Item devolvido à mochila: ", previous_item.item_base.item_name)
 
 	_save_inventory()
 	_save_hero_equipment(resolved_id)
@@ -358,7 +358,7 @@ func upgrade_equipment_tier(
 
 	var upgrade_cost := get_tier_upgrade_cost(equipment_item)
 	if upgrade_cost <= 0 or not game_manager.spend_gold(upgrade_cost):
-		print("Ouro insuficiente para evoluir o equipamento. Custo: ", upgrade_cost)
+		Log.d("Ouro insuficiente para evoluir o equipamento. Custo: ", upgrade_cost)
 		return false
 
 	equipment.remove_at(gem_index)
@@ -369,11 +369,11 @@ func upgrade_equipment_tier(
 	if is_equipped:
 		_save_hero_equipment(resolved_id)
 
-	print("=== TIER DO EQUIPAMENTO EVOLUÍDO ===")
-	print("Equipamento: ", equipment_item.item_base.item_name)
-	print("Novo Tier: ", equipment_item.tier)
-	print("Gema consumida: ", tier_gem.item_base.item_name)
-	print("Gold gasto: ", upgrade_cost)
+	Log.d("=== TIER DO EQUIPAMENTO EVOLUÍDO ===")
+	Log.d("Equipamento: ", equipment_item.item_base.item_name)
+	Log.d("Novo Tier: ", equipment_item.tier)
+	Log.d("Gema consumida: ", tier_gem.item_base.item_name)
+	Log.d("Gold gasto: ", upgrade_cost)
 	return true
 
 
@@ -423,7 +423,7 @@ func install_gem(
 
 	var enchantment_cost := get_enchantment_cost(equipment_item)
 	if enchantment_cost <= 0 or not game_manager.spend_gold(enchantment_cost):
-		print("Ouro insuficiente para encantar este equipamento. Custo: ", enchantment_cost)
+		Log.d("Ouro insuficiente para encantar este equipamento. Custo: ", enchantment_cost)
 		return false
 
 	equipment.remove_at(gem_index)
@@ -436,7 +436,7 @@ func install_gem(
 	if is_equipped:
 		_save_hero_equipment(resolved_id)
 
-	print(
+	Log.d(
 		"=== GEMA INSTALADA === | GEMA: ",
 		gem_item.item_base.item_name,
 		" | EQUIPAMENTO: ",
@@ -460,8 +460,8 @@ func unequip_item(item_type: ItemBase.ItemType, hero_id: String = "") -> bool:
 	equipment_changed.emit()
 	inventory_changed.emit()
 
-	print("=== EQUIPAMENTO REMOVIDO | HERÓI: ", resolved_id, " ===")
-	print("Item: ", item.item_base.item_name if item.item_base != null else "Item")
+	Log.d("=== EQUIPAMENTO REMOVIDO | HERÓI: ", resolved_id, " ===")
+	Log.d("Item: ", item.item_base.item_name if item.item_base != null else "Item")
 
 	_save_inventory()
 	_save_hero_equipment(resolved_id)
