@@ -203,7 +203,7 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	attacking = true
 	current_attack_target = null
 
-	print("ARCHER -> SKILL HEAL")
+	Log.d("ARCHER -> SKILL HEAL")
 
 	# A cura só é aplicada depois que a animação termina.
 	# Se a skill for interrompida durante a preparação, não haverá
@@ -237,9 +237,9 @@ func use_skill(skill_id: String, target: Node3D) -> void:
 	health = minf(health + float(healing_instance.healing_amount), max_health)
 	var healed_amount: float = health - old_health
 
-	print("=== CURA DO ARCHER APLICADA ===")
-	print("Vida recuperada: ", healed_amount)
-	print("Vida atual: ", health, "/", max_health)
+	Log.d("=== CURA DO ARCHER APLICADA ===")
+	Log.d("Vida recuperada: ", healed_amount)
+	Log.d("Vida atual: ", health, "/", max_health)
 
 	# A cura permanece ativa visualmente durante sua duração, mas não bloqueia
 	# o Archer: depois da animação de ativação ele já pode atacar ou usar outra skill.
