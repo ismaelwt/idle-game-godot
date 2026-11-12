@@ -246,7 +246,7 @@ func use_skill(skill_id: String, target: Node3D):
 
 		"damage_buff":
 
-			print("SKILL -> BUFF DE DANO")
+			Log.d("SKILL -> BUFF DE DANO")
 
 			animation_player.speed_scale = 1.0
 			animation_player.play("mage/buff", animation_blend)
@@ -263,7 +263,7 @@ func use_skill(skill_id: String, target: Node3D):
 			add_child(damage_buff_instance)
 			damage_buff_instance.position = Vector3.ZERO
 
-			print("BUFF CASTADO!")
+			Log.d("BUFF CASTADO!")
 
 			var buff_duration = damage_buff_instance.duration
 
@@ -280,13 +280,13 @@ func use_skill(skill_id: String, target: Node3D):
 				damage_buff_instance.queue_free()
 				damage_buff_instance = null
 
-			print("BUFF TERMINOU")
+			Log.d("BUFF TERMINOU")
 			current_attack_target = null
 			return
 
 		"heal":
 
-			print("SKILL -> CURA")
+			Log.d("SKILL -> CURA")
 
 			animation_player.speed_scale = 1.0
 			animation_player.play("mage/heal", animation_blend)
@@ -307,9 +307,9 @@ func use_skill(skill_id: String, target: Node3D):
 			health = minf(health + healing_instance.healing_amount, max_health)
 			var healed_amount = health - old_health
 
-			print("=== CURA APLICADA ===")
-			print("Vida recuperada: ", healed_amount)
-			print("Vida atual: ", health, "/", max_health)
+			Log.d("=== CURA APLICADA ===")
+			Log.d("Vida recuperada: ", healed_amount)
+			Log.d("Vida atual: ", health, "/", max_health)
 
 			await get_tree().create_timer(healing_instance.duration).timeout
 
@@ -319,12 +319,12 @@ func use_skill(skill_id: String, target: Node3D):
 			attacking = false
 			action_locked = false
 			current_attack_target = null
-			print("EFEITO DE CURA TERMINOU")
+			Log.d("EFEITO DE CURA TERMINOU")
 			return
 			
 		"thunderstorm":
 
-			print("SKILL -> THUNDERSTORM")
+			Log.d("SKILL -> THUNDERSTORM")
 			
 			animation_player.speed_scale = 1.0
 			animation_player.play("mage/attack_2", animation_blend)
@@ -380,7 +380,7 @@ func get_target_position(target: Node3D) -> Vector3:
 
 func _on_animation_finished(anim_name):
 
-	print("ANIMAÇÃO TERMINOU: ", anim_name)
+	Log.d("ANIMAÇÃO TERMINOU: ", anim_name)
 
 	if dead and anim_name != "mage/die":
 		return
@@ -404,7 +404,7 @@ func _on_animation_finished(anim_name):
 		)
 
 	elif anim_name == "mage/base_attack":
-		print("base_attack terminou: ")
+		Log.d("base_attack terminou: ")
 		animation_player.speed_scale = 1.0
 
 		if not attacking:
@@ -497,20 +497,20 @@ func return_to_initial_position():
 
 func check_all_enemies_dead():
 
-	print("=== VERIFICANDO INIMIGOS ===")
+	Log.d("=== VERIFICANDO INIMIGOS ===")
 
 	var enemies = get_tree().get_nodes_in_group("enemies")
 
-	print("Quantidade de inimigos: ", enemies.size())
+	Log.d("Quantidade de inimigos: ", enemies.size())
 
 	for enemy in enemies:
 
 		if is_instance_valid(enemy) and not enemy.dying:
 
-			print("Ainda existe inimigo vivo: ", enemy.name)
+			Log.d("Ainda existe inimigo vivo: ", enemy.name)
 			return
 
-	print("NÃO EXISTEM MAIS INIMIGOS VIVOS!")
+	Log.d("NÃO EXISTEM MAIS INIMIGOS VIVOS!")
 
 	return_to_initial_position()
 
@@ -528,7 +528,7 @@ func take_damage(damage: float, damage_type: String = "physical"):
 	# Apenas o flash visual de dano
 	flash_hit()
 
-	print(
+	Log.d(
 		"Mage recebeu ",
 		final_damage,
 		" de dano. Vida: ",
@@ -553,7 +553,7 @@ func die():
 	dead = true
 	_notify_skill_cancelled()
 
-	print("=== Mago MORREU ===")
+	Log.d("=== Mago MORREU ===")
 
 	# Interrompe o combate e invalida qualquer ação pendente.
 	attacking = false
@@ -704,13 +704,13 @@ func _on_attributes_changed():
 	# Se a vida máxima diminuir, limita a vida atual.
 	health = clampf(health, 0.0, max_health)
 
-	print("=== ATRIBUTOS ATUALIZADOS ===")
-	print("Força total: ", character_stats.get_total_strength())
-	print("Agilidade total: ", character_stats.get_total_agility())
-	print("Inteligência total: ", character_stats.get_total_intelligence())
-	print("Vitalidade total: ", character_stats.get_total_vitality())
-	print("Vida máxima: ", max_health)
-	print("Vida atual: ", health)
+	Log.d("=== ATRIBUTOS ATUALIZADOS ===")
+	Log.d("Força total: ", character_stats.get_total_strength())
+	Log.d("Agilidade total: ", character_stats.get_total_agility())
+	Log.d("Inteligência total: ", character_stats.get_total_intelligence())
+	Log.d("Vitalidade total: ", character_stats.get_total_vitality())
+	Log.d("Vida máxima: ", max_health)
+	Log.d("Vida atual: ", health)
 
 
 
@@ -815,7 +815,7 @@ func basic_attack(target: Node3D):
 	# mesmo que o inimigo morra durante a animação.
 	var target_position_snapshot: Vector3 = get_target_position(target)
 
-	print(
+	Log.d(
 		"⚔️ BASE ATTACK INICIADO: ",
 		target.name,
 		" | HEALTH: ",
@@ -844,7 +844,7 @@ func basic_attack(target: Node3D):
 	var basic_attack_interval_multiplier: float = character_stats.get_basic_attack_interval_multiplier()
 	var effective_animation_speed: float = animation_player_attack_base_duration / basic_attack_interval_multiplier
 	animation_player.speed_scale = effective_animation_speed
-	print(
+	Log.d(
 		"base_attack INICIOU: 1")
 	animation_player.play(
 		"mage/base_attack",
@@ -896,7 +896,7 @@ func basic_attack(target: Node3D):
 	projectile.has_target_position_snapshot = true
 	projectile.basic_attack_level = character_stats.basic_attack_level
 	projectile.character_stats = character_stats
-	print("base_attack TARGET ", target.name if is_instance_valid(target) else "posição salva (alvo removido)")
+	Log.d("base_attack TARGET ", target.name if is_instance_valid(target) else "posição salva (alvo removido)")
 	projectile.magic_bonus = character_stats.get_magic_bonus()
 	projectile.critical_chance = character_stats.get_critical_chance()
 	projectile.critical_damage_multiplier = character_stats.get_critical_damage_multiplier()
@@ -972,7 +972,7 @@ func cancel_attack_on_target(target: Node3D):
 		return
 
 	_notify_skill_cancelled()
-	print(
+	Log.d(
 		"=== BASIC ATTACK CANCELADO === | ALVO: ",
 		target.name
 	)
@@ -1006,7 +1006,7 @@ func cancel_attack_on_target(target: Node3D):
 					animation_blend
 				)
 
-	print("=== CANCELAMENTO CONCLUÍDO ===")
+	Log.d("=== CANCELAMENTO CONCLUÍDO ===")
 
 	attacking = false
 	basic_attack_lock = false
@@ -1022,7 +1022,7 @@ func cancel_basic_attack():
 	if not basic_attack_lock:
 		return
 
-	print(
+	Log.d(
 		"=== BASIC ATTACK CANCELADO ==="
 	)
 
@@ -1054,6 +1054,6 @@ func cancel_basic_attack():
 	basic_attack_target = null
 	basic_attack_hit = false
 
-	print(
+	Log.d(
 		"=== BASIC ATTACK INVALIDADO ==="
 	)
