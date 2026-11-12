@@ -22,17 +22,17 @@ func _ready():
 
 	if mesh:
 
-		print("=== DAMAGE BUFF ===")
-		print("Mesh encontrado: ", mesh)
-		print("Material: ", mesh.material_override)
+		Log.d("=== DAMAGE BUFF ===")
+		Log.d("Mesh encontrado: ", mesh)
+		Log.d("Material: ", mesh.material_override)
 
 		if mesh.material_override:
 
-			print(
+			Log.d(
 				"ShaderMaterial: ",
 				mesh.material_override is ShaderMaterial
 			)
 
 	else:
 
-		print("ERRO: MeshInstance3D não encontrado!")
+		Log.d("ERRO: MeshInstance3D não encontrado!")
