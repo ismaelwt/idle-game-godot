@@ -187,7 +187,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 
 	health -= damage
 
-	print(
+	Log.d(
 		"INIMIGO: ", name,
 		" | DAMAGE: ", damage,
 		" | CRÍTICO: ", is_critical,
@@ -250,7 +250,7 @@ func _check_special_attack() -> void:
 
 
 func die() -> void:
-	print(
+	Log.d(
 		"☠️ DIE INICIOU: ",
 		name,
 		" | HEALTH: ",
@@ -597,7 +597,7 @@ func setup_level(level: int) -> void:
 
 	create_level_label()
 
-	print(
+	Log.d(
 		"=== BOSS CONFIGURADO ===",
 		" | Nome: ", name,
 		" | Nível: ", boss_level,
