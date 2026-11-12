@@ -227,7 +227,7 @@ func take_damage(damage: float, is_critical: bool = false) -> void:
 	AudioManager.play_sfx(ENEMY_PAIN_SOUND, randf_range(0.95, 1.05))
 	health -= damage
 
-	print(
+	Log.d(
 		"INIMIGO: ", name,
 		" | DAMAGE: ", damage,
 		" | CRÍTICO: ", is_critical,
@@ -638,7 +638,7 @@ func setup_level(level: int) -> void:
 	update_health_bar()
 	create_level_label()
 
-	print(
+	Log.d(
 		"=== INIMIGO CONFIGURADO ===",
 		" | Nome: ", name,
 		" | Nível: ", enemy_level,
