@@ -90,8 +90,8 @@ func add_xp(amount: int):
 
 	xp += amount
 
-	print("XP recebida: ", amount)
-	print("XP atual: ", xp, "/", xp_to_next_level)
+	Log.d("XP recebida: ", amount)
+	Log.d("XP atual: ", xp, "/", xp_to_next_level)
 
 	if xp >= xp_to_next_level:
 		level_up()
@@ -112,11 +112,11 @@ func level_up():
 	attribute_points += 1
 	skill_points += 1
 
-	print("=== LEVEL UP ===")
-	print("Novo nível: ", level)
-	print("XP para próximo nível: ", xp_to_next_level)
-	print("Pontos de atributo disponíveis: ", attribute_points)
-	print("Pontos de skill disponíveis: ", skill_points)
+	Log.d("=== LEVEL UP ===")
+	Log.d("Novo nível: ", level)
+	Log.d("XP para próximo nível: ", xp_to_next_level)
+	Log.d("Pontos de atributo disponíveis: ", attribute_points)
+	Log.d("Pontos de skill disponíveis: ", skill_points)
 
 	level_up_occurred.emit()
 
@@ -125,7 +125,7 @@ func add_attribute_point(attribute: String):
 
 	if attribute_points <= 0:
 
-		print("Nenhum ponto de atributo disponível.")
+		Log.d("Nenhum ponto de atributo disponível.")
 		return
 
 	match attribute:
@@ -143,19 +143,19 @@ func add_attribute_point(attribute: String):
 			vitality += 1
 
 		_:
-			print("Atributo inválido.")
+			Log.d("Atributo inválido.")
 			return
 
 	attribute_points -= 1
 
 	attributes_changed.emit()
 
-	print(
+	Log.d(
 		"Atributo aumentado: ",
 		attribute
 	)
 
-	print(
+	Log.d(
 		"FOR: ", strength,
 		" | AGI: ", agility,
 		" | INT: ", intelligence,
@@ -167,13 +167,13 @@ func use_skill_point():
 
 	if skill_points <= 0:
 
-		print("Nenhum ponto de skill disponível.")
+		Log.d("Nenhum ponto de skill disponível.")
 		return
 
 	skill_points -= 1
 
-	print("Ponto de skill utilizado.")
-	print("Pontos de skill restantes: ", skill_points)
+	Log.d("Ponto de skill utilizado.")
+	Log.d("Pontos de skill restantes: ", skill_points)
 
 
 func use_mana(amount: float):
@@ -181,12 +181,12 @@ func use_mana(amount: float):
 	mana -= amount
 	mana = max(mana, 0.0)
 
-	print(
+	Log.d(
 		"Mana usada: ",
 		amount
 	)
 
-	print(
+	Log.d(
 		"Mana atual: ",
 		mana,
 		"/",
@@ -214,12 +214,12 @@ func add_gold(amount: int):
 
 	gold += amount
 
-	print(
+	Log.d(
 		"Gold recebido: ",
 		amount
 	)
 
-	print(
+	Log.d(
 		"Gold atual: ",
 		gold
 	)
@@ -236,7 +236,7 @@ func unlock_skill(skill_id: String):
 
 	unlocked_skills.append(skill_id)
 
-	print("SKILL DESBLOQUEADA: ", skill_id)
+	Log.d("SKILL DESBLOQUEADA: ", skill_id)
 
 func can_unlock_skill(skill_id: String) -> bool:
 
@@ -260,7 +260,7 @@ func can_unlock_skill(skill_id: String) -> bool:
 func learn_skill(skill_id: String) -> bool:
 
 	if not can_unlock_skill(skill_id):
-		print(
+		Log.d(
 			"NÃO PODE DESBLOQUEAR: ",
 			skill_id,
 			" | HERÓI: ",
@@ -284,7 +284,7 @@ func learn_skill(skill_id: String) -> bool:
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"SKILL APRENDIDA: ",
 		skill_id,
 		" | HERÓI: ",
@@ -297,7 +297,7 @@ func learn_skill(skill_id: String) -> bool:
 		skill_points
 	)
 
-	print("ROTAÇÃO ATUAL: ", skill_order)
+	Log.d("ROTAÇÃO ATUAL: ", skill_order)
 
 	return true
 
@@ -309,7 +309,7 @@ func set_skill_order(order: Array[String]):
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"NOVA ORDEM DE SKILLS: ",
 		skill_order
 	)
@@ -318,7 +318,7 @@ func add_skill_to_order(skill_id: String) -> bool:
 
 	if not has_skill(skill_id):
 
-		print(
+		Log.d(
 			"SKILL NÃO APRENDIDA: ",
 			skill_id
 		)
@@ -327,7 +327,7 @@ func add_skill_to_order(skill_id: String) -> bool:
 
 	if skill_id in skill_order:
 
-		print(
+		Log.d(
 			"SKILL JÁ ESTÁ NA ORDEM: ",
 			skill_id
 		)
@@ -339,12 +339,12 @@ func add_skill_to_order(skill_id: String) -> bool:
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"SKILL ADICIONADA À ROTAÇÃO: ",
 		skill_id
 	)
 
-	print(
+	Log.d(
 		"ORDEM ATUAL: ",
 		skill_order
 	)
@@ -363,12 +363,12 @@ func remove_skill_from_order(skill_id: String) -> bool:
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"SKILL REMOVIDA DA ROTAÇÃO: ",
 		skill_id
 	)
 
-	print(
+	Log.d(
 		"ORDEM ATUAL: ",
 		skill_order
 	)
@@ -401,7 +401,7 @@ func move_skill_in_order(
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"NOVA ORDEM: ",
 		skill_order
 	)
@@ -411,7 +411,7 @@ func move_skill_in_order(
 func upgrade_basic_attack() -> bool:
 
 	if skill_points <= 0:
-		print("NENHUM SKILL POINT DISPONÍVEL")
+		Log.d("NENHUM SKILL POINT DISPONÍVEL")
 		return false
 
 	skill_points -= 1
@@ -419,7 +419,7 @@ func upgrade_basic_attack() -> bool:
 
 	SaveManager.save_character(self, inventory, hero_id)
 
-	print(
+	Log.d(
 		"=== BASIC ATTACK EVOLUÍDO ===",
 		" | NÍVEL: ", basic_attack_level,
 		" | BÔNUS DE DANO: +", basic_attack_level,
@@ -441,11 +441,11 @@ func invest_in_skill_stage() -> bool:
 
 	if unlocked_stage == 0 and stage_progress >= 15.0:
 		unlocked_stage = 1
-		print("ESTÁGIO 1 DESBLOQUEADO")
+		Log.d("ESTÁGIO 1 DESBLOQUEADO")
 
 	elif unlocked_stage == 1 and stage_progress >= 36.0:
 		unlocked_stage = 2
-		print("ESTÁGIO 2 DESBLOQUEADO")
+		Log.d("ESTÁGIO 2 DESBLOQUEADO")
 
 	SaveManager.save_character(self, inventory, hero_id)
 	return true
