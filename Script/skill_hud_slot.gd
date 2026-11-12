@@ -21,7 +21,7 @@ func _ready():
 			slot_index = 2
 
 		_:
-			print(
+			Log.d(
 				"ERRO: Nome de slot desconhecido: ",
 				name
 			)
@@ -40,7 +40,7 @@ func _ready():
 		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
-	print(
+	Log.d(
 		"SKILL SLOT CONFIGURADO: ",
 		name,
 		" | Índice: ",
@@ -54,7 +54,7 @@ func _get_drag_data(_at_position):
 
 	if not is_instance_valid(hero):
 
-		print("DRAG ERRO: herói principal não encontrado.")
+		Log.d("DRAG ERRO: herói principal não encontrado.")
 
 		return null
 
@@ -64,7 +64,7 @@ func _get_drag_data(_at_position):
 
 	if slot_index >= character_stats.skill_order.size():
 
-		print(
+		Log.d(
 			"DRAG ERRO: Slot ",
 			slot_index + 1,
 			" está vazio."
@@ -78,7 +78,7 @@ func _get_drag_data(_at_position):
 
 	if not character_stats.has_skill(skill_id):
 
-		print(
+		Log.d(
 			"DRAG ERRO: Skill ",
 			skill_id,
 			" não está desbloqueada."
@@ -87,15 +87,15 @@ func _get_drag_data(_at_position):
 		return null
 
 
-	print("====================================")
-	print("=== INÍCIO DO DRAG ===")
-	print("Slot origem: ", slot_index + 1)
-	print("Skill: ", skill_id)
-	print(
+	Log.d("====================================")
+	Log.d("=== INÍCIO DO DRAG ===")
+	Log.d("Slot origem: ", slot_index + 1)
+	Log.d("Skill: ", skill_id)
+	Log.d(
 		"Ordem atual: ",
 		character_stats.skill_order
 	)
-	print("====================================")
+	Log.d("====================================")
 
 
 	# ==========================================
@@ -148,7 +148,7 @@ func _can_drop_data(_at_position, data):
 	)
 
 
-	print(
+	Log.d(
 		"CAN DROP -> DESTINO SLOT ",
 		slot_index + 1
 	)
@@ -183,7 +183,7 @@ func _drop_data(_at_position, data):
 
 	if not is_instance_valid(hero):
 
-		print(
+		Log.d(
 			"DROP ERRO: herói principal não encontrado."
 		)
 
@@ -197,16 +197,16 @@ func _drop_data(_at_position, data):
 	)
 
 
-	print("====================================")
-	print("=== DROP RECEBIDO ===")
-	print("Origem: Slot ", from_index + 1)
-	print("Destino: Slot ", slot_index + 1)
-	print("====================================")
+	Log.d("====================================")
+	Log.d("=== DROP RECEBIDO ===")
+	Log.d("Origem: Slot ", from_index + 1)
+	Log.d("Destino: Slot ", slot_index + 1)
+	Log.d("====================================")
 
 
 	if from_index == slot_index:
 
-		print(
+		Log.d(
 			"DROP IGNORADO: mesma posição."
 		)
 
@@ -218,7 +218,7 @@ func _drop_data(_at_position, data):
 
 	if from_index < 0 or from_index >= order.size():
 
-		print(
+		Log.d(
 			"DROP ERRO: posição de origem inválida."
 		)
 
@@ -227,20 +227,20 @@ func _drop_data(_at_position, data):
 
 	if slot_index < 0 or slot_index >= order.size():
 
-		print(
+		Log.d(
 			"DROP ERRO: posição de destino inválida."
 		)
 
 		return
 
 
-	print(
+	Log.d(
 		"ORDEM ANTES: ",
 		order
 	)
 
 
-	print(
+	Log.d(
 		"MOVENDO ",
 		order[from_index],
 		" DO SLOT ",
@@ -268,16 +268,16 @@ func _drop_data(_at_position, data):
 	character_stats.set_skill_order(order)
 
 
-	print(
+	Log.d(
 		"ORDEM DEPOIS: ",
 		character_stats.skill_order
 	)
 
-	print(
+	Log.d(
 		"=== ALTERAÇÃO CONCLUÍDA ==="
 	)
 
-	print("====================================")
+	Log.d("====================================")
 
 
 func _get_main_hero() -> Node:
