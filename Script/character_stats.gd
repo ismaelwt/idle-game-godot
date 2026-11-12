@@ -3,6 +3,7 @@ extends Node
 const CharacterSelectionDataScript = preload("res://Script/character_selection_data.gd")
 signal level_up_occurred
 signal attributes_changed
+signal skill_order_changed
 
 @export_category("Identidade do Herói")
 @export var hero_id: String = "mage"
@@ -304,6 +305,7 @@ func learn_skill(skill_id: String) -> bool:
 func set_skill_order(order: Array[String]):
 
 	skill_order = order.duplicate()
+	skill_order_changed.emit()
 
 	SaveManager.save_character(self, inventory, hero_id)
 
@@ -333,6 +335,7 @@ func add_skill_to_order(skill_id: String) -> bool:
 		return false
 
 	skill_order.append(skill_id)
+	skill_order_changed.emit()
 
 	SaveManager.save_character(self, inventory, hero_id)
 
@@ -356,6 +359,7 @@ func remove_skill_from_order(skill_id: String) -> bool:
 		return false
 
 	skill_order.erase(skill_id)
+	skill_order_changed.emit()
 
 	SaveManager.save_character(self, inventory, hero_id)
 
@@ -393,6 +397,7 @@ func move_skill_in_order(
 		new_position,
 		skill_id
 	)
+	skill_order_changed.emit()
 
 	SaveManager.save_character(self, inventory, hero_id)
 
