@@ -68,7 +68,7 @@ func _on_disable_auto_retry_pressed():
 
 
 func _on_restart_pressed():
-	print("=== REINICIANDO SOMENTE A FASE ===")
+	Log.d("=== REINICIANDO SOMENTE A FASE ===")
 	SceneLoader.reload_current_level()
 	hide()
 
