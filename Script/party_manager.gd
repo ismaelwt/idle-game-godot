@@ -75,14 +75,14 @@ func _initialize_party() -> void:
 	register_hero(main_hero)
 	_refresh_companion()
 
-	print("=== EQUIPE ATUAL ===")
-	print("ID principal: ", selected_id)
-	print("Principal: ", main_hero.name)
-	print(
+	Log.d("=== EQUIPE ATUAL ===")
+	Log.d("ID principal: ", selected_id)
+	Log.d("Principal: ", main_hero.name)
+	Log.d(
 		"Companheiro: ",
 		str(companion_hero.name) if is_instance_valid(companion_hero) else "nenhum"
 	)
-	print("Total de heróis: ", get_heroes().size())
+	Log.d("Total de heróis: ", get_heroes().size())
 
 
 func _discover_heroes() -> Array[Node3D]:
@@ -281,7 +281,7 @@ func register_hero(hero: Node3D) -> bool:
 
 	heroes.append(hero)
 	party_changed.emit(get_heroes())
-	print("PartyManager: herói registrado: ", hero.name)
+	Log.d("PartyManager: herói registrado: ", hero.name)
 	return true
 
 
@@ -338,13 +338,13 @@ func grant_enemy_rewards(xp_reward: int, gold_reward: int) -> void:
 		var game_manager := get_node_or_null("/root/GameManager")
 		if is_instance_valid(game_manager) and game_manager.has_method("add_gold"):
 			game_manager.add_gold(gold_reward)
-			print("Ouro recebido: ", gold_reward)
+			Log.d("Ouro recebido: ", gold_reward)
 		else:
 			push_warning("PartyManager: GameManager não encontrado ou sem add_gold().")
 
 	var alive_heroes := get_alive_heroes()
 	if alive_heroes.is_empty():
-		print("PartyManager: nenhum herói vivo para receber XP.")
+		Log.d("PartyManager: nenhum herói vivo para receber XP.")
 		return
 
 	var save_manager := get_node_or_null("/root/SaveManager")
@@ -362,7 +362,7 @@ func grant_enemy_rewards(xp_reward: int, gold_reward: int) -> void:
 
 		if stats.has_method("add_xp"):
 			stats.add_xp(xp_reward)
-			print("XP recebido | Herói: ", hero.name, " | XP: ", xp_reward)
+			Log.d("XP recebido | Herói: ", hero.name, " | XP: ", xp_reward)
 
 		if is_instance_valid(save_manager) and save_manager.has_method("save_character"):
 			var hero_id := str(stats.get("hero_id"))
