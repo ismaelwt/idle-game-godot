@@ -39,7 +39,7 @@ func _ready() -> void:
 		load_global_components(global_data)
 
 	_is_initializing = false
-	print("GameManager: ouro global carregado: ", gold)
+	Log.d("GameManager: ouro global carregado: ", gold)
 
 
 func set_gold(amount: int, persist: bool = true) -> void:
@@ -62,7 +62,7 @@ func add_gold(amount: int, persist: bool = true) -> int:
 
 	set_gold(gold + amount, persist)
 
-	print("GameManager: +", amount, " ouro | Total: ", gold)
+	Log.d("GameManager: +", amount, " ouro | Total: ", gold)
 	return gold
 
 
@@ -72,7 +72,7 @@ func spend_gold(amount: int, persist: bool = true) -> bool:
 
 	set_gold(gold - amount, persist)
 
-	print("GameManager: -", amount, " ouro | Total: ", gold)
+	Log.d("GameManager: -", amount, " ouro | Total: ", gold)
 	return true
 
 
@@ -214,7 +214,7 @@ func unlock_level(level: int, persist: bool = true) -> void:
 
 	global_state_changed.emit()
 
-	print("GameManager: fase desbloqueada: ", unlocked_level)
+	Log.d("GameManager: fase desbloqueada: ", unlocked_level)
 
 	if persist and not _is_initializing:
 		_save_global_state()
@@ -248,13 +248,13 @@ func purchase_companion(
 		return false
 
 	if owns_companion(companion_id):
-		print("Companion já adquirido: ", companion_id)
+		Log.d("Companion já adquirido: ", companion_id)
 		return false
 
 	# Desconta o ouro sem salvar ainda.
 	# A compra e o novo saldo serão salvos juntos.
 	if not spend_gold(price, false):
-		print("Ouro insuficiente para comprar: ", companion_id)
+		Log.d("Ouro insuficiente para comprar: ", companion_id)
 		return false
 
 	owned_companions[companion_id] = true
@@ -269,7 +269,7 @@ func purchase_companion(
 	companion_state_changed.emit()
 	global_state_changed.emit()
 
-	print(
+	Log.d(
 		"COMPANION COMPRADO: ",
 		companion_id,
 		" | Preço: ",
@@ -284,13 +284,13 @@ func purchase_companion(
 func equip_companion(companion_id: String) -> bool:
 	var normalized := companion_id.strip_edges().to_lower()
 	if not owns_companion(normalized):
-		print("Não é possível equipar companion não adquirido: ", companion_id)
+		Log.d("Não é possível equipar companion não adquirido: ", companion_id)
 		return false
 
 	if equipped_companion_ids.has(normalized):
 		return true
 	if equipped_companion_ids.size() >= _get_companion_limit():
-		print("Limite de companions equipados atingido.")
+		Log.d("Limite de companions equipados atingido.")
 		return false
 
 	equipped_companion_ids.append(normalized)
@@ -302,7 +302,7 @@ func equip_companion(companion_id: String) -> bool:
 	companion_state_changed.emit()
 	global_state_changed.emit()
 
-	print("COMPANION EQUIPADO: ", normalized)
+	Log.d("COMPANION EQUIPADO: ", normalized)
 	return true
 
 
@@ -332,5 +332,5 @@ func unequip_companion(companion_id: String = "") -> bool:
 	companion_state_changed.emit()
 	global_state_changed.emit()
 
-	print("COMPANION DESEQUIPADO: ", normalized)
+	Log.d("COMPANION DESEQUIPADO: ", normalized)
 	return true
