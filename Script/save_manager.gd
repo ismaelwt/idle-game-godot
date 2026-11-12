@@ -201,7 +201,7 @@ func save_inventory(inventory: Inventory) -> bool:
 	_remove_legacy_root_fields(data)
 	var success := _write_save_data(data)
 	if success:
-		print("SaveManager: inventário compartilhado salvo.")
+		Log.d("SaveManager: inventário compartilhado salvo.")
 	return success
 
 
@@ -260,7 +260,7 @@ func save_character(character_stats, inventory = null, hero_id: String = "") -> 
 	_remove_legacy_root_fields(data)
 
 	if _write_save_data(data):
-		print("=== JOGO SALVO | HERÓI: ", hero_id, " ===")
+		Log.d("=== JOGO SALVO | HERÓI: ", hero_id, " ===")
 
 
 func load_character(character_stats, inventory = null, hero_id: String = "") -> void:
@@ -274,7 +274,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 	hero_id = CharacterSelectionDataScript.normalize_hero_id(hero_id)
 
 	if not FileAccess.file_exists(SAVE_PATH):
-		print("Nenhum save encontrado.")
+		Log.d("Nenhum save encontrado.")
 		return
 
 	var data := _read_save_data()
@@ -299,7 +299,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 		# Compatibilidade com saves antigos que guardavam atributos na raiz.
 		hero_data = data
 	else:
-		print("SaveManager: nenhum save individual para o herói: ", hero_id)
+		Log.d("SaveManager: nenhum save individual para o herói: ", hero_id)
 		return
 
 	_apply_character_stats(character_stats, hero_data)
@@ -326,7 +326,7 @@ func load_character(character_stats, inventory = null, hero_id: String = "") -> 
 	if is_instance_valid(game_manager):
 		game_manager.load_global_components(global_data)
 
-	print("=== SAVE CARREGADO | HERÓI: ", hero_id, " ===")
+	Log.d("=== SAVE CARREGADO | HERÓI: ", hero_id, " ===")
 
 
 func _serialize_character_stats(character_stats) -> Dictionary:
@@ -508,9 +508,9 @@ func deserialize_inventory(inventory: Inventory, data: Dictionary) -> void:
 
 	inventory.inventory_changed.emit()
 	inventory.equipment_changed.emit()
-	print("=== INVENTÁRIO COMPARTILHADO CARREGADO ===")
-	print("Baús: ", inventory.chest_count)
-	print("Itens na mochila: ", inventory.get_backpack_items().size())
+	Log.d("=== INVENTÁRIO COMPARTILHADO CARREGADO ===")
+	Log.d("Baús: ", inventory.chest_count)
+	Log.d("Itens na mochila: ", inventory.get_backpack_items().size())
 
 
 func deserialize_item(item_data: Dictionary, database: ItemDatabase) -> ItemInstance:
@@ -608,5 +608,5 @@ func save_auto_retry(enabled: bool) -> void:
 func load_auto_retry() -> bool:
 	var data := _read_save_data()
 	automatic_retry = bool(data.get("automatic_retry", false))
-	print("=== AUTO RETRY CARREGADO === ", automatic_retry)
+	Log.d("=== AUTO RETRY CARREGADO === ", automatic_retry)
 	return automatic_retry
