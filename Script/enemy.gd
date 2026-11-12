@@ -70,7 +70,7 @@ const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 @onready var animation_player = $AnimationPlayer
 @onready var health_bar: ProgressBar = $SubViewport/ProgressBar
 @onready var health_bar_display: Sprite3D = $HealthBarDisplay
-@onready var enemy_behavior: Node = enemy_behavior
+@onready var enemy_behavior: Node = get_node_or_null("EnemyBehavior")
 @onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 @onready var level_controller: Node = get_tree().get_first_node_in_group("level_controller")
 
