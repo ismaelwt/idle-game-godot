@@ -19,6 +19,7 @@ config/icon="res://Assets/icon.png"
 default_bus_layout="res://default_bus_layout.tres"
 
 [autoload]
+Log="*res://Script/log.gd"
 
 SaveManager="*res://Script/save_manager.gd"
 SkillTree="*res://Script/skill_tree.gd"
