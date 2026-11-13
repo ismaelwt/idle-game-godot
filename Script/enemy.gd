@@ -73,7 +73,7 @@ const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 @onready var enemy_behavior: Node = get_node_or_null("EnemyBehavior")
 @onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 @onready var level_controller: Node = get_tree().get_first_node_in_group("level_controller")
-@onready var combat_controller: CombatController = get_tree().current_scene.get_node_or_null("CombatController") as CombatController
+@onready var combat_controller: CombatController = get_tree().current_scene.find_child("CombatController", true, false) as CombatController
 
 var fallback_hero_target: Node3D
 var combat_target: Node3D = null
