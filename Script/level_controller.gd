@@ -565,13 +565,6 @@ func enemy_died(dead_enemy: Node3D):
 	# A morte do inimigo não cancela ataques ou skills em execução.
 	# Cada ataque valida o alvo no momento do impacto e não aplica dano se ele morreu.
 
-	# Remove o inimigo da lista de combate.
-	var index := combat_enemies.find(dead_enemy)
-
-	if index >= 0:
-		combat_enemies.remove_at(index)
-		Log.d("INIMIGO REMOVIDO DO COMBATE: ", dead_enemy.name)
-
 	if current_enemy == dead_enemy:
 		current_enemy = null
 
