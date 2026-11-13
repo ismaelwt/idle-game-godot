@@ -65,7 +65,6 @@ var damage_buff_active: bool = false
 var damage_buff_instance: Node3D = null
 
 # Posição e rotação inicial do Mage
-var initial_position: Vector3
 var initial_rotation_y: float
 
 
@@ -80,7 +79,6 @@ func _ready():
 	character_stats.mana = character_stats.max_mana
 	character_stats.mana_regen_timer = 0.0
 
-	initial_position = global_position
 	initial_rotation_y = rotation.y
 
 	character_stats.attributes_changed.connect(_on_attributes_changed)
@@ -485,36 +483,6 @@ func look_at_target(target: Node3D):
 	)
 
 
-# ==========================================
-# VOLTAR PARA A POSIÇÃO INICIAL
-# ==========================================
-
-func return_to_initial_position():
-
-	global_position = initial_position
-	rotation.y = initial_rotation_y
-
-	#start_running()
-
-
-func check_all_enemies_dead():
-
-	Log.d("=== VERIFICANDO INIMIGOS ===")
-
-	var enemies = get_tree().get_nodes_in_group("enemies")
-
-	Log.d("Quantidade de inimigos: ", enemies.size())
-
-	for enemy in enemies:
-
-		if is_instance_valid(enemy) and not enemy.dying:
-
-			Log.d("Ainda existe inimigo vivo: ", enemy.name)
-			return
-
-	Log.d("NÃO EXISTEM MAIS INIMIGOS VIVOS!")
-
-	return_to_initial_position()
 
 
 func take_damage(damage: float, damage_type: String = "physical"):
