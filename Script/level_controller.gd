@@ -646,16 +646,15 @@ func enemy_died(dead_enemy: Node3D):
 	# Procura o próximo alvo sem iniciar o retorno à posição inicial.
 	select_next_enemy()
 
-	# Atualiza os alvos de todos os heróis ativos.
+	# Cada herói escolhe individualmente o inimigo vivo mais próximo.
+	# Não força a equipe inteira a perseguir o current_enemy global:
+	# esse alvo é usado apenas para controlar o fluxo geral da onda.
 	if is_instance_valid(combat_controller) and is_instance_valid(party_manager):
 		for hero in party_manager.get_alive_heroes():
-			if not is_instance_valid(hero):
-				continue
-			if is_instance_valid(current_enemy):
-				combat_controller.set_target(hero, current_enemy)
-				Log.d("=== NOVO ALVO | ", hero.name, ": ", current_enemy.name, " ===")
-			else:
+			if is_instance_valid(hero):
 				combat_controller.set_target(hero, null)
+
+		combat_controller.refresh_hero_targets()
 
 	# Encontrou um próximo alvo: continua o combate.
 	if is_instance_valid(current_enemy):
