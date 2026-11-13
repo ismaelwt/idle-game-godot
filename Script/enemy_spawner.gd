@@ -32,6 +32,7 @@ const CharacterSelectionDataScript = preload("res://Script/character_selection_d
 @onready var selected_hero: Node3D =  _get_selected_hero()
 @onready var party_manager: PartyManager = get_parent().get_node_or_null("PartyManager") as PartyManager
 @onready var level_controller: Node = get_parent().get_node("LevelController")
+@onready var combat_controller: CombatController = get_parent().get_node_or_null("CombatController") as CombatController
 @onready var world_scroller: Node3D = get_parent().get_node("World/WorldScroller")
 
 var enemies: Array[Node3D] = []
@@ -49,27 +50,9 @@ func _process(_delta: float) -> void:
 		if not is_instance_valid(enemies[i]):
 			enemies.remove_at(i)
 
-	# Se o herói de referência morreu ou foi liberado, usa outro herói vivo.
+	# O CombatController centraliza a detecção e o início do combate.
 	if not _is_hero_alive(selected_hero):
 		selected_hero = _get_selected_hero()
-
-	if not is_instance_valid(selected_hero):
-		return
-
-	for enemy in enemies:
-		if not is_instance_valid(enemy):
-			continue
-		if bool(enemy.get("dying")):
-			continue
-
-		var distance: float = enemy.global_position.distance_to(selected_hero.global_position)
-
-		if distance <= float(selected_hero.get("attack_range")):
-			level_controller.start_combat(enemy)
-
-		if not bool(enemy.get("in_combat")):
-			if distance <= float(enemy.get("attack_range")):
-				enemy.start_combat()
 
 
 func spawn_enemies() -> void:
@@ -150,6 +133,8 @@ func spawn_enemies() -> void:
 			world_scroller.add_child(enemy)
 			enemy.global_position = spawn_position
 			enemies.append(enemy)
+			if is_instance_valid(combat_controller):
+				combat_controller.register_enemy(enemy)
 
 	Log.d(
 		"=== INIMIGOS SPAWNADOS === | Onda: ", current_wave,
@@ -197,8 +182,10 @@ func advance_wave() -> void:
 		return
 
 	current_wave += 1
-	level_controller.combat_enemies.clear()
-	level_controller.current_enemy = null
+	if is_instance_valid(combat_controller):
+		combat_controller.clear_wave_state()
+	if is_instance_valid(level_controller):
+		level_controller.current_enemy = null
 
 	Log.d("=== PRÓXIMA ONDA: ", current_wave, " ===")
 
@@ -290,6 +277,8 @@ func spawn_boss() -> void:
 
 	if not enemies.has(boss):
 		enemies.append(boss)
+	if is_instance_valid(combat_controller):
+		combat_controller.register_enemy(boss)
 
 	Log.d(
 		"=== BOSS SPAWNADO === | Nível do jogador: ",
