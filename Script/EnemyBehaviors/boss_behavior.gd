@@ -47,6 +47,7 @@ func update_behavior(delta: float) -> void:
 	if distance <= enemy.attack_range:
 		enemy.combat_target = target
 		start_combat()
+		enemy.request_combat_engagement()
 		return
 
 	var direction := target.global_position - enemy.global_position
@@ -132,6 +133,7 @@ func start_combat() -> void:
 		return
 
 	enemy.in_combat = true
+	enemy.request_combat_engagement()
 	enemy.attacking = false
 	enemy.attack_timer = 0.0
 	enemy.animation_player.speed_scale = 1.0
