@@ -825,47 +825,11 @@ func mark_wave_start_positions() -> void:
 
 
 func prepare_next_wave_transition() -> void:
-	# O LevelController controla a parada do cenário.
+	# Apenas pausa o cenário e muda o estado para a transição.
+	# Os heróis permanecem onde terminaram o combate; não reposiciona
+	# o Mage nem sincroniza a formação usando move_hero_to_z().
 	world_scroller.running = false
 	state = State.REWARD
-
-	if not is_instance_valid(party_manager) or not wave_start_position_recorded:
-		return
-
-	var active_heroes := party_manager.get_alive_heroes()
-	if active_heroes.size() < 2:
-		return
-
-	# O companheiro é a referência de deslocamento quando existe;
-	# sem companheiro, usa o primeiro herói ativo.
-	var anchor: Node3D = party_manager.get_companion_hero()
-	if not is_instance_valid(anchor) or not active_heroes.has(anchor):
-		anchor = active_heroes[0]
-
-	var anchor_id := anchor.get_instance_id()
-	if not wave_start_positions.has(anchor_id):
-		return
-
-	var displacement: Vector3 = anchor.global_position - wave_start_positions[anchor_id]
-	displacement.x = 0.0
-	displacement.y = 0.0
-
-	# Mantém a lógica anterior: a referência fica onde terminou e os
-	# outros heróis avançam a mesma distância no eixo Z.
-	for hero in active_heroes:
-		if (
-			hero == anchor
-			or not is_instance_valid(hero)
-			or not hero.is_inside_tree()
-			or bool(hero.get("dead"))
-		):
-			continue
-
-		var target_z: float = hero.global_position.z + displacement.z
-		await move_hero_to_z(hero, target_z)
-
-	Log.d("=== FORMAÇÃO SINCRONIZADA ===")
-	Log.d("Deslocamento da formação: ", displacement)
 
 
 func resume_after_wave_transition() -> void:
