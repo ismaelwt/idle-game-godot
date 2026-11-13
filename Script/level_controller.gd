@@ -379,15 +379,6 @@ func has_combat_enemies() -> bool:
 func has_alive_enemies() -> bool:
 	if is_instance_valid(combat_controller):
 		return not combat_controller.get_alive_enemies().is_empty()
-	for enemy in enemy_spawner.enemies:
-		if not is_instance_valid(enemy):
-			continue
-
-		if enemy.dying or enemy.health <= 0:
-			continue
-
-		return true
-
 	return false
 
 
