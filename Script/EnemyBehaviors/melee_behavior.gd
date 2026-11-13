@@ -63,7 +63,6 @@ func update_behavior(delta: float) -> void:
 	if distance <= enemy.attack_range + 0.01:
 		enemy.combat_target = target
 		start_combat()
-		enemy.request_combat_engagement()
 		return
 
 	var direction := target.global_position - enemy.global_position
