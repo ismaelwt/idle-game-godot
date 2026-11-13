@@ -73,6 +73,7 @@ const ENEMY_DEATH_SOUND: AudioStream = preload("res://Sounds/goblin_pain.mp3")
 @onready var enemy_behavior: Node = get_node_or_null("EnemyBehavior")
 @onready var party_manager: PartyManager = get_tree().get_first_node_in_group("party_manager") as PartyManager
 @onready var level_controller: Node = get_tree().get_first_node_in_group("level_controller")
+@onready var combat_controller: CombatController = get_tree().current_scene.get_node_or_null("CombatController") as CombatController
 
 var fallback_hero_target: Node3D
 var combat_target: Node3D = null
@@ -101,6 +102,8 @@ func _ready() -> void:
 	base_gold_reward = gold_reward
 
 	health = max_health
+	if is_instance_valid(combat_controller):
+		combat_controller.register_enemy(self)
 
 func _process(delta: float) -> void:
 	var melee_behavior := enemy_behavior
@@ -219,10 +222,10 @@ func die() -> void:
 		if child is StaticBody3D:
 			child.visible = false
 
-	var controller := level_controller
-
-	if is_instance_valid(controller):
-		controller.enemy_died(self)
+	if is_instance_valid(combat_controller):
+		combat_controller.on_enemy_died(self)
+	elif is_instance_valid(level_controller):
+		level_controller.enemy_died(self)
 
 	health_bar_display.visible = false
 
@@ -454,9 +457,18 @@ func update_health_bar() -> void:
 
 
 func start_combat() -> void:
-	var melee_behavior := enemy_behavior
-	if is_instance_valid(melee_behavior):
-		melee_behavior.call("start_combat")
+	var behavior := enemy_behavior
+	if is_instance_valid(behavior):
+		behavior.call("start_combat")
+
+
+func request_combat_engagement() -> void:
+	if dying or health <= 0.0:
+		return
+	if is_instance_valid(combat_controller):
+		combat_controller.engage_enemy(self)
+	elif is_instance_valid(level_controller):
+		level_controller.start_combat(self)
 
 
 func flash_hit() -> void:
