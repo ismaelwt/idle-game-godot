@@ -22,7 +22,6 @@ var pending_run_heroes: Array[Node3D] = []
 var run_request_id: int = 0
 
 var current_enemy: Node3D
-var combat_enemies: Array[Node3D] = []
 
 const DAMAGE_FONT: Font = preload("res://Fonts/Pix32.ttf")
 
@@ -374,7 +373,7 @@ func process_skills() -> void:
 func has_combat_enemies() -> bool:
 	if is_instance_valid(combat_controller):
 		return not combat_controller.get_alive_enemies().is_empty()
-	for enemy in combat_enemies:
+	for enemy in combat_controller.get_alive_enemies() if is_instance_valid(combat_controller) else []:
 		if not is_instance_valid(enemy):
 			continue
 
@@ -483,8 +482,6 @@ func start_combat(enemy: Node3D):
 	# O registro principal dos inimigos pertence ao CombatController.
 	if is_instance_valid(combat_controller):
 		combat_controller.register_enemy(enemy)
-	if not combat_enemies.has(enemy):
-		combat_enemies.append(enemy)
 
 	if state == State.COMBAT:
 		if not is_instance_valid(current_enemy):
@@ -520,8 +517,6 @@ func start_combat(enemy: Node3D):
 
 
 func select_next_enemy():
-	if is_instance_valid(combat_controller):
-		combat_enemies = combat_controller.get_alive_enemies()
 	if is_instance_valid(current_enemy):
 		if not current_enemy.dying and current_enemy.health > 0:
 			var nearest_hero := get_nearest_alive_hero_to(current_enemy)
@@ -586,7 +581,6 @@ func enemy_died(dead_enemy: Node3D):
 	if current_enemy == dead_enemy:
 		current_enemy = null
 
-	combat_enemies.erase(dead_enemy)
 
 	# Boss: mantém o fluxo de vitória existente.
 	if current_wave >= 4:
