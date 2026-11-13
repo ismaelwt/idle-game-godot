@@ -488,7 +488,7 @@ func start_combat(enemy: Node3D):
 			select_next_enemy()
 		return
 
-	if state != State.RUNNING:
+	if state != State.RUNNING and state != State.PREPARING:
 		return
 
 	state = State.COMBAT
@@ -517,6 +517,9 @@ func start_combat(enemy: Node3D):
 
 
 func select_next_enemy():
+	var available_enemies: Array[Node3D] = []
+	if is_instance_valid(combat_controller):
+		available_enemies = combat_controller.get_alive_enemies()
 	if is_instance_valid(current_enemy):
 		if not current_enemy.dying and current_enemy.health > 0:
 			var nearest_hero := get_nearest_alive_hero_to(current_enemy)
@@ -529,7 +532,7 @@ func select_next_enemy():
 	current_enemy = null
 	var nearest_distance := INF
 
-	for enemy in combat_enemies:
+	for enemy in available_enemies:
 		if not is_instance_valid(enemy):
 			continue
 
