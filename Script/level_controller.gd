@@ -102,6 +102,12 @@ func _ready():
 
 	await get_tree().process_frame
 
+	if is_instance_valid(combat_controller):
+		if not combat_controller.enemy_engaged.is_connected(start_combat):
+			combat_controller.enemy_engaged.connect(start_combat)
+		if not combat_controller.enemy_died_signal.is_connected(enemy_died):
+			combat_controller.enemy_died_signal.connect(enemy_died)
+
 	automatic_retry = SaveManager.load_auto_retry()
 
 	AudioManager.play_music(LEVEL_MUSIC, 1.0)
@@ -366,6 +372,8 @@ func process_skills() -> void:
 
 
 func has_combat_enemies() -> bool:
+	if is_instance_valid(combat_controller):
+		return not combat_controller.get_alive_enemies().is_empty()
 	for enemy in combat_enemies:
 		if not is_instance_valid(enemy):
 			continue
@@ -379,6 +387,8 @@ func has_combat_enemies() -> bool:
 
 
 func has_alive_enemies() -> bool:
+	if is_instance_valid(combat_controller):
+		return not combat_controller.get_alive_enemies().is_empty()
 	for enemy in enemy_spawner.enemies:
 		if not is_instance_valid(enemy):
 			continue
@@ -470,7 +480,9 @@ func start_combat(enemy: Node3D):
 	if enemy.dying or enemy.health <= 0:
 		return
 
-	# Registra o inimigo que iniciou o combate da equipe.
+	# O registro principal dos inimigos pertence ao CombatController.
+	if is_instance_valid(combat_controller):
+		combat_controller.register_enemy(enemy)
 	if not combat_enemies.has(enemy):
 		combat_enemies.append(enemy)
 
@@ -508,6 +520,8 @@ func start_combat(enemy: Node3D):
 
 
 func select_next_enemy():
+	if is_instance_valid(combat_controller):
+		combat_enemies = combat_controller.get_alive_enemies()
 	if is_instance_valid(current_enemy):
 		if not current_enemy.dying and current_enemy.health > 0:
 			var nearest_hero := get_nearest_alive_hero_to(current_enemy)
@@ -556,9 +570,7 @@ func enemy_died(dead_enemy: Node3D):
 	if not is_instance_valid(dead_enemy):
 		return
 
-	if state != State.COMBAT:
-		return
-
+	# Processa mortes mesmo durante aproximação ou transição entre ondas.
 	Log.d("=== INIMIGO MORREU: ", dead_enemy.name, " ===")
 
 	# A morte do inimigo não cancela ataques ou skills em execução.
@@ -574,8 +586,7 @@ func enemy_died(dead_enemy: Node3D):
 	if current_enemy == dead_enemy:
 		current_enemy = null
 
-	if is_instance_valid(combat_controller):
-		combat_controller.on_enemy_died(dead_enemy)
+	combat_enemies.erase(dead_enemy)
 
 	# Boss: mantém o fluxo de vitória existente.
 	if current_wave >= 4:
@@ -655,6 +666,9 @@ func enemy_died(dead_enemy: Node3D):
 
 		Log.d("=== AUTORETRY DESATIVADO ===")
 		Log.d("=== EXIBINDO PAINEL DE VITÓRIA ===")
+		return
+
+	if state == State.VICTORY or state == State.DEFEAT:
 		return
 
 	# Procura o próximo alvo sem iniciar o retorno à posição inicial.
