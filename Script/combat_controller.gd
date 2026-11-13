@@ -5,6 +5,11 @@ class_name CombatController
 signal combat_cycle_started
 signal combat_cycle_finished
 
+signal enemy_registered(enemy: Node3D)
+signal enemy_engaged(enemy: Node3D)
+signal enemy_died_signal(enemy: Node3D)
+signal all_enemies_cleared
+
 @export_category("Targeting")
 @export_range(0.1, 2.0, 0.1) var target_refresh_interval: float = 0.5
 
@@ -14,6 +19,8 @@ signal combat_cycle_finished
 var party_manager: PartyManager = null
 var enemy_spawner: Node = null
 var combat_active: bool = false
+var enemies: Array[Node3D] = []
+var engaged_enemies: Array[Node3D] = []
 
 var target_refresh_timer: float = 0.0
 
@@ -47,6 +54,9 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
+	_cleanup_enemy_registry()
+	_detect_engagements()
+
 	if not combat_active:
 		return
 	
@@ -59,6 +69,80 @@ func _process(delta: float) -> void:
 
 	target_refresh_timer = target_refresh_interval
 	refresh_hero_targets()
+
+
+
+func register_enemy(enemy: Node3D) -> void:
+	if not is_instance_valid(enemy) or not enemy.is_inside_tree() or enemies.has(enemy):
+		return
+	enemies.append(enemy)
+	enemy_registered.emit(enemy)
+
+
+func unregister_enemy(enemy: Node3D) -> void:
+	if not is_instance_valid(enemy):
+		return
+	enemies.erase(enemy)
+	engaged_enemies.erase(enemy)
+	if enemies.is_empty():
+		all_enemies_cleared.emit()
+
+
+func get_alive_enemies() -> Array[Node3D]:
+	_cleanup_enemy_registry()
+	var alive: Array[Node3D] = []
+	for enemy in enemies:
+		if is_enemy_alive(enemy):
+			alive.append(enemy)
+	return alive
+
+
+func engage_enemy(enemy: Node3D) -> void:
+	if not is_enemy_alive(enemy):
+		return
+	register_enemy(enemy)
+	if engaged_enemies.has(enemy):
+		return
+	engaged_enemies.append(enemy)
+	if not combat_active:
+		start_combat()
+	enemy_engaged.emit(enemy)
+
+
+func clear_wave_state() -> void:
+	for hero in get_heroes():
+		if is_instance_valid(hero):
+			set_target(hero, null)
+	enemies.clear()
+	engaged_enemies.clear()
+	stop_combat()
+
+
+func _detect_engagements() -> void:
+	if combat_active or not is_instance_valid(party_manager):
+		return
+	var heroes := party_manager.get_alive_heroes()
+	for enemy in get_alive_enemies():
+		for hero in heroes:
+			if not is_instance_valid(hero):
+				continue
+			var range_value = hero.get("attack_range")
+			if range_value == null:
+				continue
+			var hp := Vector2(hero.global_position.x, hero.global_position.z)
+			var ep := Vector2(enemy.global_position.x, enemy.global_position.z)
+			if hp.distance_to(ep) <= float(range_value):
+				engage_enemy(enemy)
+				return
+
+
+func _cleanup_enemy_registry() -> void:
+	for i in range(enemies.size() - 1, -1, -1):
+		if not is_instance_valid(enemies[i]):
+			enemies.remove_at(i)
+	for i in range(engaged_enemies.size() - 1, -1, -1):
+		if not is_instance_valid(engaged_enemies[i]) or not is_enemy_alive(engaged_enemies[i]):
+			engaged_enemies.remove_at(i)
 
 
 func start_combat() -> void:
@@ -133,7 +217,7 @@ func find_target_for_hero(hero: Node3D) -> Node3D:
 	if not is_instance_valid(hero):
 		return null
 
-	if not is_instance_valid(enemy_spawner):
+	if not is_instance_valid(enemy_spawner) and enemies.is_empty():
 		return null
 
 	var attack_range_value = hero.get("attack_range")
@@ -148,7 +232,7 @@ func find_target_for_hero(hero: Node3D) -> Node3D:
 	var closest_enemy: Node3D = null
 	var closest_distance: float = INF
 
-	for enemy in enemy_spawner.enemies:
+	for enemy in get_alive_enemies():
 		if not is_instance_valid(enemy):
 			continue
 
@@ -203,6 +287,10 @@ func refresh_hero_targets() -> void:
 
 
 func on_enemy_died(dead_enemy: Node3D) -> void:
+	if not is_instance_valid(dead_enemy):
+		return
+	unregister_enemy(dead_enemy)
+	enemy_died_signal.emit(dead_enemy)
 	if not is_instance_valid(party_manager):
 		return
 
