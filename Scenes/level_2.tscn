@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://dg0kr8avhqlm5"]
+[gd_scene load_steps=29 format=3 uid="uid://dg0kr8avhqlm5"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_7qsfm"]
 [ext_resource type="PackedScene" uid="uid://cpu1g8auqvx74" path="res://Scenes/tile_02.tscn" id="2_g8xra"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="11_bgibu"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="14_vqvjq"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="15_k14j5"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="16_yvrk7"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="17_fhuy1"]
 [ext_resource type="PackedScene" uid="uid://btemg1q7fkpga" path="res://Scenes/knight.tscn" id="66_p1gm3"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_hj5x7"]
@@ -69,6 +71,12 @@ script = ExtResource("7_wjjdy")
 enemy_scene = ExtResource("10_yvrk7")
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e2piv"]
+shader = ExtResource("16_yvrk7")
+shader_parameter/palette_texture = ExtResource("17_fhuy1")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
+
 [node name="Level_2" type="Node3D"]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -87,7 +95,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(384, 216)
+size = Vector2i(266, 200)
 render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
@@ -201,3 +209,15 @@ script = ExtResource("14_vqvjq")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("15_k14j5")
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_e2piv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

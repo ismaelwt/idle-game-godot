@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b2ndfvpsdf7l4"]
+[gd_scene load_steps=26 format=3 uid="uid://b2ndfvpsdf7l4"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_eh1ed"]
 [ext_resource type="PackedScene" uid="uid://y2g4fdku0oox" path="res://Scenes/tile_01.tscn" id="2_olpot"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_r5dji"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="13_soyxa"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="14_yy84a"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="15_8i23i"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="16_8yhm2"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_5jii6"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -38,8 +40,8 @@ shader = ExtResource("4_w6q3x")
 shader_parameter/lightIntensity = 1.25
 shader_parameter/lineAlpha = 0.7
 shader_parameter/useLighting = true
-shader_parameter/lineHighlight = 0.1
-shader_parameter/lineShadow = 0.1
+shader_parameter/lineHighlight = 0.5
+shader_parameter/lineShadow = 1.0
 
 [sub_resource type="Resource" id="Resource_4qhvg"]
 script = ExtResource("6_yy84a")
@@ -57,6 +59,12 @@ script = ExtResource("6_yy84a")
 enemy_scene = ExtResource("7_4qhvg")
 amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pjppf"]
+shader = ExtResource("15_8i23i")
+shader_parameter/palette_texture = ExtResource("16_8yhm2")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
 
 [node name="Level_1" type="Node3D"]
 
@@ -76,7 +84,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(384, 216)
+size = Vector2i(266, 200)
 render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
@@ -189,3 +197,15 @@ script = ExtResource("13_soyxa")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("14_yy84a")
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_pjppf")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true
