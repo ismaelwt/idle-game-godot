@@ -57,10 +57,13 @@ func _process(delta: float) -> void:
 	_cleanup_enemy_registry()
 	_detect_engagements()
 
+	# Cooldowns são temporizadores independentes do estado de combate.
+	# Devem continuar avançando durante deslocamentos e transições.
+	update_skill_cooldowns(delta)
+
+	# Apenas a atualização de alvos depende de combate ativo.
 	if not combat_active:
 		return
-	
-	update_skill_cooldowns(delta)
 
 	target_refresh_timer -= delta
 
