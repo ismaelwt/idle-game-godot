@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://soosefshdpkq"]
+[gd_scene load_steps=32 format=3 uid="uid://soosefshdpkq"]
 
 [ext_resource type="Script" uid="uid://cdxhfcegkj3is" path="res://Script/world_scroller.gd" id="1_odnv0"]
 [ext_resource type="PackedScene" uid="uid://mpt1iubn4rnd" path="res://Scenes/tile_03.tscn" id="3_gqssx"]
@@ -17,6 +17,8 @@
 [ext_resource type="PackedScene" uid="uid://cqmhxfjwtbpig" path="res://Scenes/mage.tscn" id="13_xqvjd"]
 [ext_resource type="Script" uid="uid://bvl3b3u0wib4" path="res://Script/party_manager.gd" id="15_xqvjd"]
 [ext_resource type="Script" uid="uid://bcg0blg06sqmo" path="res://Script/combat_controller.gd" id="16_rkt0a"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="18_kgmqw"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="19_s80er"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_nbwsh"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -77,6 +79,12 @@ enemy_scene = ExtResource("7_e5i8k")
 amount = 2
 metadata/_custom_type_script = "uid://p802c5ldrgy"
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hed5s"]
+shader = ExtResource("18_kgmqw")
+shader_parameter/palette_texture = ExtResource("19_s80er")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
+
 [node name="Level_3" type="Node3D"]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
@@ -95,14 +103,14 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(384, 216)
+size = Vector2i(266, 200)
 render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
 
 [node name="DirectionalLight3D2" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport/World"]
 transform = Transform3D(0.7173502, -0.45901752, 0.52412945, -0.09842582, 0.6779773, 0.7284636, -0.68972534, -0.5741514, 0.441168, -16.030119, 21.797924, -21.269085)
-light_color = Color(0.10499778, 0.73127425, 0.77004266, 1)
+light_color = Color(0.7410147, 0.4001752, 0.5710362, 1)
 light_energy = 0.5
 light_indirect_energy = 0.5
 light_bake_mode = 1
@@ -173,8 +181,8 @@ spawn_spacing = 2.0
 x_spacing = 0.5
 spawn_radius = 2.5
 min_enemy_spacing = 1.0
-max_enemy_level_limit = 35
-boss_level_limit = 28
+max_enemy_level_limit = 20
+boss_level_limit = 20
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_ki8bc")]
 transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
@@ -208,3 +216,15 @@ script = ExtResource("15_xqvjd")
 
 [node name="CombatController" type="Node" parent="SubViewportContainer/SubViewport"]
 script = ExtResource("16_rkt0a")
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_hed5s")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

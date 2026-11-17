@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://dq8ikoedncwll"]
+[gd_scene load_steps=27 format=3 uid="uid://dq8ikoedncwll"]
 
 [ext_resource type="Script" uid="uid://dnu24abo6csr7" path="res://Script/character_selection.gd" id="1_l3v1h"]
 [ext_resource type="PackedScene" uid="uid://fgafivbrl7ty" path="res://Scenes/torch.tscn" id="2_8eyk7"]
@@ -16,6 +16,8 @@
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="11_pslhg"]
 [ext_resource type="Texture2D" uid="uid://du7fanycp8jeg" path="res://UI/CharacterSelectionUI/Select_Hero.png" id="12_pslhg"]
 [ext_resource type="Texture2D" uid="uid://dcp5smjcgbd1w" path="res://UI/UISprites/Next.png" id="13_l3v1h"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="17_0akvy"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="18_s6j68"]
 
 [sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_i640r"]
 ground_color = Color(0.176178, 0.131568, 0.0777401, 1)
@@ -49,6 +51,12 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="LabelSettings" id="LabelSettings_l3v1h"]
 font = ExtResource("11_pslhg")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_acrdh"]
+shader = ExtResource("17_0akvy")
+shader_parameter/palette_texture = ExtResource("18_s6j68")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
+
 [node name="CharacterSelection" type="Node3D"]
 script = ExtResource("1_l3v1h")
 
@@ -68,7 +76,7 @@ metadata/_edit_use_anchors_ = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
-size = Vector2i(384, 216)
+size = Vector2i(266, 200)
 render_target_update_mode = 4
 
 [node name="World" type="Node3D" parent="SubViewportContainer/SubViewport"]
@@ -327,3 +335,15 @@ grow_horizontal = 0
 grow_vertical = 0
 texture_normal = ExtResource("13_l3v1h")
 stretch_mode = 5
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_acrdh")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

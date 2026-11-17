@@ -1,8 +1,10 @@
-[gd_scene load_steps=36 format=3 uid="uid://wr8k7inmswj4"]
+[gd_scene load_steps=39 format=3 uid="uid://wr8k7inmswj4"]
 
 [ext_resource type="Texture2D" uid="uid://cmjs0pkjwm65x" path="res://icons/Icon_button_inventory.png" id="2_c6o1p"]
 [ext_resource type="Texture2D" uid="uid://c1xebf0iui5a5" path="res://UI/UISprites/Icon_my_chest.png" id="11_segtc"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="25_segtc"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="26_c6o1p"]
 [ext_resource type="Texture2D" uid="uid://c0p0l8snv4oqh" path="res://icons/gem-chain.png" id="42_lue1o"]
 [ext_resource type="Texture2D" uid="uid://iba8p52pl78j" path="res://icons/plus-button.png" id="46_54lcq"]
 [ext_resource type="Texture2D" uid="uid://mimvw1ydfp56" path="res://icons/belt.png" id="46_w8vhy"]
@@ -72,6 +74,12 @@ font = ExtResource("18_x3b7j")
 
 [sub_resource type="LabelSettings" id="LabelSettings_5jii6"]
 font = ExtResource("18_x3b7j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6hs8e"]
+shader = ExtResource("25_segtc")
+shader_parameter/palette_texture = ExtResource("26_c6o1p")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
 
 [node name="Status" type="Panel"]
 z_index = 5
@@ -881,3 +889,15 @@ offset_top = 259.0
 offset_right = 237.0
 offset_bottom = 349.0
 size_flags_vertical = 3
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_6hs8e")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

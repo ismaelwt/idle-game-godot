@@ -40,9 +40,9 @@ render_priority = 1
 shader = ExtResource("2_gl6a3")
 shader_parameter/grass_texture = ExtResource("3_oyrtw")
 shader_parameter/dirt_texture = ExtResource("2_w3dc0")
-shader_parameter/path_width = 0.21200001007
-shader_parameter/path_softness = 0.5
-shader_parameter/pixel_size = 128.00000603249998
+shader_parameter/path_width = 0.38000001805
+shader_parameter/path_softness = 0.2770000131575
+shader_parameter/pixel_size = 64.0000029925
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_redxg"]
 next_pass = SubResource("ShaderMaterial_uktat")

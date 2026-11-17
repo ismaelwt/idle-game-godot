@@ -40,8 +40,8 @@ shader = ExtResource("4_w6q3x")
 shader_parameter/lightIntensity = 1.25
 shader_parameter/lineAlpha = 0.7
 shader_parameter/useLighting = true
-shader_parameter/lineHighlight = 0.5
-shader_parameter/lineShadow = 1.0
+shader_parameter/lineHighlight = 0.2
+shader_parameter/lineShadow = 0.55
 
 [sub_resource type="Resource" id="Resource_4qhvg"]
 script = ExtResource("6_yy84a")
@@ -123,9 +123,9 @@ speed = 4.0
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -40)
 
 [node name="Tile_01" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="Tile_02" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
 
 [node name="Tile_03" parent="SubViewportContainer/SubViewport/World/WorldScroller" groups=["tiles"] instance=ExtResource("2_olpot")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 20)
@@ -166,7 +166,7 @@ max_level_offset = 0
 boss_level_limit = 5
 
 [node name="Archer" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("10_w8vhy")]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -27.461792)
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, -1.0001221, 0, -22.847046)
 attack_range = 8.0
 attack_damage = 8.0
 attack_hit_delay = 0.8
@@ -176,7 +176,7 @@ damage_duration = 1.0
 damage_color = Color(0.98195344, 0.982595, 0.9816391, 1)
 
 [node name="Knight" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("12_w8vhy")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -25.434143)
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, -0.06695557, 0, -20.819397)
 melee_range = 3.0
 damage_font_size = 350
 damage_height = 2.0
@@ -184,7 +184,7 @@ damage_duration = 1.0
 damage_color = Color(0.9045815, 0.90020454, 0.87776834, 1)
 
 [node name="Mage" parent="SubViewportContainer/SubViewport" groups=["party_heroes"] instance=ExtResource("13_r5dji")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -27.586182)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7229004, 0, -22.971436)
 attack_range = 7.0
 attack_base_duration = 0.6
 damage_font_size = 150

@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://ccfhkuijvlf6k"]
+[gd_scene load_steps=31 format=3 uid="uid://ccfhkuijvlf6k"]
 
 [ext_resource type="Texture2D" uid="uid://dl4tfr2vvainy" path="res://UI/UISprites/Mage_Avatar.png" id="6_stc44"]
 [ext_resource type="Texture2D" uid="uid://ctef08pvcnevn" path="res://UI/UISprites/Knight_Avatar.png" id="9_go05x"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bi60c71gul2v6" path="res://UI/UISprites/characterUI/hp_icon.png" id="15_ghgdn"]
 [ext_resource type="Script" uid="uid://ccsoe75qt5qxb" path="res://Script/character_hud.gd" id="16_npx7t"]
 [ext_resource type="Texture2D" uid="uid://e06xyp7ikun3" path="res://UI/UISprites/characterUI/mp_icon.png" id="16_w6q3x"]
+[ext_resource type="Shader" uid="uid://b8w617ygngq83" path="res://Shaders/palette_limit.gdshader" id="17_gsej1"]
 [ext_resource type="Texture2D" uid="uid://bt1gvsf66bmbw" path="res://UI/CharacterSelectionUI/element_2.png" id="17_w6q3x"]
+[ext_resource type="Texture2D" uid="uid://vtvhsfbbqoac" path="res://Render/AAp-64.png" id="18_7g78p"]
 [ext_resource type="FontFile" uid="uid://beu4dwcr7dfe4" path="res://Fonts/Pix32.ttf" id="18_x3b7j"]
 [ext_resource type="Texture2D" uid="uid://2mqxcw8cptnr" path="res://UI/UISprites/elements/element_4.png" id="23_u8waq"]
 [ext_resource type="Script" uid="uid://dkls6mhvlbhll" path="res://Script/skill_hud_slot.gd" id="25_nvvmv"]
@@ -72,6 +74,12 @@ corner_radius_bottom_left = 25
 
 [sub_resource type="LabelSettings" id="LabelSettings_kwf64"]
 font = ExtResource("18_x3b7j")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r7qaw"]
+shader = ExtResource("17_gsej1")
+shader_parameter/palette_texture = ExtResource("18_7g78p")
+shader_parameter/palette_size = 64
+shader_parameter/palette_strength = 0.6000000285
 
 [node name="CharacterHUD" type="Control"]
 layout_mode = 3
@@ -1042,3 +1050,15 @@ offset_bottom = 65.0
 grow_horizontal = 0
 texture_normal = ExtResource("15_bc265")
 stretch_mode = 5
+
+[node name="PaletteLayer" type="CanvasLayer" parent="."]
+
+[node name="PaletteEffect" type="ColorRect" parent="PaletteLayer"]
+material = SubResource("ShaderMaterial_r7qaw")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+metadata/_edit_use_anchors_ = true

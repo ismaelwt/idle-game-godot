@@ -45,7 +45,7 @@ shader_parameter/grass_texture = ExtResource("3_uuxnl")
 shader_parameter/dirt_texture = ExtResource("2_uuxnl")
 shader_parameter/path_width = 0.0
 shader_parameter/path_softness = 0.20800000988
-shader_parameter/pixel_size = 32.0000014725
+shader_parameter/pixel_size = 64.0000029925
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2u2op"]
 next_pass = SubResource("ShaderMaterial_uktat")

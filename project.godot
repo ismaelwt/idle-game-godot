@@ -19,8 +19,8 @@ config/icon="res://Assets/icon.png"
 default_bus_layout="res://default_bus_layout.tres"
 
 [autoload]
-Log="*res://Script/log.gd"
 
+Log="*res://Script/log.gd"
 SaveManager="*res://Script/save_manager.gd"
 SkillTree="*res://Script/skill_tree.gd"
 SceneLoader="*res://Script/scene_loader.gd"
@@ -30,6 +30,8 @@ AudioManager="*res://Script/audio_manager.gd"
 
 [display]
 
+window/size/viewport_width=800
+window/size/viewport_height=600
 window/size/borderless=true
 window/stretch/scale_mode="integer"
 
